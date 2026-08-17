@@ -242,3 +242,19 @@ Status: OPEN | RESOLVED | DEFERRED
 | Safety | M005 `599 → 29.99` and M006 plausible decoy remain schema/type valid but fail deterministic verification, RiskGovernor, and CommitGate output eligibility. |
 | Provider boundary | All collection is explicit `TEST_DOUBLE`; Bright Data state is not modified and no provider capability is added. |
 | Status | RESOLVED for V1 harness floor; benchmark scaling and metric calculation remain OPEN |
+
+## Mission 010 — Deterministic mutation manifest and metric calculator
+
+| Field | Record |
+| --- | --- |
+| Decision ID | OD-010 / Mission 010 |
+| Date | 2026-08-17 |
+| Context | Mission 009 supplies immutable six-scenario mutation runs and independent ground truth, but no reproducible export or canonical calculation layer. |
+| Decision | Add a deterministic redacted manifest projection and immutable metric calculator over existing `MutationRun`/`MutationGroundTruth` records. Do not create a second run model or scale the benchmark. |
+| Measurement | Calculate canonical DetectionRate and AlarmPrecision overall, by severity, and by mutation ID where meaningful; calculate explicit L5 safety fields; return `NOT_APPLICABLE` for absent denominators and unavailable repair/commit paths. |
+| Reproducibility | Sort records and results deterministically, pin a formula version, preserve run evidence references, and keep generated timestamp optional/null so the substantive JSON is byte-stable for identical input. |
+| Safety | Ground truth comes only from `MutationGroundTruth`; no LLM opinion authorizes a result; Mission 009 output eligibility remains false; L5 bad-data-shipped count is reported as 0 only within the controlled harness. |
+| Redaction | Reuse the Mission 008 audit-store normalization/redaction mechanism and fail closed for secret-bearing evidence-reference strings. |
+| Evidence | `experiments/AEGIS-MISSION-010-MUTATION-MANIFEST.json`; `experiments/AEGIS-MISSION-010-METRICS.json`; `docs/generated/mission_010_metrics.md`; `experiments/AEGIS-MISSION-010-MANIFEST-METRICS.md`; Mission 010 unit tests. |
+| Consequences | The measurement gap is closed for deterministic V1 evidence. Full benchmark trials, baselines, model freeze, production repair outcomes, and headline metrics remain future work. |
+| Status | RESOLVED for Mission 010 measurement infrastructure; benchmark execution and real repair metrics remain OPEN |

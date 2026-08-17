@@ -139,6 +139,7 @@ class MutationRun:
     ground_truth_reference: str = ""
     detected: bool = False
     detected_by_existing_detection: bool = False
+    detector_severity: str = "NONE"
     outcome: MutationOutcome = MutationOutcome.UNKNOWN
     provenance: ProviderProvenance = ProviderProvenance.TEST_DOUBLE
     timing_ms: Mapping[str, int] = field(default_factory=dict)
@@ -296,6 +297,7 @@ class MutationLab:
             ground_truth_reference=f"ground-truth://{case.ground_truth.ground_truth_id}",
             detected=detection.detected or verification.overall_status is not VerificationOverallStatus.PASS,
             detected_by_existing_detection=detection.detected,
+            detector_severity=detection.severity,
             outcome=outcome,
             timing_ms={"detection": detected_ms, "verification": verification_ms, "risk": risk_ms, "total": _elapsed_ms(started, utc_now())},
             verification_status=verification.overall_status.value,

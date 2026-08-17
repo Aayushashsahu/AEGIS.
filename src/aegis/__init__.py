@@ -42,6 +42,7 @@ from .diagnosis import (
     diagnose_deterministically,
 )
 from .healing import HealHandle, HealOperationResult, HealProviderEnvelope, HealState, RepairCandidate, VerificationStatus
+from .mutation_metrics import MetricReport, MetricResult, MetricStatus, build_mission009_dataset, calculate_metrics, export_manifest, manifest_record
 from .mutation_lab import (
     MutationCase,
     MutationDefinition,
@@ -169,6 +170,9 @@ __all__ = [
     "MutationOutcome",
     "MutationRun",
     "MutationSeverity",
+    "MetricReport",
+    "MetricResult",
+    "MetricStatus",
     "MutatedFixture",
     "NoExecutionRepairBoundary",
     "Observation",
@@ -219,13 +223,17 @@ __all__ = [
     "VerificationResult",
     "VerificationStatus",
     "baseline_fixture",
+    "build_mission009_dataset",
     "build_commit_gate_fixture",
     "build_heal_command",
     "build_heal_prompt",
     "build_repair_request",
     "build_verification_fixture",
     "extraction_contract",
+    "calculate_metrics",
     "diagnose_deterministically",
+    "export_manifest",
+    "manifest_record",
     "mission005_contract",
     "verify_candidate",
     "verify_contract",

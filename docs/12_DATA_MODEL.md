@@ -178,3 +178,17 @@ Stored payloads are normalized from canonical domain records and redacted before
 | `MutationRun` | run/mutation/seed, collector/observation/detection/verification/risk/ground-truth references, detected flags, outcome, provenance, timing, eligibility, quarantine/evidence refs | Immutable raw run evidence; no output eligibility in V1. |
 
 All six V1 mutation scenarios use `ProviderProvenance.TEST_DOUBLE`. L5 values remain schema-compatible and numeric, while expected truth and verification evidence preserve the semantic distinction.
+
+## Mission 010 logical additions — deterministic manifest and metrics
+
+Mission 010 does not add a second run entity. It adds a deterministic projection/export over the existing immutable `MutationRun` and `MutationGroundTruth` records, plus the immutable `MetricResult` value object already named in the model.
+
+| Record/projection | Required fields | Safety and reproducibility boundary |
+| --- | --- | --- |
+| `MutationManifestRecord` | run ID, mutation ID, mutation severity, seed, fixture version, baseline/mutated/truth references, provenance, detection outcome, existing-detector flag, observed detector severity, verification/risk/CommitGate results, output eligibility, quarantine reference, timing, timestamp, evidence references, ground-truth behavior projection | Redacted read projection; does not mutate `MutationRun` or expose secrets |
+| `MetricResult` | metric name, value, status, numerator, denominator, scope, severity, mutation IDs, run count, formula version, optional generated timestamp, evidence references, formula | Frozen record; `NOT_APPLICABLE` has `value=null`; every measured result carries raw-run traceability |
+| `MetricReport` | redacted manifest summary, ordered `MetricResult` tuple, formula version, optional generated timestamp | Byte-stable substantive payload for identical immutable inputs |
+
+`MutationManifestRecord.severity` is the mutation ground-truth severity. `detector_severity` is the observed signal severity from the existing detector and is retained separately; an L4 mutation may emit an L3 detector signal without changing its ground-truth classification. The current L5 runs remain `output_eligible=false` and carry quarantine/evidence references.
+
+The machine-readable report is generated from immutable raw records and includes overall, per-severity, and per-mutation scopes where meaningful. Its redaction path reuses the Mission 008 audit-store normalizer/redactor and fails closed on secret-bearing evidence-reference strings. No manifest or metric projection creates provider state, approval state, commit state, rollback state, or a new benchmark run.

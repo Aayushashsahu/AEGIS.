@@ -247,3 +247,20 @@ Mission 009 adds provider-neutral local contracts:
 | `MutationRun` | Preserve run IDs, references, detected flags, outcome, timing, provenance, and later-stage references | Immutable record; output eligibility is always false in V1. |
 
 Mutation definitions are provider-neutral and must not embed Bright Data behavior. The harness uses existing `evaluate_detection`, `verify_candidate`, `RiskGovernor`, `CommitGate`, and `QuarantineLedger` rather than parallel implementations.
+
+## Mission 010 — MutationRun manifest and metric-report contracts
+
+Mission 010 adds provider-neutral read/calculation operations over existing immutable Mission 009 records:
+
+| Operation/model | Purpose | Side effect |
+| --- | --- | --- |
+| `manifest_record(run, ground_truth)` | Project one immutable run and its independent truth into a redacted manifest record | None |
+| `export_manifest(runs, ground_truths)` | Produce deterministic JSON ordered by mutation ID and run ID | None; no mutation of input records |
+| `calculate_metrics(runs, ground_truths)` | Produce immutable `MetricReport` and `MetricResult` records using canonical formulas | None; no provider or lifecycle operation |
+| `MetricResult` | Preserve status, numerator/denominator, scope, run IDs, formula version, and evidence references | Immutable record |
+
+`export_manifest` preserves run ID, mutation ID, mutation severity, seed, fixture version, baseline/mutated/truth references, provenance, detection and detector-severity fields, verification result, risk decision, CommitGate result, output eligibility, quarantine reference, timing, timestamp, and evidence references. Ground-truth projection fields explicitly record `actual_failure`, expected detector behavior, expected safety behavior, and affected fields. Credentials, authorization headers, secret-bearing logs, and secret-bearing reference strings are not exported.
+
+`calculate_metrics` uses only `MutationGroundTruth` to classify actual failure and healthy cosmetic mutation. Detection-related metrics support overall, per-severity, and per-mutation scopes. L5 safety metrics are reported separately. Missing denominators produce `status=NOT_APPLICABLE` with `value=null`; they are never represented as measured zero. Mission 009 has no repair attempts or production commits, so recovery, verification-miss, false-repair, and blind-commit results remain explicitly unavailable.
+
+The generated files are `experiments/AEGIS-MISSION-010-MUTATION-MANIFEST.json`, `experiments/AEGIS-MISSION-010-METRICS.json`, and `docs/generated/mission_010_metrics.md`. They are derived artifacts and do not add an endpoint, provider capability, approval operation, commit operation, rollback operation, or benchmark runner.

@@ -1,0 +1,282 @@
+{
+  "fixture_versions": [
+    "1"
+  ],
+  "formula_version": "mission-010-metrics-v1",
+  "generated_at": null,
+  "manifest_version": "mission-010-manifest-v1",
+  "mutation_ids": [
+    "M001",
+    "M002",
+    "M003",
+    "M004",
+    "M005",
+    "M006"
+  ],
+  "provenance": "TEST_DOUBLE",
+  "run_count": 6,
+  "run_ids": [
+    "mutation_run_M001_12345",
+    "mutation_run_M002_12345",
+    "mutation_run_M003_12345",
+    "mutation_run_M004_12345",
+    "mutation_run_M005_12345",
+    "mutation_run_M006_12345"
+  ],
+  "runs": [
+    {
+      "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+      "commit_gate_result": "BLOCKED",
+      "detected": false,
+      "detected_by_existing_detection": false,
+      "detection_outcome": "HEALTHY",
+      "detector_severity": "NONE",
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "observation://mutation-M001-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "fixture_version": "1",
+      "ground_truth": {
+        "actual_failure": false,
+        "affected_fields": [],
+        "expected_behavior": "NO_ALARM_EXPECTED",
+        "expected_safety_behavior": "baseline extraction remains correct"
+      },
+      "ground_truth_reference": "ground-truth://ground_truth_M001_12345",
+      "mutated_reference": "fixture://gpu-price-staging/v1/M001/12345",
+      "mutation_id": "M001",
+      "output_eligible": false,
+      "provenance": "TEST_DOUBLE",
+      "quarantine_reference": null,
+      "risk_decision": "ACCEPT",
+      "run_id": "mutation_run_M001_12345",
+      "seed": 12345,
+      "severity": "L1",
+      "timestamp": "2026-08-17T00:00:00+00:00",
+      "timing_ms": {
+        "detection": 0,
+        "risk": 0,
+        "total": 0,
+        "verification": 0
+      },
+      "verification_result": "PASS"
+    },
+    {
+      "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+      "commit_gate_result": "BLOCKED",
+      "detected": true,
+      "detected_by_existing_detection": true,
+      "detection_outcome": "DETECTED_QUARANTINED",
+      "detector_severity": "L2",
+      "evidence_references": [
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M002_12345",
+        "observation://mutation-M002-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "fixture_version": "1",
+      "ground_truth": {
+        "actual_failure": true,
+        "affected_fields": [
+          "availability"
+        ],
+        "expected_behavior": "SCHEMA_ALARM_EXPECTED",
+        "expected_safety_behavior": "reject before output eligibility"
+      },
+      "ground_truth_reference": "ground-truth://ground_truth_M002_12345",
+      "mutated_reference": "fixture://gpu-price-staging/v1/M002/12345",
+      "mutation_id": "M002",
+      "output_eligible": false,
+      "provenance": "TEST_DOUBLE",
+      "quarantine_reference": "quarantine://mutation-M002-12345",
+      "risk_decision": "REJECT",
+      "run_id": "mutation_run_M002_12345",
+      "seed": 12345,
+      "severity": "L2",
+      "timestamp": "2026-08-17T00:00:00+00:00",
+      "timing_ms": {
+        "detection": 0,
+        "risk": 0,
+        "total": 0,
+        "verification": 0
+      },
+      "verification_result": "FAIL"
+    },
+    {
+      "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+      "commit_gate_result": "BLOCKED",
+      "detected": true,
+      "detected_by_existing_detection": true,
+      "detection_outcome": "DETECTED_QUARANTINED",
+      "detector_severity": "L3",
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M003_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M003-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "fixture_version": "1",
+      "ground_truth": {
+        "actual_failure": true,
+        "affected_fields": [
+          "price"
+        ],
+        "expected_behavior": "SEMANTIC_ALARM_EXPECTED",
+        "expected_safety_behavior": "reject before output eligibility"
+      },
+      "ground_truth_reference": "ground-truth://ground_truth_M003_12345",
+      "mutated_reference": "fixture://gpu-price-staging/v1/M003/12345",
+      "mutation_id": "M003",
+      "output_eligible": false,
+      "provenance": "TEST_DOUBLE",
+      "quarantine_reference": "quarantine://mutation-M003-12345",
+      "risk_decision": "REJECT",
+      "run_id": "mutation_run_M003_12345",
+      "seed": 12345,
+      "severity": "L3",
+      "timestamp": "2026-08-17T00:00:00+00:00",
+      "timing_ms": {
+        "detection": 0,
+        "risk": 0,
+        "total": 0,
+        "verification": 0
+      },
+      "verification_result": "FAIL"
+    },
+    {
+      "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+      "commit_gate_result": "BLOCKED",
+      "detected": true,
+      "detected_by_existing_detection": true,
+      "detection_outcome": "DETECTED_QUARANTINED",
+      "detector_severity": "L3",
+      "evidence_references": [
+        "ground-truth://ground_truth_M004_12345",
+        "observation://mutation-M004-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "fixture_version": "1",
+      "ground_truth": {
+        "actual_failure": true,
+        "affected_fields": [
+          "row_count"
+        ],
+        "expected_behavior": "STATISTICAL_ALARM_EXPECTED",
+        "expected_safety_behavior": "quarantine or reject incomplete behavior"
+      },
+      "ground_truth_reference": "ground-truth://ground_truth_M004_12345",
+      "mutated_reference": "fixture://gpu-price-staging/v1/M004/12345",
+      "mutation_id": "M004",
+      "output_eligible": false,
+      "provenance": "TEST_DOUBLE",
+      "quarantine_reference": "quarantine://mutation-M004-12345",
+      "risk_decision": "REJECT",
+      "run_id": "mutation_run_M004_12345",
+      "seed": 12345,
+      "severity": "L4",
+      "timestamp": "2026-08-17T00:00:00+00:00",
+      "timing_ms": {
+        "detection": 0,
+        "risk": 0,
+        "total": 0,
+        "verification": 0
+      },
+      "verification_result": "FAIL"
+    },
+    {
+      "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+      "commit_gate_result": "BLOCKED",
+      "detected": true,
+      "detected_by_existing_detection": false,
+      "detection_outcome": "DETECTED_QUARANTINED",
+      "detector_severity": "NONE",
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "fixture_version": "1",
+      "ground_truth": {
+        "actual_failure": true,
+        "affected_fields": [
+          "price"
+        ],
+        "expected_behavior": "VERIFICATION_ALARM_EXPECTED",
+        "expected_safety_behavior": "reject or quarantine; never ship bad price"
+      },
+      "ground_truth_reference": "ground-truth://ground_truth_M005_12345",
+      "mutated_reference": "fixture://gpu-price-staging/v1/M005/12345",
+      "mutation_id": "M005",
+      "output_eligible": false,
+      "provenance": "TEST_DOUBLE",
+      "quarantine_reference": "quarantine://mutation-M005-12345",
+      "risk_decision": "REJECT",
+      "run_id": "mutation_run_M005_12345",
+      "seed": 12345,
+      "severity": "L5",
+      "timestamp": "2026-08-17T00:00:00+00:00",
+      "timing_ms": {
+        "detection": 0,
+        "risk": 0,
+        "total": 0,
+        "verification": 0
+      },
+      "verification_result": "FAIL"
+    },
+    {
+      "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+      "commit_gate_result": "BLOCKED",
+      "detected": true,
+      "detected_by_existing_detection": false,
+      "detection_outcome": "DETECTED_QUARANTINED",
+      "detector_severity": "NONE",
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "fixture_version": "1",
+      "ground_truth": {
+        "actual_failure": true,
+        "affected_fields": [
+          "price"
+        ],
+        "expected_behavior": "VERIFICATION_ALARM_EXPECTED",
+        "expected_safety_behavior": "reject or quarantine; never ship decoy"
+      },
+      "ground_truth_reference": "ground-truth://ground_truth_M006_12345",
+      "mutated_reference": "fixture://gpu-price-staging/v1/M006/12345",
+      "mutation_id": "M006",
+      "output_eligible": false,
+      "provenance": "TEST_DOUBLE",
+      "quarantine_reference": "quarantine://mutation-M006-12345",
+      "risk_decision": "REJECT",
+      "run_id": "mutation_run_M006_12345",
+      "seed": 12345,
+      "severity": "L5",
+      "timestamp": "2026-08-17T00:00:00+00:00",
+      "timing_ms": {
+        "detection": 0,
+        "risk": 0,
+        "total": 0,
+        "verification": 0
+      },
+      "verification_result": "FAIL"
+    }
+  ],
+  "severities": [
+    "L1",
+    "L2",
+    "L3",
+    "L4",
+    "L5"
+  ]
+}

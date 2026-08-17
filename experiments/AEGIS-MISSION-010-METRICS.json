@@ -1,0 +1,1440 @@
+{
+  "formula_version": "mission-010-metrics-v1",
+  "generated_at": null,
+  "manifest": {
+    "fixture_versions": [
+      "1"
+    ],
+    "formula_version": "mission-010-metrics-v1",
+    "generated_at": null,
+    "manifest_version": "mission-010-manifest-v1",
+    "mutation_ids": [
+      "M001",
+      "M002",
+      "M003",
+      "M004",
+      "M005",
+      "M006"
+    ],
+    "provenance": "TEST_DOUBLE",
+    "run_count": 6,
+    "run_ids": [
+      "mutation_run_M001_12345",
+      "mutation_run_M002_12345",
+      "mutation_run_M003_12345",
+      "mutation_run_M004_12345",
+      "mutation_run_M005_12345",
+      "mutation_run_M006_12345"
+    ],
+    "runs": [
+      {
+        "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+        "commit_gate_result": "BLOCKED",
+        "detected": false,
+        "detected_by_existing_detection": false,
+        "detection_outcome": "HEALTHY",
+        "detector_severity": "NONE",
+        "evidence_references": [
+          "contract://mutation-lab-gpu-price-v1",
+          "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+          "ground-truth://ground_truth_M001_12345",
+          "observation://mutation-M001-12345",
+          "semantic://deterministic-invariants"
+        ],
+        "fixture_version": "1",
+        "ground_truth": {
+          "actual_failure": false,
+          "affected_fields": [],
+          "expected_behavior": "NO_ALARM_EXPECTED",
+          "expected_safety_behavior": "baseline extraction remains correct"
+        },
+        "ground_truth_reference": "ground-truth://ground_truth_M001_12345",
+        "mutated_reference": "fixture://gpu-price-staging/v1/M001/12345",
+        "mutation_id": "M001",
+        "output_eligible": false,
+        "provenance": "TEST_DOUBLE",
+        "quarantine_reference": null,
+        "risk_decision": "ACCEPT",
+        "run_id": "mutation_run_M001_12345",
+        "seed": 12345,
+        "severity": "L1",
+        "timestamp": "2026-08-17T00:00:00+00:00",
+        "timing_ms": {
+          "detection": 0,
+          "risk": 0,
+          "total": 0,
+          "verification": 0
+        },
+        "verification_result": "PASS"
+      },
+      {
+        "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+        "commit_gate_result": "BLOCKED",
+        "detected": true,
+        "detected_by_existing_detection": true,
+        "detection_outcome": "DETECTED_QUARANTINED",
+        "detector_severity": "L2",
+        "evidence_references": [
+          "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+          "ground-truth://ground_truth_M002_12345",
+          "observation://mutation-M002-12345",
+          "semantic://deterministic-invariants"
+        ],
+        "fixture_version": "1",
+        "ground_truth": {
+          "actual_failure": true,
+          "affected_fields": [
+            "availability"
+          ],
+          "expected_behavior": "SCHEMA_ALARM_EXPECTED",
+          "expected_safety_behavior": "reject before output eligibility"
+        },
+        "ground_truth_reference": "ground-truth://ground_truth_M002_12345",
+        "mutated_reference": "fixture://gpu-price-staging/v1/M002/12345",
+        "mutation_id": "M002",
+        "output_eligible": false,
+        "provenance": "TEST_DOUBLE",
+        "quarantine_reference": "quarantine://mutation-M002-12345",
+        "risk_decision": "REJECT",
+        "run_id": "mutation_run_M002_12345",
+        "seed": 12345,
+        "severity": "L2",
+        "timestamp": "2026-08-17T00:00:00+00:00",
+        "timing_ms": {
+          "detection": 0,
+          "risk": 0,
+          "total": 0,
+          "verification": 0
+        },
+        "verification_result": "FAIL"
+      },
+      {
+        "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+        "commit_gate_result": "BLOCKED",
+        "detected": true,
+        "detected_by_existing_detection": true,
+        "detection_outcome": "DETECTED_QUARANTINED",
+        "detector_severity": "L3",
+        "evidence_references": [
+          "contract://mutation-lab-gpu-price-v1",
+          "ground-truth://ground_truth_M003_12345",
+          "history://url:https://example.test/gpu-1.price",
+          "observation://mutation-M003-12345",
+          "semantic://deterministic-invariants"
+        ],
+        "fixture_version": "1",
+        "ground_truth": {
+          "actual_failure": true,
+          "affected_fields": [
+            "price"
+          ],
+          "expected_behavior": "SEMANTIC_ALARM_EXPECTED",
+          "expected_safety_behavior": "reject before output eligibility"
+        },
+        "ground_truth_reference": "ground-truth://ground_truth_M003_12345",
+        "mutated_reference": "fixture://gpu-price-staging/v1/M003/12345",
+        "mutation_id": "M003",
+        "output_eligible": false,
+        "provenance": "TEST_DOUBLE",
+        "quarantine_reference": "quarantine://mutation-M003-12345",
+        "risk_decision": "REJECT",
+        "run_id": "mutation_run_M003_12345",
+        "seed": 12345,
+        "severity": "L3",
+        "timestamp": "2026-08-17T00:00:00+00:00",
+        "timing_ms": {
+          "detection": 0,
+          "risk": 0,
+          "total": 0,
+          "verification": 0
+        },
+        "verification_result": "FAIL"
+      },
+      {
+        "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+        "commit_gate_result": "BLOCKED",
+        "detected": true,
+        "detected_by_existing_detection": true,
+        "detection_outcome": "DETECTED_QUARANTINED",
+        "detector_severity": "L3",
+        "evidence_references": [
+          "ground-truth://ground_truth_M004_12345",
+          "observation://mutation-M004-12345",
+          "semantic://deterministic-invariants"
+        ],
+        "fixture_version": "1",
+        "ground_truth": {
+          "actual_failure": true,
+          "affected_fields": [
+            "row_count"
+          ],
+          "expected_behavior": "STATISTICAL_ALARM_EXPECTED",
+          "expected_safety_behavior": "quarantine or reject incomplete behavior"
+        },
+        "ground_truth_reference": "ground-truth://ground_truth_M004_12345",
+        "mutated_reference": "fixture://gpu-price-staging/v1/M004/12345",
+        "mutation_id": "M004",
+        "output_eligible": false,
+        "provenance": "TEST_DOUBLE",
+        "quarantine_reference": "quarantine://mutation-M004-12345",
+        "risk_decision": "REJECT",
+        "run_id": "mutation_run_M004_12345",
+        "seed": 12345,
+        "severity": "L4",
+        "timestamp": "2026-08-17T00:00:00+00:00",
+        "timing_ms": {
+          "detection": 0,
+          "risk": 0,
+          "total": 0,
+          "verification": 0
+        },
+        "verification_result": "FAIL"
+      },
+      {
+        "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+        "commit_gate_result": "BLOCKED",
+        "detected": true,
+        "detected_by_existing_detection": false,
+        "detection_outcome": "DETECTED_QUARANTINED",
+        "detector_severity": "NONE",
+        "evidence_references": [
+          "contract://mutation-lab-gpu-price-v1",
+          "ground-truth://ground_truth_M005_12345",
+          "history://url:https://example.test/gpu-1.price",
+          "observation://mutation-M005-12345",
+          "semantic://deterministic-invariants"
+        ],
+        "fixture_version": "1",
+        "ground_truth": {
+          "actual_failure": true,
+          "affected_fields": [
+            "price"
+          ],
+          "expected_behavior": "VERIFICATION_ALARM_EXPECTED",
+          "expected_safety_behavior": "reject or quarantine; never ship bad price"
+        },
+        "ground_truth_reference": "ground-truth://ground_truth_M005_12345",
+        "mutated_reference": "fixture://gpu-price-staging/v1/M005/12345",
+        "mutation_id": "M005",
+        "output_eligible": false,
+        "provenance": "TEST_DOUBLE",
+        "quarantine_reference": "quarantine://mutation-M005-12345",
+        "risk_decision": "REJECT",
+        "run_id": "mutation_run_M005_12345",
+        "seed": 12345,
+        "severity": "L5",
+        "timestamp": "2026-08-17T00:00:00+00:00",
+        "timing_ms": {
+          "detection": 0,
+          "risk": 0,
+          "total": 0,
+          "verification": 0
+        },
+        "verification_result": "FAIL"
+      },
+      {
+        "baseline_reference": "fixture://gpu-price-staging/v1/baseline",
+        "commit_gate_result": "BLOCKED",
+        "detected": true,
+        "detected_by_existing_detection": false,
+        "detection_outcome": "DETECTED_QUARANTINED",
+        "detector_severity": "NONE",
+        "evidence_references": [
+          "contract://mutation-lab-gpu-price-v1",
+          "ground-truth://ground_truth_M006_12345",
+          "history://url:https://example.test/gpu-1.price",
+          "observation://mutation-M006-12345",
+          "semantic://deterministic-invariants"
+        ],
+        "fixture_version": "1",
+        "ground_truth": {
+          "actual_failure": true,
+          "affected_fields": [
+            "price"
+          ],
+          "expected_behavior": "VERIFICATION_ALARM_EXPECTED",
+          "expected_safety_behavior": "reject or quarantine; never ship decoy"
+        },
+        "ground_truth_reference": "ground-truth://ground_truth_M006_12345",
+        "mutated_reference": "fixture://gpu-price-staging/v1/M006/12345",
+        "mutation_id": "M006",
+        "output_eligible": false,
+        "provenance": "TEST_DOUBLE",
+        "quarantine_reference": "quarantine://mutation-M006-12345",
+        "risk_decision": "REJECT",
+        "run_id": "mutation_run_M006_12345",
+        "seed": 12345,
+        "severity": "L5",
+        "timestamp": "2026-08-17T00:00:00+00:00",
+        "timing_ms": {
+          "detection": 0,
+          "risk": 0,
+          "total": 0,
+          "verification": 0
+        },
+        "verification_result": "FAIL"
+      }
+    ],
+    "severities": [
+      "L1",
+      "L2",
+      "L3",
+      "L4",
+      "L5"
+    ]
+  },
+  "results": [
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "observation://mutation-M001-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M001"
+      ],
+      "numerator": 0,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M001"
+      },
+      "severity": null,
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M002_12345",
+        "observation://mutation-M002-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M002"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M002"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M003_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M003-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M003"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M003"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "ground-truth://ground_truth_M004_12345",
+        "observation://mutation-M004-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M004"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M004"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M005"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M005"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M006"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M006"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 5,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 5,
+      "run_count": 6,
+      "scope": {
+        "level": "overall"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "observation://mutation-M001-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M001"
+      ],
+      "numerator": 0,
+      "run_count": 1,
+      "scope": {
+        "level": "severity",
+        "severity": "L1"
+      },
+      "severity": "L1",
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M002_12345",
+        "observation://mutation-M002-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M002"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "severity",
+        "severity": "L2"
+      },
+      "severity": "L2",
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M003_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M003-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M003"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "severity",
+        "severity": "L3"
+      },
+      "severity": "L3",
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "ground-truth://ground_truth_M004_12345",
+        "observation://mutation-M004-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M004"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "severity",
+        "severity": "L4"
+      },
+      "severity": "L4",
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 2,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected actual failures / actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "DetectionRate",
+      "mutation_ids": [
+        "M005",
+        "M006"
+      ],
+      "numerator": 2,
+      "run_count": 2,
+      "scope": {
+        "level": "severity",
+        "severity": "L5"
+      },
+      "severity": "L5",
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "observation://mutation-M001-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M001"
+      ],
+      "numerator": 0,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M001"
+      },
+      "severity": null,
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M002_12345",
+        "observation://mutation-M002-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M002"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M002"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M003_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M003-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M003"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M003"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "ground-truth://ground_truth_M004_12345",
+        "observation://mutation-M004-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M004"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M004"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M005"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M005"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M006"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "mutation",
+        "mutation_id": "M006"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 5,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 5,
+      "run_count": 6,
+      "scope": {
+        "level": "overall"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "observation://mutation-M001-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M001"
+      ],
+      "numerator": 0,
+      "run_count": 1,
+      "scope": {
+        "level": "severity",
+        "severity": "L1"
+      },
+      "severity": "L1",
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M002_12345",
+        "observation://mutation-M002-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M002"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "severity",
+        "severity": "L2"
+      },
+      "severity": "L2",
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M003_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M003-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M003"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "severity",
+        "severity": "L3"
+      },
+      "severity": "L3",
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 1,
+      "evidence_references": [
+        "ground-truth://ground_truth_M004_12345",
+        "observation://mutation-M004-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M004"
+      ],
+      "numerator": 1,
+      "run_count": 1,
+      "scope": {
+        "level": "severity",
+        "severity": "L4"
+      },
+      "severity": "L4",
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 2,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "true alarms / total alarms",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "AlarmPrecision",
+      "mutation_ids": [
+        "M005",
+        "M006"
+      ],
+      "numerator": 2,
+      "run_count": 2,
+      "scope": {
+        "level": "severity",
+        "severity": "L5"
+      },
+      "severity": "L5",
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 2,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "correctly refused high-risk events / high-risk events",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "UnsafeRefusalRate",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 2,
+      "run_count": 6,
+      "scope": {
+        "high_risk_definition": "L5 actual failures",
+        "level": "overall",
+        "result_class": "CONTROLLED_HARNESS_RESULT"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 2,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detected L5 failures / L5 actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "L5DetectionRate",
+      "mutation_ids": [
+        "M005",
+        "M006"
+      ],
+      "numerator": 2,
+      "run_count": 2,
+      "scope": {
+        "level": "overall",
+        "result_class": "CONTROLLED_HARNESS_RESULT"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 2,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "L5 runs with quarantine reference",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "L5QuarantineCount",
+      "mutation_ids": [
+        "M005",
+        "M006"
+      ],
+      "numerator": 2,
+      "run_count": 2,
+      "scope": {
+        "level": "overall",
+        "result_class": "CONTROLLED_HARNESS_RESULT"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 2
+    },
+    {
+      "denominator": 2,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "L5 quarantine count / L5 actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "L5QuarantineRate",
+      "mutation_ids": [
+        "M005",
+        "M006"
+      ],
+      "numerator": 2,
+      "run_count": 2,
+      "scope": {
+        "level": "overall",
+        "result_class": "CONTROLLED_HARNESS_RESULT"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 1.0
+    },
+    {
+      "denominator": 2,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "L5 runs marked output eligible",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "L5OutputEligibleCount",
+      "mutation_ids": [
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 2,
+      "scope": {
+        "level": "overall",
+        "result_class": "CONTROLLED_HARNESS_RESULT"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 0
+    },
+    {
+      "denominator": 2,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "L5 actual failures with output_eligible=true",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "L5BadDataShippedCount",
+      "mutation_ids": [
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 2,
+      "scope": {
+        "level": "overall",
+        "result_class": "CONTROLLED_HARNESS_RESULT"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 0
+    },
+    {
+      "denominator": 2,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "L5 bad-data-shipped count / L5 actual failures",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "L5BadDataShippedRate",
+      "mutation_ids": [
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 2,
+      "scope": {
+        "level": "overall",
+        "result_class": "CONTROLLED_HARNESS_RESULT"
+      },
+      "severity": null,
+      "status": "MEASURED",
+      "value": 0.0
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "correct verified repairs / actual failures; no repair path in Mission 009",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "VerifiedRecovery",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 6,
+      "scope": {
+        "level": "overall"
+      },
+      "severity": null,
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "wrong repairs that passed verification / committed repairs; no commits in Mission 009",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "VerificationMissRate",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 6,
+      "scope": {
+        "level": "overall"
+      },
+      "severity": null,
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "wrong candidates proposed / repair attempts; no repair attempts in Mission 009",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "FalseRepairRate",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 6,
+      "scope": {
+        "level": "overall"
+      },
+      "severity": null,
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "commits without required deterministic verification / total commits; no commit denominator in Mission 009",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "BlindCommitRate",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 6,
+      "scope": {
+        "level": "overall"
+      },
+      "severity": null,
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "detection timestamp \u2192 verified commit timestamp; no verified commit path",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "MTTR",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 6,
+      "scope": {
+        "level": "overall"
+      },
+      "severity": null,
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "attributable repair cost / completed repair episodes; no cost ledger",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "CostPerRepair",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 6,
+      "scope": {
+        "level": "overall"
+      },
+      "severity": null,
+      "status": "NOT_APPLICABLE",
+      "value": null
+    },
+    {
+      "denominator": 0,
+      "evidence_references": [
+        "contract://mutation-lab-gpu-price-v1",
+        "evidence://TEST_DOUBLE/mutation/BASELINE/12345",
+        "ground-truth://ground_truth_M001_12345",
+        "ground-truth://ground_truth_M002_12345",
+        "ground-truth://ground_truth_M003_12345",
+        "ground-truth://ground_truth_M004_12345",
+        "ground-truth://ground_truth_M005_12345",
+        "ground-truth://ground_truth_M006_12345",
+        "history://url:https://example.test/gpu-1.price",
+        "observation://mutation-M001-12345",
+        "observation://mutation-M002-12345",
+        "observation://mutation-M003-12345",
+        "observation://mutation-M004-12345",
+        "observation://mutation-M005-12345",
+        "observation://mutation-M006-12345",
+        "semantic://deterministic-invariants"
+      ],
+      "formula": "LLM calls / repair episodes; no LLM repair path",
+      "formula_version": "mission-010-metrics-v1",
+      "generated_at": null,
+      "metric_name": "LLMCallsPerRepair",
+      "mutation_ids": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "numerator": 0,
+      "run_count": 6,
+      "scope": {
+        "level": "overall"
+      },
+      "severity": null,
+      "status": "NOT_APPLICABLE",
+      "value": null
+    }
+  ]
+}

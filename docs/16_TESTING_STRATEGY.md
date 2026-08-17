@@ -102,3 +102,15 @@ The full command `PYTHONPATH=src pytest -q tests/unit tests/integration` passed 
 Mission 009 adds 31 mutation-lab tests for baseline determinism, all six mutation definitions, five severity coverage, two L5 modes, same-seed reproduction, reversibility, explicit ground truth, L1–L4 behavior, L5 schema/type preservation, existing detection consumption, verification/risk/CommitGate integration, TEST_DOUBLE provenance, non-shipment, no benchmark runner, and no provider side effects.
 
 The full command `PYTHONPATH=src pytest -q tests/unit tests/integration` passed with `120 passed`. The V1 harness intentionally does not claim DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, or any 540-run result.
+
+## Mission 010 evidence — 2026-08-17
+
+Mission 010 adds 13 unit tests covering deterministic manifest ordering, required run fields, redaction, immutable `MetricResult`, DetectionRate, AlarmPrecision, zero-alarm `NOT_APPLICABLE`, per-severity and per-mutation scopes, L5 detection/quarantine/output-eligibility/bad-data-shipped safety, mutation severity versus detector severity, traceability to evidence references, no fake recovery or verification-miss result, no fake blind-commit result, and byte-stable metric JSON.
+
+The generator creates a six-run controlled harness manifest and metric report from immutable Mission 009 records with fixed timestamps and zero synthetic benchmark scaling. The generated output labels itself `CONTROLLED_HARNESS_RESULT`; it does not claim production behavior or the full benchmark. Recovery, verification-miss, false-repair, blind-commit, MTTR, cost, and LLM-call metrics are asserted as `NOT_APPLICABLE` because their required denominators are absent. L5 bad-data-shipped count is asserted as 0/2 within this controlled harness only.
+
+The full repository test command remains the release validation command:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```

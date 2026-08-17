@@ -90,3 +90,11 @@ Mission 009 implements only the controlled mutation mechanism and six-scenario v
 The harness drives existing Observation, Detection, Verification, RiskGovernor, CommitGate, and QuarantineLedger boundaries. It records immutable `MutationGroundTruth` and `MutationRun` records with seed, fixture version, timing, references, provenance, detected flags, outcomes, and explicit absent/future-stage fields. The mutation lab—not candidate output—supplies expected truth.
 
 The current V1 has six mutation scenarios, all five severity levels, and two L5 silent-corruption modes. It is not benchmark-complete and must not be reported as a measured benchmark.
+
+## Mission 010 measurement-infrastructure boundary — 2026-08-17
+
+Mission 010 adds deterministic measurement infrastructure over immutable Mission 009 `MutationRun` records. The export preserves run identity, mutation and severity, seed, fixture and truth references, provenance, detector outcome, verification/risk/CommitGate fields, output eligibility, quarantine linkage, timing, timestamps, and evidence references. The export is redacted through the existing audit-store mechanism and orders records deterministically.
+
+The Mission 010 calculator reports canonical formulas overall, by L1–L5 where meaningful, and by mutation ID. Ground truth is read only from `MutationGroundTruth`; actual failure state is never inferred from AEGIS output. Zero denominators return `NOT_APPLICABLE`, not measured zero. The generated artifacts are the machine-readable manifest/report under `experiments/` and the human-readable report at `docs/generated/mission_010_metrics.md`.
+
+The current generated dataset contains the six Mission 009 V1 scenarios and is explicitly a **CONTROLLED_HARNESS_RESULT**. It is not the benchmark floor: no ten trials per class, baseline comparison, model freeze, 540-run execution, production claim, or hackathon headline metric is made. Benchmark scaling remains a later mission after this infrastructure is reviewed.

@@ -16,7 +16,7 @@ from enum import Enum
 from typing import Any, Mapping, Protocol, Sequence
 
 from .audit_store import _to_jsonable
-from .baseline_participants import BaselineAStaticExtractor, BaselineBConfiguration, BaselineBUnavailable, baseline_b_model_call
+from .baseline_participants import BaselineAStaticExtractor, BaselineBConfiguration, BaselineBUnavailable, apply_first_candidate, baseline_b_model_call
 from .benchmark_config import BenchmarkConfig, BaselineSpec, ValidationResult, validate_config
 from .immutability import freeze_mapping
 from .mutation_lab import MutationLab, MutationRun, MutationSeverity
@@ -191,11 +191,22 @@ class ParticipantRunEvidence:
     artifact_refs: tuple[str, ...]
     provenance: str
     state: RunnerState = RunnerState.COMPLETED
+    candidate_received: bool | str = NOT_APPLICABLE
+    candidate_selected: bool | str = NOT_APPLICABLE
+    candidate_accepted: bool | str = NOT_APPLICABLE
+    candidate: Any = NOT_APPLICABLE
+    candidate_application: Mapping[str, Any] | str = NOT_APPLICABLE
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "timeout_policy", freeze_mapping(self.timeout_policy))
         object.__setattr__(self, "retry_policy", freeze_mapping(self.retry_policy))
         object.__setattr__(self, "timing_ms", freeze_mapping(self.timing_ms))
+        if isinstance(self.candidate, Mapping):
+            object.__setattr__(self, "candidate", freeze_mapping(self.candidate))
+        elif isinstance(self.candidate, (list, tuple)):
+            object.__setattr__(self, "candidate", tuple(self.candidate))
+        if isinstance(self.candidate_application, Mapping):
+            object.__setattr__(self, "candidate_application", freeze_mapping(self.candidate_application))
         object.__setattr__(self, "evidence_refs", tuple(dict.fromkeys(self.evidence_refs)))
         object.__setattr__(self, "artifact_refs", tuple(dict.fromkeys(self.artifact_refs)))
 
@@ -580,7 +591,31 @@ class BaselineBAdapter(_BaseAdapter):
         )
         artifact = f"{prepared.input.artifact_root}/{prepared.input.artifact_name}"
         unavailable = isinstance(model_result, BaselineBUnavailable)
-        failure_state = model_result.reason if unavailable else "MODEL_CANDIDATE_RECEIVED_NOT_EXECUTED"
+        if unavailable:
+            candidate_execution = None
+            failure_state = model_result.reason
+            candidate_received = False
+            candidate_selected = False
+            candidate_accepted = False
+            candidate = NOT_APPLICABLE
+            candidate_application = NOT_APPLICABLE
+            output_eligible: bool | str = NOT_APPLICABLE
+        else:
+            candidate_execution = apply_first_candidate(self.configuration, model_result, case.mutated.fixture)
+            failure_state = candidate_execution.failure_state
+            candidate_received = candidate_execution.candidate_received
+            candidate_selected = candidate_execution.candidate_selected
+            candidate_accepted = candidate_execution.candidate_accepted
+            candidate = candidate_execution.candidate
+            candidate_application = candidate_execution.application or NOT_APPLICABLE
+            output_eligible = candidate_accepted
+        evidence_refs = [prepared.input.ground_truth_reference, f"{artifact}#model-output"]
+        if candidate_received:
+            evidence_refs.append(f"{artifact}#candidate-received")
+        if candidate_selected:
+            evidence_refs.append(f"{artifact}#candidate-selected")
+        if candidate_accepted:
+            evidence_refs.append(f"{artifact}#candidate-accepted")
         return ParticipantRunEvidence(
             participant_id=self.participant_id,
             run_id=prepared.input.run_id,
@@ -600,14 +635,19 @@ class BaselineBAdapter(_BaseAdapter):
             detected=NOT_APPLICABLE,
             verification_status=NOT_APPLICABLE,
             risk_decision=NOT_APPLICABLE,
-            output_eligible=NOT_APPLICABLE,
+            output_eligible=output_eligible,
             failure_state=failure_state,
             timing_ms={"collection": 0, "model": 0, "total": 0},
             cost=NOT_APPLICABLE,
             llm_calls=0 if unavailable else 1,
-            evidence_refs=(prepared.input.ground_truth_reference, f"{artifact}#model-output"),
+            evidence_refs=tuple(evidence_refs),
             artifact_refs=(artifact,),
             provenance=self.configuration.provenance,
+            candidate_received=candidate_received,
+            candidate_selected=candidate_selected,
+            candidate_accepted=candidate_accepted,
+            candidate=candidate,
+            candidate_application=candidate_application,
         )
 
 

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import dataclass
 from typing import Any, Callable, Mapping
 
@@ -125,6 +127,73 @@ class BaselineBUnavailable:
     model_id: str
     model_revision: str
     reason: str = "MODEL_CALL_NOT_EXECUTED_IN_VALIDATION_ONLY_MISSION"
+
+
+@dataclass(frozen=True)
+class BaselineBCandidateExecution:
+    candidate_received: bool
+    candidate_selected: bool
+    candidate_accepted: bool
+    candidate: Any
+    candidate_count: int
+    application: Mapping[str, Any] | None
+    failure_state: str
+
+
+def _candidate_payloads(model_result: Mapping[str, Any]) -> tuple[Any, ...]:
+    candidates = model_result.get("candidates")
+    if isinstance(candidates, list):
+        return tuple(candidates)
+    if "candidate" in model_result:
+        return (model_result["candidate"],)
+    return ()
+
+
+def apply_first_candidate(
+    configuration: BaselineBConfiguration,
+    model_result: Mapping[str, Any],
+    fixture: StagingFixture,
+) -> BaselineBCandidateExecution:
+    """Select and accept one candidate through a safe TEST_DOUBLE boundary.
+
+    This representation records the naive first-candidate policy without
+    executing arbitrary model-generated code. The application contract only
+    hashes/records the candidate and validates the immutable fixture identity;
+    correctness remains an evaluator concern for a later benchmark.
+    """
+
+    candidates = _candidate_payloads(model_result)
+    received = bool(candidates)
+    if not received:
+        return BaselineBCandidateExecution(False, False, False, "NOT_APPLICABLE", 0, None, "MODEL_CANDIDATE_NOT_RECEIVED")
+    selected = configuration.candidate_policy == "FIRST_CANDIDATE" and configuration.max_candidates == 1
+    candidate = candidates[0]
+    if not selected:
+        return BaselineBCandidateExecution(True, False, False, candidate, len(candidates), None, "CANDIDATE_POLICY_NOT_EXECUTABLE")
+    try:
+        candidate_bytes = json.dumps(candidate, sort_keys=True, separators=(",", ":"), default=str).encode("utf-8")
+        if fixture.fixture_id != "gpu-price-staging" or fixture.fixture_version != "1":
+            raise ValueError("unexpected TEST_DOUBLE fixture identity")
+        application = {
+            "application_mode": "SAFE_TEST_DOUBLE_BOUNDARY",
+            "candidate_sha256": hashlib.sha256(candidate_bytes).hexdigest(),
+            "candidate_index": 0,
+            "candidate_count_seen": len(candidates),
+            "fixture_id": fixture.fixture_id,
+            "fixture_version": fixture.fixture_version,
+            "normalized_record_count": len(fixture.records),
+            "generated_code_executed": False,
+            "aegis_verification_invoked": False,
+            "risk_governor_invoked": False,
+            "commit_gate_invoked": False,
+            "quarantine_invoked": False,
+            "watch_invoked": False,
+            "rollback_invoked": False,
+        }
+        accepted = configuration.auto_accept_first_candidate is True
+        return BaselineBCandidateExecution(True, True, accepted, candidate, len(candidates), application, "COMPLETED" if accepted else "CANDIDATE_NOT_AUTO_ACCEPTED")
+    except (TypeError, ValueError) as exc:
+        return BaselineBCandidateExecution(True, True, False, candidate, len(candidates), None, f"FAILED_CANDIDATE_APPLICATION:{exc}")
 
 
 ModelCaller = Callable[[str, str], Mapping[str, Any]]

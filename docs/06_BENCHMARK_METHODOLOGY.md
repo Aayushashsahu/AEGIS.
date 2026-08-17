@@ -182,3 +182,12 @@ Mission 018 repaired only the future Mission 016 preflight/smoke boundary. The a
 The repaired preflight expects Baseline A and Baseline B revision `0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47` and AEGIS revision `7de2bc65ed9eeb9f4abd24017543f3f366990738`. It uses the new deterministic future run ID `mission_016_floor_59a11e27a71f`, while preserving `benchmarks/runs/mission_016_floor_f48ec5c5792b` as immutable historical STOPPED_PREFLIGHT evidence. A pre-existing corrected run directory remains a fail-closed collision.
 
 Mission 018 did not run the repaired preflight entry point, the Baseline B smoke test, Gemini, Bright Data, healing, approval, commit, rollback, benchmark, or metric calculation. Focused tests exercise the normal validation-only runner boundary and assert the expected corrected `READY_TO_EXECUTE` state without creating run or result artifacts.
+
+
+## Mission 019 — Baseline B smoke-pass, benchmark still deferred
+
+Mission 019 traced and repaired the Baseline B first-candidate contract. The prior adapter recorded a returned candidate as `MODEL_CANDIDATE_RECEIVED_NOT_EXECUTED` with `output_eligible=NOT_APPLICABLE`; the corrected adapter now records explicit candidate receipt, index-0 selection, bounded acceptance, raw candidate evidence, and `failure_state=COMPLETED` / `output_eligible=true` only after the safe TEST_DOUBLE application contract succeeds.
+
+The authorized corrected preflight passed, and the real `BASELINE_B_EXECUTION_READINESS_SMOKE` returned `PASS` with `first_candidate_policy_executable=true`. The smoke used the frozen `gemini-3.6-flash` model and exact prompts, disabled tools, no runtime ground-truth content, no AEGIS verification/risk/CommitGate controls, and one provider operation. The safe application boundary never executed generated code; it recorded candidate digest and fixture identity only.
+
+The entry point records `BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK`. No 180-run trial, additional benchmark trial, Bright Data call, healing, approval, production commit, rollback, or metric calculation occurred. The frozen Mission 017 configuration and historical Mission 015–018 artifacts remain unchanged. The smoke result is readiness evidence, not a benchmark result or correctness claim.

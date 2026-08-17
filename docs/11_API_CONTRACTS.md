@@ -136,3 +136,21 @@ Read access is separated from mutation commands. Collection and repair commands 
 ## External API boundary
 
 Bright Data routes, CLI verbs, authentication, response formats, healing triggers, approval operations, and version semantics are documented only as adapter interfaces until verified. The adapter exposes AEGIS-normalized operations such as `collect`, `heal`, `poll`, `inspect`, `approve_if_authorized`, and `resolve_known_good`; the underlying provider call is recorded in the integration evidence.
+
+## Mission 003 — Diagnosis and RepairRequest boundary
+
+Mission 003 adds the following provider-neutral internal operations without executing healing:
+
+| Purpose | Operation | Side effect | State impact |
+| --- | --- | --- | --- |
+| Diagnose detection | `diagnose(context: DiagnosisContext) -> Diagnosis | None` | Creates an immutable diagnosis record in memory | Detection evidence → `CREATED` or no diagnosis when healthy |
+| Build repair intent | `build_repair_request(diagnosis, observation, contract) -> RepairRequest` | Creates an immutable repair request | Diagnosis `CREATED` → `REPAIR_REQUESTED` intent |
+| Request healing boundary | `request_healing(repair_request) -> RepairAttemptHandle` | Mission 003 test boundary only; no provider call | Acknowledgement remains `REQUESTED`; execution is false |
+
+`DiagnosisContext` accepts only an immutable Observation, immutable DetectionResult, ExtractionContract, detection ID, correlation ID, and explicit evidence references. It does not inspect arbitrary provider logs. `RepairRequest` is provider-neutral and describes what must be restored, not the provider implementation method.
+
+A RepairRequest preserves affected fields, the extraction contract, target input, evidence references, known invariants, unaffected fields, mutation context when supplied, provenance, and a timestamp. It cannot contain provider endpoints, tokens, CLI commands, approval authority, or commit authority.
+
+Mission 003 does not add candidate, verification, risk, approval, commit, rollback, watch, or memory operations. The furthest reachable state is `REPAIR_REQUESTED`; no request can transition into `COMMITTED`.
+
+The model diagnostician seam is an injected structured backend that returns typed `failure_class`, qualitative `certainty`, affected fields, and rationale. It is not required for tests and cannot authorize provider operations.

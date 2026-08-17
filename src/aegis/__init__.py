@@ -1,8 +1,28 @@
-"""AEGIS Mission 002: collection, immutable observation, and detection."""
+"""AEGIS Mission 003: collection, observation, detection, diagnosis, and repair request."""
 
 from .adapter import AdapterError, BrightDataCliAdapter, CommandResult
 from .contracts import default_extraction_contract
 from .detection import evaluate_detection
+from .diagnosis import (
+    Diagnosis,
+    DiagnosisCertainty,
+    DiagnosisContext,
+    DiagnosisProvenance,
+    DiagnosisStatus,
+    DeterministicDiagnostician,
+    FailureClass,
+    HealingRequester,
+    NoExecutionRepairBoundary,
+    RepairAttemptHandle,
+    RepairAttemptState,
+    RepairBoundaryProvenance,
+    RepairRequest,
+    RepairRequestStatus,
+    StructuredModelDiagnostician,
+    TestDoubleDiagnostician,
+    build_repair_request,
+    diagnose_deterministically,
+)
 from .models import (
     CollectionHandle,
     CollectionMode,
@@ -33,10 +53,28 @@ __all__ = [
     "DetectionResult",
     "DetectionSignal",
     "DeterministicBrightDataTestDouble",
+    "Diagnosis",
+    "DiagnosisCertainty",
+    "DiagnosisContext",
+    "DiagnosisProvenance",
+    "DiagnosisStatus",
+    "DeterministicDiagnostician",
     "evaluate_detection",
     "ExtractionContract",
+    "FailureClass",
     "FieldContract",
+    "HealingRequester",
+    "NoExecutionRepairBoundary",
     "Observation",
     "ProviderProvenance",
+    "RepairAttemptHandle",
+    "RepairAttemptState",
+    "RepairBoundaryProvenance",
+    "RepairRequest",
+    "RepairRequestStatus",
+    "StructuredModelDiagnostician",
+    "TestDoubleDiagnostician",
     "TestDoubleScenario",
+    "build_repair_request",
+    "diagnose_deterministically",
 ]

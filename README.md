@@ -71,14 +71,14 @@ The primary artifact is a deterministic two-minute recorded video. It opens with
 
 ## Quick start
 
-Mission 002 implements the first vertical slice: a narrow Bright Data CLI adapter seam, asynchronous collection state snapshots, immutable untrusted Observations, a typed ExtractionContract, deterministic schema/statistical/semantic detection, and a clearly labeled `TEST_DOUBLE` path. Healing, candidate verification, risk decisions, rollback, memory, benchmarking, and UI remain out of scope for this mission.
+Mission 003 extends the stable first vertical slice through bounded Diagnosis and provider-neutral RepairRequest creation. The repository now contains the Mission 002 collection/observation/detection path plus deterministic diagnosis, qualitative certainty, evidence/provenance propagation, a structured model seam, and an explicitly non-executing healing boundary. Bright Data healing, candidate verification, risk decisions, approval, commit, rollback, memory, benchmarking, and UI remain out of scope.
 
 ```bash
 cd AEGIS
 PYTHONPATH=src pytest -q tests/unit tests/integration
 ```
 
-The live Bright Data artifact from Mission 001 is converted into an untrusted Observation by `tests/integration/test_mission001_artifact_to_observation.py`. The provider adapter uses injected command execution so tests do not require credentials or provider credits. Implementation agents must first read [`docs/00_PROJECT_INFO.md`](docs/00_PROJECT_INFO.md), [`docs/04_REQUIREMENTS.md`](docs/04_REQUIREMENTS.md), and [`docs/09_AGENT_OPERATING_CONTRACT.md`](docs/09_AGENT_OPERATING_CONTRACT.md). They must not invent platform capabilities, measured results, endpoints, or schema behavior.
+The recorded Bright Data artifact from Mission 001 is tested through `Observation → DetectionResult → Diagnosis → RepairRequest` by `tests/integration/test_mission003_recorded_artifact.py`; it does not call Bright Data or claim a live healing result. The provider adapter and diagnosis seams use injected/local execution so tests do not require credentials or provider credits. Implementation agents must first read [`docs/00_PROJECT_INFO.md`](docs/00_PROJECT_INFO.md), [`docs/04_REQUIREMENTS.md`](docs/04_REQUIREMENTS.md), and [`docs/09_AGENT_OPERATING_CONTRACT.md`](docs/09_AGENT_OPERATING_CONTRACT.md). They must not invent platform capabilities, measured results, endpoints, or schema behavior.
 
 ## Repository structure
 
@@ -89,13 +89,13 @@ experiments/       Day-1 spikes and experiment records
 mutations/         Controlled mutation fixtures and manifests
 benchmarks/        Frozen baselines, runs, and reports
 scripts/           Reproducible commands and operational tooling
-src/               Mission 002 collection/observation/detection implementation
-tests/             Mission 002 unit and integration tests
+src/               Mission 002–003 collection through repair-request implementation
+tests/             Mission 002–003 unit and integration tests
 ```
 
 ## Limitations and open decisions
 
-The repository does not claim a completed healing API integration, candidate verification, risk governor, rollback, recovery rate, benchmark result, or production deployment. Mission 002 uses the Bright Data CLI path verified in Mission 001 only as an adapter boundary and preserves the provider output as untrusted. Provider-native version/rollback, raw response access, WARC availability, and exact LLM configuration remain open decisions tracked in [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
+The repository does not claim executed healing, candidate verification, approval, risk-governed commit, rollback, recovery rate, benchmark results, or production deployment. Mission 003 preserves provider output as untrusted, classifies known detection evidence deterministically, and stops at `REPAIR_REQUESTED`; the no-execution boundary cannot activate provider state. Provider-native version/rollback, raw response access, WARC availability, and exact LLM configuration remain open decisions tracked in [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
 
 ## AI usage disclosure
 

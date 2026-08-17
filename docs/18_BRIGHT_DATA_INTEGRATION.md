@@ -128,3 +128,16 @@ Mission 002 implements the smallest compatible adapter boundary from the verifie
 | Test double | VERIFIED in local implementation | `DeterministicBrightDataTestDouble` is explicitly labeled `TEST_DOUBLE`; it never proves provider capability. |
 
 The recorded Mission 001 output is intentionally not treated as healthy merely because it is structured JSON. The integration test converts it to an untrusted Observation and detects missing contract-required fields. This is a safety result, not a new live-provider claim.
+
+## Mission 003 provider boundary — 2026-08-17
+
+Mission 003 does not execute Bright Data healing. It introduces a provider-neutral `HealingRequester` protocol and `RepairAttemptHandle` acknowledgement so Mission 004 can connect the already verified CLI path without leaking provider details into domain records.
+
+| Capability | Status | Evidence / limitation |
+| --- | --- | --- |
+| Convert DetectionResult into repair intent | VERIFIED in local implementation | `src/aegis/diagnosis.py`; immutable Diagnosis and RepairRequest preserve evidence, provenance, contract, and affected fields. |
+| Provider-neutral healing seam | VERIFIED in local implementation | `HealingRequester.request_healing`; `NoExecutionRepairBoundary` returns `execution_started=False` and no provider operation reference. |
+| Bright Data healing execution in Mission 003 | NOT EXECUTED | Deliberately deferred to Mission 004; no new provider capability claim is made. |
+| Candidate retrieval/verification/approval/commit | UNKNOWN / DEFERRED | Mission 001 labels remain unchanged; Mission 003 cannot reach these states. |
+
+A future provider adapter must translate `RepairRequest` into a documented provider operation, preserve request hashes and evidence, poll asynchronously, and return an untrusted candidate envelope. It must not authorize AEGIS verification, risk, or commit decisions.

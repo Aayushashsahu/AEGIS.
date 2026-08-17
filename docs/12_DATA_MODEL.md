@@ -91,3 +91,18 @@ BenchmarkRun 1──N MetricResult
 ## Retention and deletion
 
 Benchmark raw runs, mutation truth, safety failures, and submission artifacts must be retained through final review. Secrets, transient provider tokens, and unnecessary personal data must never enter the model. If a retention policy requires deletion, delete only according to an approved policy while preserving aggregate audit references and documenting the deletion.
+
+## Mission 003 logical additions — Diagnosis and RepairRequest
+
+Mission 003 adds the following immutable logical records without changing the existing lifecycle authority:
+
+| Entity | Required fields | Lifecycle / safety boundary |
+| --- | --- | --- |
+| `DiagnosisContext` | `observation`, `detection`, `contract`, `detection_id`, `evidence_refs`, `correlation_id` | Typed input only; arbitrary provider logs are excluded. |
+| `Diagnosis` | `diagnosis_id`, `observation_id`, `detection_id`, `correlation_id`, `failure_class`, `candidate_classes`, `severity`, `affected_fields`, `evidence_references`, `detector_provenance`, `rationale`, `certainty`, `diagnosis_provenance`, `timestamp`, `status` | `CREATED → REPAIR_REQUESTED`; no candidate or commit transition. |
+| `RepairRequest` | `repair_request_id`, `collector_reference`, `observation_id`, `diagnosis_id`, `detection_id`, `correlation_id`, `affected_fields`, `failure_class`, `severity`, `extraction_contract`, `evidence_references`, `target_input`, `repair_objective`, `constraints`, `mutation_context`, `provenance`, `timestamp`, `status` | Terminal Mission 003 intent state `REPAIR_REQUESTED`; provider-neutral and immutable. |
+| `RepairAttemptHandle` | `attempt_id`, `repair_request_id`, `status`, `provenance`, `provider_operation_reference`, `execution_started`, `timestamp` | Mission 003 acknowledgement only; `execution_started` must remain false. |
+
+Certainty is qualitative (`DETERMINED`, `AMBIGUOUS`, `UNKNOWN`) rather than an additive score. Correlated detector signals are not converted into independent confidence weights. Unknown or conflicting patterns preserve bounded candidate classes but select `UNKNOWN`.
+
+The Mission 003 records retain correlation IDs, source detection IDs, evidence references, provider/test-double/model provenance, and timestamps. Physical persistence and append-only audit storage remain open implementation decisions.

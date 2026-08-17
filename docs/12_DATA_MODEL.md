@@ -166,3 +166,15 @@ The watch layer reuses the existing `DetectionResult` and `ExtractionContract`. 
 | `SQLiteAuditStore` | SQLite file or in-memory path, audit table, indexes, schema version | Lightweight local durable implementation; no distributed infrastructure claim. |
 
 Stored payloads are normalized from canonical domain records and redacted before serialization. Read queries return recursively immutable payloads. A correction is a new event referencing the original; no evidence row is edited or deleted. The store supports the event categories produced by Missions 001–007 without replacing the canonical domain models.
+
+## Mission 009 logical additions — Mutation Laboratory V1
+
+| Entity | Required fields | Lifecycle / safety boundary |
+| --- | --- | --- |
+| `StagingFixture` | fixture ID/version, baseline markup, immutable records, metadata | Local deterministic target; no public deployment claim. |
+| `MutatedFixture` | mutation ID, seed, baseline fixture, mutated fixture, mutation metadata | Reversible immutable transformation. |
+| `MutationGroundTruth` | mutation ID, severity, seed, baseline/mutated references, expected correct/corrupted state, affected fields, detector/safety expectations, deterministic metadata, timestamp | Independent ground truth; never inferred from AEGIS output. |
+| `MutationCase` | mutation definition result plus ground truth | Immutable scenario package. |
+| `MutationRun` | run/mutation/seed, collector/observation/detection/verification/risk/ground-truth references, detected flags, outcome, provenance, timing, eligibility, quarantine/evidence refs | Immutable raw run evidence; no output eligibility in V1. |
+
+All six V1 mutation scenarios use `ProviderProvenance.TEST_DOUBLE`. L5 values remain schema-compatible and numeric, while expected truth and verification evidence preserve the semantic distinction.

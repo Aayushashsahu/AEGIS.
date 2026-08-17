@@ -229,3 +229,16 @@ Status: OPEN | RESOLVED | DEFERRED
 | Invariants | No update, delete, evidence mutation, secret persistence, or lifecycle side effect. Corrections are new events referencing prior events. |
 | Evidence | `experiments/AEGIS-MISSION-008-DURABLE-AUDIT-EVIDENCE-STORE.md`; 89 passing unit/integration tests; on-disk reopen durability test. |
 | Status | RESOLVED for local boundary; production deployment, backup, encryption, migrations, and object storage remain OPEN |
+
+## Mission 009 — Mutation Laboratory V1
+
+| Field | Record |
+| --- | --- |
+| Decision ID | OD-009 / Mission 009 |
+| Date | 2026-08-17 |
+| Context | AEGIS needs controlled ground truth to prove detection and safety, especially for valid-looking L5 corruption. |
+| Decision | Add a small deterministic local mutation harness with six scenarios across L1–L5 and two L5 modes. Drive the existing AEGIS pipeline; do not build a parallel detector/verification system or full benchmark. |
+| Ground truth | Immutable `MutationGroundTruth` is created from the clean staging fixture and mutation definition, not candidate output. |
+| Safety | M005 `599 → 29.99` and M006 plausible decoy remain schema/type valid but fail deterministic verification, RiskGovernor, and CommitGate output eligibility. |
+| Provider boundary | All collection is explicit `TEST_DOUBLE`; Bright Data state is not modified and no provider capability is added. |
+| Status | RESOLVED for V1 harness floor; benchmark scaling and metric calculation remain OPEN |

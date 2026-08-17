@@ -234,3 +234,16 @@ Mission 008 adds a provider-neutral infrastructure interface around existing imm
 Convenience appenders cover observations, detections, diagnoses, repair requests, candidates, verification results, risk decisions, commit decisions, quarantine records, watch registrations, watch cycles, watch results, regression events, and evidence references. There is no update, delete, evidence mutation, or lifecycle-execution operation.
 
 The SQLite implementation is a local infrastructure choice, not a provider or production deployment claim. Each event stores an opaque event ID, event type, aggregate/reference ID, correlation ID, UTC timestamp, provenance, schema version, redacted payload, and evidence-reference tuple. Corrections are new events that may reference a prior event ID.
+
+## Mission 009 — Mutation Laboratory V1 contracts
+
+Mission 009 adds provider-neutral local contracts:
+
+| Operation/model | Purpose | Side effect |
+| --- | --- | --- |
+| `MutationLab.apply_mutation(mutation_id, seed)` | Apply one deterministic definition to the clean staging fixture | Returns immutable `MutationCase`; does not modify baseline. |
+| `MutationLab.run(mutation_id, seed)` | Create a TEST_DOUBLE Observation and drive existing detection, verification, risk, and CommitGate boundaries | Returns immutable run/evidence objects; no provider call. |
+| `MutationGroundTruth` | Preserve independent expected correct/corrupted state and safety expectation | Immutable record. |
+| `MutationRun` | Preserve run IDs, references, detected flags, outcome, timing, provenance, and later-stage references | Immutable record; output eligibility is always false in V1. |
+
+Mutation definitions are provider-neutral and must not embed Bright Data behavior. The harness uses existing `evaluate_detection`, `verify_candidate`, `RiskGovernor`, `CommitGate`, and `QuarantineLedger` rather than parallel implementations.

@@ -81,3 +81,9 @@ With no watch cycles, the metrics are `NOT_APPLICABLE`. After controlled fixture
 ## Mission 008 evidence boundary — 2026-08-17
 
 Mission 008 persists metric-relevant evidence references and lifecycle events but does not calculate or report benchmark metrics. Future metric calculation may query immutable audit events by aggregate, correlation, event type, timestamp, and per-severity payload scope. Missing production or mutation-lab denominators remain `NOT_APPLICABLE`; persistence of an event is not measurement of a reliability outcome.
+
+## Mission 009 mutation-lab hooks — 2026-08-17
+
+Mission 009 provides immutable `MutationRun` fields needed for later DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, and BlindCommitRate calculations. It records detected-by-existing-detection separately from the combined detected outcome so L5 cases can show valid schema/type output that is caught by deterministic verification.
+
+No metric result is published. The V1 harness has no benchmark denominator and no 540-run execution. Future values must be calculated from immutable mutation-run artifacts overall and by L1–L5; zero denominators remain `NOT_APPLICABLE`.

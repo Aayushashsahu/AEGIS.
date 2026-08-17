@@ -80,3 +80,20 @@ A run is a safety success if bad data is prevented from shipment, even if the fi
 ## Mutation acceptance and failure criteria
 
 A mutation is accepted into the benchmark only when its injection is deterministic under the recorded seed, the fixture remains valid for the intended scenario, ground truth is independently encoded from the extraction selector, and a reviewer can explain why the change is realistic. A mutation fails qualification when its expected output is ambiguous, the injector changes more than its declared class, or the fixture cannot be reset to a clean version.
+
+## Mission 009 V1 mutation lab — 2026-08-17
+
+Mission 009 freezes a deterministic V1 floor with six local staging mutations and known ground truth. The fixture is `gpu-price-staging` version `1`, with canonical `price=599` for `gpu-1`, and all collection provenance is `TEST_DOUBLE`.
+
+| ID | Severity | Mutation | Expected detector/safety behavior |
+| --- | --- | --- | --- |
+| M001 | L1 | Rename irrelevant CSS class token | Data remains correct; no alarm expected. |
+| M002 | L2 | Remove required `availability` field | Schema alarm; reject/block. |
+| M003 | L3 | Set `price=-599` | Semantic/statistical alarm; reject/block. |
+| M004 | L4 | Drop complete deterministic page result | Row-count alarm; reject/block incomplete output. |
+| M005 | L5 | Swap `price=599` to `29.99` | Schema/type remain valid; verification against history, semantic expectation, and independent ground truth fails; reject/quarantine. |
+| M006 | L5 | Replace price with deterministic plausible decoy | Schema/type remain valid; verification fails against ground truth; reject/quarantine. |
+
+Each run records mutation ID, severity, baseline and mutated fixture references, expected correct/corrupted state, affected fields, detector expectation, safety expectation, seed, fixture version, mechanism, and metadata. `MutationGroundTruth` is generated independently from the AEGIS candidate output. Each `MutatedFixture` is reversible to the immutable baseline.
+
+The L5 protocol is demonstrated with `M005`: `price=29.99` is valid JSON, schema-compatible, and numeric, while deterministic verification identifies disagreement with the known `price=599` truth. Risk/commit boundaries block output eligibility. This is a harness safety proof, not a benchmark result.

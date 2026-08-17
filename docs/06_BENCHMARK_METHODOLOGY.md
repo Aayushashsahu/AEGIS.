@@ -82,3 +82,11 @@ These are required command shapes, not claims that the scripts already exist.
 ## Invalid benchmark conditions
 
 A run is invalid if a baseline changes after freeze, a seed is missing, a mutation is not reset, a provider substitutes an unrecorded model, a timeout/retry policy differs without being recorded, ground truth is derived from the candidate output, or raw artifacts are missing. Invalid runs may be retained for audit but cannot support headline claims.
+
+## Mission 009 V1 harness boundary — 2026-08-17
+
+Mission 009 implements only the controlled mutation mechanism and six-scenario validation floor. It uses a local static fixture and `TEST_DOUBLE` collection provenance; it does not claim Bright Data behavior or implement the benchmark runner, baselines, pinned model configuration, ten trials per class, or 540 runs.
+
+The harness drives existing Observation, Detection, Verification, RiskGovernor, CommitGate, and QuarantineLedger boundaries. It records immutable `MutationGroundTruth` and `MutationRun` records with seed, fixture version, timing, references, provenance, detected flags, outcomes, and explicit absent/future-stage fields. The mutation lab—not candidate output—supplies expected truth.
+
+The current V1 has six mutation scenarios, all five severity levels, and two L5 silent-corruption modes. It is not benchmark-complete and must not be reported as a measured benchmark.

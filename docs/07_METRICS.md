@@ -113,3 +113,9 @@ Mission 012 produces normalized raw participant evidence and planned-run manifes
 Common normalization preserves `detected`, `verification_status`, `risk_decision`, `output_eligible`, `failure_state`, latency, cost, LLM-call count, evidence references, and provenance. For Baseline A and Baseline B, AEGIS-only fields are `NOT_APPLICABLE`; they are not converted into synthetic passes, failures, or safety equivalents. The runner records `metric_results_generated=0`, and any future metric calculation must consume raw participant evidence plus independent `MutationGroundTruth` through the Mission 010 calculator downstream.
 
 The Mission 012 dry run reports `BLOCKED_NOT_READY` because the frozen participant slots are not benchmark-ready. This is a readiness state, not a benchmark result. No DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, LLM-call, or comparative result is published.
+
+## Mission 013 participant freeze and metric-integrity boundary — 2026-08-17
+
+Mission 013 does not add or modify a metric formula. Mission 010 remains the sole metric authority, with `metric_formula_version=mission-010-metrics-v1`. Participant metadata validation and readiness promotion emit status/check/evidence records only; they do not calculate DetectionRate, AlarmPrecision, recovery, verification-miss, false-repair, refusal, BlindCommitRate, cost, or LLM-call metrics.
+
+The participant-freeze artifact records `metric_results_generated=0`. Its fairness check confirms that all three participant inputs use the same M005, seed `12345`, fixture/evaluator metadata, and `ground_truth_runtime_payload=NOT_PROVIDED`. Any future promoted participant configuration changes the benchmark configuration hash and must be recomputed before raw evidence is collected. No benchmark result is published by Mission 013.

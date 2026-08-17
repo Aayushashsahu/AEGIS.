@@ -306,3 +306,23 @@ The normalized common evidence fields are `participant_id`, `run_id`, `mutation_
 `BenchmarkRunner.dry_run()` returns `VALIDATION_ONLY`, `BLOCKED_NOT_READY`, or `INVALID`. At Mission 012 start, the frozen slots produce `BLOCKED_NOT_READY`: Baseline A has a valid contract but a `NOT_READY` slot, Baseline B lacks owner-approved model/prompt/implementation/configuration values, and AEGIS has a TEST_DOUBLE normalization contract but is `NOT_READY_FOR_BENCHMARK`. The runner still constructs the deterministic 18-step plan and never substitutes AEGIS for a missing baseline.
 
 No `approve`, production `commit`, provider activation, provider rollback, metric calculation, or automatic execution method is exposed by the dry-run boundary. An explicit `execute_one` method exists only as a later-run boundary and first checks freeze and participant readiness; it is never called by validation-only mode.
+
+## Mission 013 — Human-reviewed participant freeze and readiness promotion
+
+Mission 013 adds immutable review/promotion records and extends the runner’s readiness boundary:
+
+| Operation/model | Purpose | Side effect |
+| --- | --- | --- |
+| `ParticipantFreezeProposal` | Hold complete participant metadata and a deterministic participant configuration hash | None; missing values remain placeholders |
+| `OwnerReviewDecision` | Record explicit owner/reviewer approval, rationale, timestamp, and correlation ID | None |
+| `validate_participant_proposal` | Fail-closed completeness and participant-hash validation for Baseline A, Baseline B, or AEGIS | None |
+| `promote_participant` | Convert one explicitly reviewed `NOT_READY` proposal into a new immutable READY `BaselineSpec` | No benchmark/provider execution; prior records remain unchanged |
+| `apply_promotions` | Return a new benchmark configuration with promoted specs and a regenerated canonical configuration hash | None; old config is not mutated |
+| `ReadinessPromotion` | Immutable `NOT_READY → READY` evidence record | Append-only evidence |
+| `RunnerDryRunStatus.READY_TO_EXECUTE` | Indicate all participant metadata and freeze checks pass in planning-only mode | Still `execution_authorized=false`; it does not launch runs |
+
+The participant hash covers participant ID, implementation revision, configuration, timeout/retry policies, output normalization, provenance, artifact schema, execution policy, verification policy, and commit policy. `BenchmarkConfig` includes non-empty participant metadata in its canonical hash payload. Changing metadata while retaining the old Mission 011 hash makes `validate_config` invalid; applying a reviewed promotion returns a new frozen configuration hash.
+
+Baseline B promotion requires explicit model/provider, exact system and repair prompts, sampling/max-output/tools settings, timeout/retry policy, and first-candidate policy. No missing model or prompt is selected automatically. AEGIS promotion requires unchanged safety policy and Mission 010 compatibility. A participant marked READY without valid reviewed metadata is rejected by adapter readiness.
+
+The actual Mission 013 artifact contains no promotions because owner approval was not provided. The current `--dry-run` remains `BLOCKED_NOT_READY`. If all three slots are later promoted and the resulting configuration is frozen, the same side-effect-free runner can return `READY_TO_EXECUTE`; it still emits zero run/metric/provider counts and requires a separate explicit execution authorization boundary.

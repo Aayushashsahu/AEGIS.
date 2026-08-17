@@ -221,3 +221,17 @@ Mission 012 adds participant and planned-run records without creating a second m
 | `RunnerDryRunResult` | status, validation/freeze/readiness/fixture/seed checks, plan, expected counts, zero execution counters, metric availability, execution authorization | `BLOCKED_NOT_READY` is a safety/readiness outcome, not a benchmark result |
 
 The deterministic run ID and artifact name are derived only from participant ID, mutation ID, seed, and frozen configuration hash. Planned artifacts point under the Mission 011 artifact root but Mission 012 creates no run/result files and no fake output.
+
+## Mission 013 logical additions — participant metadata freeze and readiness promotion
+
+Mission 013 adds immutable review and promotion records without introducing benchmark results or mutating prior configuration history.
+
+| Record | Required fields | Safety and reproducibility boundary |
+| --- | --- | --- |
+| `ParticipantFreezeProposal` | participant ID/status, implementation revision, complete participant configuration, timeout/retry, normalization, provenance, artifact schema, execution/verification/commit policies, participant hash | Missing or unapproved values remain explicit placeholders; no model or prompt substitution |
+| `OwnerReviewDecision` | participant ID, approval flag, owner, reviewer, rationale, reviewed timestamp, correlation ID | Promotion requires explicit approval; rejected review cannot promote |
+| `ParticipantFreezeValidation` | participant ID, READY/NOT_READY/INVALID status, provided/computed participant hashes, checks, errors, warnings | Fail-closed completeness and hash validation |
+| `ReadinessPromotion` | participant ID, prior/new status, implementation revision, participant hash, rationale, reviewer/owner, timestamp, correlation ID | Append-only `NOT_READY → READY` evidence; prior history is not mutated |
+| `PromotionResult` | promoted immutable `BaselineSpec`, validation, and promotion evidence | No execution or result payload |
+
+For an approved promotion, `apply_promotions` returns a new immutable `BenchmarkConfig` and regenerates the canonical configuration hash. The Mission 011 hash remains active in Mission 013 because no owner-approved promotion was supplied. The runner accepts `READY_TO_EXECUTE` only when all three participant adapters validate their reviewed metadata; the status still authorizes no execution and produces no metric result.

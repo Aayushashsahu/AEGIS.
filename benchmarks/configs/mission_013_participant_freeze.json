@@ -1,0 +1,985 @@
+{
+  "artifact_version": "mission-013-participant-freeze-v1",
+  "benchmark_runs_executed": 0,
+  "dry_run_status": "BLOCKED_NOT_READY",
+  "execution_authorized": false,
+  "fairness_check": {
+    "ground_truth_runtime_payload": "NOT_PROVIDED",
+    "mutation_id": "M005",
+    "participants": [
+      "BASELINE_A",
+      "BASELINE_B",
+      "AEGIS"
+    ],
+    "seed": 12345,
+    "status": "PASS"
+  },
+  "healing_operations_executed": 0,
+  "metric_results_generated": 0,
+  "mission": "MISSION_013",
+  "new_configuration_hash": "NOT_GENERATED",
+  "owner_review_status": "NOT_PROVIDED",
+  "participant_change_invalidates_old_hash": true,
+  "participant_proposals": {
+    "AEGIS": {
+      "artifact_schema": "NOT_READY",
+      "commit_policy": "COMMIT_GATE_REQUIRED; NO_DRY_RUN_COMMIT",
+      "configuration": {
+        "artifact_schema": "NOT_READY",
+        "benchmark_configuration_hash": "NOT_READY",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration": {
+          "status": "NOT_READY"
+        },
+        "description": "AEGIS lifecycle with deterministic verification, risk governor, commit gate, quarantine, and watch boundaries.",
+        "deterministic_test_double": true,
+        "fixture_version": "1",
+        "metric_formula_version": "mission-010-metrics-v1",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "output_normalization_policy": "NOT_READY",
+        "participant_adapter": "aegis.benchmark_runner.AegisAdapter",
+        "provenance": "TEST_DOUBLE",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "safety_policy": "UNCHANGED; VERIFICATION_RISK_COMMIT_GATE_REQUIRED",
+        "seeds": [
+          12345
+        ],
+        "timeout_policy": {}
+      },
+      "configuration_hash": "NOT_READY",
+      "execution_policy": "FULL_LIFECYCLE_DEFINED_BUT_NOT_EXECUTED",
+      "implementation_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "output_normalization_policy": "NOT_READY",
+      "participant_id": "AEGIS",
+      "prior_status": "NOT_READY",
+      "provenance": "TEST_DOUBLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "timeout_policy": {},
+      "verification_policy": "MISSION_010_DETERMINISTIC_CALCULATOR_AND_EXISTING_GATES"
+    },
+    "BASELINE_A": {
+      "artifact_schema": "NOT_READY",
+      "commit_policy": "NOT_APPLICABLE_BASELINE_NO_COMMIT",
+      "configuration": {
+        "aegis_verification": "NOT_USED",
+        "artifact_schema": "NOT_READY",
+        "commit_gate": "NOT_USED",
+        "configuration": {
+          "status": "NOT_READY"
+        },
+        "description": "Static selector extraction without healing or AEGIS verification.",
+        "extraction_implementation": "NOT_READY",
+        "healing": "NOT_USED",
+        "output_normalization_policy": "NOT_READY",
+        "provenance": "TEST_DOUBLE",
+        "quarantine": "NOT_USED",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "NONE"
+        },
+        "risk_governor": "NOT_USED",
+        "rollback": "NOT_USED",
+        "timeout_policy": {},
+        "watch": "NOT_USED"
+      },
+      "configuration_hash": "NOT_READY",
+      "execution_policy": "SINGLE_PASS_NO_HEALING",
+      "implementation_revision": "NOT_READY",
+      "output_normalization_policy": "NOT_READY",
+      "participant_id": "BASELINE_A",
+      "prior_status": "NOT_READY",
+      "provenance": "TEST_DOUBLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "NONE"
+      },
+      "timeout_policy": {},
+      "verification_policy": "NOT_APPLICABLE_BASELINE_NO_VERIFICATION"
+    },
+    "BASELINE_B": {
+      "artifact_schema": "NOT_READY",
+      "commit_policy": "FIRST_CANDIDATE_POLICY_DEFINED_BUT_NOT_EXECUTED",
+      "configuration": {
+        "artifact_schema": "NOT_READY",
+        "configuration": {
+          "status": "NOT_READY"
+        },
+        "description": "Naive LLM repair baseline; configuration slot only, no model or prompt is frozen in Mission 011.",
+        "first_candidate_policy": "FIRST_CANDIDATE_POLICY_DEFINED_BUT_NOT_EXECUTED",
+        "max_output": "TBD",
+        "model_identifier": "TBD",
+        "output_normalization_policy": "NOT_READY",
+        "provenance": "TEST_DOUBLE",
+        "provider": "TBD",
+        "repair_prompt_template": "TBD",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "sampling_configuration": "TBD",
+        "system_prompt": "TBD",
+        "timeout_policy": {},
+        "tools_permitted": "TBD"
+      },
+      "configuration_hash": "NOT_READY",
+      "execution_policy": "SINGLE_CANDIDATE_POLICY_DEFINED_BUT_NOT_EXECUTED",
+      "implementation_revision": "NOT_READY",
+      "output_normalization_policy": "NOT_READY",
+      "participant_id": "BASELINE_B",
+      "prior_status": "NOT_READY",
+      "provenance": "TEST_DOUBLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "timeout_policy": {},
+      "verification_policy": "NO_AEGIS_VERIFICATION"
+    }
+  },
+  "participant_validations": {
+    "AEGIS": {
+      "checks": {
+        "artifact_schema": "FAIL",
+        "benchmark_configuration_hash": "FAIL",
+        "code_revision": "PASS",
+        "commit_policy": "PASS",
+        "deterministic_test_double": "PASS",
+        "execution_policy": "PASS",
+        "fixture_version": "PASS",
+        "implementation_revision": "PASS",
+        "metric_formula_version": "PASS",
+        "mutation_class_ids": "PASS",
+        "output_normalization_policy": "FAIL",
+        "participant_adapter": "PASS",
+        "participant_hash": "FAIL",
+        "provenance": "PASS",
+        "retry_policy": "PASS",
+        "safety_policy": "PASS",
+        "seeds": "PASS",
+        "timeout_policy": "FAIL",
+        "verification_policy": "PASS"
+      },
+      "computed_configuration_hash": "f20d56918c93b94e1518add7a3502448fce49ab8008957a494477e882517df15",
+      "errors": [
+        "missing artifact_schema",
+        "missing benchmark_configuration_hash",
+        "missing output_normalization_policy",
+        "missing timeout_policy",
+        "participant configuration hash does not match frozen metadata"
+      ],
+      "participant_configuration_hash": "NOT_READY",
+      "participant_id": "AEGIS",
+      "status": "NOT_READY",
+      "warnings": [
+        "missing or unapproved participant metadata remains explicit; no substitution is permitted"
+      ]
+    },
+    "BASELINE_A": {
+      "checks": {
+        "aegis_verification": "PASS",
+        "artifact_schema": "FAIL",
+        "commit_gate": "PASS",
+        "commit_policy": "PASS",
+        "configuration": "FAIL",
+        "execution_policy": "PASS",
+        "extraction_implementation": "FAIL",
+        "healing": "PASS",
+        "implementation_revision": "FAIL",
+        "output_normalization_policy": "FAIL",
+        "participant_hash": "FAIL",
+        "provenance": "PASS",
+        "quarantine": "PASS",
+        "retry_policy": "PASS",
+        "risk_governor": "PASS",
+        "rollback": "PASS",
+        "timeout_policy": "FAIL",
+        "verification_policy": "PASS",
+        "watch": "PASS"
+      },
+      "computed_configuration_hash": "8ace4f78cfcd7c7b87d02871c3447cd55444b2eae1304e4dbaa344f5c4bdadd1",
+      "errors": [
+        "missing artifact_schema",
+        "missing configuration",
+        "missing extraction_implementation",
+        "missing implementation_revision",
+        "missing output_normalization_policy",
+        "missing timeout_policy",
+        "participant configuration hash does not match frozen metadata"
+      ],
+      "participant_configuration_hash": "NOT_READY",
+      "participant_id": "BASELINE_A",
+      "status": "NOT_READY",
+      "warnings": [
+        "missing or unapproved participant metadata remains explicit; no substitution is permitted"
+      ]
+    },
+    "BASELINE_B": {
+      "checks": {
+        "artifact_schema": "FAIL",
+        "commit_policy": "PASS",
+        "configuration": "FAIL",
+        "execution_policy": "PASS",
+        "first_candidate_policy": "PASS",
+        "implementation_revision": "FAIL",
+        "max_output": "FAIL",
+        "model_identifier": "FAIL",
+        "output_normalization_policy": "FAIL",
+        "participant_hash": "FAIL",
+        "provenance": "PASS",
+        "provider": "FAIL",
+        "repair_prompt_template": "FAIL",
+        "retry_policy": "PASS",
+        "sampling_configuration": "FAIL",
+        "system_prompt": "FAIL",
+        "timeout_policy": "FAIL",
+        "tools_permitted": "FAIL",
+        "verification_policy": "PASS"
+      },
+      "computed_configuration_hash": "dde09e446a4a91348baeed2928d909fdefd696d6e1041f793da56c6b63c814ad",
+      "errors": [
+        "missing artifact_schema",
+        "missing configuration",
+        "missing implementation_revision",
+        "missing max_output",
+        "missing model_identifier",
+        "missing output_normalization_policy",
+        "missing provider",
+        "missing repair_prompt_template",
+        "missing sampling_configuration",
+        "missing system_prompt",
+        "missing timeout_policy",
+        "missing tools_permitted",
+        "participant configuration hash does not match frozen metadata"
+      ],
+      "participant_configuration_hash": "NOT_READY",
+      "participant_id": "BASELINE_B",
+      "status": "NOT_READY",
+      "warnings": [
+        "missing or unapproved participant metadata remains explicit; no substitution is permitted"
+      ]
+    }
+  },
+  "promotion_status": "NOT_PERFORMED",
+  "provider_operations_executed": 0,
+  "readiness_transitions": [],
+  "runner_dry_run": {
+    "benchmark_runs_executed": 0,
+    "execution_authorized": false,
+    "expected_run_count": 18,
+    "fixture_checks": {
+      "M001": "PASS",
+      "M002": "PASS",
+      "M003": "PASS",
+      "M004": "PASS",
+      "M005": "PASS",
+      "M006": "PASS"
+    },
+    "freeze_validation": {
+      "checks": {
+        "baseline_configuration_hashes": "PASS",
+        "code_revision": "PASS",
+        "configuration_hash": "PASS",
+        "fixture_version": "PASS",
+        "metric_formula_version": "PASS",
+        "mutation_class_ids": "PASS",
+        "mutation_severity": "PASS",
+        "retry_policy": "PASS",
+        "seeds": "PASS",
+        "timeout_policy": "PASS"
+      },
+      "errors": [],
+      "valid": true
+    },
+    "generated_at": null,
+    "healing_operations_executed": 0,
+    "metric_calculator_available": true,
+    "metric_results_generated": 0,
+    "mutation_count": 6,
+    "participant_count": 3,
+    "participant_readiness": {
+      "AEGIS": {
+        "benchmark_ready": false,
+        "checks": {
+          "commit_gate": "PASS",
+          "detection": "PASS",
+          "metric_calculator": "AVAILABLE_INTERFACE_ONLY",
+          "mutation_coverage": "PASS",
+          "normalization": "PASS",
+          "risk": "PASS",
+          "test_double_provenance": "PASS",
+          "verification": "PASS"
+        },
+        "contract_ready": true,
+        "errors": [
+          "AEGIS benchmark slot is NOT_READY_FOR_BENCHMARK"
+        ],
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "AEGIS",
+        "participant_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "provenance": "TEST_DOUBLE",
+        "status": "NOT_READY_FOR_BENCHMARK",
+        "warnings": [
+          "TEST_DOUBLE lifecycle normalization is available; benchmark execution remains blocked."
+        ]
+      },
+      "BASELINE_A": {
+        "benchmark_ready": false,
+        "checks": {
+          "aegis_detection": "NOT_USED",
+          "aegis_verification": "NOT_USED",
+          "artifact_format": "PASS",
+          "commit_gate": "NOT_USED",
+          "mutation_coverage": "PASS",
+          "normalization": "PASS",
+          "provenance": "PASS_TEST_DOUBLE",
+          "retry_policy": "PASS",
+          "risk_governor": "NOT_USED",
+          "timeout_policy": "PASS"
+        },
+        "contract_ready": true,
+        "errors": [
+          "frozen baseline slot is NOT_READY"
+        ],
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_A",
+        "participant_revision": "NOT_READY",
+        "provenance": "TEST_DOUBLE",
+        "status": "NOT_READY",
+        "warnings": [
+          "Baseline A has no healing, AEGIS verification, RiskGovernor, or CommitGate path."
+        ]
+      },
+      "BASELINE_B": {
+        "benchmark_ready": false,
+        "checks": {
+          "aegis_verification": "NOT_USED",
+          "commit_gate": "NOT_USED",
+          "configuration_hash": "FAIL",
+          "execution_policy": "PASS",
+          "implementation_revision": "FAIL",
+          "model_configuration": "PASS",
+          "model_id": "FAIL",
+          "prompt_revision": "FAIL",
+          "provenance": "PASS_TEST_DOUBLE",
+          "retry_policy": "PASS",
+          "risk_governor": "NOT_USED"
+        },
+        "contract_ready": false,
+        "errors": [
+          "missing model_id",
+          "missing prompt_revision",
+          "missing implementation_revision",
+          "missing configuration_hash"
+        ],
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_B",
+        "participant_revision": "NOT_READY",
+        "provenance": "TEST_DOUBLE",
+        "status": "NOT_READY",
+        "warnings": [
+          "Baseline B cannot choose a model, prompt, or first-candidate policy automatically."
+        ]
+      }
+    },
+    "plan": [
+      {
+        "artifact_name": "baseline_a__m001__seed-12345__041cd0ed4eb6.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M001/12345",
+        "mutation_id": "M001",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_A",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_a_m001_12345_041cd0ed4eb6a479",
+        "seed": 12345,
+        "severity": "L1",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_a__m002__seed-12345__f636d6c696a4.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M002/12345",
+        "mutation_id": "M002",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_A",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_a_m002_12345_f636d6c696a47713",
+        "seed": 12345,
+        "severity": "L2",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_a__m003__seed-12345__f6fbc21f3439.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M003/12345",
+        "mutation_id": "M003",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_A",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_a_m003_12345_f6fbc21f3439be91",
+        "seed": 12345,
+        "severity": "L3",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_a__m004__seed-12345__bda191214bb9.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M004/12345",
+        "mutation_id": "M004",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_A",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_a_m004_12345_bda191214bb99093",
+        "seed": 12345,
+        "severity": "L4",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_a__m005__seed-12345__bf9146716b7b.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M005/12345",
+        "mutation_id": "M005",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_A",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_a_m005_12345_bf9146716b7bf5dc",
+        "seed": 12345,
+        "severity": "L5",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_a__m006__seed-12345__668f9934d5d2.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M006/12345",
+        "mutation_id": "M006",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_A",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_a_m006_12345_668f9934d5d20309",
+        "seed": 12345,
+        "severity": "L5",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_b__m001__seed-12345__9c28793d88f5.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M001/12345",
+        "mutation_id": "M001",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_B",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_b_m001_12345_9c28793d88f55675",
+        "seed": 12345,
+        "severity": "L1",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_b__m002__seed-12345__e462b89677dc.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M002/12345",
+        "mutation_id": "M002",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_B",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_b_m002_12345_e462b89677dc5d1d",
+        "seed": 12345,
+        "severity": "L2",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_b__m003__seed-12345__96d0c0c2f6cf.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M003/12345",
+        "mutation_id": "M003",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_B",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_b_m003_12345_96d0c0c2f6cfdbf8",
+        "seed": 12345,
+        "severity": "L3",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_b__m004__seed-12345__4d1789884d06.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M004/12345",
+        "mutation_id": "M004",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_B",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_b_m004_12345_4d1789884d060f05",
+        "seed": 12345,
+        "severity": "L4",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_b__m005__seed-12345__da5487e5b423.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M005/12345",
+        "mutation_id": "M005",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_B",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_b_m005_12345_da5487e5b423d51b",
+        "seed": 12345,
+        "severity": "L5",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "baseline_b__m006__seed-12345__bee1a490822e.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M006/12345",
+        "mutation_id": "M006",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "BASELINE_B",
+        "participant_revision": "NOT_READY",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_baseline_b_m006_12345_bee1a490822e3129",
+        "seed": 12345,
+        "severity": "L5",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "aegis__m001__seed-12345__42c90f5f18c9.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M001/12345",
+        "mutation_id": "M001",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "AEGIS",
+        "participant_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_aegis_m001_12345_42c90f5f18c900c8",
+        "seed": 12345,
+        "severity": "L1",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "aegis__m002__seed-12345__6d16df873f8e.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M002/12345",
+        "mutation_id": "M002",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "AEGIS",
+        "participant_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_aegis_m002_12345_6d16df873f8e3ae1",
+        "seed": 12345,
+        "severity": "L2",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "aegis__m003__seed-12345__6e0bc75d70d7.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M003/12345",
+        "mutation_id": "M003",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "AEGIS",
+        "participant_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_aegis_m003_12345_6e0bc75d70d7bbbd",
+        "seed": 12345,
+        "severity": "L3",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "aegis__m004__seed-12345__4402706d0dfb.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M004/12345",
+        "mutation_id": "M004",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "AEGIS",
+        "participant_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_aegis_m004_12345_4402706d0dfb560a",
+        "seed": 12345,
+        "severity": "L4",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "aegis__m005__seed-12345__88a8ee5c7f69.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M005/12345",
+        "mutation_id": "M005",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "AEGIS",
+        "participant_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_aegis_m005_12345_88a8ee5c7f69c2e0",
+        "seed": 12345,
+        "severity": "L5",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      },
+      {
+        "artifact_name": "aegis__m006__seed-12345__ab550fef13f2.json",
+        "artifact_root": "benchmarks/results/mission_011_validation_floor",
+        "benchmark_id": "aegis-benchmark-floor",
+        "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+        "fixture_version": "1",
+        "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M006/12345",
+        "mutation_id": "M006",
+        "participant_configuration_hash": "NOT_READY",
+        "participant_id": "AEGIS",
+        "participant_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "run_id": "benchmark_run_aegis_m006_12345_ab550fef13f20b42",
+        "seed": 12345,
+        "severity": "L5",
+        "state": "PLANNED",
+        "timeout_policy": {
+          "collection_ms": 300000,
+          "healing_ms": 900000,
+          "polling_ms": 300000,
+          "total_ms": 1800000,
+          "verification_ms": 30000
+        }
+      }
+    ],
+    "provider_operations_executed": 0,
+    "seed_checks": {
+      "M001:12345": "PASS",
+      "M002:12345": "PASS",
+      "M003:12345": "PASS",
+      "M004:12345": "PASS",
+      "M005:12345": "PASS",
+      "M006:12345": "PASS"
+    },
+    "seed_count": 1,
+    "status": "BLOCKED_NOT_READY",
+    "validation": {
+      "checks": {
+        "artifact_contract": "PASS",
+        "artifact_root": "PASS",
+        "baseline_slots": "PASS",
+        "code_revision": "PASS",
+        "configuration_hash": "PASS",
+        "fixture": "PASS",
+        "metric_formula_version": "PASS",
+        "model_metadata": "PASS",
+        "mutation_set": "PASS",
+        "mutation_severity": "PASS",
+        "policies": "PASS",
+        "repository_state": "PASS",
+        "retry_policy": "PASS",
+        "seed_policy": "PASS",
+        "timeout_policy": "PASS"
+      },
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "errors": [],
+      "status": "VALID",
+      "warnings": [
+        "one or more baseline slots are NOT_READY/UNKNOWN; dry-run is not benchmark execution readiness",
+        "repository is not clean; no benchmark execution is authorized by this dry-run"
+      ]
+    }
+  },
+  "source_configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+  "validation_only": true
+}

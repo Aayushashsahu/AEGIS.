@@ -291,3 +291,20 @@ Status: OPEN | RESOLVED | DEFERRED
 | Dry run | The runner returns `BLOCKED_NOT_READY`, constructs 18 deterministic `PLANNED` manifests, and reports zero benchmark/provider/healing operations and zero metric results. It does not substitute AEGIS for either missing baseline. |
 | Metric integrity | Mission 010 remains the sole metric calculator; Mission 012 emits raw evidence/plan records only. |
 | Status | RESOLVED for the common contract and validation-only runner; participant readiness and benchmark execution remain OPEN |
+
+## Mission 013 — Human-reviewed participant freeze and readiness promotion
+
+| Field | Record |
+| --- | --- |
+| Decision ID | OD-013 / Mission 013 |
+| Date | 2026-08-17 |
+| Context | Mission 012 established the common participant contract, but all three participant slots remained not benchmark-ready. Mission 013 requires human-reviewed metadata before readiness promotion. |
+| Decision | Add immutable participant proposals, explicit owner-review decisions, participant configuration hashes, fail-closed completeness checks, append-only readiness-promotion evidence, and a `READY_TO_EXECUTE` planning status that never launches execution. |
+| Baseline A | Static selector extraction only. Healing, AEGIS verification, RiskGovernor, CommitGate, quarantine, watch, and rollback are explicitly `NOT_USED`. No final implementation/configuration approval was supplied, so status remains `NOT_READY`. |
+| Baseline B | Owner decision required for model/provider, exact system and repair prompts, sampling/max-output/tools, timeout/retry, first-candidate policy, implementation revision, and participant hash. No values are selected automatically; status remains `NOT_READY`. |
+| AEGIS | Requires code/fixture/mutation/seed/configuration references, adapter/artifact schema, deterministic TEST_DOUBLE, timeout/retry, provenance, Mission 010 compatibility, and unchanged safety. It remains `NOT_READY` without reviewed participant metadata. |
+| Current review | `owner_review_status=NOT_PROVIDED`; `promotion_status=NOT_PERFORMED`; readiness transitions are empty. This is a deliberate fail-closed result, not a guessed approval. |
+| Hash behavior | Source Mission 011 configuration hash `fdf3b632...` is preserved. Participant metadata changes invalidate that old hash; approved promotion would regenerate a new hash. |
+| Fairness | Same participant-independent mutation, seed, fixture, evaluator reference, trial metadata, timeout, and retry input; runtime ground-truth payload remains `NOT_PROVIDED`. |
+| Dry run | `BLOCKED_NOT_READY`, 18 planned steps, zero benchmark/provider/healing/metric operations, and `execution_authorized=false`. |
+| Status | RESOLVED for promotion workflow and fail-closed validation; owner approvals, readiness promotion, and benchmark execution remain OPEN |

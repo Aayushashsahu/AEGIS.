@@ -140,3 +140,9 @@ PYTHONPATH=src python3 scripts/benchmark_runner.py \
 ```
 
 This command is validation-only. It does not authorize or execute the benchmark.
+
+## Mission 013 evidence — participant freeze and readiness promotion
+
+Mission 013 adds focused tests for incomplete Baseline A/B/AEGIS metadata, Baseline B missing model/prompt/configuration/first-candidate policy, fully frozen participant readiness, explicit owner approval, immutable `NOT_READY → READY` evidence, participant-hash determinism, old configuration-hash invalidation after participant metadata change, code/mutation/seed freeze drift, all-ready `READY_TO_EXECUTE` planning, fairness metadata equality, zero benchmark/provider/healing/metric execution, and no benchmark result artifact claims.
+
+The focused Mission 013 suite passed with `17 passed`. The full repository suite passed with `187 passed`. No owner-approved values were supplied during this mission, so the generated artifact deliberately records no readiness transition and the final dry run remains `BLOCKED_NOT_READY`. `READY_TO_EXECUTE` is covered only with synthetic fully frozen test records and remains validation-only; it never executes a benchmark.

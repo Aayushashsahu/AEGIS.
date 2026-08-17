@@ -235,3 +235,16 @@ Mission 013 adds immutable review and promotion records without introducing benc
 | `PromotionResult` | promoted immutable `BaselineSpec`, validation, and promotion evidence | No execution or result payload |
 
 For an approved promotion, `apply_promotions` returns a new immutable `BenchmarkConfig` and regenerates the canonical configuration hash. The Mission 011 hash remains active in Mission 013 because no owner-approved promotion was supplied. The runner accepts `READY_TO_EXECUTE` only when all three participant adapters validate their reviewed metadata; the status still authorizes no execution and produces no metric result.
+
+## Mission 014 logical additions — owner-input validation
+
+Mission 014 adds immutable validation records for the supplied owner configuration without adding a new benchmark configuration or result record.
+
+| Record | Purpose | Mission 014 result |
+| --- | --- | --- |
+| `ParticipantApprovalValidation` | Preserve exact participant hash/revision text, missing/placeholder fields, exact hard-rule checks, and errors | `BLOCKED_NOT_READY` for all three participants |
+| `OwnerReviewValidation` | Preserve approval flag, reviewer, missing review fields, and errors | `BLOCKED_NOT_READY`; timestamp, rationale, correlation ID, and final hash absent |
+| `FairnessValidation` | Preserve common mutation/seed/fixture/ground-truth/retry/backoff checks and conflicts | PASS for frozen inputs; FAIL for timeout equality |
+| `OwnerApprovedValidationReport` | Preserve source hash, new-hash state, promotion count, and zero execution counters | No promotion; `new_configuration_hash=NOT_GENERATED` |
+
+The supplied owner payload remains an input artifact. Since it does not satisfy the complete promotion contract, no `OwnerReviewDecision`, `ReadinessPromotion`, or new `BenchmarkConfig` is constructed.

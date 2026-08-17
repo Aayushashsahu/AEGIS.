@@ -119,3 +119,9 @@ The Mission 012 dry run reports `BLOCKED_NOT_READY` because the frozen participa
 Mission 013 does not add or modify a metric formula. Mission 010 remains the sole metric authority, with `metric_formula_version=mission-010-metrics-v1`. Participant metadata validation and readiness promotion emit status/check/evidence records only; they do not calculate DetectionRate, AlarmPrecision, recovery, verification-miss, false-repair, refusal, BlindCommitRate, cost, or LLM-call metrics.
 
 The participant-freeze artifact records `metric_results_generated=0`. Its fairness check confirms that all three participant inputs use the same M005, seed `12345`, fixture/evaluator metadata, and `ground_truth_runtime_payload=NOT_PROVIDED`. Any future promoted participant configuration changes the benchmark configuration hash and must be recomputed before raw evidence is collected. No benchmark result is published by Mission 013.
+
+## Mission 014 owner-input validation and metric boundary — 2026-08-17
+
+Mission 014 generated no participant promotions, raw runs, benchmark metrics, or metric results. Mission 010 remains the sole metric authority. The owner-validation artifact records `metric_results_generated=0`, and the unresolved participant revisions/hashes and fairness timeout conflict prevent any `READY_TO_EXECUTE` outcome.
+
+The supplied common metadata passes mutation-set, seed, fixture-version, retry/backoff, and runtime-ground-truth checks. Timeout fairness fails exactly because the owner-supplied values are 30 seconds for Baseline A, 60 seconds for Baseline B, and 300 seconds for AEGIS. The validator reports this conflict rather than averaging, selecting, or rewriting a timeout policy.

@@ -1,0 +1,209 @@
+{
+  "source": "owner-approved-attachment-pasted_content_14.txt",
+  "participants": {
+    "BASELINE_A": {
+      "participant_id": "BASELINE_A",
+      "purpose": "Static selector extraction without healing or AEGIS trust controls.",
+      "provider": {
+        "type": "TEST_DOUBLE",
+        "name": "local-mutation-fixture"
+      },
+      "implementation": {
+        "name": "aegis-baseline-a-static-selector",
+        "revision": "MUST_BE_GENERATED_FROM_THE_FINAL_BASELINE_A_COMMIT",
+        "language": "python",
+        "entrypoint": "BaselineAAdapter"
+      },
+      "extraction": {
+        "strategy": "fixed_selectors",
+        "selector_version": "baseline-a-v1",
+        "schema_version": "gpu-price-schema-v1",
+        "fields": {
+          "title": "CSS_SELECTOR",
+          "price": "CSS_SELECTOR",
+          "availability": "CSS_SELECTOR",
+          "rating": "CSS_SELECTOR",
+          "url": "CSS_SELECTOR"
+        }
+      },
+      "controls": {
+        "healing": "NOT_USED",
+        "llm": "NOT_USED",
+        "aegis_detection": "NOT_USED",
+        "aegis_verification": "NOT_USED",
+        "risk_governor": "NOT_USED",
+        "commit_gate": "NOT_USED",
+        "quarantine": "NOT_USED",
+        "watch": "NOT_USED",
+        "rollback": "NOT_USED"
+      },
+      "execution": {
+        "timeout_seconds": 30,
+        "retry_count": 0,
+        "backoff_seconds": 0
+      },
+      "output": {
+        "normalization": "canonical-participant-run-v1",
+        "artifact_schema": "participant-run-evidence-v1",
+        "provenance": "TEST_DOUBLE"
+      },
+      "benchmark": {
+        "mutation_set": ["M001", "M002", "M003", "M004", "M005", "M006"],
+        "seed": 12345,
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": 1
+      },
+      "cost": {
+        "llm_calls": 0,
+        "provider_cost": 0
+      },
+      "ground_truth": {
+        "runtime_payload": "NOT_PROVIDED"
+      },
+      "participant_config_version": "baseline-a-v1",
+      "participant_hash": "MUST_BE_COMPUTED_AFTER_FINAL_CONFIGURATION_AND_COMMIT_ARE_FROZEN"
+    },
+    "BASELINE_B": {
+      "participant_id": "BASELINE_B",
+      "purpose": "Naive LLM scraper repair using first-candidate acceptance without AEGIS verification.",
+      "provider": {
+        "type": "GOOGLE_GEMINI_API"
+      },
+      "model": {
+        "id": "gemini-3.6-flash",
+        "revision": "stable"
+      },
+      "prompts": {
+        "system_prompt_version": "baseline-b-system-v1",
+        "system_prompt": "You repair a web scraper whose extracted output has changed.\n\nYour job is to modify the scraper so that it restores the expected\nextraction behavior while preserving the requested output schema.\n\nReturn ONLY the repaired scraper code/configuration and a concise\nexplanation of what changed.\n\nDo not discuss verification.\nDo not ask for human approval.\nDo not perform additional validation beyond what is necessary to\nproduce the repaired scraper.\n",
+        "repair_prompt_template_version": "baseline-b-repair-v1",
+        "repair_prompt_template": "Repair the scraper for the following extraction failure.\n\nTARGET:\n{target}\n\nEXPECTED OUTPUT SCHEMA:\n{extraction_contract}\n\nOBSERVED OUTPUT:\n{observed_output}\n\nFAILURE DESCRIPTION:\n{failure_description}\n\nSCRAPER:\n{scraper_source}\n\nProduce the repaired scraper.\n"
+      },
+      "sampling": {
+        "temperature": "NOT_APPLICABLE",
+        "top_p": "NOT_APPLICABLE",
+        "top_k": "NOT_APPLICABLE",
+        "max_output_tokens": 8192
+      },
+      "tools": {
+        "enabled": false
+      },
+      "execution": {
+        "timeout_seconds": 60,
+        "retry_count": 0,
+        "backoff_seconds": 0
+      },
+      "repair_policy": {
+        "candidate_policy": "FIRST_CANDIDATE",
+        "max_candidates": 1,
+        "auto_accept_first_candidate": true
+      },
+      "aegis_controls": {
+        "detection": "NOT_USED",
+        "verification": "NOT_USED",
+        "risk_governor": "NOT_USED",
+        "commit_gate": "NOT_USED",
+        "quarantine": "NOT_USED",
+        "watch": "NOT_USED",
+        "rollback": "NOT_USED",
+        "mutation_ground_truth_runtime_payload": "NOT_USED"
+      },
+      "output": {
+        "normalization": "canonical-participant-run-v1",
+        "artifact_schema": "participant-run-evidence-v1",
+        "provenance": "MODEL_ASSISTED"
+      },
+      "benchmark": {
+        "mutation_set": ["M001", "M002", "M003", "M004", "M005", "M006"],
+        "seed": 12345,
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": 1
+      },
+      "cost": {
+        "llm_calls_per_attempt": 1
+      },
+      "ground_truth": {
+        "runtime_payload": "NOT_PROVIDED"
+      },
+      "implementation": {
+        "name": "aegis-baseline-b-naive-llm",
+        "revision": "MUST_BE_GENERATED_FROM_THE_FINAL_BASELINE_B_COMMIT"
+      },
+      "participant_config_version": "baseline-b-v1",
+      "participant_hash": "MUST_BE_COMPUTED_AFTER_FINAL_CONFIGURATION_AND_COMMIT_ARE_FROZEN"
+    },
+    "AEGIS": {
+      "participant_id": "AEGIS",
+      "purpose": "Full AEGIS reliability lifecycle with detection, diagnosis, repair, verification, risk control, quarantine, commit gate, and watch.",
+      "implementation": {
+        "name": "aegis",
+        "revision": "MUST_USE_THE_FINAL_REVIEWED_AEGIS_BENCHMARK_COMMIT",
+        "benchmark_adapter": "AegisAdapter"
+      },
+      "provider": {
+        "collection_mode": "TEST_DOUBLE",
+        "provenance": "TEST_DOUBLE",
+        "live_bright_data_execution": "NOT_USED_FOR_INITIAL_BENCHMARK"
+      },
+      "mutation_lab": {
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": 1,
+        "mutations": ["M001", "M002", "M003", "M004", "M005", "M006"],
+        "seed": 12345,
+        "ground_truth_runtime_payload": "NOT_PROVIDED"
+      },
+      "lifecycle": {
+        "collection": "USED",
+        "observation": "USED",
+        "detection": "USED",
+        "diagnosis": "USED",
+        "repair_request": "USED",
+        "healing_adapter": "USED_WHEN_AVAILABLE",
+        "candidate": "USED",
+        "verification": "USED",
+        "risk_governor": "USED",
+        "commit_gate": "USED",
+        "quarantine": "USED",
+        "watch": "USED",
+        "rollback": "NOT_EXECUTED_IN_INITIAL_BENCHMARK_IF_PROVIDER_CAPABILITY_REMAINS_UNVERIFIED"
+      },
+      "safety": {
+        "blind_commit_allowed": false,
+        "auto_approve_allowed": false,
+        "verification_bypass_allowed": false,
+        "ground_truth_runtime_access": false,
+        "unsafe_candidate_shipping": false
+      },
+      "execution": {
+        "timeout_seconds": 300,
+        "retry_count": 0,
+        "backoff_seconds": 0
+      },
+      "output": {
+        "normalization": "canonical-participant-run-v1",
+        "artifact_schema": "participant-run-evidence-v1",
+        "provenance": "TEST_DOUBLE"
+      },
+      "metrics": {
+        "calculator": "mission-010-metrics-v1"
+      },
+      "benchmark": {
+        "configuration_version": "aegis-benchmark-v1",
+        "mutation_set": ["M001", "M002", "M003", "M004", "M005", "M006"],
+        "seed": 12345,
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": 1
+      },
+      "participant_config_version": "aegis-benchmark-v1",
+      "participant_hash": "MUST_BE_COMPUTED_AFTER_FINAL_CONFIGURATION_AND_AEGIS_COMMIT_ARE_FROZEN"
+    }
+  },
+  "owner_review": {
+    "approved": true,
+    "reviewer": "PROJECT_OWNER",
+    "approval_timestamp": "NOT_SUPPLIED",
+    "rationale": "NOT_SUPPLIED",
+    "correlation_id": "NOT_SUPPLIED",
+    "approved_configuration_hash": "MUST_BE_COMPUTED_AFTER_FINAL_CONFIGURATION_AND_COMMIT_ARE_FROZEN"
+  }
+}

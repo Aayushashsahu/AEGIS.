@@ -326,3 +326,18 @@ The participant hash covers participant ID, implementation revision, configurati
 Baseline B promotion requires explicit model/provider, exact system and repair prompts, sampling/max-output/tools settings, timeout/retry policy, and first-candidate policy. No missing model or prompt is selected automatically. AEGIS promotion requires unchanged safety policy and Mission 010 compatibility. A participant marked READY without valid reviewed metadata is rejected by adapter readiness.
 
 The actual Mission 013 artifact contains no promotions because owner approval was not provided. The current `--dry-run` remains `BLOCKED_NOT_READY`. If all three slots are later promoted and the resulting configuration is frozen, the same side-effect-free runner can return `READY_TO_EXECUTE`; it still emits zero run/metric/provider counts and requires a separate explicit execution authorization boundary.
+
+## Mission 014 — Owner-approved input validation gate
+
+Mission 014 adds a declarative owner-input validator that preserves supplied participant values and fails closed before promotion:
+
+| Contract | Behavior |
+| --- | --- |
+| `load_owner_payload` | Loads the exact owner-supplied participant configuration; it does not fill placeholders |
+| `validate_owner_configuration` | Validates required fields, exact hard rules, participant hashes, review metadata, and common fairness fields |
+| `ParticipantApprovalValidation` | Records per-participant status, missing fields, placeholder fields, exact checks, participant hash text, and errors |
+| `OwnerReviewValidation` | Requires `approved=true`, reviewer `PROJECT_OWNER`, timestamp, rationale, correlation ID, and approved final configuration hash |
+| `FairnessValidation` | Compares mutation IDs, seed, fixture, ground-truth payload, timeout, retry, and backoff values across participants |
+| `OwnerApprovedValidationReport` | Records blocked/valid status and zero-execution counters without creating promotion or result records |
+
+The supplied input is `BLOCKED_NOT_READY`: all three participant revisions and hashes are unresolved placeholders; owner-review timestamp, rationale, correlation ID, and final hash are not supplied; and timeout values conflict across participants. The validator therefore does not call `promote_participant`, `apply_promotions`, or the benchmark runner. `READY_TO_EXECUTE` is not emitted.

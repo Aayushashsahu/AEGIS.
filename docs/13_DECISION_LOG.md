@@ -308,3 +308,19 @@ Status: OPEN | RESOLVED | DEFERRED
 | Fairness | Same participant-independent mutation, seed, fixture, evaluator reference, trial metadata, timeout, and retry input; runtime ground-truth payload remains `NOT_PROVIDED`. |
 | Dry run | `BLOCKED_NOT_READY`, 18 planned steps, zero benchmark/provider/healing/metric operations, and `execution_authorized=false`. |
 | Status | RESOLVED for promotion workflow and fail-closed validation; owner approvals, readiness promotion, and benchmark execution remain OPEN |
+
+## Mission 014 — Owner-approved input validation result
+
+| Field | Record |
+| --- | --- |
+| Decision ID | OD-014 / owner-input validation |
+| Date | 2026-08-17 |
+| Context | Owner supplied participant configuration values, but revision/hash fields were declared as values to be generated later and review evidence fields were not supplied. |
+| Decision | Validate exact input and fail closed before constructing OwnerReviewDecision, ReadinessPromotion, or a new BenchmarkConfig. |
+| Baseline A | Exact selectors/controls/fixture/seed values pass; implementation revision and participant hash remain unresolved placeholders. |
+| Baseline B | Exact model/prompt/first-candidate/no-AEGIS-control values pass; implementation revision and participant hash remain unresolved placeholders. |
+| AEGIS | Exact TEST_DOUBLE lifecycle/safety/fixture/seed/formula values pass; implementation revision, participant hash, and the AEGIS mutation field mapping require completion. |
+| Owner review | `approved=true` and `reviewer=PROJECT_OWNER` are present, but approval timestamp, rationale, correlation ID, and final approved configuration hash are absent. No fake identity or timestamp is created. |
+| Fairness | Mutation, seed, fixture, runtime-ground-truth, retry, and backoff checks pass. Timeout equality fails: A=30, B=60, AEGIS=300. |
+| Result | `BLOCKED_NOT_READY`; promotions=0; new hash not generated; new-config dry run not run; all execution counters remain zero. |
+| Status | RESOLVED for exact validation; OPEN for owner-supplied final revisions/hashes/review metadata and a common timeout decision |

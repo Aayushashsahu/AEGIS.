@@ -380,3 +380,20 @@ Status: OPEN | RESOLVED | DEFERRED
 **Validation boundary:** Focused Mission 018 tests call `run_preflight()` and the normal validation-only runner boundary, verify corrected `READY_TO_EXECUTE`, and prove the smoke boundary is not invoked. The complete suite is run separately. Mission 018 produces no run or benchmark result artifacts.
 
 **Status:** RESOLVED for the preflight repair; Mission 016 rerun remains a future separately authorized action.
+
+
+## Mission 019 — repair Baseline B first-candidate execution contract
+
+**Decision:** Fix only Baseline B’s execution/readiness representation. Preserve the Mission 017 corrected configuration, frozen prompts/model/policies, M001–M006, seed `12345`, fixture `gpu-price-staging` v1, timeout/retry/backoff values, metric formula, AEGIS controls, and all historical Mission 015–018 artifacts.
+
+**Root cause:** The real Gemini response was successfully captured, but `BaselineBAdapter.run_mutation()` deliberately normalized every available response as `MODEL_CANDIDATE_RECEIVED_NOT_EXECUTED`, used `output_eligible=NOT_APPLICABLE`, and emitted no candidate lifecycle fields. Therefore the smoke condition `failure_state=COMPLETED and output_eligible=true` could never pass even when a candidate was returned.
+
+**Corrected semantics:** Baseline B now records `candidate_received`, `candidate_selected`, and `candidate_accepted` explicitly. It selects only index 0 under the frozen `FIRST_CANDIDATE` policy, accepts only after the bounded safe application contract succeeds, emits `failure_state=COMPLETED` and `output_eligible=true` on success, and preserves `verification_status=NOT_APPLICABLE`, `risk_decision=NOT_APPLICABLE`, `llm_calls=1`, and `provenance=MODEL_ASSISTED`.
+
+**Safety boundary:** The application contract is a deterministic `SAFE_TEST_DOUBLE_BOUNDARY`; it records candidate digest and fixture identity, sets `generated_code_executed=false`, and records no invocation of verification, RiskGovernor, CommitGate, quarantine, watch, or rollback. It does not pass MutationGroundTruth content to the model and does not execute arbitrary generated code. A wrong candidate may be accepted by this intentionally naive baseline; correctness remains a later evaluator question.
+
+**Smoke evidence:** The corrected preflight passed, and the authorized real Gemini `BASELINE_B_EXECUTION_READINESS_SMOKE` returned `status=PASS` with `first_candidate_policy_executable=true`, candidate received/selected/accepted true, bounded application true, exact `gemini-3.6-flash` model, exact prompts, tools disabled, no AEGIS controls, and runtime ground truth `NOT_PROVIDED`. One provider operation was used for this readiness smoke only.
+
+**Execution boundary:** The entry point records `BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK` and returns without activating the 180-run floor. Benchmark runs, healing, approval, production commit, rollback, and metrics remain zero/false.
+
+**Status:** RESOLVED for Baseline B readiness smoke; Mission 016 benchmark execution remains a separate future action and is not started by Mission 019.

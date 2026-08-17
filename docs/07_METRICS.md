@@ -141,3 +141,12 @@ The absolute Mission 015 counters were `benchmark_runs_executed=0`, `provider_op
 Mission 017 corrected only participant revision identity and the immutable benchmark freeze after Mission 016 preflight invalidation. It did not execute participants, calculate metrics, or alter `mission-010-metrics-v1`. The corrected dry-run reports `READY_TO_EXECUTE` as a validation-only state with `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`.
 
 The corrected configuration preserves M001–M006, the canonical severity mapping, seed `12345`, fixture `gpu-price-staging` v1, common 300-second timeout, zero retries, zero backoff, and `ground_truth_runtime_payload=NOT_PROVIDED`. No DetectionRate, AlarmPrecision, L5, recovery, false-repair, commit, cost, latency, or model-call benchmark result is claimed by Mission 017.
+
+
+## Mission 019 — smoke-only metric boundary
+
+Mission 019 repaired Baseline B’s first-candidate execution representation and ran only the authorized execution-readiness smoke. The smoke’s `output_eligible=true` means that Baseline B accepted its first candidate under its intentionally naive policy; it is not a correctness metric, shipment claim, or verified recovery result.
+
+No MutationLab benchmark trial was executed, no metric calculator was invoked, and no Mission 010 formula was changed. The frozen configuration remains hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b`, with M001–M006, seed `12345`, `gpu-price-staging` v1, and `mission-010-metrics-v1` unchanged. Mission 019 therefore publishes no DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, or benchmark L5 result.
+
+Mission 019 counters are `benchmark_runs_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. The one authorized Gemini readiness provider operation is smoke evidence only and is not a benchmark metric denominator.

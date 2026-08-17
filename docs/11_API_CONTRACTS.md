@@ -350,3 +350,14 @@ Mission 015 freezes the common participant contract at `canonical-participant-ru
 The owner-review contract records `approved=true`, `owner=PROJECT_OWNER`, `reviewer=PROJECT_OWNER`, a current UTC review timestamp, a mission rationale, a generated correlation ID, and the computed participant configuration hash. Each participant has an immutable `NOT_READY → READY` promotion record. The benchmark-level timeout policy is frozen in milliseconds at 300000 for collection, healing, polling, verification, and total time; retry is bounded to one attempt with zero backoff.
 
 The new configuration is `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`, and validation reports all three participant slots ready. The runner produces an 18-manifest validation-only plan and `READY_TO_EXECUTE` readiness status without invoking collection, healing, provider, approval, commit, rollback, or metric operations. The persisted dry-run counters remain zero and `execution_authorized=false`.
+
+
+## Mission 019 — Baseline B first-candidate execution contract
+
+Mission 019 extends `ParticipantRunEvidence` with explicit raw Baseline B lifecycle fields: `candidate_received`, `candidate_selected`, `candidate_accepted`, `candidate`, and `candidate_application`. Non-Baseline-B participants retain `NOT_APPLICABLE` defaults for these fields.
+
+For an available model response, Baseline B now applies the frozen `FIRST_CANDIDATE` / `max_candidates=1` / `auto_accept_first_candidate=true` policy explicitly. The first candidate is recorded, selected at index 0, accepted only when the bounded adapter execution contract succeeds, and normalized as `failure_state=COMPLETED`, `output_eligible=true`, `verification_status=NOT_APPLICABLE`, `risk_decision=NOT_APPLICABLE`, `llm_calls=1`, and `provenance=MODEL_ASSISTED`. Additional returned candidates are recorded only through `candidate_count_seen`; they are never selected or accepted.
+
+The application boundary is `SAFE_TEST_DOUBLE_BOUNDARY`. It records a candidate digest and controlled fixture identity, explicitly sets `generated_code_executed=false`, and records that AEGIS verification, RiskGovernor, CommitGate, quarantine, watch, and rollback were not invoked. It does not execute arbitrary generated code and does not receive `MutationGroundTruth` content. `output_eligible=true` means only that Baseline B accepted its first candidate under its naive policy; it is not a correctness or production-commit decision.
+
+Unavailable or malformed model results remain fail-closed as unavailable/failed evidence and never become output eligible. The authorized Mission 019 real smoke produced `BASELINE_B_EXECUTION_READINESS_SMOKE` status `PASS`; the benchmark and metric boundaries remained unused.

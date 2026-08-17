@@ -20,8 +20,8 @@ CORRECTED_CONFIG = ROOT / "benchmarks/configs/mission_017_corrected_frozen_confi
 OLD_CONFIG = ROOT / "benchmarks/configs/mission_015_frozen_config.json"
 OLD_HASH = "f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96"
 CORRECTED_HASH = "59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b"
-ACTUAL_BASELINE_REVISION = "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47"
-ACTUAL_AEGIS_REVISION = "7de2bc65ed9eeb9f4abd24017543f3f366990738"
+ACTUAL_BASELINE_REVISION = "067c06d8d41b2c23a93aebdcc45ac46a2c71351e"
+ACTUAL_AEGIS_REVISION = "067c06d8d41b2c23a93aebdcc45ac46a2c71351e"
 
 
 def _directory_digest(root: Path) -> dict[str, str]:
@@ -57,21 +57,26 @@ def test_corrected_participant_revisions_resolve() -> None:
         assert preflight._revision_matches(revision, preflight.SOURCE_FILES[participant])
 
 
-def test_historical_mission016_directory_is_present_and_untouched() -> None:
+def test_historical_mission016_directory_is_present_and_untouched(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     before = _directory_digest(HISTORICAL_ROOT)
     assert before
-    assert not CORRECTED_ROOT.exists()
+    isolated_root = tmp_path / "corrected-floor"
+    monkeypatch.setattr(preflight, "FLOOR_RUN_ROOT", isolated_root)
+    monkeypatch.setattr(preflight, "SMOKE_ROOT", isolated_root / "baseline_b_execution_readiness_smoke")
     result, _ = preflight.run_preflight()
     assert result.checks["artifact_paths"]["historical_floor_run_preserved"] is True
     assert result.checks["artifact_paths"]["floor_run_absent"] is True
     assert _directory_digest(HISTORICAL_ROOT) == before
-    assert not CORRECTED_ROOT.exists()
+    assert not isolated_root.exists()
 
 
-def test_run_preflight_uses_normal_validation_boundary_and_stops_before_smoke(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_run_preflight_uses_normal_validation_boundary_and_stops_before_smoke(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     def smoke_must_not_run(_config):
         raise AssertionError("Mission 018 must not execute the Baseline B smoke test")
 
+    isolated_root = tmp_path / "corrected-floor"
+    monkeypatch.setattr(preflight, "FLOOR_RUN_ROOT", isolated_root)
+    monkeypatch.setattr(preflight, "SMOKE_ROOT", isolated_root / "baseline_b_execution_readiness_smoke")
     monkeypatch.setattr(preflight, "run_baseline_b_smoke", smoke_must_not_run)
     result, config = preflight.run_preflight()
     assert result.passed is True
@@ -83,17 +88,21 @@ def test_run_preflight_uses_normal_validation_boundary_and_stops_before_smoke(mo
     assert result.checks["dry_run"]["pass"] is True
 
 
-def test_old_config_is_fail_closed_when_substituted(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_old_config_is_fail_closed_when_substituted(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    isolated_root = tmp_path / "old-config-floor"
+    monkeypatch.setattr(preflight, "FLOOR_RUN_ROOT", isolated_root)
+    monkeypatch.setattr(preflight, "SMOKE_ROOT", isolated_root / "baseline_b_execution_readiness_smoke")
     monkeypatch.setattr(preflight, "CONFIG_PATH", OLD_CONFIG)
     result, config = preflight.run_preflight()
     assert config.configuration_hash == OLD_HASH
     assert result.passed is False
     assert any("configuration_hash" in error for error in result.errors)
     assert [spec.implementation_revision for spec in config.baselines if spec.baseline_id in ("BASELINE_A", "BASELINE_B")] == ["0e8bcc4a2c2184cae9a50b291054ec47d83fc895"] * 2
-    assert not CORRECTED_ROOT.exists()
+    assert not isolated_root.exists()
 
 
-def test_mission018_creates_no_run_or_result_artifacts() -> None:
-    assert not CORRECTED_ROOT.exists()
+def test_mission019_smoke_artifact_isolated_from_results_and_reports() -> None:
+    assert CORRECTED_ROOT.exists()
+    assert (CORRECTED_ROOT / "baseline_b_execution_readiness_smoke/smoke.json").exists()
     assert not (ROOT / "benchmarks/results/mission_016_floor_59a11e27a71f").exists()
     assert not (ROOT / "benchmarks/reports/mission_016_floor_59a11e27a71f").exists()

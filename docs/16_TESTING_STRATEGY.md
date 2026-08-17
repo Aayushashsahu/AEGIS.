@@ -190,3 +190,18 @@ The corrected configuration validates successfully, supersedes the Mission 015 c
 Mission 018 adds focused tests for loading the Mission 017 corrected configuration, rejecting the superseded Mission 015 hash as the active configuration, resolving the corrected Baseline A/B/AEGIS revisions, preserving the historical Mission 016 run directory, deterministic corrected run-ID isolation, fail-closed preflight behavior, normal validation-only `READY_TO_EXECUTE` evaluation, and the absence of smoke/run/result side effects.
 
 The focused Mission 018 suite passed with `7 passed`. The tests do not invoke `scripts/mission016_preflight_smoke.py` as a live entry point, do not call Gemini, and do not create the corrected future run directory or benchmark result files. The future smoke boundary remains available only after the corrected preflight passes.
+
+
+## Mission 019 evidence — Baseline B first-candidate execution contract
+
+Mission 019 adds focused tests for explicit candidate receipt, first-candidate selection, acceptance, normalized `COMPLETED` evidence, `output_eligible=true`, `NOT_APPLICABLE` verification/risk, one LLM call, `MODEL_ASSISTED` provenance, `NOT_PROVIDED` runtime ground truth, no AEGIS controls, no provider operation in unit tests, no arbitrary-code execution, unavailable/failed model behavior, first-candidate-only handling, and deterministic injected smoke success.
+
+The focused Mission 019 suite passed with `9 passed`. The complete repository command passed with `227 passed`:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```
+
+The corrected preflight was executed and passed. The authorized real Gemini readiness smoke returned `BASELINE_B_EXECUTION_READINESS_SMOKE` status `PASS` with `first_candidate_policy_executable=true`, explicit candidate received/selected/accepted fields, bounded safe application, exact approved model/prompts, disabled tools, no AEGIS controls, and runtime ground truth `NOT_PROVIDED`. One provider operation was used for this smoke only. The repaired entry point stops with `BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK` and does not activate the 180-run floor.
+
+Mission 019 generated no benchmark trial, healing operation, approval, production commit, rollback, or metric result. Counters remain `benchmark_runs_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`; the smoke-only provider count is recorded separately as `1`.

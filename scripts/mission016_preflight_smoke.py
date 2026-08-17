@@ -23,9 +23,9 @@ EXPECTED_SEED = 12345
 EXPECTED_MUTATIONS = ("M001", "M002", "M003", "M004", "M005", "M006")
 EXPECTED_MODEL = "gemini-3.6-flash"
 EXPECTED_REVISIONS = {
-    "BASELINE_A": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
-    "BASELINE_B": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
-    "AEGIS": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "BASELINE_A": "067c06d8d41b2c23a93aebdcc45ac46a2c71351e",
+    "BASELINE_B": "067c06d8d41b2c23a93aebdcc45ac46a2c71351e",
+    "AEGIS": "067c06d8d41b2c23a93aebdcc45ac46a2c71351e",
 }
 SOURCE_FILES = {
     "BASELINE_A": "src/aegis/baseline_participants.py",
@@ -221,6 +221,11 @@ def run_baseline_b_smoke(config: Any) -> Mapping[str, Any]:
         "evaluator_ground_truth_runtime_payload": "NOT_PROVIDED",
         "model_reachable": False,
         "model_call_produced_candidate": False,
+        "candidate_received": False,
+        "candidate_selected": False,
+        "candidate_accepted": False,
+        "candidate_present_in_raw_evidence": False,
+        "candidate_application_bounded": False,
         "first_candidate_policy_executable": False,
         "normalized_participant_evidence": False,
     }
@@ -260,11 +265,17 @@ def run_baseline_b_smoke(config: Any) -> Mapping[str, Any]:
         checks["model_reachable"] = True
         checks["model_call_produced_candidate"] = bool(captured and _candidate_text(captured[0][2]))
         checks["tools_disabled"] = adapter.configuration.tools_enabled is False
-        checks["aegis_verification_not_invoked"] = evidence.verification_status == "NOT_APPLICABLE"
-        checks["risk_governor_not_invoked"] = evidence.risk_decision == "NOT_APPLICABLE"
-        checks["commit_gate_not_invoked"] = evidence.output_eligible == "NOT_APPLICABLE"
-        checks["normalized_participant_evidence"] = evidence.participant_id == "BASELINE_B" and evidence.provenance == "MODEL_ASSISTED"
-        checks["first_candidate_policy_executable"] = evidence.failure_state == "COMPLETED" and evidence.output_eligible is True
+        application = evidence.candidate_application if isinstance(evidence.candidate_application, Mapping) else {}
+        checks["candidate_received"] = evidence.candidate_received is True
+        checks["candidate_selected"] = evidence.candidate_selected is True
+        checks["candidate_accepted"] = evidence.candidate_accepted is True
+        checks["candidate_present_in_raw_evidence"] = evidence.candidate != "NOT_APPLICABLE"
+        checks["candidate_application_bounded"] = application.get("application_mode") == "SAFE_TEST_DOUBLE_BOUNDARY" and application.get("generated_code_executed") is False
+        checks["aegis_verification_not_invoked"] = evidence.verification_status == "NOT_APPLICABLE" and application.get("aegis_verification_invoked") is False
+        checks["risk_governor_not_invoked"] = evidence.risk_decision == "NOT_APPLICABLE" and application.get("risk_governor_invoked") is False
+        checks["commit_gate_not_invoked"] = application.get("commit_gate_invoked") is False
+        checks["normalized_participant_evidence"] = evidence.participant_id == "BASELINE_B" and evidence.provenance == "MODEL_ASSISTED" and evidence.llm_calls == 1
+        checks["first_candidate_policy_executable"] = evidence.failure_state == "COMPLETED" and evidence.output_eligible is True and evidence.candidate_accepted is True
         prompt_text = "\n".join(item for pair in captured for item in pair[:2])
         checks["no_evaluator_ground_truth_in_prompt"] = "expected_correct_state" not in prompt_text and "expected_corrupted_state" not in prompt_text and "MutationGroundTruth" not in prompt_text
         smoke = {
@@ -313,7 +324,16 @@ def main() -> int:
         write_json(FLOOR_RUN_ROOT / "execution_log.json", {"status": "STOPPED_BASELINE_B_SMOKE", "benchmark_runs_executed": 0, "provider_operations_executed": smoke.get("provider_operation_count", 0), "healing_operations_executed": 0, "metric_results_generated": 0, "execution_authorized": False, "errors": smoke.get("errors", [])})
         print(json.dumps({"status": "STOPPED_BASELINE_B_SMOKE", "errors": smoke.get("errors", []), "checks": smoke.get("checks", {})}, indent=2))
         return 3
-    raise SystemExit("Mission 016 floor executor is not activated by this preflight/smoke boundary")
+    write_json(FLOOR_RUN_ROOT / "execution_log.json", {
+        "status": "BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK",
+        "benchmark_runs_executed": 0,
+        "provider_operations_executed": smoke.get("provider_operation_count", 0),
+        "healing_operations_executed": 0,
+        "metric_results_generated": 0,
+        "execution_authorized": False,
+    })
+    print(json.dumps({"status": "BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK", "smoke_status": smoke["status"], "benchmark_runs_executed": 0}, indent=2))
+    return 0
 
 
 if __name__ == "__main__":

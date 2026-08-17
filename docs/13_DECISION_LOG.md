@@ -324,3 +324,18 @@ Status: OPEN | RESOLVED | DEFERRED
 | Fairness | Mutation, seed, fixture, runtime-ground-truth, retry, and backoff checks pass. Timeout equality fails: A=30, B=60, AEGIS=300. |
 | Result | `BLOCKED_NOT_READY`; promotions=0; new hash not generated; new-config dry run not run; all execution counters remain zero. |
 | Status | RESOLVED for exact validation; OPEN for owner-supplied final revisions/hashes/review metadata and a common timeout decision |
+
+
+## Mission 015 — real participant freeze and validation-only readiness
+
+**Decision:** Finalize the minimum comparative participant set using only the owner-approved values, real implementation revisions, deterministic participant hashes, explicit owner review, and append-only readiness promotion. Do not execute the benchmark in this mission.
+
+**Participants and implementation revisions:** Baseline A uses deterministic fixed-selector extraction at `0e8bcc4a2c2184cae9a50b291054ec47d83fc895`; Baseline B uses the approved `GOOGLE_GEMINI_API` model `gemini-3.6-flash` at stable revision with disabled tools and first-candidate-only behavior at the same committed participant-adapter revision; AEGIS uses the existing TEST_DOUBLE lifecycle adapter at `7de2bc65ed9eeb9f4abd24017543f3f366990738`.
+
+**Participant configuration hashes:** Baseline A `fc95be9ae66b859ab770d23ab46c2ce82dcad645325f833f5fac88959dc3e5d6`; Baseline B `20f90c001f061683c91acc65a2031f07651678041f88db064ad68157084bfb1b`; AEGIS `76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75`. All three hashes were computed from the complete proposal payload and reproduced deterministically.
+
+**Owner review:** Each participant has `approved=true`, `owner=PROJECT_OWNER`, `reviewer=PROJECT_OWNER`, a current UTC approval timestamp, the deterministic mission rationale, a generated UUID correlation ID, and the corresponding participant hash. Each promotion records the immutable transition `NOT_READY → READY`; no historical Mission 013 or Mission 014 record was modified.
+
+**Benchmark configuration:** Starting from the Mission 011 validation floor, Mission 015 replaces the participant slots and applies the common 300-second timeout, zero-retry, zero-backoff policy. The resulting canonical configuration hash is `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`, which differs from the old Mission 011 hash `fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3`. M001–M006, the L1–L5 severity mapping, seed `12345`, fixture `gpu-price-staging` v1, and `mission-010-metrics-v1` remain unchanged.
+
+**Readiness and safety decision:** Participant validation, freeze validation, fairness, and deterministic fixture/seed checks pass. The runner returns `READY_TO_EXECUTE` with 18 planned manifests. This is not authorization to benchmark. The final counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. No provider, healing, approval, commit, rollback, or metric operation was invoked. Mission 016 is not started.

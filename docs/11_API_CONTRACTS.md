@@ -341,3 +341,12 @@ Mission 014 adds a declarative owner-input validator that preserves supplied par
 | `OwnerApprovedValidationReport` | Records blocked/valid status and zero-execution counters without creating promotion or result records |
 
 The supplied input is `BLOCKED_NOT_READY`: all three participant revisions and hashes are unresolved placeholders; owner-review timestamp, rationale, correlation ID, and final hash are not supplied; and timeout values conflict across participants. The validator therefore does not call `promote_participant`, `apply_promotions`, or the benchmark runner. `READY_TO_EXECUTE` is not emitted.
+
+
+## Mission 015 — finalized participant contract and validation-only runner boundary
+
+Mission 015 freezes the common participant contract at `canonical-participant-run-v1` with artifact schema `participant-run-evidence-v1`. Baseline A uses deterministic static-selector extraction with AEGIS-only controls marked `NOT_USED`. Baseline B uses the approved `GOOGLE_GEMINI_API` / `gemini-3.6-flash` configuration with tools disabled and a first-candidate-only policy; when no caller is injected, the model boundary returns an explicit unavailable raw-evidence state rather than silently selecting another provider or model. AEGIS uses the existing `AegisAdapter` TEST_DOUBLE lifecycle and preserves verification, RiskGovernor, CommitGate, quarantine, watch, and rollback boundaries.
+
+The owner-review contract records `approved=true`, `owner=PROJECT_OWNER`, `reviewer=PROJECT_OWNER`, a current UTC review timestamp, a mission rationale, a generated correlation ID, and the computed participant configuration hash. Each participant has an immutable `NOT_READY → READY` promotion record. The benchmark-level timeout policy is frozen in milliseconds at 300000 for collection, healing, polling, verification, and total time; retry is bounded to one attempt with zero backoff.
+
+The new configuration is `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`, and validation reports all three participant slots ready. The runner produces an 18-manifest validation-only plan and `READY_TO_EXECUTE` readiness status without invoking collection, healing, provider, approval, commit, rollback, or metric operations. The persisted dry-run counters remain zero and `execution_authorized=false`.

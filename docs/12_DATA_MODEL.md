@@ -248,3 +248,12 @@ Mission 014 adds immutable validation records for the supplied owner configurati
 | `OwnerApprovedValidationReport` | Preserve source hash, new-hash state, promotion count, and zero execution counters | No promotion; `new_configuration_hash=NOT_GENERATED` |
 
 The supplied owner payload remains an input artifact. Since it does not satisfy the complete promotion contract, no `OwnerReviewDecision`, `ReadinessPromotion`, or new `BenchmarkConfig` is constructed.
+
+
+## Mission 015 logical additions — participant freeze and validation-only evidence
+
+Mission 015 instantiates the participant-freeze records introduced by the existing benchmark model. Each `BaselineSpec` now carries a real implementation revision, deterministic participant configuration hash, status `READY`, execution/retry policy, verification and commit policy, model/prompt metadata where applicable, provenance, and the shared `participant-run-evidence-v1` artifact schema. The corresponding owner-review decision and immutable `NOT_READY → READY` promotion are stored separately from the benchmark configuration so the approval rationale, reviewer, owner, timestamp, correlation ID, and participant hash remain auditable.
+
+The frozen benchmark configuration preserves six mutation IDs (`M001`–`M006`), the canonical L1–L5 mapping, seed `12345`, fixture `gpu-price-staging` v1, and formula version `mission-010-metrics-v1`. All participant timeout metadata uses 300 seconds with zero retries and zero backoff; the benchmark policy stores the equivalent 300000-millisecond values for collection, healing, polling, verification, and total time. The new canonical configuration hash is `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`; the Mission 011 hash is retained only as historical source evidence and is not reused.
+
+`benchmarks/configs/mission_015_frozen_config.json` is the immutable configuration artifact. `benchmarks/configs/mission_015_dry_run.json` contains planned manifests and validation-only status, and `experiments/mission_015_freeze_records.json` contains the owner reviews, participant validation records, promotions, participant specs, fairness result, and zero-execution counters. No benchmark result entity or metric result entity is created by this mission.

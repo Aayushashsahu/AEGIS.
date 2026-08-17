@@ -152,3 +152,18 @@ The focused Mission 013 suite passed with `17 passed`. The full repository suite
 Mission 014 tests preserve the exact owner-supplied fields, detect unresolved implementation revisions and participant hashes for all three participants, require complete owner-review metadata, compare common fairness fields without rewriting participant timeouts, preserve the Mission 011 source hash, and assert zero promotions and zero execution counters.
 
 The focused owner-input validation suite passed with `5 passed`. Because the supplied input is blocked, the new benchmark configuration and `READY_TO_EXECUTE` dry run are intentionally not produced. The full repository suite remains the required final gate before any branch completion.
+
+
+## Mission 015 evidence — participant freeze, fairness, and zero-execution gate
+
+Mission 015 adds dedicated tests for the exact Baseline A fixed-selector configuration, Baseline B `gemini-3.6-flash` stable configuration and no-network unavailable seam, deterministic participant hashes, owner-review records, immutable `NOT_READY → READY` promotions, new configuration-hash generation, Mission 011 hash invalidation, common timeout/retry/backoff parity, AEGIS readiness and normalization, fairness, and the validation-only runner boundary.
+
+The complete release command passed with `207 passed`:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```
+
+The exact CLI validation command also returned `READY_TO_EXECUTE` for the frozen Mission 015 config and produced an 18-manifest plan. This result is intentionally not execution authorization. The safety assertions remained `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. No Bright Data call, model call, healing call, approval, production commit, rollback, or metric calculation was performed.
+
+The final participant and runner artifacts are `benchmarks/configs/mission_015_frozen_config.json`, `benchmarks/configs/mission_015_dry_run.json`, and `experiments/mission_015_freeze_records.json`. The repository remains stopped before benchmark execution and Mission 016.

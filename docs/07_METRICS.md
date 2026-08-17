@@ -125,3 +125,12 @@ The participant-freeze artifact records `metric_results_generated=0`. Its fairne
 Mission 014 generated no participant promotions, raw runs, benchmark metrics, or metric results. Mission 010 remains the sole metric authority. The owner-validation artifact records `metric_results_generated=0`, and the unresolved participant revisions/hashes and fairness timeout conflict prevent any `READY_TO_EXECUTE` outcome.
 
 The supplied common metadata passes mutation-set, seed, fixture-version, retry/backoff, and runtime-ground-truth checks. Timeout fairness fails exactly because the owner-supplied values are 30 seconds for Baseline A, 60 seconds for Baseline B, and 300 seconds for AEGIS. The validator reports this conflict rather than averaging, selecting, or rewriting a timeout policy.
+
+
+## Mission 015 evidence — metric-integrity boundary preserved
+
+Mission 015 finalized participant metadata and a validation-only comparative execution plan but generated no benchmark metrics. The dry run exposed only metric-calculator availability as an interface check; it did not invoke metric calculation and recorded `metric_results_generated=0`. No DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, or LLM-call result is claimed by this mission.
+
+The participant freeze records preserve the common mutation set `M001`–`M006`, seed `12345`, fixture `gpu-price-staging` v1, and formula version `mission-010-metrics-v1`. Any future ground-truth metric remains valid only after an authorized benchmark execution produces immutable raw evidence under the frozen configuration. `READY_TO_EXECUTE` is not a metric result and is not execution authorization.
+
+The absolute Mission 015 counters were `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`.

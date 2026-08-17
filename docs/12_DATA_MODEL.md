@@ -156,3 +156,13 @@ The Mission 006 gate keeps `VerificationStatus`, `RiskDecision`, and `CommitElig
 | `WatchMetricEvent` | event ID, event type, cycle ID, correlation ID, timestamp | Instrumentation only; no benchmark result. |
 
 The watch layer reuses the existing `DetectionResult` and `ExtractionContract`. It does not mutate the input `Observation`. Regression quarantine records are created through the Mission 006 `QuarantineLedger` and preserve the original candidate/verification linkage plus watch-cycle evidence.
+
+## Mission 008 logical additions — Durable audit/evidence
+
+| Entity | Required fields | Lifecycle / safety boundary |
+| --- | --- | --- |
+| `AuditEvent` | event ID, event type, aggregate ID, correlation ID, UTC timestamp, provenance, schema version, redacted payload, evidence references | Immutable envelope; stored append-only. |
+| `AuditStore` | `append_event`, `get_event`, `history`, `current_status` | Provider-neutral persistence/query protocol; no update/delete method. |
+| `SQLiteAuditStore` | SQLite file or in-memory path, audit table, indexes, schema version | Lightweight local durable implementation; no distributed infrastructure claim. |
+
+Stored payloads are normalized from canonical domain records and redacted before serialization. Read queries return recursively immutable payloads. A correction is a new event referencing the original; no evidence row is edited or deleted. The store supports the event categories produced by Missions 001–007 without replacing the canonical domain models.

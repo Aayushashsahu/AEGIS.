@@ -169,3 +169,7 @@ A provider proposal remains untrusted until deterministic verification passes. E
 Mission 007 adds no Bright Data operation. It evaluates later AEGIS observations through the existing deterministic detection boundary and stores local regression/quarantine evidence. Provider-native rollback remains `PARTIALLY VERIFIED by documentation` as recorded in Mission 001; no rollback, activation, approval, or provider mutation is attempted.
 
 The watch registration requires an AEGIS-level eligible commit decision, known-good reference, passing verification, verified candidate, expected contract, and matching correlation. A regression is quarantined locally according to watch policy. Later rollback or re-diagnosis remains a separate mission and cannot be inferred from a watch result.
+
+## Mission 008 provider boundary — 2026-08-17
+
+Mission 008 adds no Bright Data operation. `SQLiteAuditStore` is a provider-neutral AEGIS infrastructure boundary that persists redacted domain/audit envelopes and evidence references. It does not claim provider-native durability, rollback, raw-response access, WARC delivery, approval, activation, or production deployment. Existing Bright Data `UNKNOWN` and `PARTIALLY VERIFIED` labels remain unchanged.

@@ -219,3 +219,18 @@ Mission 007 adds provider-neutral internal operations after a future eligible co
 The watch state boundary is `COMMITTED → WATCHING → HEALTHY/REGRESSION/UNKNOWN`, with `REGRESSION → QUARANTINED` when the watch policy requires it. The watch layer does not repair, re-diagnose, activate, approve, commit, or rollback.
 
 `UNKNOWN` is preserved when required watch evidence is unavailable. The default policy does not quarantine merely because optional evidence is absent. Any serious regression uses the existing `QuarantineLedger`; no second quarantine implementation exists.
+
+## Mission 008 — Durable audit/evidence store boundary
+
+Mission 008 adds a provider-neutral infrastructure interface around existing immutable domain records:
+
+| Purpose | Operation | Side effect | Result |
+| --- | --- | --- | --- |
+| Append evidence event | `AuditStore.append_event(event)` | One immutable SQLite insert | Stored `AuditEvent` |
+| Read event | `get_event(event_id)` | None | Immutable event or `None` |
+| Read history | `history(aggregate_id=?, correlation_id=?, event_type=?)` | None | Ordered immutable event tuple |
+| Read current status | `current_status(aggregate_id)` | None | Read-only status projection |
+
+Convenience appenders cover observations, detections, diagnoses, repair requests, candidates, verification results, risk decisions, commit decisions, quarantine records, watch registrations, watch cycles, watch results, regression events, and evidence references. There is no update, delete, evidence mutation, or lifecycle-execution operation.
+
+The SQLite implementation is a local infrastructure choice, not a provider or production deployment claim. Each event stores an opaque event ID, event type, aggregate/reference ID, correlation ID, UTC timestamp, provenance, schema version, redacted payload, and evidence-reference tuple. Corrections are new events that may reference a prior event ID.

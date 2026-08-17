@@ -77,3 +77,7 @@ With no production commit denominator, commit-related rate values remain `NOT_AP
 Mission 007 adds `WatchMetricHooks` for later calculation of `RegressionRate`, `WatchFailureRate`, and `UnsafeRefusalRate`. The current instrumentation defines watch failure as an unknown watch result and unsafe refusal as a regression that enters quarantine. It records watch, regression, unknown, and quarantine events without executing benchmarks or claiming production metrics.
 
 With no watch cycles, the metrics are `NOT_APPLICABLE`. After controlled fixture events, the status is `INSTRUMENTED_NOT_BENCHMARKED`; values are not benchmark results. Future reporting must calculate numerators and denominators from immutable controlled-run events with per-severity scope.
+
+## Mission 008 evidence boundary — 2026-08-17
+
+Mission 008 persists metric-relevant evidence references and lifecycle events but does not calculate or report benchmark metrics. Future metric calculation may query immutable audit events by aggregate, correlation, event type, timestamp, and per-severity payload scope. Missing production or mutation-lab denominators remain `NOT_APPLICABLE`; persistence of an event is not measurement of a reliability outcome.

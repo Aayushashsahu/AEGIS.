@@ -1,6 +1,7 @@
 """AEGIS Mission 005: deterministic candidate verification and risk policy."""
 
 from .adapter import AdapterError, BrightDataCliAdapter, CommandResult, build_heal_command, build_heal_prompt
+from .audit_store import AuditEvent, AuditEventType, AuditStore, SCHEMA_VERSION, SQLiteAuditStore
 from .commit_gate_double import CommitGateFixture, build_commit_gate_fixture
 from .commit_gate import (
     AuthorizationContext,
@@ -101,6 +102,9 @@ from .verification_double import VerificationFixture, build_verification_fixture
 
 __all__ = [
     "AdapterError",
+    "AuditEvent",
+    "AuditEventType",
+    "AuditStore",
     "AuthorizationContext",
     "CommitBlockReason",
     "CommitDecision",
@@ -161,10 +165,12 @@ __all__ = [
     "RepairRequestStatus",
     "RiskDecision",
     "RiskDecisionType",
+    "SCHEMA_VERSION",
     "RiskGovernor",
     "RiskPolicy",
     "RiskReason",
     "SafetyMetricHooks",
+    "SQLiteAuditStore",
     "StructuredModelDiagnostician",
     "TestDoubleDiagnostician",
     "TestDoubleScenario",

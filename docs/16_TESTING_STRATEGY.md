@@ -90,3 +90,9 @@ The full command `PYTHONPATH=src pytest -q tests/unit tests/integration` passed 
 Mission 007 adds deterministic watch tests for healthy post-commit output, schema regression, semantic regression, statistical regression, unknown evidence, registration requirements, state-transition guards, immutable WatchResult/RegressionEvent/QuarantineRecord records, unchanged Observations, existing detection reuse, quarantine integration, and absence of repair/rollback/provider operations.
 
 The full command `PYTHONPATH=src pytest -q tests/unit tests/integration` passed with `82 passed`. Tests use an explicitly labeled `TEST_DOUBLE` eligible baseline; no production commit is faked and no Bright Data state is changed. Unknown watch evidence remains `UNKNOWN` and is not automatically quarantined by the default policy.
+
+## Mission 008 evidence — 2026-08-17
+
+Mission 008 adds persistence tests for on-disk SQLite reopen durability, append-only duplicate-event rejection, no update/delete interface, recursive payload immutability, secret redaction before SQL persistence, aggregate/correlation/type read queries, current-status projection, correction-by-new-event semantics, and Mission 006–007 domain record appenders.
+
+The full command `PYTHONPATH=src pytest -q tests/unit tests/integration` passed with `89 passed`. No provider operation, repair, rollback, memory, benchmark, frontend, or production sink is invoked. The SQLite test demonstrates local file durability only and is not a production availability or backup claim.

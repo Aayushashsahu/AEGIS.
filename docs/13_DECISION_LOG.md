@@ -216,3 +216,16 @@ Status: OPEN | RESOLVED | DEFERRED
 | Safety consequence | Watch never repairs, re-diagnoses, activates, approves, commits, or rolls back. Unknown does not silently become healthy, and optional missing evidence does not automatically quarantine. |
 | Provider boundary | Bright Data provider-native rollback remains partial/documentation-only and is not implemented. |
 | Status | RESOLVED for Mission 007 scope; durable watch history and rollback remain OPEN |
+
+## Mission 008 — Durable audit/evidence store and read-only history
+
+| Field | Record |
+| --- | --- |
+| Decision ID | OD-008 / Mission 008 |
+| Date | 2026-08-17 |
+| Context | Missions 001–007 produce immutable evidence-bearing records, but the current persistence boundary is in-memory only. |
+| Decision | Use a provider-neutral append-only audit event envelope and local SQLite implementation with redacted payloads and read-only aggregate/correlation/type queries. |
+| Reason | The canonical stack leaves storage open, the workspace has no dependency manifest or selected distributed database, and Python standard-library SQLite supplies lightweight local durability without introducing unnecessary infrastructure. |
+| Invariants | No update, delete, evidence mutation, secret persistence, or lifecycle side effect. Corrections are new events referencing prior events. |
+| Evidence | `experiments/AEGIS-MISSION-008-DURABLE-AUDIT-EVIDENCE-STORE.md`; 89 passing unit/integration tests; on-disk reopen durability test. |
+| Status | RESOLVED for local boundary; production deployment, backup, encryption, migrations, and object storage remain OPEN |

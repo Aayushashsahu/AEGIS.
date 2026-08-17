@@ -1,13 +1,19 @@
 from __future__ import annotations
 
 import hashlib
+import importlib.util
+import sys
 from pathlib import Path
 
 import pytest
 
-from scripts import mission016_preflight_smoke as preflight
-
 ROOT = Path(__file__).resolve().parents[2]
+_PREFLIGHT_SPEC = importlib.util.spec_from_file_location("mission016_preflight_smoke", ROOT / "scripts/mission016_preflight_smoke.py")
+assert _PREFLIGHT_SPEC is not None and _PREFLIGHT_SPEC.loader is not None
+preflight = importlib.util.module_from_spec(_PREFLIGHT_SPEC)
+sys.modules[_PREFLIGHT_SPEC.name] = preflight
+_PREFLIGHT_SPEC.loader.exec_module(preflight)
+
 HISTORICAL_ROOT = ROOT / "benchmarks/runs/mission_016_floor_f48ec5c5792b"
 CORRECTED_ROOT = ROOT / "benchmarks/runs/mission_016_floor_59a11e27a71f"
 CORRECTED_CONFIG = ROOT / "benchmarks/configs/mission_017_corrected_frozen_config.json"

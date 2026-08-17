@@ -183,3 +183,10 @@ This is a `STOPPED_PREFLIGHT` / `FIX` result. It is not a benchmark result, not 
 Mission 017 added correction-only tests for exact Git revision resolution, Baseline A/B strategy separation, deterministic participant hashes, preservation of M001–M006 and the canonical L1–L5 mapping, seed `12345`, fixture `gpu-price-staging` v1, `mission-010-metrics-v1`, common 300-second timeout, zero retries, zero backoff, owner approvals, and append-only `NOT_READY → READY` promotions.
 
 The corrected configuration validates successfully, supersedes the Mission 015 configuration hash, passes fairness, and produces a validation-only `READY_TO_EXECUTE` dry-run with 18 planned manifests. The full test suite passes with 214 tests. No Baseline B smoke test, participant execution, provider operation, healing operation, approval, commit, rollback, or metric calculation was performed. Final counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`.
+
+
+## Mission 018 evidence — repaired Mission 016 preflight boundary
+
+Mission 018 adds focused tests for loading the Mission 017 corrected configuration, rejecting the superseded Mission 015 hash as the active configuration, resolving the corrected Baseline A/B/AEGIS revisions, preserving the historical Mission 016 run directory, deterministic corrected run-ID isolation, fail-closed preflight behavior, normal validation-only `READY_TO_EXECUTE` evaluation, and the absence of smoke/run/result side effects.
+
+The focused Mission 018 suite passed with `7 passed`. The tests do not invoke `scripts/mission016_preflight_smoke.py` as a live entry point, do not call Gemini, and do not create the corrected future run directory or benchmark result files. The future smoke boundary remains available only after the corrected preflight passes.

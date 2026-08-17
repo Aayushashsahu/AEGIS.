@@ -1,0 +1,93 @@
+from __future__ import annotations
+
+import hashlib
+from pathlib import Path
+
+import pytest
+
+from scripts import mission016_preflight_smoke as preflight
+
+ROOT = Path(__file__).resolve().parents[2]
+HISTORICAL_ROOT = ROOT / "benchmarks/runs/mission_016_floor_f48ec5c5792b"
+CORRECTED_ROOT = ROOT / "benchmarks/runs/mission_016_floor_59a11e27a71f"
+CORRECTED_CONFIG = ROOT / "benchmarks/configs/mission_017_corrected_frozen_config.json"
+OLD_CONFIG = ROOT / "benchmarks/configs/mission_015_frozen_config.json"
+OLD_HASH = "f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96"
+CORRECTED_HASH = "59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b"
+ACTUAL_BASELINE_REVISION = "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47"
+ACTUAL_AEGIS_REVISION = "7de2bc65ed9eeb9f4abd24017543f3f366990738"
+
+
+def _directory_digest(root: Path) -> dict[str, str]:
+    return {
+        str(path.relative_to(root)): hashlib.sha256(path.read_bytes()).hexdigest()
+        for path in sorted(root.rglob("*"))
+        if path.is_file()
+    }
+
+
+def test_mission016_uses_corrected_mission017_config_and_run_id() -> None:
+    assert preflight.CONFIG_PATH == CORRECTED_CONFIG
+    assert preflight.EXPECTED_CONFIG_HASH == CORRECTED_HASH
+    assert preflight.FLOOR_RUN_ID == "mission_016_floor_59a11e27a71f"
+    assert preflight.FLOOR_RUN_ROOT == CORRECTED_ROOT
+    assert preflight.FLOOR_RUN_ID != "mission_016_floor_f48ec5c5792b"
+    assert preflight.HISTORICAL_FLOOR_RUN_ROOT == HISTORICAL_ROOT
+
+
+def test_superseded_mission015_hash_is_not_active() -> None:
+    assert preflight.EXPECTED_CONFIG_HASH != OLD_HASH
+    assert preflight.CONFIG_PATH != OLD_CONFIG
+    assert OLD_HASH not in preflight.EXPECTED_CONFIG_HASH
+
+
+def test_corrected_participant_revisions_resolve() -> None:
+    assert preflight.EXPECTED_REVISIONS == {
+        "BASELINE_A": ACTUAL_BASELINE_REVISION,
+        "BASELINE_B": ACTUAL_BASELINE_REVISION,
+        "AEGIS": ACTUAL_AEGIS_REVISION,
+    }
+    for participant, revision in preflight.EXPECTED_REVISIONS.items():
+        assert preflight._revision_matches(revision, preflight.SOURCE_FILES[participant])
+
+
+def test_historical_mission016_directory_is_present_and_untouched() -> None:
+    before = _directory_digest(HISTORICAL_ROOT)
+    assert before
+    assert not CORRECTED_ROOT.exists()
+    result, _ = preflight.run_preflight()
+    assert result.checks["artifact_paths"]["historical_floor_run_preserved"] is True
+    assert result.checks["artifact_paths"]["floor_run_absent"] is True
+    assert _directory_digest(HISTORICAL_ROOT) == before
+    assert not CORRECTED_ROOT.exists()
+
+
+def test_run_preflight_uses_normal_validation_boundary_and_stops_before_smoke(monkeypatch: pytest.MonkeyPatch) -> None:
+    def smoke_must_not_run(_config):
+        raise AssertionError("Mission 018 must not execute the Baseline B smoke test")
+
+    monkeypatch.setattr(preflight, "run_baseline_b_smoke", smoke_must_not_run)
+    result, config = preflight.run_preflight()
+    assert result.passed is True
+    assert config.configuration_hash == CORRECTED_HASH
+    assert result.checks["configuration_validation"]["pass"] is True
+    assert result.checks["participants_ready"]["pass"] is True
+    assert result.checks["fairness"]["pass"] is True
+    assert result.checks["dry_run"]["status"] == "READY_TO_EXECUTE"
+    assert result.checks["dry_run"]["pass"] is True
+
+
+def test_old_config_is_fail_closed_when_substituted(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(preflight, "CONFIG_PATH", OLD_CONFIG)
+    result, config = preflight.run_preflight()
+    assert config.configuration_hash == OLD_HASH
+    assert result.passed is False
+    assert any("configuration_hash" in error for error in result.errors)
+    assert [spec.implementation_revision for spec in config.baselines if spec.baseline_id in ("BASELINE_A", "BASELINE_B")] == ["0e8bcc4a2c2184cae9a50b291054ec47d83fc895"] * 2
+    assert not CORRECTED_ROOT.exists()
+
+
+def test_mission018_creates_no_run_or_result_artifacts() -> None:
+    assert not CORRECTED_ROOT.exists()
+    assert not (ROOT / "benchmarks/results/mission_016_floor_59a11e27a71f").exists()
+    assert not (ROOT / "benchmarks/reports/mission_016_floor_59a11e27a71f").exists()

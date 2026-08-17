@@ -12,17 +12,19 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG_PATH = ROOT / "benchmarks/configs/mission_015_frozen_config.json"
-FLOOR_RUN_ID = "mission_016_floor_f48ec5c5792b"
+CONFIG_PATH = ROOT / "benchmarks/configs/mission_017_corrected_frozen_config.json"
+EXPECTED_CONFIG_HASH = "59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b"
+FLOOR_RUN_ID = "mission_016_floor_59a11e27a71f"
 FLOOR_RUN_ROOT = ROOT / "benchmarks/runs" / FLOOR_RUN_ID
+HISTORICAL_FLOOR_RUN_ID = "mission_016_floor_f48ec5c5792b"
+HISTORICAL_FLOOR_RUN_ROOT = ROOT / "benchmarks/runs" / HISTORICAL_FLOOR_RUN_ID
 SMOKE_ROOT = FLOOR_RUN_ROOT / "baseline_b_execution_readiness_smoke"
-EXPECTED_CONFIG_HASH = "f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96"
 EXPECTED_SEED = 12345
 EXPECTED_MUTATIONS = ("M001", "M002", "M003", "M004", "M005", "M006")
 EXPECTED_MODEL = "gemini-3.6-flash"
 EXPECTED_REVISIONS = {
-    "BASELINE_A": "0e8bcc4a2c2184cae9a50b291054ec47d83fc895",
-    "BASELINE_B": "0e8bcc4a2c2184cae9a50b291054ec47d83fc895",
+    "BASELINE_A": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+    "BASELINE_B": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
     "AEGIS": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
 }
 SOURCE_FILES = {
@@ -161,6 +163,9 @@ def run_preflight() -> tuple[PreflightResult, Any]:
             "pass": all((ROOT / path).is_dir() for path in ("benchmarks/configs", "benchmarks/manifests", "benchmarks/runs", "benchmarks/results", "benchmarks/reports")),
             "paths": [str(ROOT / path) for path in ("benchmarks/configs", "benchmarks/manifests", "benchmarks/runs", "benchmarks/results", "benchmarks/reports")],
             "floor_run_absent": not FLOOR_RUN_ROOT.exists(),
+            "corrected_floor_run_id": FLOOR_RUN_ID,
+            "historical_floor_run_id": HISTORICAL_FLOOR_RUN_ID,
+            "historical_floor_run_preserved": HISTORICAL_FLOOR_RUN_ROOT.is_dir(),
         },
         "clean_fixture_state": {"pass": lab.fixture == baseline_fixture(), "provenance": "TEST_DOUBLE_IMMUTABLE_FIXTURE"},
         "dry_run": {"status": None if dry_run is None else dry_run.status.value, "pass": bool(dry_run) and dry_run.status is RunnerDryRunStatus.READY_TO_EXECUTE},
@@ -178,7 +183,9 @@ def run_preflight() -> tuple[PreflightResult, Any]:
                 errors.append("fairness validation failed")
         elif name == "artifact_paths":
             if not check["pass"] or not check["floor_run_absent"]:
-                errors.append("artifact path validation failed or immutable floor run already exists")
+                errors.append("artifact path validation failed or corrected floor run already exists")
+            if not check["historical_floor_run_preserved"]:
+                errors.append("historical Mission 016 floor run is missing")
         elif not check.get("pass", False):
             errors.append(f"preflight check failed: {name}")
     return PreflightResult(not errors, checks, tuple(errors)), config

@@ -365,3 +365,18 @@ Status: OPEN | RESOLVED | DEFERRED
 **Freeze:** `benchmarks/configs/mission_017_corrected_frozen_config.json` has canonical hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b` and supersedes Mission 015 hash `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`. All approved mutation, severity, seed, fixture, timeout, retry, backoff, ground-truth, safety, and metric-formula values remain unchanged.
 
 **Validation:** All three participants are READY, fairness is PASS, and the exact validation-only CLI dry-run returns `READY_TO_EXECUTE`. The counters remain zero and execution authorization remains false. Mission 016 is not rerun by Mission 017.
+
+
+## Mission 018 — repair Mission 016 preflight to use Mission 017 freeze
+
+**Decision:** Repair only the future Mission 016 preflight/smoke boundary. Do not execute Mission 016, Gemini, Bright Data, healing, approval, production commit, rollback, benchmark, or metric calculation in Mission 018.
+
+**Stale active values removed:** The preflight no longer uses `benchmarks/configs/mission_015_frozen_config.json`, Mission 015 hash `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`, or the invalid Baseline A/B revision `0e8bcc4a2c2184cae9a50b291054ec47d83fc895` as active expectations.
+
+**Corrected boundary:** The preflight now loads `benchmarks/configs/mission_017_corrected_frozen_config.json`, expects hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b`, expects Baseline A/B revision `0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47`, and expects AEGIS revision `7de2bc65ed9eeb9f4abd24017543f3f366990738`.
+
+**Run isolation:** A future preflight uses deterministic run ID `mission_016_floor_59a11e27a71f`. The historical directory `benchmarks/runs/mission_016_floor_f48ec5c5792b` remains immutable evidence and is explicitly required to exist; the corrected run directory must be absent before a future run.
+
+**Validation boundary:** Focused Mission 018 tests call `run_preflight()` and the normal validation-only runner boundary, verify corrected `READY_TO_EXECUTE`, and prove the smoke boundary is not invoked. The complete suite is run separately. Mission 018 produces no run or benchmark result artifacts.
+
+**Status:** RESOLVED for the preflight repair; Mission 016 rerun remains a future separately authorized action.

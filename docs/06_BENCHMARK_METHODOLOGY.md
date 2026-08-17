@@ -173,3 +173,12 @@ Mission 017 supersedes the invalidated Mission 015 freeze without editing Missio
 The corrected participant hashes are Baseline A `17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f`, Baseline B `01a71de8a60c7d20e1d68744f1ffea3d5ebda0539c0a2e656d3d3e106169e113`, and AEGIS `76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75`. The new immutable configuration is `benchmarks/configs/mission_017_corrected_frozen_config.json` with canonical hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b`, superseding Mission 015 hash `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`.
 
 All approved benchmark values remain unchanged: M001–M006, canonical L1–L5 mapping, seed `12345`, `gpu-price-staging` v1, `mission-010-metrics-v1`, common 300-second timeout, zero retries, zero backoff, and `ground_truth_runtime_payload=NOT_PROVIDED`. The corrected validation-only dry-run returns `READY_TO_EXECUTE` with fairness `PASS` and zero execution counters. This status remains validation readiness only; Mission 016 benchmark execution is not authorized by Mission 017.
+
+
+## Mission 018 — repaired Mission 016 preflight boundary
+
+Mission 018 repaired only the future Mission 016 preflight/smoke boundary. The active configuration source is now `benchmarks/configs/mission_017_corrected_frozen_config.json` with expected canonical hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b`. The superseded Mission 015 configuration and the historical Mission 016 run remain unchanged.
+
+The repaired preflight expects Baseline A and Baseline B revision `0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47` and AEGIS revision `7de2bc65ed9eeb9f4abd24017543f3f366990738`. It uses the new deterministic future run ID `mission_016_floor_59a11e27a71f`, while preserving `benchmarks/runs/mission_016_floor_f48ec5c5792b` as immutable historical STOPPED_PREFLIGHT evidence. A pre-existing corrected run directory remains a fail-closed collision.
+
+Mission 018 did not run the repaired preflight entry point, the Baseline B smoke test, Gemini, Bright Data, healing, approval, commit, rollback, benchmark, or metric calculation. Focused tests exercise the normal validation-only runner boundary and assert the expected corrected `READY_TO_EXECUTE` state without creating run or result artifacts.

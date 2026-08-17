@@ -1,0 +1,298 @@
+{
+  "artifact_contract": {
+    "configs": "benchmarks/configs",
+    "manifests": "benchmarks/manifests",
+    "reports": "benchmarks/reports",
+    "results": "benchmarks/results",
+    "runs": "benchmarks/runs"
+  },
+  "artifact_root": "benchmarks/results/mission_015",
+  "baselines": [
+    {
+      "baseline_id": "BASELINE_A",
+      "commit_policy": "NOT_APPLICABLE_BASELINE_NO_COMMIT",
+      "configuration_hash": "fc95be9ae66b859ab770d23ab46c2ce82dcad645325f833f5fac88959dc3e5d6",
+      "description": "Deterministic fixed-selector static extraction baseline.",
+      "execution_policy": "SINGLE_PASS_NO_HEALING",
+      "implementation_revision": "0e8bcc4a2c2184cae9a50b291054ec47d83fc895",
+      "metadata": {
+        "aegis_verification": "NOT_USED",
+        "artifact_schema": "participant-run-evidence-v1",
+        "commit_gate": "NOT_USED",
+        "configuration": {
+          "mode": "STATIC_SELECTOR_ONLY",
+          "schema_version": "gpu-price-schema-v1",
+          "selector_version": "baseline-a-v1",
+          "selectors": {
+            "availability": "CSS_SELECTOR",
+            "price": "CSS_SELECTOR",
+            "product_id": "FIELD_PASSTHROUGH",
+            "rating": "CSS_SELECTOR",
+            "title": "CSS_SELECTOR",
+            "url": "CSS_SELECTOR"
+          }
+        },
+        "description": "Deterministic fixed-selector static extraction baseline.",
+        "extraction_implementation": "baseline-a-static-selector-v1",
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": "1",
+        "healing": "NOT_USED",
+        "llm": "NOT_USED",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "output_normalization_policy": "canonical-participant-run-v1",
+        "provenance": "TEST_DOUBLE",
+        "provider": "TEST_DOUBLE",
+        "quarantine": "NOT_USED",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "risk_governor": "NOT_USED",
+        "rollback": "NOT_USED",
+        "schema_version": "gpu-price-schema-v1",
+        "seed": 12345,
+        "selector_version": "baseline-a-v1",
+        "timeout_policy": {
+          "backoff_seconds": 0,
+          "retry_count": 0,
+          "timeout_seconds": 300
+        },
+        "watch": "NOT_USED"
+      },
+      "model_id": "NOT_APPLICABLE",
+      "prompt_revision": "NOT_APPLICABLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "status": "READY",
+      "verification_policy": "NOT_APPLICABLE_BASELINE_NO_VERIFICATION"
+    },
+    {
+      "baseline_id": "BASELINE_B",
+      "commit_policy": "FIRST_CANDIDATE_ACCEPTED_NO_AEGIS_COMMIT_GATE",
+      "configuration_hash": "20f90c001f061683c91acc65a2031f07651678041f88db064ad68157084bfb1b",
+      "description": "Naive Gemini first-candidate repair baseline without AEGIS verification.",
+      "execution_policy": "FIRST_CANDIDATE_ONLY",
+      "implementation_revision": "0e8bcc4a2c2184cae9a50b291054ec47d83fc895",
+      "metadata": {
+        "aegis_verification": "NOT_USED",
+        "artifact_schema": "participant-run-evidence-v1",
+        "auto_accept_first_candidate": true,
+        "commit_gate": "NOT_USED",
+        "configuration": {
+          "auto_accept_first_candidate": true,
+          "first_candidate_only": true,
+          "max_output_tokens": 8192,
+          "model_identifier": "gemini-3.6-flash",
+          "model_revision": "stable",
+          "prompt_revision": "baseline-b-prompts-v1",
+          "repair_prompt_template_version": "baseline-b-repair-v1",
+          "system_prompt_version": "baseline-b-system-v1",
+          "tools_enabled": false
+        },
+        "description": "Naive Gemini first-candidate repair baseline without AEGIS verification.",
+        "first_candidate_policy": "FIRST_CANDIDATE",
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": "1",
+        "max_candidates": 1,
+        "max_output": 8192,
+        "max_output_tokens": 8192,
+        "model_identifier": "gemini-3.6-flash",
+        "model_revision": "stable",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "mutation_ground_truth_runtime_payload": "NOT_PROVIDED",
+        "output_normalization_policy": "canonical-participant-run-v1",
+        "prompt_revision": "baseline-b-prompts-v1",
+        "provenance": "MODEL_ASSISTED",
+        "provider": "GOOGLE_GEMINI_API",
+        "repair_prompt_template": "Repair the scraper for the following extraction failure.\n\nTARGET:\n{target}\n\nEXPECTED OUTPUT SCHEMA:\n{extraction_contract}\n\nOBSERVED OUTPUT:\n{observed_output}\n\nFAILURE DESCRIPTION:\n{failure_description}\n\nSCRAPER:\n{scraper_source}\n\nProduce the repaired scraper.\n",
+        "repair_prompt_template_version": "baseline-b-repair-v1",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "risk_governor": "NOT_USED",
+        "sampling_configuration": {
+          "temperature": "NOT_APPLICABLE",
+          "top_k": "NOT_APPLICABLE",
+          "top_p": "NOT_APPLICABLE"
+        },
+        "seed": 12345,
+        "system_prompt": "You repair a web scraper whose extracted output has changed.\n\nYour job is to modify the scraper so that it restores the expected\nextraction behavior while preserving the requested output schema.\n\nReturn ONLY the repaired scraper code/configuration and a concise\nexplanation of what changed.\n\nDo not discuss verification.\nDo not ask for human approval.\nDo not perform additional validation beyond what is necessary to\nproduce the repaired scraper.\n",
+        "system_prompt_version": "baseline-b-system-v1",
+        "timeout_policy": {
+          "backoff_seconds": 0,
+          "retry_count": 0,
+          "timeout_seconds": 300
+        },
+        "tools_enabled": false,
+        "tools_permitted": [
+          "DISABLED"
+        ]
+      },
+      "model_id": "gemini-3.6-flash",
+      "prompt_revision": "baseline-b-prompts-v1",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "status": "READY",
+      "verification_policy": "NO_AEGIS_VERIFICATION"
+    },
+    {
+      "baseline_id": "AEGIS",
+      "commit_policy": "COMMIT_GATE_REQUIRED_NO_DRY_RUN_COMMIT",
+      "configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "description": "AEGIS safety lifecycle TEST_DOUBLE benchmark adapter.",
+      "execution_policy": "FULL_AEGIS_LIFECYCLE_TEST_DOUBLE_ONLY",
+      "implementation_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "metadata": {
+        "artifact_schema": "participant-run-evidence-v1",
+        "auto_approve": false,
+        "benchmark_configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "blind_commit": false,
+        "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+        "commit_gate": "USED",
+        "configuration": {
+          "adapter": "AegisAdapter",
+          "auto_approve": false,
+          "blind_commit": false,
+          "ground_truth_runtime_access": false,
+          "live_provider_execution": false,
+          "mode": "TEST_DOUBLE",
+          "verification_bypass": false
+        },
+        "description": "AEGIS safety lifecycle TEST_DOUBLE benchmark adapter.",
+        "deterministic_test_double": true,
+        "evaluator_ground_truth_runtime_access": false,
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": "1",
+        "healing": "EXISTING_AEGIS_LIFECYCLE_ONLY",
+        "live_bright_data_execution": "NOT_USED",
+        "metric_formula_version": "mission-010-metrics-v1",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "output_normalization_policy": "canonical-participant-run-v1",
+        "participant_adapter": "AegisAdapter",
+        "provenance": "TEST_DOUBLE",
+        "provider_execution": "NOT_USED_FOR_INITIAL_BENCHMARK",
+        "quarantine": "USED",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "risk_governor": "USED",
+        "rollback": "USED",
+        "safety_policy": "UNCHANGED; VERIFICATION_RISK_COMMIT_GATE_REQUIRED",
+        "seeds": [
+          12345
+        ],
+        "timeout_policy": {
+          "backoff_seconds": 0,
+          "retry_count": 0,
+          "timeout_seconds": 300
+        },
+        "verification": "USED",
+        "verification_bypass": false,
+        "watch": "USED"
+      },
+      "model_id": "NOT_APPLICABLE",
+      "prompt_revision": "NOT_APPLICABLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "status": "READY",
+      "verification_policy": "MISSION_010_DETERMINISTIC_VERIFICATION"
+    }
+  ],
+  "benchmark_id": "aegis-benchmark-mission-015",
+  "benchmark_version": "mission-015-frozen-participants-v1",
+  "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+  "collection_policy": {
+    "mode": "VALIDATION_ONLY",
+    "provenance": "TEST_DOUBLE_FIXTURE_ONLY",
+    "provider_execution": "NOT_EXECUTED"
+  },
+  "config_version": "mission-011-benchmark-config-v1",
+  "configuration_hash": "f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96",
+  "created_at": "2026-08-17T00:00:00+00:00",
+  "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+  "evidence_policy": {
+    "ground_truth": "MutationGroundTruth_ONLY",
+    "manual_result_editing": false,
+    "metrics": "Mission010_calculator_only",
+    "raw_runs": "MutationRun_ONLY",
+    "redaction": "Mission008_audit_store"
+  },
+  "fixture_id": "gpu-price-staging",
+  "fixture_version": "1",
+  "metric_formula_version": "mission-010-metrics-v1",
+  "model_configuration": {
+    "status": "NOT_APPLICABLE_FOR_VALIDATION_ONLY"
+  },
+  "model_identifier": "NOT_APPLICABLE",
+  "mutation_class_ids": [
+    "M001",
+    "M002",
+    "M003",
+    "M004",
+    "M005",
+    "M006"
+  ],
+  "mutation_severity": {
+    "M001": "L1",
+    "M002": "L2",
+    "M003": "L3",
+    "M004": "L4",
+    "M005": "L5",
+    "M006": "L5"
+  },
+  "prompt_version": "NOT_APPLICABLE",
+  "repository_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+  "repository_state": "DIRTY_USER_FILES_PRESERVED",
+  "retry_policy": {
+    "backoff_ms": 0,
+    "max_attempts": 1,
+    "mode": "BOUNDED"
+  },
+  "runtime_reference": "Python 3.12; standard-library application modules; pytest test environment",
+  "seeds": [
+    12345
+  ],
+  "timeout_policy": {
+    "collection_ms": 300000,
+    "healing_ms": 300000,
+    "polling_ms": 300000,
+    "total_ms": 300000,
+    "verification_ms": 300000
+  },
+  "trial_count": 1
+}

@@ -167,3 +167,12 @@ PYTHONPATH=src pytest -q tests/unit tests/integration
 The exact CLI validation command also returned `READY_TO_EXECUTE` for the frozen Mission 015 config and produced an 18-manifest plan. This result is intentionally not execution authorization. The safety assertions remained `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. No Bright Data call, model call, healing call, approval, production commit, rollback, or metric calculation was performed.
 
 The final participant and runner artifacts are `benchmarks/configs/mission_015_frozen_config.json`, `benchmarks/configs/mission_015_dry_run.json`, and `experiments/mission_015_freeze_records.json`. The repository remains stopped before benchmark execution and Mission 016.
+
+
+## Mission 016 evidence — preflight stop before benchmark execution
+
+Mission 016 added a fail-closed preflight boundary for the minimum 180-run floor and an isolated Baseline B execution-readiness smoke boundary. The preflight verified the frozen Mission 015 configuration hash, fixture, mutation set, seed, participant readiness, fairness, metric formula, artifact paths, and clean fixture state. It stopped on a participant revision-integrity failure: the frozen Baseline A/B revision `0e8bcc4a2c2184cae9a50b291054ec47d83fc895` does not resolve to the actual committed implementation revision `0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47`.
+
+The Baseline B smoke test was not run because the mandatory preflight failed. No benchmark trial, provider call, healing operation, approval, commit, rollback, or metric calculation occurred. Planned runs remain 180 and executed runs remain zero. The full preflight blocker, frozen config copy, execution log, and report are preserved under `benchmarks/runs/mission_016_floor_f48ec5c5792b`, `benchmarks/reports/mission_016_floor_f48ec5c5792b/summary.md`, and `experiments/AEGIS-MISSION-016-BENCHMARK-FLOOR.md`.
+
+This is a `STOPPED_PREFLIGHT` / `FIX` result. It is not a benchmark result, not a floor-credibility claim, and not authorization to scale or continue.

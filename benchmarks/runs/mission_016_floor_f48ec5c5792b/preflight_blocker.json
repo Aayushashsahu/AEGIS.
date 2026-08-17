@@ -1,0 +1,48 @@
+{
+  "mission": "016",
+  "run_id": "mission_016_floor_f48ec5c5792b",
+  "status": "STOPPED_PREFLIGHT",
+  "blocking_condition": "PARTICIPANT_REVISION_MISMATCH",
+  "frozen_configuration_hash": "f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96",
+  "participant_revision_checks": {
+    "BASELINE_A": {
+      "frozen_expected_revision": "0e8bcc4a2c2184cae9a50b291054ec47d83fc895",
+      "resolved_git_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "source_file": "src/aegis/baseline_participants.py",
+      "pass": false
+    },
+    "BASELINE_B": {
+      "frozen_expected_revision": "0e8bcc4a2c2184cae9a50b291054ec47d83fc895",
+      "resolved_git_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "source_file": "src/aegis/baseline_participants.py",
+      "pass": false
+    },
+    "AEGIS": {
+      "frozen_expected_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "resolved_git_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "source_file": "src/aegis/benchmark_runner.py",
+      "pass": true
+    }
+  },
+  "passed_preflight_checks": {
+    "configuration_hash": true,
+    "configuration_validation": true,
+    "fixture_version": true,
+    "mutation_set": true,
+    "seed": true,
+    "participants_ready": true,
+    "fairness": true,
+    "metric_formula_version": true,
+    "artifact_paths": true,
+    "clean_fixture_state": true,
+    "mission_015_dry_run": "READY_TO_EXECUTE"
+  },
+  "baseline_b_execution_readiness_smoke": "NOT_RUN_DUE_TO_PREFLIGHT_STOP",
+  "planned_benchmark_runs": 180,
+  "benchmark_runs_executed": 0,
+  "provider_operations_executed": 0,
+  "healing_operations_executed": 0,
+  "metric_results_generated": 0,
+  "execution_authorized": false,
+  "required_fix": "Obtain owner-approved correction of the frozen participant implementation revision metadata, regenerate participant/configuration hashes and freeze artifacts through a new mission, then rerun Mission 016 preflight. Do not edit the frozen configuration in place or continue partially."
+}

@@ -339,3 +339,16 @@ Status: OPEN | RESOLVED | DEFERRED
 **Benchmark configuration:** Starting from the Mission 011 validation floor, Mission 015 replaces the participant slots and applies the common 300-second timeout, zero-retry, zero-backoff policy. The resulting canonical configuration hash is `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`, which differs from the old Mission 011 hash `fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3`. M001–M006, the L1–L5 severity mapping, seed `12345`, fixture `gpu-price-staging` v1, and `mission-010-metrics-v1` remain unchanged.
 
 **Readiness and safety decision:** Participant validation, freeze validation, fairness, and deterministic fixture/seed checks pass. The runner returns `READY_TO_EXECUTE` with 18 planned manifests. This is not authorization to benchmark. The final counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. No provider, healing, approval, commit, rollback, or metric operation was invoked. Mission 016 is not started.
+
+
+## Mission 016 — preflight stop on participant revision integrity failure
+
+**Decision:** Do not execute the 180-run benchmark floor until the frozen participant implementation revisions resolve to actual Git commits.
+
+**Evidence:** The Mission 015 frozen configuration hash is `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`. Its Baseline A/B revision is `0e8bcc4a2c2184cae9a50b291054ec47d83fc895`, which does not resolve to the actual committed adapter revision `0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47`. AEGIS resolves correctly to `7de2bc65ed9eeb9f4abd24017543f3f366990738`.
+
+**Safety consequence:** Preflight stopped before the Baseline B smoke test and before all 180 trials. The Mission 015 configuration was not edited in place, no participant hash was recomputed, and no partial benchmark or metric result was produced. The exact blocker and zero-execution counters are preserved in `benchmarks/runs/mission_016_floor_f48ec5c5792b/preflight_blocker.json`.
+
+**Required next step:** Obtain owner approval for a new freeze correction, regenerate the participant and configuration hashes, rerun preflight, and only then consider the Baseline B smoke test. This is a `FIX` outcome, not a benchmark result or a floor-credibility claim.
+
+**Status:** STOPPED_PREFLIGHT / FIX_REQUIRED

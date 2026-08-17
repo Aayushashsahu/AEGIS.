@@ -16,6 +16,7 @@ from enum import Enum
 from typing import Any, Mapping, Protocol, Sequence
 
 from .audit_store import _to_jsonable
+from .baseline_participants import BaselineAStaticExtractor, BaselineBConfiguration, BaselineBUnavailable, baseline_b_model_call
 from .benchmark_config import BenchmarkConfig, BaselineSpec, ValidationResult, validate_config
 from .immutability import freeze_mapping
 from .mutation_lab import MutationLab, MutationRun, MutationSeverity
@@ -399,6 +400,7 @@ class _BaseAdapter:
         self.spec = spec
         self._lab = lab or MutationLab()
         self.participant_id = spec.baseline_id
+        self._benchmark_config: BenchmarkConfig | None = None
 
     def prepare(self, execution_input: ParticipantExecutionInput) -> PreparedParticipantRun:
         _validate_input_against_lab(execution_input, self._lab)
@@ -474,6 +476,7 @@ class BaselineAAdapter(_BaseAdapter):
 
     def run_mutation(self, prepared: PreparedParticipantRun) -> ParticipantRunEvidence:
         case = self._lab.apply_mutation(prepared.input.mutation_id, prepared.input.seed)
+        extracted = BaselineAStaticExtractor().extract(case.mutated.fixture)
         artifact = f"{prepared.input.artifact_root}/{prepared.input.artifact_name}"
         observation_ref = f"{artifact}#observation"
         return ParticipantRunEvidence(
@@ -507,7 +510,12 @@ class BaselineAAdapter(_BaseAdapter):
 
 
 class BaselineBAdapter(_BaseAdapter):
-    """Readiness-only naive repair slot; no model or prompt is selected."""
+    """Approved naive Gemini first-candidate baseline with an injected caller seam."""
+
+    def __init__(self, spec: BaselineSpec, lab: MutationLab | None = None, *, model_caller: Any | None = None) -> None:
+        super().__init__(spec, lab)
+        self.configuration = BaselineBConfiguration()
+        self._model_caller = model_caller
 
     def readiness(self, config: BenchmarkConfig) -> ParticipantReadiness:
         fields = {
@@ -548,10 +556,59 @@ class BaselineBAdapter(_BaseAdapter):
         )
 
     def readiness_for_execution(self) -> ParticipantReadiness:
-        raise ParticipantNotReady("Baseline B is NOT_READY until owner-approved model and prompt metadata are frozen")
+        if self._benchmark_config is None:
+            raise ParticipantNotReady("Baseline B requires an attached frozen BenchmarkConfig")
+        readiness = self.readiness(self._benchmark_config)
+        if not readiness.ready:
+            raise ParticipantNotReady(f"Baseline B is not executable: {readiness.errors}")
+        return readiness
 
     def run_mutation(self, prepared: PreparedParticipantRun) -> ParticipantRunEvidence:
-        raise ParticipantNotReady("Baseline B has no approved model/prompt configuration")
+        case = self._lab.apply_mutation(prepared.input.mutation_id, prepared.input.seed)
+        repair_prompt = self.configuration.repair_prompt_template.format(
+            target="https://example.test/gpu-1",
+            extraction_contract="gpu-price-schema-v1",
+            observed_output=repr(case.mutated.fixture.records),
+            failure_description=f"controlled mutation {prepared.input.mutation_id}",
+            scraper_source="approved static selector scraper configuration",
+        )
+        model_result = baseline_b_model_call(
+            self.configuration,
+            caller=self._model_caller,
+            system_prompt=self.configuration.system_prompt,
+            repair_prompt=repair_prompt,
+        )
+        artifact = f"{prepared.input.artifact_root}/{prepared.input.artifact_name}"
+        unavailable = isinstance(model_result, BaselineBUnavailable)
+        failure_state = model_result.reason if unavailable else "MODEL_CANDIDATE_RECEIVED_NOT_EXECUTED"
+        return ParticipantRunEvidence(
+            participant_id=self.participant_id,
+            run_id=prepared.input.run_id,
+            mutation_id=prepared.input.mutation_id,
+            severity=prepared.input.severity,
+            seed=prepared.input.seed,
+            fixture_version=prepared.input.fixture_version,
+            participant_revision=prepared.input.code_revision,
+            configuration_hash=prepared.input.configuration_hash,
+            ground_truth_reference=prepared.input.ground_truth_reference,
+            code_revision=prepared.input.code_revision,
+            environment_reference=prepared.input.environment_reference,
+            timeout_policy=prepared.input.timeout_policy,
+            retry_policy=prepared.input.retry_policy,
+            artifact_root=prepared.input.artifact_root,
+            observation_reference=f"{artifact}#observation",
+            detected=NOT_APPLICABLE,
+            verification_status=NOT_APPLICABLE,
+            risk_decision=NOT_APPLICABLE,
+            output_eligible=NOT_APPLICABLE,
+            failure_state=failure_state,
+            timing_ms={"collection": 0, "model": 0, "total": 0},
+            cost=NOT_APPLICABLE,
+            llm_calls=0 if unavailable else 1,
+            evidence_refs=(prepared.input.ground_truth_reference, f"{artifact}#model-output"),
+            artifact_refs=(artifact,),
+            provenance=self.configuration.provenance,
+        )
 
 
 class AegisAdapter(_BaseAdapter):
@@ -650,6 +707,9 @@ class ParticipantRegistry:
             ParticipantId.BASELINE_B.value: BaselineBAdapter(specs[ParticipantId.BASELINE_B.value], lab),
             ParticipantId.AEGIS.value: AegisAdapter(specs[ParticipantId.AEGIS.value], lab),
         }
+        for adapter in self._adapters.values():
+            if isinstance(adapter, _BaseAdapter):
+                adapter._benchmark_config = config
 
     def all(self) -> tuple[ParticipantAdapter, ...]:
         return tuple(self._adapters[participant_id] for participant_id in PARTICIPANT_IDS)

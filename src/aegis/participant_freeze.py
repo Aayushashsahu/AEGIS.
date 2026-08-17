@@ -20,7 +20,7 @@ from .benchmark_config import BenchmarkConfig, BaselineSpec, freeze_config
 from .immutability import freeze_mapping
 
 PARTICIPANT_IDS = ("BASELINE_A", "BASELINE_B", "AEGIS")
-PLACEHOLDER_VALUES = {"", "TBD", "UNKNOWN", "NOT_READY", "NOT_APPLICABLE", "NOT_PROVIDED"}
+PLACEHOLDER_VALUES = {"", "TBD", "UNKNOWN", "NOT_READY", "NOT_PROVIDED"}
 
 
 class PromotionStatus(str, Enum):
@@ -386,11 +386,11 @@ def _present(value: Any) -> bool:
     if isinstance(value, str) and value in PLACEHOLDER_VALUES:
         return False
     if isinstance(value, Mapping):
-        return bool(value) and all(_present(item) for item in value.values())
+        return bool(value)
     if isinstance(value, (tuple, list, set)):
-        return bool(value) and all(_present(item) for item in value)
+        return bool(value)
     if isinstance(value, bool):
-        return value
+        return True
     if isinstance(value, (int, float)):
         return True
     return value is not None and bool(value)

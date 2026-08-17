@@ -116,3 +116,17 @@ The Mission 003 records retain correlation IDs, source detection IDs, evidence r
 | `RepairCandidate` | `candidate_id`, `repair_request_id`, collector reference, provider operation reference, provider status, preview result, diff summary, approval command, raw/redacted evidence reference, provenance, timestamp, latency, `verification_status` | Mission 004 requires `verification_status=UNVERIFIED`; no verified, accepted, committed, or activated state is available. |
 
 The candidate preview and provider envelope are recursively immutable. Provider credentials and unrestricted raw command logs are not fields in these records.
+
+## Mission 005 logical additions — Verification and Risk
+
+| Entity | Required fields | Lifecycle / safety boundary |
+| --- | --- | --- |
+| `IndependentEvidence` | `evidence_id`, `source`, `rows`, `provenance`, `source_group`, `evidence_refs`, `correlation_id`, `available` | Explicit distinct evidence path; same-source history is not double-counted. |
+| `VerificationContext` | `candidate`, `contract`, `candidate_output`, `history`, `independent_evidence`, `correlation_id`, `evidence_refs`, `unaffected_fields`, `semantic_expectations`, source-correlation metadata | Typed verifier input; model opinion is auxiliary and ignored by deterministic policy. |
+| `VerificationCheck` | `check_id`, `candidate_id`, `channel`, `category`, `status`, `message`, `evidence_refs`, `provenance`, `correlation_id`, `affected_fields`, `critical`, `timestamp`, `details` | `PASS`, `FAIL`, or `UNKNOWN`; immutable. |
+| `VerificationResult` | `verification_id`, `candidate_id`, `checks`, `overall_status`, `failed_checks`, `evidence_refs`, `verification_provenance`, `correlation_id`, timestamps, `eligible_for_future_commit` | `PASS`, `FAIL`, or `INCONCLUSIVE`; eligibility is not activation or commit. |
+| `RiskPolicy` | required acceptance channels and unknown/failure rules | Explicit deterministic policy; no confidence weights. |
+| `RiskDecision` | `decision_id`, `candidate_id`, `verification_id`, `decision`, `reason_code`, `evidence_refs`, `correlation_id`, `provenance`, timestamp, `eligible_for_future_commit`, `production_commit_performed` | `ACCEPT`, `REJECT`, or `QUARANTINE`; production commit is always false in Mission 005. |
+| `MetricEvent` | `event_id`, `event_type`, `candidate_id`, decision, evidence, correlation ID, timestamp | Measurement hooks only; no benchmark execution. |
+
+The deterministic verifier treats provider evidence as untrusted. The recorded Mission 001 artifact remains provider evidence rather than ground truth. A candidate cannot become accepted merely because it has valid JSON or because a model opinion says pass.

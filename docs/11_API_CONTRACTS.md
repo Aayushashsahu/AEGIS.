@@ -174,3 +174,19 @@ npx -p @brightdata/cli bdata scraper heal <collector_id> <prompt> --url <url>
 No `bdata scraper approve`, `--auto-approve`, activation, verification, risk, commit, or rollback operation is exposed by Mission 004. Provider `awaiting_approval` is data indicating a proposal, not AEGIS approval.
 
 Candidate creation requires a structured status, preview result, and provider operation identifier. Missing, malformed, unexpected, failed, or timed-out provider responses fail closed. The candidate’s only verification status in this mission is `UNVERIFIED`.
+
+## Mission 005 — Verification and Risk Governor boundary
+
+Mission 005 adds deterministic internal operations that evaluate a provider proposal without executing provider approval or production commit:
+
+| Purpose | Operation | Side effect | State/result |
+| --- | --- | --- | --- |
+| Verify candidate | `verify_candidate(context: VerificationContext) -> VerificationResult` | Creates immutable channel checks and evidence references | `PASS`, `FAIL`, or `INCONCLUSIVE` |
+| Decide risk | `RiskGovernor.decide(verification, candidate, policy) -> RiskDecision` | Creates immutable deterministic decision record | `ACCEPT`, `REJECT`, or `QUARANTINE` |
+| Record metric event | `SafetyMetricHooks.record_verification()` / `record_risk_decision()` | Appends local measurement hooks only | No benchmark or commit operation |
+
+Verification evaluates exactly four conceptual channels: `CONTRACT`, `HISTORY`, `SEMANTIC_INVARIANT`, and `INDEPENDENT_EVIDENCE`. Each check is `PASS`, `FAIL`, or `UNKNOWN` and includes evidence, provenance, timestamp, correlation ID, affected fields, and criticality. Unknown is never converted to pass.
+
+The initial acceptance gate requires `CONTRACT`, `SEMANTIC_INVARIANT`, and `INDEPENDENT_EVIDENCE` to pass with no critical contradiction. `HISTORY` strengthens the decision when available but is optional. Missing required evidence produces `QUARANTINE`; deterministic failure produces `REJECT`. No additive confidence weights are used.
+
+`RiskDecision.ACCEPT` means eligible for a later commit stage only. It does not activate a provider version, ship data, or perform production commit. Mission 005 exposes no provider approval, activation, commit, rollback, watch, memory, or benchmark endpoint.

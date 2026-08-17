@@ -57,3 +57,11 @@ The release gate requires BlindCommitRate = 0% on the evaluated path, no unexpla
   "calculated_at": "[MEASURED_TIMESTAMP]"
 }
 ```
+
+## Mission 005 metric hooks — 2026-08-17
+
+Mission 005 adds `SafetyMetricHooks` for later calculation of verification and risk metrics from immutable event references. It records verification-completed and risk-decision events without executing benchmarks or synthesizing benchmark results.
+
+On the Mission 005 path, no commit operation exists. Therefore the safety counter is `blind_commit_count=0`, `total_commit_count=0`, and `blind_commit_rate=0.0` as a zero-event safety counter. The corresponding status is `NOT_APPLICABLE` because the canonical metric denominator is zero. This is implementation-state instrumentation, not a measured production or mutation-lab result.
+
+The following later metrics remain event-ready but unmeasured: `VerificationMissRate`, `FalseRepairRate`, and `UnsafeRefusalRate`. Ground-truth values must come from the mutation laboratory and must be reported with numerator, denominator, raw run references, and per-severity scope.

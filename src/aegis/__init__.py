@@ -1,12 +1,6 @@
-"""AEGIS Mission 004: bounded Bright Data healing and unverified candidates."""
+"""AEGIS Mission 005: deterministic candidate verification and risk policy."""
 
-from .adapter import (
-    AdapterError,
-    BrightDataCliAdapter,
-    CommandResult,
-    build_heal_command,
-    build_heal_prompt,
-)
+from .adapter import AdapterError, BrightDataCliAdapter, CommandResult, build_heal_command, build_heal_prompt
 from .contracts import default_extraction_contract
 from .detection import evaluate_detection
 from .diagnosis import (
@@ -29,14 +23,7 @@ from .diagnosis import (
     build_repair_request,
     diagnose_deterministically,
 )
-from .healing import (
-    HealHandle,
-    HealOperationResult,
-    HealProviderEnvelope,
-    HealState,
-    RepairCandidate,
-    VerificationStatus,
-)
+from .healing import HealHandle, HealOperationResult, HealProviderEnvelope, HealState, RepairCandidate, VerificationStatus
 from .models import (
     CollectionHandle,
     CollectionMode,
@@ -51,16 +38,38 @@ from .models import (
     Observation,
     ProviderProvenance,
 )
-from .test_double import (
-    DeterministicBrightDataHealingTestDouble,
-    DeterministicBrightDataTestDouble,
-    HealTestDoubleScenario,
-    TestDoubleScenario,
+from .risk import (
+    MetricEvent,
+    MetricEventType,
+    RiskDecision,
+    RiskDecisionType,
+    RiskGovernor,
+    RiskPolicy,
+    RiskReason,
+    SafetyMetricHooks,
 )
+from .test_double import DeterministicBrightDataHealingTestDouble, DeterministicBrightDataTestDouble, HealTestDoubleScenario, TestDoubleScenario
+from .verification import (
+    CheckStatus,
+    EvidenceChannel,
+    IndependentEvidence,
+    VerificationCheck,
+    VerificationContext,
+    VerificationOverallStatus,
+    VerificationProvenance,
+    VerificationResult,
+    verify_candidate,
+    verify_contract,
+    verify_history,
+    verify_independent_evidence,
+    verify_semantics,
+)
+from .verification_double import VerificationFixture, build_verification_fixture, mission005_contract
 
 __all__ = [
     "AdapterError",
     "BrightDataCliAdapter",
+    "CheckStatus",
     "CollectionHandle",
     "CollectionMode",
     "CollectionResult",
@@ -79,6 +88,7 @@ __all__ = [
     "DiagnosisProvenance",
     "DiagnosisStatus",
     "DeterministicDiagnostician",
+    "EvidenceChannel",
     "evaluate_detection",
     "ExtractionContract",
     "FailureClass",
@@ -89,6 +99,9 @@ __all__ = [
     "HealState",
     "HealingRequester",
     "HealTestDoubleScenario",
+    "IndependentEvidence",
+    "MetricEvent",
+    "MetricEventType",
     "NoExecutionRepairBoundary",
     "Observation",
     "ProviderProvenance",
@@ -98,12 +111,31 @@ __all__ = [
     "RepairCandidate",
     "RepairRequest",
     "RepairRequestStatus",
+    "RiskDecision",
+    "RiskDecisionType",
+    "RiskGovernor",
+    "RiskPolicy",
+    "RiskReason",
+    "SafetyMetricHooks",
     "StructuredModelDiagnostician",
     "TestDoubleDiagnostician",
     "TestDoubleScenario",
+    "VerificationCheck",
+    "VerificationContext",
+    "VerificationFixture",
+    "VerificationOverallStatus",
+    "VerificationProvenance",
+    "VerificationResult",
     "VerificationStatus",
     "build_heal_command",
     "build_heal_prompt",
     "build_repair_request",
+    "build_verification_fixture",
     "diagnose_deterministically",
+    "mission005_contract",
+    "verify_candidate",
+    "verify_contract",
+    "verify_history",
+    "verify_independent_evidence",
+    "verify_semantics",
 ]

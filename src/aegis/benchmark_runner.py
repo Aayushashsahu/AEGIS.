@@ -614,6 +614,12 @@ class BaselineBAdapter(_BaseAdapter):
 class AegisAdapter(_BaseAdapter):
     """AEGIS TEST_DOUBLE adapter using the existing Mission 009 lifecycle."""
 
+    participant_configuration_version = "aegis-benchmark-v1"
+    participant_adapter_name = "AegisAdapter"
+    participant_normalization = "canonical-participant-run-v1"
+    participant_artifact_schema = "participant-run-evidence-v1"
+    participant_metric_formula_version = "mission-010-metrics-v1"
+
     def readiness(self, config: BenchmarkConfig) -> ParticipantReadiness:
         checks = {
             "mutation_coverage": "PASS" if tuple(self._lab.mutation_ids) == tuple(config.mutation_class_ids) else "FAIL",

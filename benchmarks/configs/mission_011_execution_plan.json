@@ -1,0 +1,212 @@
+{
+  "baseline_count": 3,
+  "benchmark_id": "aegis-benchmark-floor",
+  "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+  "execution": "NOT_EXECUTED",
+  "execution_authorized": false,
+  "expected_run_count": 18,
+  "mutation_count": 6,
+  "plan_version": "mission-011-execution-plan-v1",
+  "seed_count": 1,
+  "steps": [
+    {
+      "baseline_id": "AEGIS",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M001",
+      "seed": 12345,
+      "severity": "L1"
+    },
+    {
+      "baseline_id": "AEGIS",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M002",
+      "seed": 12345,
+      "severity": "L2"
+    },
+    {
+      "baseline_id": "AEGIS",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M003",
+      "seed": 12345,
+      "severity": "L3"
+    },
+    {
+      "baseline_id": "AEGIS",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M004",
+      "seed": 12345,
+      "severity": "L4"
+    },
+    {
+      "baseline_id": "AEGIS",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M005",
+      "seed": 12345,
+      "severity": "L5"
+    },
+    {
+      "baseline_id": "AEGIS",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M006",
+      "seed": 12345,
+      "severity": "L5"
+    },
+    {
+      "baseline_id": "BASELINE_A",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M001",
+      "seed": 12345,
+      "severity": "L1"
+    },
+    {
+      "baseline_id": "BASELINE_A",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M002",
+      "seed": 12345,
+      "severity": "L2"
+    },
+    {
+      "baseline_id": "BASELINE_A",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M003",
+      "seed": 12345,
+      "severity": "L3"
+    },
+    {
+      "baseline_id": "BASELINE_A",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M004",
+      "seed": 12345,
+      "severity": "L4"
+    },
+    {
+      "baseline_id": "BASELINE_A",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M005",
+      "seed": 12345,
+      "severity": "L5"
+    },
+    {
+      "baseline_id": "BASELINE_A",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M006",
+      "seed": 12345,
+      "severity": "L5"
+    },
+    {
+      "baseline_id": "BASELINE_B",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M001",
+      "seed": 12345,
+      "severity": "L1"
+    },
+    {
+      "baseline_id": "BASELINE_B",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M002",
+      "seed": 12345,
+      "severity": "L2"
+    },
+    {
+      "baseline_id": "BASELINE_B",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M003",
+      "seed": 12345,
+      "severity": "L3"
+    },
+    {
+      "baseline_id": "BASELINE_B",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M004",
+      "seed": 12345,
+      "severity": "L4"
+    },
+    {
+      "baseline_id": "BASELINE_B",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M005",
+      "seed": 12345,
+      "severity": "L5"
+    },
+    {
+      "baseline_id": "BASELINE_B",
+      "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+      "execution": "NOT_EXECUTED",
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "mutation_id": "M006",
+      "seed": 12345,
+      "severity": "L5"
+    }
+  ],
+  "validation_only": true
+}

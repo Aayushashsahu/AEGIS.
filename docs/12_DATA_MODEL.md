@@ -192,3 +192,16 @@ Mission 010 does not add a second run entity. It adds a deterministic projection
 `MutationManifestRecord.severity` is the mutation ground-truth severity. `detector_severity` is the observed signal severity from the existing detector and is retained separately; an L4 mutation may emit an L3 detector signal without changing its ground-truth classification. The current L5 runs remain `output_eligible=false` and carry quarantine/evidence references.
 
 The machine-readable report is generated from immutable raw records and includes overall, per-severity, and per-mutation scopes where meaningful. Its redaction path reuses the Mission 008 audit-store normalizer/redactor and fails closed on secret-bearing evidence-reference strings. No manifest or metric projection creates provider state, approval state, commit state, rollback state, or a new benchmark run.
+
+## Mission 011 logical additions — frozen benchmark configuration and dry-run plan
+
+Mission 011 adds immutable configuration and validation projections without adding a benchmark-run entity or mutating Mission 009 raw records.
+
+| Record | Required fields | Safety and reproducibility boundary |
+| --- | --- | --- |
+| `BaselineSpec` | baseline ID, description, implementation revision, model ID, prompt revision, configuration hash, execution/retry/verification/commit policies, readiness status | `NOT_READY` is preserved when a baseline is not implemented; no fake results or substitution is allowed |
+| `BenchmarkConfig` | benchmark identity/version, fixture ID/version, mutation IDs/severity, seeds/trial count, baseline tuple, code/repository/environment/runtime/model/prompt references, retry/timeout/collection/evidence policies, artifact contract/root, metric formula version, creation timestamp, configuration hash | Recursively immutable; changing any hashed field invalidates the stored configuration hash |
+| `ValidationResult` | validation status, ordered errors/warnings, check map, configuration hash | Fail-closed; invalid configuration cannot produce an execution plan |
+| `DryRunResult` | validation-only status, config/fixture/seed/baseline checks, calculator availability, artifact-path check, execution-plan tuple, expected counts, zero execution counters, no-execution authorization flag | Explicitly no benchmark/provider/healing/metric execution; substantive JSON is deterministic for identical config |
+
+The artifact contract declares future locations for configurations, manifests, runs, results, and reports under `benchmarks/`. Mission 011 commits only configuration and validation-plan artifacts under `benchmarks/configs/`; it does not create fake run/result/report artifacts. Every future benchmark number must remain traceable to `MutationGroundTruth + MutationRun + BenchmarkConfig` and the Mission 010 calculator.

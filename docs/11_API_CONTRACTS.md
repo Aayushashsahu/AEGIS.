@@ -264,3 +264,22 @@ Mission 010 adds provider-neutral read/calculation operations over existing immu
 `calculate_metrics` uses only `MutationGroundTruth` to classify actual failure and healthy cosmetic mutation. Detection-related metrics support overall, per-severity, and per-mutation scopes. L5 safety metrics are reported separately. Missing denominators produce `status=NOT_APPLICABLE` with `value=null`; they are never represented as measured zero. Mission 009 has no repair attempts or production commits, so recovery, verification-miss, false-repair, and blind-commit results remain explicitly unavailable.
 
 The generated files are `experiments/AEGIS-MISSION-010-MUTATION-MANIFEST.json`, `experiments/AEGIS-MISSION-010-METRICS.json`, and `docs/generated/mission_010_metrics.md`. They are derived artifacts and do not add an endpoint, provider capability, approval operation, commit operation, rollback operation, or benchmark runner.
+
+## Mission 011 — BenchmarkConfig freeze and validation-only dry-run contracts
+
+Mission 011 adds provider-neutral, side-effect-free benchmark configuration operations:
+
+| Operation/model | Purpose | Side effect |
+| --- | --- | --- |
+| `BaselineSpec` | Immutable slot for Baseline A, Baseline B, or AEGIS metadata and readiness status | None |
+| `BenchmarkConfig` | Immutable benchmark definition with frozen mutation, seed, baseline, environment, policy, artifact, and metric-version fields | None |
+| `validate_config(config)` | Fail-closed validation of configuration completeness, consistency, fixture alignment, policy ranges, artifact contract, and configuration hash | None |
+| `compute_configuration_hash(config)` | Canonical SHA-256 hash over all frozen configuration fields except the stored hash itself | None |
+| `freeze_config(config)` | Return a new immutable configuration with the canonical hash | None |
+| `run_dry_run(config)` / `dry_run(config)` | Verify fixture definitions, seed reproducibility, baseline metadata, calculator availability, artifact path, and generate an unexecuted plan | No provider, benchmark, healing, metric, commit, or rollback operation |
+
+`BenchmarkConfig` contains `benchmark_id`, `benchmark_version`, `fixture_id`, `fixture_version`, `mutation_class_ids`, `mutation_severity`, `seeds`, `trial_count`, baseline slots, code/repository revision, repository state, environment/runtime references, model/prompt fields, retry/timeout/collection/evidence policies, the artifact contract, artifact root, metric formula version, creation timestamp, and configuration hash. Nested mappings are recursively frozen. The artifact contract defines `benchmarks/configs`, `benchmarks/manifests`, `benchmarks/runs`, `benchmarks/results`, and `benchmarks/reports`; Mission 011 does not create fake run artifacts or future directories.
+
+The validator rejects missing or duplicate mutation IDs, missing or invalid severity mappings, missing/duplicate/non-integer seeds, incomplete or inconsistent baselines, missing revisions or fixture version, invalid retry/timeout policies, missing artifact paths, unsupported metric formula versions, conflicting code/repository revisions, and stale configuration hashes. `NOT_READY`, `TBD`, `UNKNOWN`, and `NOT_APPLICABLE` remain explicit data where implementation or model details are not established.
+
+A successful dry-run result is labeled `VALIDATION_ONLY` and contains `VALIDATION ONLY` / `NO BENCHMARK EXECUTED`, a deterministic execution plan, expected run/mutation/seed/baseline counts, validation checks, and zero execution counters. It never returns metric values and carries `benchmark_execution_authorized=false`. Repeated dry runs over the same immutable config must have byte-identical substantive output.

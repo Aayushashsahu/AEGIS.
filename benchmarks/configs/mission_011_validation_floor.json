@@ -1,0 +1,125 @@
+{
+  "artifact_contract": {
+    "configs": "benchmarks/configs",
+    "manifests": "benchmarks/manifests",
+    "reports": "benchmarks/reports",
+    "results": "benchmarks/results",
+    "runs": "benchmarks/runs"
+  },
+  "artifact_root": "benchmarks/results/mission_011_validation_floor",
+  "baselines": [
+    {
+      "baseline_id": "BASELINE_A",
+      "commit_policy": "NOT_APPLICABLE_BASELINE_NO_COMMIT",
+      "configuration_hash": "NOT_READY",
+      "description": "Static selector extraction without healing or AEGIS verification.",
+      "execution_policy": "SINGLE_PASS_NO_HEALING",
+      "implementation_revision": "NOT_READY",
+      "model_id": "NOT_APPLICABLE",
+      "prompt_revision": "NOT_APPLICABLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "NONE"
+      },
+      "status": "NOT_READY",
+      "verification_policy": "NOT_APPLICABLE_BASELINE_NO_VERIFICATION"
+    },
+    {
+      "baseline_id": "BASELINE_B",
+      "commit_policy": "FIRST_CANDIDATE_POLICY_DEFINED_BUT_NOT_EXECUTED",
+      "configuration_hash": "NOT_READY",
+      "description": "Naive LLM repair baseline; configuration slot only, no model or prompt is frozen in Mission 011.",
+      "execution_policy": "SINGLE_CANDIDATE_POLICY_DEFINED_BUT_NOT_EXECUTED",
+      "implementation_revision": "NOT_READY",
+      "model_id": "TBD",
+      "prompt_revision": "TBD",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "status": "NOT_READY",
+      "verification_policy": "NO_AEGIS_VERIFICATION"
+    },
+    {
+      "baseline_id": "AEGIS",
+      "commit_policy": "COMMIT_GATE_REQUIRED; NO_DRY_RUN_COMMIT",
+      "configuration_hash": "NOT_READY",
+      "description": "AEGIS lifecycle with deterministic verification, risk governor, commit gate, quarantine, and watch boundaries.",
+      "execution_policy": "FULL_LIFECYCLE_DEFINED_BUT_NOT_EXECUTED",
+      "implementation_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+      "model_id": "NOT_APPLICABLE",
+      "prompt_revision": "NOT_APPLICABLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "status": "NOT_READY",
+      "verification_policy": "MISSION_010_DETERMINISTIC_CALCULATOR_AND_EXISTING_GATES"
+    }
+  ],
+  "benchmark_id": "aegis-benchmark-floor",
+  "benchmark_version": "mission-011-validation-floor-v1",
+  "code_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+  "collection_policy": {
+    "mode": "VALIDATION_ONLY",
+    "provenance": "TEST_DOUBLE_FIXTURE_ONLY",
+    "provider_execution": "NOT_EXECUTED"
+  },
+  "config_version": "mission-011-benchmark-config-v1",
+  "configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+  "created_at": "2026-08-17T00:00:00+00:00",
+  "environment_reference": "AEGIS_LOCAL_VALIDATION_ONLY; TEST_DOUBLE_FIXTURE; NO_PROVIDER_EXECUTION",
+  "evidence_policy": {
+    "ground_truth": "MutationGroundTruth_ONLY",
+    "manual_result_editing": false,
+    "metrics": "Mission010_calculator_only",
+    "raw_runs": "MutationRun_ONLY",
+    "redaction": "Mission008_audit_store"
+  },
+  "fixture_id": "gpu-price-staging",
+  "fixture_version": "1",
+  "metric_formula_version": "mission-010-metrics-v1",
+  "model_configuration": {
+    "status": "NOT_APPLICABLE_FOR_VALIDATION_ONLY"
+  },
+  "model_identifier": "NOT_APPLICABLE",
+  "mutation_class_ids": [
+    "M001",
+    "M002",
+    "M003",
+    "M004",
+    "M005",
+    "M006"
+  ],
+  "mutation_severity": {
+    "M001": "L1",
+    "M002": "L2",
+    "M003": "L3",
+    "M004": "L4",
+    "M005": "L5",
+    "M006": "L5"
+  },
+  "prompt_version": "NOT_APPLICABLE",
+  "repository_revision": "3dea1cb103a331568f4853a56316ce22d13bd2c2",
+  "repository_state": "DIRTY_USER_FILES_PRESERVED",
+  "retry_policy": {
+    "backoff_ms": 0,
+    "max_attempts": 1,
+    "mode": "BOUNDED"
+  },
+  "runtime_reference": "Python 3.12; standard-library application modules; pytest test environment",
+  "seeds": [
+    12345
+  ],
+  "timeout_policy": {
+    "collection_ms": 300000,
+    "healing_ms": 900000,
+    "polling_ms": 300000,
+    "total_ms": 1800000,
+    "verification_ms": 30000
+  },
+  "trial_count": 1
+}

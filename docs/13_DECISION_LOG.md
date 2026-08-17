@@ -258,3 +258,19 @@ Status: OPEN | RESOLVED | DEFERRED
 | Evidence | `experiments/AEGIS-MISSION-010-MUTATION-MANIFEST.json`; `experiments/AEGIS-MISSION-010-METRICS.json`; `docs/generated/mission_010_metrics.md`; `experiments/AEGIS-MISSION-010-MANIFEST-METRICS.md`; Mission 010 unit tests. |
 | Consequences | The measurement gap is closed for deterministic V1 evidence. Full benchmark trials, baselines, model freeze, production repair outcomes, and headline metrics remain future work. |
 | Status | RESOLVED for Mission 010 measurement infrastructure; benchmark execution and real repair metrics remain OPEN |
+
+## Mission 011 — Benchmark configuration freeze and validation-only dry run
+
+| Field | Record |
+| --- | --- |
+| Decision ID | OD-011 / Mission 011 |
+| Date | 2026-08-17 |
+| Context | Mission 010 provides deterministic manifest and metric infrastructure, but benchmark execution still lacks a frozen experiment definition, baseline slots, environment/revision pinning, artifact contract, and reproducibility gate. |
+| Decision | Add immutable `BenchmarkConfig`/`BaselineSpec` records, fail-closed validation, canonical configuration hashing, and a validation-only dry-run planner. Preserve M001–M006 and their existing severities and use the Mission 009 seed behavior. |
+| Freeze | The committed validation configuration uses code/repository revision `3dea1cb103a331568f4853a56316ce22d13bd2c2`, fixture `gpu-price-staging` version `1`, seed `12345`, Mission 010 formula version `mission-010-metrics-v1`, and configuration hash `fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3`. Any changed hashed field with the old hash fails validation. |
+| Baselines | `BASELINE_A`, `BASELINE_B`, and `AEGIS` slots are explicit and complete in shape, but all are `NOT_READY`; no baseline result or model/prompt configuration is invented. |
+| Dry run | Twice-run validation produced byte-identical substantive output and an 18-step plan (`3 × 6 × 1`) with `NOT_EXECUTED` steps. No benchmark collection, provider operation, healing, metric calculation, approval, commit, or rollback occurred. |
+| Metric integrity | Mission 010 remains the sole metric calculator. Mission 011 reports calculator availability only and generates zero metric values. No headline benchmark result is published. |
+| Artifact contract | Future configs, manifests, runs, results, and reports are declared under `benchmarks/`; only configuration and validation-plan artifacts are committed now. |
+| Consequences | The benchmark definition and reproducibility gate are frozen for review, but full benchmark execution remains blocked until baseline A/B/AEGIS implementations/configurations are genuinely ready and a later mission authorizes execution. |
+| Status | RESOLVED for configuration freeze and dry-run validation; benchmark execution, baseline readiness, and headline results remain OPEN |

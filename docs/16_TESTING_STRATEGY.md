@@ -114,3 +114,15 @@ The full repository test command remains the release validation command:
 ```bash
 PYTHONPATH=src pytest -q tests/unit tests/integration
 ```
+
+## Mission 011 evidence — benchmark configuration freeze and dry-run validator
+
+Mission 011 adds focused tests for immutable `BenchmarkConfig`/`BaselineSpec` records, explicit M001–M006 mutation and severity preservation, fixed seed policy, artifact-contract completeness, valid configuration acceptance, missing/duplicate mutation rejection, invalid severity rejection, missing seed rejection, incomplete baseline rejection, missing code/fixture/metric revisions, stale freeze hash, invalid timeout/retry policy, deterministic execution-plan ordering, repeated dry-run byte identity, fixture reproducibility, calculator availability, no provider/healing/benchmark execution, no execution authorization, and zero invented metric values.
+
+The focused Mission 011 suite passed with `21 passed`. The validation configuration produces an 18-step plan from three baseline slots, six mutation classes, and one fixed seed, but every plan step is `NOT_EXECUTED`; all baseline slots remain `NOT_READY`. The dry-run was run twice and the substantive JSON and execution plan were byte-identical. The required full repository command remains:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```
+
+Mission 011 publishes no benchmark metric result. Mission 010 controlled-harness evidence remains separate, and no 540-run execution or provider operation is invoked by the validator.

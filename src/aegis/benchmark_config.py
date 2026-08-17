@@ -55,9 +55,11 @@ class BaselineSpec:
     verification_policy: str
     commit_policy: str
     status: str = "NOT_READY"
+    metadata: Mapping[str, Any] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "retry_policy", freeze_mapping(self.retry_policy))
+        object.__setattr__(self, "metadata", freeze_mapping(self.metadata))
 
 
 @dataclass(frozen=True)
@@ -129,6 +131,7 @@ class BenchmarkConfig:
                 verification_policy=item["verification_policy"],
                 commit_policy=item["commit_policy"],
                 status=item.get("status", "NOT_READY"),
+                metadata=item.get("metadata", {}),
             )
             for item in raw_baselines
         )
@@ -600,6 +603,7 @@ def _canonical_config_payload(config: BenchmarkConfig) -> Mapping[str, Any]:
                 "verification_policy": baseline.verification_policy,
                 "commit_policy": baseline.commit_policy,
                 "status": baseline.status,
+                **({"participant_metadata": baseline.metadata} if baseline.metadata else {}),
             }
             for baseline in sorted(config.baselines, key=lambda item: item.baseline_id)
         ],

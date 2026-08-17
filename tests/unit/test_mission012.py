@@ -6,6 +6,7 @@ import pytest
 
 import aegis.benchmark_runner as runner_module
 from aegis.benchmark_config import default_validation_config, freeze_config
+from aegis.participant_freeze import ParticipantFreezeProposal
 from aegis.benchmark_runner import (
     AegisAdapter,
     BaselineAAdapter,
@@ -34,10 +35,42 @@ def specs(current):
 def ready_baseline_a_config():
     current = config()
     baseline_a = specs(current)["BASELINE_A"]
+    metadata = {
+        "description": baseline_a.description,
+        "extraction_implementation": "baseline-a-static-selector-v1",
+        "configuration": {"selector": ".product-card", "mode": "STATIC_SELECTOR_ONLY"},
+        "timeout_policy": {"collection_ms": 300000, "verification_ms": 30000, "total_ms": 1800000},
+        "retry_policy": {"mode": "NONE", "max_attempts": 1, "backoff_ms": 0},
+        "output_normalization_policy": "ParticipantRunEvidence-v1",
+        "provenance": "TEST_DOUBLE",
+        "artifact_schema": "ParticipantRunEvidence-v1",
+        "healing": "NOT_USED",
+        "aegis_verification": "NOT_USED",
+        "risk_governor": "NOT_USED",
+        "commit_gate": "NOT_USED",
+        "quarantine": "NOT_USED",
+        "watch": "NOT_USED",
+        "rollback": "NOT_USED",
+    }
+    proposal = ParticipantFreezeProposal(
+        participant_id="BASELINE_A",
+        prior_status="NOT_READY",
+        implementation_revision="baseline-a-v1",
+        configuration=metadata,
+        timeout_policy=metadata["timeout_policy"],
+        retry_policy=metadata["retry_policy"],
+        output_normalization_policy=metadata["output_normalization_policy"],
+        provenance=metadata["provenance"],
+        artifact_schema=metadata["artifact_schema"],
+        execution_policy="SINGLE_PASS_NO_HEALING",
+        verification_policy="NOT_APPLICABLE_BASELINE_NO_VERIFICATION",
+        commit_policy="NOT_APPLICABLE_BASELINE_NO_COMMIT",
+    )
     ready_a = replace(
         baseline_a,
         implementation_revision="baseline-a-v1",
-        configuration_hash="baseline-a-config-v1",
+        configuration_hash=proposal.configuration_hash,
+        metadata=metadata,
         status="READY",
     )
     return freeze_config(replace(current, baselines=(ready_a, specs(current)["BASELINE_B"], specs(current)["AEGIS"])))

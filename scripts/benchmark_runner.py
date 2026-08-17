@@ -29,7 +29,7 @@ def main(argv: list[str] | None = None) -> int:
     config = load_benchmark_config(Path(args.config))
     result = BenchmarkRunner(config).dry_run()
     print(result.to_json(), end="")
-    return 0 if result.status.value in {"VALIDATION_ONLY", "BLOCKED_NOT_READY"} else 2
+    return 0 if result.status.value in {"VALIDATION_ONLY", "READY_TO_EXECUTE", "BLOCKED_NOT_READY"} else 2
 
 
 if __name__ == "__main__":

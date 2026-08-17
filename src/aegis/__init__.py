@@ -4,6 +4,7 @@ from .adapter import AdapterError, BrightDataCliAdapter, CommandResult, build_he
 from .audit_store import AuditEvent, AuditEventType, AuditStore, SCHEMA_VERSION, SQLiteAuditStore
 from .benchmark_config import BaselineSpec, BenchmarkConfig, DryRunResult, DryRunStatus, ValidationResult, ValidationStatus, compute_configuration_hash, default_validation_config, dry_run, freeze_config, load_benchmark_config, run_dry_run, validate_config
 from .benchmark_runner import AegisAdapter, BaselineAAdapter, BaselineBAdapter, BenchmarkRunner, ExecutionAttempt, FreezeSnapshot, FreezeValidation, NOT_APPLICABLE, ParticipantAdapter, ParticipantExecutionInput, ParticipantId, ParticipantNotReady, ParticipantReadiness, ParticipantReadinessStatus, ParticipantRegistry, ParticipantRunEvidence, PreparedParticipantRun, RunManifest, RunnerDryRunResult, RunnerDryRunStatus, RunnerState, deterministic_artifact_name, deterministic_run_id, normalize_mutation_run, planned_ground_truth_reference, validate_freeze
+from .participant_freeze import OwnerReviewDecision, ParticipantFreezeProposal, ParticipantFreezeValidation, PromotionError, PromotionResult, PromotionStatus, ReadinessPromotion, apply_promotions, compute_participant_hash, default_mission013_proposals, promote_participant, proposal_from_spec, validate_participant_proposal
 from .commit_gate_double import CommitGateFixture, build_commit_gate_fixture
 from .commit_gate import (
     AuthorizationContext,
@@ -187,6 +188,7 @@ __all__ = [
     "MetricResult",
     "MetricStatus",
     "NOT_APPLICABLE",
+    "OwnerReviewDecision",
     "MutatedFixture",
     "NoExecutionRepairBoundary",
     "Observation",
@@ -200,6 +202,11 @@ __all__ = [
     "ParticipantRunEvidence",
     "PreparedParticipantRun",
     "OutputEligibility",
+    "ParticipantFreezeProposal",
+    "ParticipantFreezeValidation",
+    "PromotionError",
+    "PromotionResult",
+    "PromotionStatus",
     "OutputEligibilityBoundary",
     "ProviderProvenance",
     "QuarantineLedger",
@@ -211,6 +218,7 @@ __all__ = [
     "RepairCandidate",
     "RepairRequest",
     "RepairRequestStatus",
+    "ReadinessPromotion",
     "RiskDecisionType",
     "SCHEMA_VERSION",
     "RiskGovernor",
@@ -241,6 +249,7 @@ __all__ = [
     "WatchResultStatus",
     "WatchState",
     "WatchFixture",
+    "apply_promotions",
     "build_watch_fixture",
     "VerificationContext",
     "VerificationFixture",
@@ -253,6 +262,8 @@ __all__ = [
     "baseline_fixture",
     "build_mission009_dataset",
     "compute_configuration_hash",
+    "compute_participant_hash",
+    "default_mission013_proposals",
     "default_validation_config",
     "dry_run",
     "build_commit_gate_fixture",
@@ -274,7 +285,10 @@ __all__ = [
     "deterministic_run_id",
     "normalize_mutation_run",
     "planned_ground_truth_reference",
+    "promote_participant",
+    "proposal_from_spec",
     "validate_freeze",
+    "validate_participant_proposal",
     "verify_candidate",
     "verify_contract",
     "verify_history",

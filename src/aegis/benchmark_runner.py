@@ -20,6 +20,7 @@ from .benchmark_config import BenchmarkConfig, BaselineSpec, ValidationResult, v
 from .immutability import freeze_mapping
 from .mutation_lab import MutationLab, MutationRun, MutationSeverity
 from .models import ProviderProvenance
+from .participant_freeze import proposal_from_spec, validate_participant_proposal
 
 
 PARTICIPANT_IDS = ("BASELINE_A", "BASELINE_B", "AEGIS")
@@ -52,6 +53,7 @@ class RunnerState(str, Enum):
 
 class RunnerDryRunStatus(str, Enum):
     VALIDATION_ONLY = "VALIDATION_ONLY"
+    READY_TO_EXECUTE = "READY_TO_EXECUTE"
     BLOCKED_NOT_READY = "BLOCKED_NOT_READY"
     INVALID = "INVALID"
 
@@ -319,7 +321,7 @@ class RunnerDryRunResult:
 
     @property
     def valid(self) -> bool:
-        return self.status is RunnerDryRunStatus.VALIDATION_ONLY
+        return self.status in {RunnerDryRunStatus.VALIDATION_ONLY, RunnerDryRunStatus.READY_TO_EXECUTE}
 
     @property
     def blocked_not_ready(self) -> bool:
@@ -435,11 +437,16 @@ class BaselineAAdapter(_BaseAdapter):
         slot_ready = self.spec.status == "READY"
         if not slot_ready:
             errors.append("frozen baseline slot is NOT_READY")
+        else:
+            reviewed = validate_participant_proposal(proposal_from_spec(self.spec))
+            contract_checks["reviewed_metadata"] = "PASS" if reviewed.ready else "FAIL"
+            errors.extend(reviewed.errors)
+        contract_ready = not any(value == "FAIL" for value in contract_checks.values())
         return ParticipantReadiness(
             participant_id=self.participant_id,
-            status=ParticipantReadinessStatus.READY if not errors else ParticipantReadinessStatus.NOT_READY,
-            contract_ready=not any(value == "FAIL" for value in contract_checks.values()),
-            benchmark_ready=slot_ready and not errors,
+            status=ParticipantReadinessStatus.READY if slot_ready and contract_ready and not errors else ParticipantReadinessStatus.NOT_READY,
+            contract_ready=contract_ready,
+            benchmark_ready=slot_ready and contract_ready and not errors,
             participant_revision=self.spec.implementation_revision,
             participant_configuration_hash=self.spec.configuration_hash,
             provenance=self.provenance,
@@ -523,6 +530,10 @@ class BaselineBAdapter(_BaseAdapter):
         checks["risk_governor"] = "NOT_USED"
         checks["commit_gate"] = "NOT_USED"
         checks["provenance"] = "PASS_TEST_DOUBLE"
+        if self.spec.status == "READY":
+            reviewed = validate_participant_proposal(proposal_from_spec(self.spec))
+            checks["reviewed_metadata"] = "PASS" if reviewed.ready else "FAIL"
+            errors.extend(reviewed.errors)
         return ParticipantReadiness(
             participant_id=self.participant_id,
             status=ParticipantReadinessStatus.READY if not errors and self.spec.status == "READY" else ParticipantReadinessStatus.NOT_READY,
@@ -558,12 +569,19 @@ class AegisAdapter(_BaseAdapter):
             "metric_calculator": "AVAILABLE_INTERFACE_ONLY",
         }
         errors = [name for name, value in checks.items() if value == "FAIL"]
-        errors.append("AEGIS benchmark slot is NOT_READY_FOR_BENCHMARK")
+        if self.spec.status == "READY":
+            reviewed = validate_participant_proposal(proposal_from_spec(self.spec))
+            checks["reviewed_metadata"] = "PASS" if reviewed.ready else "FAIL"
+            errors.extend(reviewed.errors)
+        slot_ready = self.spec.status == "READY" and self.spec.configuration_hash not in {"", "TBD", "UNKNOWN", "NOT_READY"}
+        if not slot_ready:
+            errors.append("AEGIS benchmark slot is NOT_READY_FOR_BENCHMARK")
+        contract_ready = not any(value == "FAIL" for value in checks.values())
         return ParticipantReadiness(
             participant_id=self.participant_id,
-            status=ParticipantReadinessStatus.NOT_READY_FOR_BENCHMARK,
-            contract_ready=not any(value == "FAIL" for value in checks.values()),
-            benchmark_ready=False,
+            status=ParticipantReadinessStatus.READY if slot_ready and contract_ready else ParticipantReadinessStatus.NOT_READY_FOR_BENCHMARK,
+            contract_ready=contract_ready,
+            benchmark_ready=slot_ready and contract_ready,
             participant_revision=self.spec.implementation_revision,
             participant_configuration_hash=self.spec.configuration_hash,
             provenance=self.provenance,
@@ -718,7 +736,7 @@ class BenchmarkRunner:
         elif any(not report.ready for report in readiness.values()):
             status = RunnerDryRunStatus.BLOCKED_NOT_READY
         else:
-            status = RunnerDryRunStatus.VALIDATION_ONLY
+            status = RunnerDryRunStatus.READY_TO_EXECUTE
         return RunnerDryRunResult(
             status=status,
             validation=validation,

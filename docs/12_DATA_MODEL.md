@@ -130,3 +130,16 @@ The candidate preview and provider envelope are recursively immutable. Provider 
 | `MetricEvent` | `event_id`, `event_type`, `candidate_id`, decision, evidence, correlation ID, timestamp | Measurement hooks only; no benchmark execution. |
 
 The deterministic verifier treats provider evidence as untrusted. The recorded Mission 001 artifact remains provider evidence rather than ground truth. A candidate cannot become accepted merely because it has valid JSON or because a model opinion says pass.
+
+## Mission 006 logical additions — CommitGate, KnownGoodVersion, and Quarantine
+
+| Entity | Required fields | Lifecycle / safety boundary |
+| --- | --- | --- |
+| `AuthorizationContext` | actor, authorization reference, scopes, correlation ID, validity, provenance | Evidence of eligibility authorization only; it does not execute authorization or provider operations. |
+| `KnownGoodVersion` | pipeline reference, version reference, observation reference, verification reference, provenance, correlation ID, timestamp | AEGIS-level known-good record; not provider-native rollback. |
+| `CommitDecision` | decision ID, candidate ID, verification ID, risk decision ID, eligibility, block reasons, evidence, known-good reference, authorization reference, correlation ID, provenance, timestamp, production side-effect flag | `ELIGIBLE` or `BLOCKED`; production commit is always false in Mission 006. |
+| `QuarantineRecord` | quarantine ID, candidate ID, repair request ID, verification ID, risk decision, reason, failed/unknown checks, evidence, candidate provenance, timestamps, correlation ID, status | `OPEN → REVIEWED/RELEASED/REJECTED` as representation only; release requires re-entry through verification. |
+| `QuarantineLedger` | immutable tuple of records | Append-only in-memory forensic ledger; no discard or release authority. |
+| `OutputEligibility` | eligible flag, candidate ID, commit decision ID, reason, evidence, correlation ID, timestamp | Eligibility result only; no downstream sink. |
+
+The Mission 006 gate keeps `VerificationStatus`, `RiskDecision`, and `CommitEligibility` separate. A candidate can have a passing verification result and `RiskDecision=ACCEPT` yet still be blocked because it remains `UNVERIFIED`, lacks a known-good reference, lacks authorization, or has incomplete evidence.

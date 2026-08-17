@@ -1,6 +1,23 @@
 """AEGIS Mission 005: deterministic candidate verification and risk policy."""
 
 from .adapter import AdapterError, BrightDataCliAdapter, CommandResult, build_heal_command, build_heal_prompt
+from .commit_gate_double import CommitGateFixture, build_commit_gate_fixture
+from .commit_gate import (
+    AuthorizationContext,
+    CommitBlockReason,
+    CommitDecision,
+    CommitEligibility,
+    CommitGate,
+    CommitMetricEvent,
+    CommitMetricEventType,
+    CommitSafetyMetricHooks,
+    KnownGoodVersion,
+    OutputEligibility,
+    OutputEligibilityBoundary,
+    QuarantineLedger,
+    QuarantineRecord,
+    QuarantineStatus,
+)
 from .contracts import default_extraction_contract
 from .detection import evaluate_detection
 from .diagnosis import (
@@ -68,6 +85,15 @@ from .verification_double import VerificationFixture, build_verification_fixture
 
 __all__ = [
     "AdapterError",
+    "AuthorizationContext",
+    "CommitBlockReason",
+    "CommitDecision",
+    "CommitEligibility",
+    "CommitGate",
+    "CommitMetricEvent",
+    "CommitMetricEventType",
+    "CommitGateFixture",
+    "CommitSafetyMetricHooks",
     "BrightDataCliAdapter",
     "CheckStatus",
     "CollectionHandle",
@@ -99,12 +125,18 @@ __all__ = [
     "HealState",
     "HealingRequester",
     "HealTestDoubleScenario",
+    "KnownGoodVersion",
     "IndependentEvidence",
     "MetricEvent",
     "MetricEventType",
     "NoExecutionRepairBoundary",
     "Observation",
+    "OutputEligibility",
+    "OutputEligibilityBoundary",
     "ProviderProvenance",
+    "QuarantineLedger",
+    "QuarantineRecord",
+    "QuarantineStatus",
     "RepairAttemptHandle",
     "RepairAttemptState",
     "RepairBoundaryProvenance",
@@ -127,6 +159,7 @@ __all__ = [
     "VerificationProvenance",
     "VerificationResult",
     "VerificationStatus",
+    "build_commit_gate_fixture",
     "build_heal_command",
     "build_heal_prompt",
     "build_repair_request",

@@ -27,6 +27,7 @@ class HealState(str, Enum):
 
 class VerificationStatus(str, Enum):
     UNVERIFIED = "UNVERIFIED"
+    VERIFIED = "VERIFIED"
 
 
 @dataclass(frozen=True)
@@ -108,8 +109,8 @@ class RepairCandidate:
 
     def __post_init__(self) -> None:
         object.__setattr__(self, "preview_result", deep_freeze(self.preview_result))
-        if self.verification_status is not VerificationStatus.UNVERIFIED:
-            raise ValueError("Mission 004 candidates must begin UNVERIFIED")
+        if self.verification_status not in {VerificationStatus.UNVERIFIED, VerificationStatus.VERIFIED}:
+            raise ValueError("RepairCandidate verification status is invalid")
         if not self.raw_evidence_ref:
             raise ValueError("RepairCandidate requires a redacted evidence reference")
 

@@ -157,3 +157,9 @@ Mission 004 connects the existing provider-neutral RepairRequest to the verified
 | Provider-native rollback, raw HTML, WARC, candidate correctness | UNKNOWN/PARTIAL as previously recorded | Mission 004 does not change Mission 001 labels. |
 
 The approval command returned by Bright Data is treated as untrusted provider data. It is not executed, and `--auto-approve` is absent from the adapter and tests. A future verification/risk mission owns the authority to decide whether any candidate may proceed.
+
+## Mission 006 provider boundary — 2026-08-17
+
+Mission 006 does not add a Bright Data operation. It adds only an AEGIS-level `CommitGate` and `KnownGoodVersion` record after candidate verification and risk decision. The provider-native version/rollback capability remains `PARTIALLY VERIFIED by documentation` as recorded in Mission 001; no provider activation, approval, commit, or rollback command is introduced or claimed.
+
+A provider proposal remains untrusted until deterministic verification passes. Even a `RiskDecision=ACCEPT` does not authorize Bright Data approval or production activation. The gate requires an AEGIS known-good reference, valid authorization evidence, complete identifiers, complete verification evidence, `VerificationStatus=VERIFIED`, and matching correlation IDs before returning future `ELIGIBLE`. Otherwise the result is `BLOCKED`, and a quarantine record may be retained.

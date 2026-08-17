@@ -190,3 +190,17 @@ Verification evaluates exactly four conceptual channels: `CONTRACT`, `HISTORY`, 
 The initial acceptance gate requires `CONTRACT`, `SEMANTIC_INVARIANT`, and `INDEPENDENT_EVIDENCE` to pass with no critical contradiction. `HISTORY` strengthens the decision when available but is optional. Missing required evidence produces `QUARANTINE`; deterministic failure produces `REJECT`. No additive confidence weights are used.
 
 `RiskDecision.ACCEPT` means eligible for a later commit stage only. It does not activate a provider version, ship data, or perform production commit. Mission 005 exposes no provider approval, activation, commit, rollback, watch, memory, or benchmark endpoint.
+
+## Mission 006 — CommitGate and QuarantineLedger boundary
+
+Mission 006 adds a provider-neutral eligibility layer after Mission 005 `RiskDecision`:
+
+| Purpose | Operation | Side effect | State/result |
+| --- | --- | --- | --- |
+| Evaluate commit preconditions | `CommitGate.evaluate(candidate, verification, risk, contract, known_good, authorization, correlation_id)` | None; creates an immutable decision | `ELIGIBLE` or `BLOCKED` |
+| Record unsafe outcome | `QuarantineLedger.record_for_decision(...)` | Appends an immutable forensic record in the in-memory ledger | `OPEN` quarantine record |
+| Evaluate future output eligibility | `OutputEligibilityBoundary.evaluate(commit_decision, quarantine_record)` | None; creates an authorization/eligibility result only | eligible or blocked |
+
+The gate fails closed. It requires `RiskDecision=ACCEPT`, `VerificationResult=PASS`, all required deterministic evidence, no critical failures, an allowed candidate provenance, `VerificationStatus=VERIFIED`, a provider-neutral known-good reference, valid authorization, complete identifiers, complete evidence references, and no active quarantine. `ACCEPT` remains eligibility for a later commit stage only; no provider commit or production sink is exposed.
+
+`KnownGoodVersion` is an AEGIS-level reference containing pipeline, version, observation, verification, provenance, and correlation references. It is not a Bright Data version or rollback claim. `QuarantineRecord` preserves candidate, repair, verification, risk, reason, failed/unknown checks, evidence, provenance, timestamps, and correlation IDs. A release status is only represented as data; re-entry requires a new verification ID and no release mechanism is implemented.

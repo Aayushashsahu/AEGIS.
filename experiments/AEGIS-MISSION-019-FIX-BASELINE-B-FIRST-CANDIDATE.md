@@ -144,12 +144,13 @@ Coverage includes candidate receipt, selection, acceptance, normalized evidence,
 | Counter | Value |
 | --- | ---: |
 | `benchmark_runs_executed` | 0 |
-| `provider_operations_executed` | 1 |
+| `provider_operations_executed` | 0 |
+| `smoke_provider_operation_count` | 1 |
 | `healing_operations_executed` | 0 |
 | `metric_results_generated` | 0 |
 | `execution_authorized` | false |
 
-The provider count of one is solely the authorized Gemini readiness smoke. It is not a benchmark trial and is not used to calculate metrics.
+The one smoke provider operation is recorded separately as `smoke_provider_operation_count=1`. `provider_operations_executed=0` refers to benchmark/provider execution counters and remains zero because no benchmark operation was started. The smoke operation is not a benchmark trial and is not used to calculate metrics.
 
 ## Subsequent benchmark command
 

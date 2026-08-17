@@ -321,13 +321,14 @@ def main() -> int:
     write_json(SMOKE_ROOT / "smoke.json", smoke)
     write_json(SMOKE_ROOT / "execution_log.json", {"status": smoke["status"], "provider_operation_count": smoke.get("provider_operation_count", 0), "benchmark_runs_executed": 0, "healing_operations_executed": 0, "metric_results_generated": 0, "execution_authorized": False})
     if smoke["status"] != "PASS":
-        write_json(FLOOR_RUN_ROOT / "execution_log.json", {"status": "STOPPED_BASELINE_B_SMOKE", "benchmark_runs_executed": 0, "provider_operations_executed": smoke.get("provider_operation_count", 0), "healing_operations_executed": 0, "metric_results_generated": 0, "execution_authorized": False, "errors": smoke.get("errors", [])})
+        write_json(FLOOR_RUN_ROOT / "execution_log.json", {"status": "STOPPED_BASELINE_B_SMOKE", "benchmark_runs_executed": 0, "provider_operations_executed": 0, "smoke_provider_operation_count": smoke.get("provider_operation_count", 0), "healing_operations_executed": 0, "metric_results_generated": 0, "execution_authorized": False, "errors": smoke.get("errors", [])})
         print(json.dumps({"status": "STOPPED_BASELINE_B_SMOKE", "errors": smoke.get("errors", []), "checks": smoke.get("checks", {})}, indent=2))
         return 3
     write_json(FLOOR_RUN_ROOT / "execution_log.json", {
         "status": "BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK",
         "benchmark_runs_executed": 0,
-        "provider_operations_executed": smoke.get("provider_operation_count", 0),
+        "provider_operations_executed": 0,
+        "smoke_provider_operation_count": smoke.get("provider_operation_count", 0),
         "healing_operations_executed": 0,
         "metric_results_generated": 0,
         "execution_authorized": False,

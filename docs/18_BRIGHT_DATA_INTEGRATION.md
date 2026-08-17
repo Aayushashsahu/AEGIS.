@@ -113,3 +113,18 @@ bdata scraper approve c_msx16nef2jck24ag94 --url https://news.ycombinator.com
 ```
 
 This experiment does not claim provider-native rollback, raw HTML retrieval, WARC delivery, candidate correctness, AEGIS verification success, or a general performance SLA.
+
+## Mission 002 implementation outcome — 2026-08-17
+
+Mission 002 implements the smallest compatible adapter boundary from the verified Mission 001 CLI path. The application does not scatter provider commands and does not implement healing, approval, rollback, candidate verification, or raw-response retrieval.
+
+| Capability | Status | Mission 002 evidence |
+| --- | --- | --- |
+| Provider-neutral create/run/poll/retrieve seam | VERIFIED for implementation boundary | `src/aegis/adapter.py`; injected command runner; unit test for the documented CLI-shaped response. |
+| Asynchronous collection state | VERIFIED in local implementation | `SUBMITTED → RUNNING → COMPLETED/FAILED/TIMED_OUT`; bounded deadline; timeout cannot produce an Observation. |
+| Realtime-to-batch preservation | VERIFIED in local implementation against Mission 001 trace shape | Adapter records `BATCH` when the observed CLI trace reports realtime fallback. This does not claim deterministic provider behavior beyond Mission 001 evidence. |
+| Bright Data Observation conversion | VERIFIED for recorded artifact path | `tests/integration/test_mission001_artifact_to_observation.py` preserves Bright Data provenance, provider IDs, latency, mode, row count, and untrusted status. |
+| Deterministic detection | VERIFIED in local implementation | Schema, statistical, and semantic/invariant signals produce immutable `DetectionResult` evidence. |
+| Test double | VERIFIED in local implementation | `DeterministicBrightDataTestDouble` is explicitly labeled `TEST_DOUBLE`; it never proves provider capability. |
+
+The recorded Mission 001 output is intentionally not treated as healthy merely because it is structured JSON. The integration test converts it to an untrusted Observation and detects missing contract-required fields. This is a safety result, not a new live-provider claim.

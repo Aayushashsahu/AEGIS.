@@ -71,14 +71,14 @@ The primary artifact is a deterministic two-minute recorded video. It opens with
 
 ## Quick start
 
-The repository currently contains the canonical documentation and placeholder directories. Application implementation is intentionally not included by this documentation-generation task.
+Mission 002 implements the first vertical slice: a narrow Bright Data CLI adapter seam, asynchronous collection state snapshots, immutable untrusted Observations, a typed ExtractionContract, deterministic schema/statistical/semantic detection, and a clearly labeled `TEST_DOUBLE` path. Healing, candidate verification, risk decisions, rollback, memory, benchmarking, and UI remain out of scope for this mission.
 
 ```bash
 cd AEGIS
-find docs -maxdepth 1 -type f | sort
+PYTHONPATH=src pytest -q tests/unit tests/integration
 ```
 
-Implementation agents must first read [`docs/00_PROJECT_INFO.md`](docs/00_PROJECT_INFO.md), [`docs/04_REQUIREMENTS.md`](docs/04_REQUIREMENTS.md), and [`docs/09_AGENT_OPERATING_CONTRACT.md`](docs/09_AGENT_OPERATING_CONTRACT.md). They must not invent platform capabilities, measured results, endpoints, or schema behavior.
+The live Bright Data artifact from Mission 001 is converted into an untrusted Observation by `tests/integration/test_mission001_artifact_to_observation.py`. The provider adapter uses injected command execution so tests do not require credentials or provider credits. Implementation agents must first read [`docs/00_PROJECT_INFO.md`](docs/00_PROJECT_INFO.md), [`docs/04_REQUIREMENTS.md`](docs/04_REQUIREMENTS.md), and [`docs/09_AGENT_OPERATING_CONTRACT.md`](docs/09_AGENT_OPERATING_CONTRACT.md). They must not invent platform capabilities, measured results, endpoints, or schema behavior.
 
 ## Repository structure
 
@@ -89,13 +89,13 @@ experiments/       Day-1 spikes and experiment records
 mutations/         Controlled mutation fixtures and manifests
 benchmarks/        Frozen baselines, runs, and reports
 scripts/           Reproducible commands and operational tooling
-src/               Application implementation (not yet created)
-tests/             Test suites (not yet created)
+src/               Mission 002 collection/observation/detection implementation
+tests/             Mission 002 unit and integration tests
 ```
 
 ## Limitations and open decisions
 
-The repository does not yet claim a completed collector, healing API integration, latency, recovery rate, or production deployment. Bright Data CLI/API behavior, approval workflow, version/rollback mechanism, raw response access, WARC availability, staging-hosting choice, and the exact LLM configuration require Day-1 verification. These are tracked as open decisions rather than filled with assumptions.
+The repository does not claim a completed healing API integration, candidate verification, risk governor, rollback, recovery rate, benchmark result, or production deployment. Mission 002 uses the Bright Data CLI path verified in Mission 001 only as an adapter boundary and preserves the provider output as untrusted. Provider-native version/rollback, raw response access, WARC availability, and exact LLM configuration remain open decisions tracked in [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
 
 ## AI usage disclosure
 

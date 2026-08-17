@@ -85,6 +85,7 @@ class BenchmarkConfig:
     timeout_policy: Mapping[str, Any]
     collection_policy: Mapping[str, Any]
     evidence_policy: Mapping[str, Any]
+    artifact_contract: Mapping[str, str]
     artifact_root: str
     metric_formula_version: str
     created_at: str
@@ -101,6 +102,7 @@ class BenchmarkConfig:
         object.__setattr__(self, "timeout_policy", freeze_mapping(self.timeout_policy))
         object.__setattr__(self, "collection_policy", freeze_mapping(self.collection_policy))
         object.__setattr__(self, "evidence_policy", freeze_mapping(self.evidence_policy))
+        object.__setattr__(self, "artifact_contract", freeze_mapping(self.artifact_contract))
         if not self.configuration_hash:
             object.__setattr__(self, "configuration_hash", compute_configuration_hash(self))
 
@@ -384,6 +386,17 @@ def validate_config(config: BenchmarkConfig) -> ValidationResult:
         errors.append("evidence_policy is missing")
     checks["policies"] = "PASS" if isinstance(config.collection_policy, Mapping) and bool(config.collection_policy) and isinstance(config.evidence_policy, Mapping) and bool(config.evidence_policy) else "FAIL"
 
+    required_artifacts = {"configs", "manifests", "runs", "results", "reports"}
+    artifact_contract_ok = isinstance(config.artifact_contract, Mapping) and set(config.artifact_contract) == required_artifacts
+    if not artifact_contract_ok:
+        errors.append("artifact_contract must define configs, manifests, runs, results, and reports")
+    else:
+        for artifact_name, artifact_path in config.artifact_contract.items():
+            if not isinstance(artifact_path, str) or not artifact_path.startswith("benchmarks/") or Path(artifact_path).is_absolute():
+                errors.append(f"artifact_contract.{artifact_name} must be a relative benchmarks path")
+                artifact_contract_ok = False
+    checks["artifact_contract"] = "PASS" if artifact_contract_ok else "FAIL"
+
     if not config.artifact_root.strip() or Path(config.artifact_root).is_file():
         errors.append("artifact_root is missing or points to a file")
     checks["artifact_root"] = "PASS" if bool(config.artifact_root.strip()) and not Path(config.artifact_root).is_file() else "FAIL"
@@ -556,6 +569,7 @@ def default_validation_config(*, code_revision: str, repository_state: str = "DI
         timeout_policy={"collection_ms": 300000, "healing_ms": 900000, "polling_ms": 300000, "verification_ms": 30000, "total_ms": 1800000},
         collection_policy={"mode": "VALIDATION_ONLY", "provider_execution": "NOT_EXECUTED", "provenance": "TEST_DOUBLE_FIXTURE_ONLY"},
         evidence_policy={"ground_truth": "MutationGroundTruth_ONLY", "raw_runs": "MutationRun_ONLY", "metrics": "Mission010_calculator_only", "redaction": "Mission008_audit_store", "manual_result_editing": False},
+        artifact_contract={"configs": "benchmarks/configs", "manifests": "benchmarks/manifests", "runs": "benchmarks/runs", "results": "benchmarks/results", "reports": "benchmarks/reports"},
         artifact_root="benchmarks/results/mission_011_validation_floor",
         metric_formula_version=FORMULA_VERSION,
         created_at=DEFAULT_CREATED_AT,
@@ -601,6 +615,7 @@ def _canonical_config_payload(config: BenchmarkConfig) -> Mapping[str, Any]:
         "timeout_policy": config.timeout_policy,
         "collection_policy": config.collection_policy,
         "evidence_policy": config.evidence_policy,
+        "artifact_contract": config.artifact_contract,
         "artifact_root": config.artifact_root,
         "metric_formula_version": config.metric_formula_version,
         "created_at": config.created_at,

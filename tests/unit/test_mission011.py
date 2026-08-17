@@ -39,6 +39,14 @@ def test_valid_validation_config_passes_and_records_expected_freeze_fields() -> 
     assert tuple(baseline.baseline_id for baseline in current.baselines) == ("BASELINE_A", "BASELINE_B", "AEGIS")
     assert all(baseline.status == "NOT_READY" for baseline in current.baselines)
     assert result.warnings
+    assert current.artifact_contract == {
+        "configs": "benchmarks/configs",
+        "manifests": "benchmarks/manifests",
+        "runs": "benchmarks/runs",
+        "results": "benchmarks/results",
+        "reports": "benchmarks/reports",
+    }
+    assert result.checks["artifact_contract"] == "PASS"
 
 
 def test_benchmark_config_and_nested_policies_are_immutable() -> None:
@@ -112,6 +120,14 @@ def test_ready_baseline_requires_real_implementation_and_configuration_metadata(
     result = validate_config(invalid_ready)
     assert result.status is ValidationStatus.INVALID
     assert error_contains(result, "ready baseline BASELINE_A lacks a real configuration hash")
+
+
+def test_changed_frozen_field_invalidates_the_configuration_hash() -> None:
+    changed = replace(config(), prompt_version="prompt-v2")
+    result = validate_config(changed)
+    assert result.status is ValidationStatus.INVALID
+    assert error_contains(result, "configuration_hash does not match")
+    assert changed.configuration_hash != compute_configuration_hash(changed)
 
 
 def test_freeze_config_recomputes_the_same_hash_without_mutating_input() -> None:

@@ -185,6 +185,42 @@ class QuarantineRecord:
             correlation_id=correlation_id,
         )
 
+    @classmethod
+    def from_watch_regression(
+        cls,
+        *,
+        quarantine_id: str,
+        candidate_id: str,
+        registration_id: str,
+        verification_id: str,
+        reason_code: str,
+        failed_checks: tuple[str, ...],
+        evidence_refs: tuple[str, ...],
+        candidate_provenance: ProviderProvenance,
+        correlation_id: str,
+    ) -> "QuarantineRecord":
+        """Create a watch regression record through the same ledger model.
+
+        The repair request reference is an AEGIS-local watch-registration link;
+        it is not a new repair execution or a provider operation.
+        """
+
+        return cls(
+            quarantine_id=quarantine_id,
+            candidate_id=candidate_id,
+            repair_request_id=f"watch:{registration_id}",
+            verification_id=verification_id,
+            risk_decision_id=f"watch-risk:{quarantine_id}",
+            risk_decision=RiskDecisionType.QUARANTINE,
+            reason_code=reason_code,
+            failed_checks=failed_checks,
+            unknown_checks=(),
+            evidence_refs=evidence_refs,
+            candidate_provenance=candidate_provenance,
+            correlation_id=correlation_id,
+            status=QuarantineStatus.OPEN,
+        )
+
     def with_status(
         self,
         status: QuarantineStatus,
@@ -236,6 +272,33 @@ class QuarantineLedger:
                 risk_decision,
                 reason_code=reason,
                 correlation_id=verification.correlation_id,
+            )
+        )
+
+    def record_watch_regression(
+        self,
+        *,
+        quarantine_id: str,
+        candidate_id: str,
+        registration_id: str,
+        verification_id: str,
+        reason_code: str,
+        failed_checks: tuple[str, ...],
+        evidence_refs: tuple[str, ...],
+        candidate_provenance: ProviderProvenance,
+        correlation_id: str,
+    ) -> "QuarantineLedger":
+        return self.append(
+            QuarantineRecord.from_watch_regression(
+                quarantine_id=quarantine_id,
+                candidate_id=candidate_id,
+                registration_id=registration_id,
+                verification_id=verification_id,
+                reason_code=reason_code,
+                failed_checks=failed_checks,
+                evidence_refs=evidence_refs,
+                candidate_provenance=candidate_provenance,
+                correlation_id=correlation_id,
             )
         )
 

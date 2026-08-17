@@ -163,3 +163,9 @@ The approval command returned by Bright Data is treated as untrusted provider da
 Mission 006 does not add a Bright Data operation. It adds only an AEGIS-level `CommitGate` and `KnownGoodVersion` record after candidate verification and risk decision. The provider-native version/rollback capability remains `PARTIALLY VERIFIED by documentation` as recorded in Mission 001; no provider activation, approval, commit, or rollback command is introduced or claimed.
 
 A provider proposal remains untrusted until deterministic verification passes. Even a `RiskDecision=ACCEPT` does not authorize Bright Data approval or production activation. The gate requires an AEGIS known-good reference, valid authorization evidence, complete identifiers, complete verification evidence, `VerificationStatus=VERIFIED`, and matching correlation IDs before returning future `ELIGIBLE`. Otherwise the result is `BLOCKED`, and a quarantine record may be retained.
+
+## Mission 007 provider boundary — 2026-08-17
+
+Mission 007 adds no Bright Data operation. It evaluates later AEGIS observations through the existing deterministic detection boundary and stores local regression/quarantine evidence. Provider-native rollback remains `PARTIALLY VERIFIED by documentation` as recorded in Mission 001; no rollback, activation, approval, or provider mutation is attempted.
+
+The watch registration requires an AEGIS-level eligible commit decision, known-good reference, passing verification, verified candidate, expected contract, and matching correlation. A regression is quarantined locally according to watch policy. Later rollback or re-diagnosis remains a separate mission and cannot be inferred from a watch result.

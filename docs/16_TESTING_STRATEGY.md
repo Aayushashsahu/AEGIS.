@@ -84,3 +84,9 @@ Mission 006 adds deterministic safety tests for the CommitGate, KnownGoodVersion
 The recorded Bright Data proposal integration remains `UNVERIFIED` and is blocked by the Mission 006 gate even when provider-neutral known-good and authorization references are supplied. The gate performs no provider call, approval, activation, commit, rollback, or downstream write.
 
 The full command `PYTHONPATH=src pytest -q tests/unit tests/integration` passed with `71 passed`. No benchmark results were generated. The safety suite asserts that quarantine is retained, rejection is blocked, unknown evidence is blocked, release representation does not directly create eligibility, and all immutable records reject mutation.
+
+## Mission 007 evidence — 2026-08-17
+
+Mission 007 adds deterministic watch tests for healthy post-commit output, schema regression, semantic regression, statistical regression, unknown evidence, registration requirements, state-transition guards, immutable WatchResult/RegressionEvent/QuarantineRecord records, unchanged Observations, existing detection reuse, quarantine integration, and absence of repair/rollback/provider operations.
+
+The full command `PYTHONPATH=src pytest -q tests/unit tests/integration` passed with `82 passed`. Tests use an explicitly labeled `TEST_DOUBLE` eligible baseline; no production commit is faked and no Bright Data state is changed. Unknown watch evidence remains `UNKNOWN` and is not automatically quarantined by the default policy.

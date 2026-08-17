@@ -203,3 +203,16 @@ Status: OPEN | RESOLVED | DEFERRED
 | Safety consequence | Quarantined or blocked candidates are retained as forensic records and cannot enter downstream output. A represented `RELEASED` status still requires a new verification re-entry. |
 | Provider boundary | No Bright Data approval, activation, provider commit, or rollback is implemented. Provider-native version/rollback remains partial/documentation-only. |
 | Status | RESOLVED for Mission 006 scope; durable persistence and real production commit remain OPEN |
+
+## Mission 007 — Post-commit watch and regression detection
+
+| Field | Record |
+| --- | --- |
+| Decision ID | OD-007 / Mission 007 |
+| Date | 2026-08-17 |
+| Context | Passing verification once does not prove that a repaired extraction remains healthy on later collections. Provider-native rollback remains unresolved. |
+| Decision | Add immutable WatchRegistration, WatchCycle, WatchResult, and RegressionEvent models that reuse the existing deterministic detection engine and the existing Mission 006 QuarantineLedger. |
+| Policy | A later observation is `HEALTHY` only when required watch evidence is present and existing detection emits no signals. Any detection signal is `REGRESSION`; missing required evidence is `UNKNOWN`. Serious regression is quarantined locally. |
+| Safety consequence | Watch never repairs, re-diagnoses, activates, approves, commits, or rolls back. Unknown does not silently become healthy, and optional missing evidence does not automatically quarantine. |
+| Provider boundary | Bright Data provider-native rollback remains partial/documentation-only and is not implemented. |
+| Status | RESOLVED for Mission 007 scope; durable watch history and rollback remain OPEN |

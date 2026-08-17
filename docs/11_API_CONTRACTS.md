@@ -204,3 +204,18 @@ Mission 006 adds a provider-neutral eligibility layer after Mission 005 `RiskDec
 The gate fails closed. It requires `RiskDecision=ACCEPT`, `VerificationResult=PASS`, all required deterministic evidence, no critical failures, an allowed candidate provenance, `VerificationStatus=VERIFIED`, a provider-neutral known-good reference, valid authorization, complete identifiers, complete evidence references, and no active quarantine. `ACCEPT` remains eligibility for a later commit stage only; no provider commit or production sink is exposed.
 
 `KnownGoodVersion` is an AEGIS-level reference containing pipeline, version, observation, verification, provenance, and correlation references. It is not a Bright Data version or rollback claim. `QuarantineRecord` preserves candidate, repair, verification, risk, reason, failed/unknown checks, evidence, provenance, timestamps, and correlation IDs. A release status is only represented as data; re-entry requires a new verification ID and no release mechanism is implemented.
+
+## Mission 007 — Post-commit watch boundary
+
+Mission 007 adds provider-neutral internal operations after a future eligible commit:
+
+| Purpose | Operation | Side effect | State/result |
+| --- | --- | --- | --- |
+| Register watch | `WatchEngine.register(candidate, verification, risk, commit_decision, known_good, contract, ...)` | Creates immutable registration only when the existing CommitGate is `ELIGIBLE` | `COMMITTED` |
+| Evaluate watch cycle | `WatchEngine.evaluate(registration, observation, ...)` | Reuses `evaluate_detection`; creates immutable cycle/result/evidence | `HEALTHY`, `REGRESSION`, or `UNKNOWN` |
+| Quarantine regression | `QuarantineLedger.record_watch_regression(...)` | Appends the existing Mission 006 quarantine record | `OPEN` quarantine record |
+| Record watch metrics | `WatchMetricHooks.record(evaluation)` | Appends local metric events only | No benchmark or provider operation |
+
+The watch state boundary is `COMMITTED → WATCHING → HEALTHY/REGRESSION/UNKNOWN`, with `REGRESSION → QUARANTINED` when the watch policy requires it. The watch layer does not repair, re-diagnose, activate, approve, commit, or rollback.
+
+`UNKNOWN` is preserved when required watch evidence is unavailable. The default policy does not quarantine merely because optional evidence is absent. Any serious regression uses the existing `QuarantineLedger`; no second quarantine implementation exists.

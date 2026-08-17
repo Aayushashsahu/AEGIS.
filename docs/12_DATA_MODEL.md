@@ -143,3 +143,16 @@ The deterministic verifier treats provider evidence as untrusted. The recorded M
 | `OutputEligibility` | eligible flag, candidate ID, commit decision ID, reason, evidence, correlation ID, timestamp | Eligibility result only; no downstream sink. |
 
 The Mission 006 gate keeps `VerificationStatus`, `RiskDecision`, and `CommitEligibility` separate. A candidate can have a passing verification result and `RiskDecision=ACCEPT` yet still be blocked because it remains `UNVERIFIED`, lacks a known-good reference, lacks authorization, or has incomplete evidence.
+
+## Mission 007 logical additions — Post-commit watch
+
+| Entity | Required fields | Lifecycle / safety boundary |
+| --- | --- | --- |
+| `WatchPolicy` | policy ID, evidence requirement, quarantine severity threshold, enabled flag | Controls bounded watch interpretation; unknown is not silently healthy. |
+| `WatchRegistration` | registration ID, pipeline reference, candidate reference, committed verification reference, known-good version, expected contract, correlation ID, policy, provenance, state, timestamp | Requires existing `CommitDecision=ELIGIBLE`, passing verification, verified candidate, known-good, and matching correlation. |
+| `WatchCycle` | cycle ID, pipeline reference, observation reference, detection reference, timestamp, status, evidence, correlation ID, provenance | `WATCHING → HEALTHY/REGRESSION/UNKNOWN`; regression may transition to `QUARANTINED`. |
+| `WatchResult` | cycle ID, status, detection reference/result, evidence, affected fields, severity, provenance, correlation ID, timestamp | `HEALTHY`, `REGRESSION`, or `UNKNOWN`; immutable. |
+| `RegressionEvent` | regression ID, pipeline reference, candidate reference, watch cycle reference, failed evidence, affected fields, severity, timestamp, correlation ID, provenance | Evidence-only regression record; no repair or rollback transition. |
+| `WatchMetricEvent` | event ID, event type, cycle ID, correlation ID, timestamp | Instrumentation only; no benchmark result. |
+
+The watch layer reuses the existing `DetectionResult` and `ExtractionContract`. It does not mutate the input `Observation`. Regression quarantine records are created through the Mission 006 `QuarantineLedger` and preserve the original candidate/verification linkage plus watch-cycle evidence.

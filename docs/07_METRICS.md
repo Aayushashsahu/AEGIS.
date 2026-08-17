@@ -71,3 +71,9 @@ The following later metrics remain event-ready but unmeasured: `VerificationMiss
 Mission 006 adds `CommitSafetyMetricHooks` for later event-based calculation of `QuarantineRate` and `UnsafeRefusalRate`. It records commit decisions and quarantine records without running a benchmark or claiming production behavior.
 
 With no production commit denominator, commit-related rate values remain `NOT_APPLICABLE` rather than being reported as measured zero. A blocked decision is an instrumented safety refusal event; it is not a benchmark result. Quarantine and unsafe-refusal numerators/denominators must later be calculated from immutable mutation-lab or controlled run events with per-severity scope.
+
+## Mission 007 metric hooks — 2026-08-17
+
+Mission 007 adds `WatchMetricHooks` for later calculation of `RegressionRate`, `WatchFailureRate`, and `UnsafeRefusalRate`. The current instrumentation defines watch failure as an unknown watch result and unsafe refusal as a regression that enters quarantine. It records watch, regression, unknown, and quarantine events without executing benchmarks or claiming production metrics.
+
+With no watch cycles, the metrics are `NOT_APPLICABLE`. After controlled fixture events, the status is `INSTRUMENTED_NOT_BENCHMARKED`; values are not benchmark results. Future reporting must calculate numerators and denominators from immutable controlled-run events with per-severity scope.

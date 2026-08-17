@@ -205,3 +205,19 @@ Mission 011 adds immutable configuration and validation projections without addi
 | `DryRunResult` | validation-only status, config/fixture/seed/baseline checks, calculator availability, artifact-path check, execution-plan tuple, expected counts, zero execution counters, no-execution authorization flag | Explicitly no benchmark/provider/healing/metric execution; substantive JSON is deterministic for identical config |
 
 The artifact contract declares future locations for configurations, manifests, runs, results, and reports under `benchmarks/`. Mission 011 commits only configuration and validation-plan artifacts under `benchmarks/configs/`; it does not create fake run/result/report artifacts. Every future benchmark number must remain traceable to `MutationGroundTruth + MutationRun + BenchmarkConfig` and the Mission 010 calculator.
+
+## Mission 012 logical additions — common benchmark participant and runner contract
+
+Mission 012 adds participant and planned-run records without creating a second metric model or altering `MutationRun`.
+
+| Record | Required fields | Safety and fairness boundary |
+| --- | --- | --- |
+| `ParticipantReadiness` | participant ID, readiness status, contract/benchmark readiness, participant revision/configuration hash, provenance, checks, errors, warnings | `NOT_READY` and `NOT_READY_FOR_BENCHMARK` remain explicit; no substitution is allowed |
+| `ParticipantExecutionInput` | benchmark/config hash, participant ID, mutation/severity/seed, fixture version, evaluator ground-truth reference, code/environment, timeout/retry policies, artifact root, trial metadata | Same mutation, seed, fixture, ground truth reference, timeout/retry policy, and evaluator metadata for every participant |
+| `PreparedParticipantRun` | participant ID, immutable execution input, `READY` state, artifact reference | Preparation is distinct from execution and does not change the input |
+| `RunManifest` | benchmark/config hash, participant and revision/config hash, mutation/severity/seed, fixture/ground-truth/code/environment references, timeout/retry policies, artifact root/name, deterministic run ID, state | Immutable after planning; contains no result payload |
+| `ParticipantRunEvidence` | common normalized output fields, timings, cost/LLM-call values, evidence/artifact refs, provenance, runner state | Raw evidence only; absent AEGIS concepts are `NOT_APPLICABLE`; no metric calculation |
+| `FreezeSnapshot` | frozen configuration hash, code/fixture/mutation/severity/seed/baseline/formula/policy values | Any mismatch produces invalidated fail-closed evidence |
+| `RunnerDryRunResult` | status, validation/freeze/readiness/fixture/seed checks, plan, expected counts, zero execution counters, metric availability, execution authorization | `BLOCKED_NOT_READY` is a safety/readiness outcome, not a benchmark result |
+
+The deterministic run ID and artifact name are derived only from participant ID, mutation ID, seed, and frozen configuration hash. Planned artifacts point under the Mission 011 artifact root but Mission 012 creates no run/result files and no fake output.

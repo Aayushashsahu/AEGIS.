@@ -274,3 +274,20 @@ Status: OPEN | RESOLVED | DEFERRED
 | Artifact contract | Future configs, manifests, runs, results, and reports are declared under `benchmarks/`; only configuration and validation-plan artifacts are committed now. |
 | Consequences | The benchmark definition and reproducibility gate are frozen for review, but full benchmark execution remains blocked until baseline A/B/AEGIS implementations/configurations are genuinely ready and a later mission authorizes execution. |
 | Status | RESOLVED for configuration freeze and dry-run validation; benchmark execution, baseline readiness, and headline results remain OPEN |
+
+## Mission 012 — Common baseline participant contract and validation-only runner
+
+| Field | Record |
+| --- | --- |
+| Decision ID | OD-012 / Mission 012 |
+| Date | 2026-08-17 |
+| Context | Mission 011 froze the benchmark configuration and deterministic plan, but the three participants did not yet share an executable evidence contract or readiness boundary. |
+| Decision | Define common provider-neutral participant adapters for `BASELINE_A`, `BASELINE_B`, and `AEGIS`; normalize raw evidence into one schema; enforce freeze equality; and expose a validation-only `--dry-run` runner. |
+| Baseline A | Static selector contract with no AEGIS detection, verification, RiskGovernor, or CommitGate controls. Contract readiness is testable against all M001–M006; benchmark readiness remains tied to a real frozen READY slot. |
+| Baseline B | Readiness validator only. Model, prompt, configuration, implementation revision, and first-candidate policy cannot be selected automatically. Missing owner-approved values remain `NOT_READY`. |
+| AEGIS | Existing Mission 009 lifecycle is normalized through a TEST_DOUBLE adapter. The benchmark slot remains `NOT_READY_FOR_BENCHMARK`; safety policy is unchanged. |
+| Fairness | Every participant receives equal mutation ID, severity, seed, fixture version, evaluator ground-truth reference, trial metadata, timeout, retry, code/environment, and artifact-root inputs. Ground-truth content is not supplied as runtime participant data. |
+| Freeze enforcement | Configuration hash, code revision, fixture version, mutation IDs/severity, seeds, baseline hashes, metric formula version, timeout, and retry policy are compared against `FreezeSnapshot`; any drift fails closed before `RUNNING`. |
+| Dry run | The runner returns `BLOCKED_NOT_READY`, constructs 18 deterministic `PLANNED` manifests, and reports zero benchmark/provider/healing operations and zero metric results. It does not substitute AEGIS for either missing baseline. |
+| Metric integrity | Mission 010 remains the sole metric calculator; Mission 012 emits raw evidence/plan records only. |
+| Status | RESOLVED for the common contract and validation-only runner; participant readiness and benchmark execution remain OPEN |

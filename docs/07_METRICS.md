@@ -105,3 +105,11 @@ Mission 011 does not modify the Mission 010 metric formulas or calculate any met
 The validation-only dry run records `metric_calculator_available=true` as an interface-availability check, not as a metric value. It records `metric_values_generated=0`, `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, and `benchmark_execution_authorized=false`. Therefore Mission 011 makes no DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, or LLM-call result claim. Mission 010’s six-run `CONTROLLED_HARNESS_RESULT` remains the latest controlled-harness measurement and is not reclassified as a benchmark.
 
 The benchmark configuration hash covers mutation IDs and severity, seeds and trial count, baseline metadata, model/prompt fields, code and repository revision, fixture version, retry and timeout policies, collection/evidence policies, artifact contract, and metric formula version. A changed frozen field with the old hash fails closed.
+
+## Mission 012 runner and metric-integrity boundary — 2026-08-17
+
+Mission 012 produces normalized raw participant evidence and planned-run manifests only. It does not implement a metric formula, calculate a metric result, or embed baseline-specific metric logic. Mission 010 remains the sole calculator and its `mission-010-metrics-v1` formula version remains frozen in `BenchmarkConfig`.
+
+Common normalization preserves `detected`, `verification_status`, `risk_decision`, `output_eligible`, `failure_state`, latency, cost, LLM-call count, evidence references, and provenance. For Baseline A and Baseline B, AEGIS-only fields are `NOT_APPLICABLE`; they are not converted into synthetic passes, failures, or safety equivalents. The runner records `metric_results_generated=0`, and any future metric calculation must consume raw participant evidence plus independent `MutationGroundTruth` through the Mission 010 calculator downstream.
+
+The Mission 012 dry run reports `BLOCKED_NOT_READY` because the frozen participant slots are not benchmark-ready. This is a readiness state, not a benchmark result. No DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, LLM-call, or comparative result is published.

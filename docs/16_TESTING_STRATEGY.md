@@ -126,3 +126,17 @@ PYTHONPATH=src pytest -q tests/unit tests/integration
 ```
 
 Mission 011 publishes no benchmark metric result. Mission 010 controlled-harness evidence remains separate, and no 540-run execution or provider operation is invoked by the validator.
+
+## Mission 012 evidence — common benchmark participant and runner contract
+
+Mission 012 adds focused tests for the existence of all three participant slots; NOT_READY execution blocking; Baseline A static-contract readiness and one controlled normalized evidence record; Baseline B missing-model/prompt/implementation/configuration fail-closed readiness; AEGIS TEST_DOUBLE normalization; common schema fields; equal mutation/seed/fixture/ground-truth/trial metadata; configuration-hash, fixture-version, seed, and baseline-hash freeze drift; deterministic run IDs and artifact names; repeated dry-run identity; zero participant execution during dry-run; Mission 010 sole metric authority; explicit TEST_DOUBLE provenance; and absence of production approval/commit/rollback controls.
+
+The focused Mission 012 suite passed with `16 passed`. The full repository suite passed with `170 passed`. The generated runner dry run returns `BLOCKED_NOT_READY`, constructs 18 planned manifests, preserves all six mutation IDs and seed `12345`, and reports zero benchmark runs, provider operations, healing operations, and metric results. The command boundary is:
+
+```bash
+PYTHONPATH=src python3 scripts/benchmark_runner.py \
+  --config benchmarks/configs/mission_011_validation_floor.json \
+  --dry-run
+```
+
+This command is validation-only. It does not authorize or execute the benchmark.

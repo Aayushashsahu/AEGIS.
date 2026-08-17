@@ -283,3 +283,26 @@ Mission 011 adds provider-neutral, side-effect-free benchmark configuration oper
 The validator rejects missing or duplicate mutation IDs, missing or invalid severity mappings, missing/duplicate/non-integer seeds, incomplete or inconsistent baselines, missing revisions or fixture version, invalid retry/timeout policies, missing artifact paths, unsupported metric formula versions, conflicting code/repository revisions, and stale configuration hashes. `NOT_READY`, `TBD`, `UNKNOWN`, and `NOT_APPLICABLE` remain explicit data where implementation or model details are not established.
 
 A successful dry-run result is labeled `VALIDATION_ONLY` and contains `VALIDATION ONLY` / `NO BENCHMARK EXECUTED`, a deterministic execution plan, expected run/mutation/seed/baseline counts, validation checks, and zero execution counters. It never returns metric values and carries `benchmark_execution_authorized=false`. Repeated dry runs over the same immutable config must have byte-identical substantive output.
+
+## Mission 012 — Common benchmark participants and raw-evidence runner
+
+Mission 012 adds provider-neutral benchmark interfaces without adding a provider endpoint or an execution side effect to dry-run:
+
+| Operation/model | Purpose | Side effect |
+| --- | --- | --- |
+| `ParticipantAdapter` | Common `readiness`, `prepare`, `run_mutation`, `collect_result`, and `return_run_evidence` contract | Participant execution only through an explicit later call; dry-run does not invoke it |
+| `BaselineAAdapter` | Static selector contract; AEGIS detection/verification/risk/commit controls are explicitly `NOT_USED` | TEST_DOUBLE fixture execution only when a separately frozen READY slot is supplied |
+| `BaselineBAdapter` | Owner-approved naive-repair slot and readiness validator | No execution while model/prompt/configuration is missing |
+| `AegisAdapter` | Normalize existing Mission 009 AEGIS lifecycle under `TEST_DOUBLE` provenance | No provider operation; benchmark slot remains `NOT_READY_FOR_BENCHMARK` |
+| `ParticipantExecutionInput` | Identical mutation/seed/fixture/trial metadata delivered to every participant | None |
+| `ParticipantRunEvidence` | Common raw output schema with `NOT_APPLICABLE` for absent concepts | None |
+| `RunManifest` | Immutable planned-run identity and artifact naming | None; no result payload |
+| `FreezeSnapshot` / `validate_freeze` | Compare hash, revision, fixture, mutation, severity, seed, baseline hashes, formula, and policies | None; mismatch invalidates |
+| `BenchmarkRunner.dry_run()` | Validate participants and create deterministic plan | No benchmark/provider/healing/metric operation |
+| `scripts/benchmark_runner.py --dry-run` | Command boundary for validation-only mode | Prints raw dry-run JSON; execution is intentionally unavailable |
+
+The normalized common evidence fields are `participant_id`, `run_id`, `mutation_id`, `severity`, `seed`, `fixture_version`, `participant_revision`, `configuration_hash`, `ground_truth_reference`, `code_revision`, `environment_reference`, `timeout_policy`, `retry_policy`, `artifact_root`, `observation_reference`, `detected`, `verification_status`, `risk_decision`, `output_eligible`, `failure_state`, `timing_ms`, `cost`, `llm_calls`, `evidence_refs`, `artifact_refs`, `provenance`, and runner state. Baseline-only concepts remain `NOT_APPLICABLE`.
+
+`BenchmarkRunner.dry_run()` returns `VALIDATION_ONLY`, `BLOCKED_NOT_READY`, or `INVALID`. At Mission 012 start, the frozen slots produce `BLOCKED_NOT_READY`: Baseline A has a valid contract but a `NOT_READY` slot, Baseline B lacks owner-approved model/prompt/implementation/configuration values, and AEGIS has a TEST_DOUBLE normalization contract but is `NOT_READY_FOR_BENCHMARK`. The runner still constructs the deterministic 18-step plan and never substitutes AEGIS for a missing baseline.
+
+No `approve`, production `commit`, provider activation, provider rollback, metric calculation, or automatic execution method is exposed by the dry-run boundary. An explicit `execute_one` method exists only as a later-run boundary and first checks freeze and participant readiness; it is never called by validation-only mode.

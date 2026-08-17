@@ -1,0 +1,51 @@
+# Python caches and bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.crt
+
+# Packaging and build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Test, coverage, and type-check caches
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# IDE and OS metadata
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Generated benchmark and experiment outputs
+benchmarks/results/*
+benchmarks/reports/*
+experiments/runs/*
+!benchmarks/results/.gitkeep
+!benchmarks/reports/.gitkeep
+!experiments/runs/.gitkeep
+
+# Local logs and temporary files
+*.log
+*.tmp
+*.swp

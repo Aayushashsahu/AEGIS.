@@ -1,0 +1,11 @@
+{
+  "collector_id": "c_msx16nef2jck24ag94",
+  "created_at": "2026-08-17T09:28:09.207Z",
+  "create_latency_ms": 236628,
+  "run_latency_ms": 198844,
+  "response_id": "d2t1786959141390rqae4b7sq8q8",
+  "batch_job_id": "j_msx1c7l14dx6gn69t",
+  "target_url": "https://news.ycombinator.com",
+  "row_count": 59,
+  "run_behavior": "CLI attempted realtime mode, reported page limit exceeded, then fell back to batch mode."
+}

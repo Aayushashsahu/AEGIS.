@@ -1,0 +1,138 @@
+# 11 — Internal API Contracts
+
+**Status:** Contract baseline for implementation. Exact provider endpoints remain unknown.  
+**Design:** Internal APIs are versioned, idempotent where side effects exist, and state-aware.  
+**External rule:** Do not represent Bright Data routes as internal or verified until the integration spike confirms them.
+
+## API conventions
+
+All internal endpoints use JSON, UTC timestamps, opaque IDs, and a `correlation_id`. Mutating commands require an idempotency key. Responses include `request_id`, `status`, and links to durable evidence. Errors use stable codes, not provider-specific free text. Authorization is role-based at the command boundary; read endpoints may redact raw content and secrets.
+
+## Common schemas
+
+```json
+{
+  "id": "opaque-id",
+  "correlation_id": "episode-or-request-id",
+  "created_at": "ISO-8601 UTC",
+  "status": "terminal-or-current-status",
+  "evidence_refs": ["evidence://..."],
+  "version": 1
+}
+```
+
+```json
+{
+  "error": {
+    "code": "VERIFICATION_REQUIRED",
+    "message": "Safe human-readable explanation",
+    "retryable": false,
+    "details": {}
+  },
+  "request_id": "opaque-id"
+}
+```
+
+## Endpoint catalog
+
+| Purpose | Method | Route | Side effect | Idempotency | State impact |
+| --- | --- | --- | --- | --- | --- |
+| Register collector | POST | `/v1/collectors` | Creates collector definition | `Idempotency-Key` required | None → registered |
+| Get collector | GET | `/v1/collectors/{collector_id}` | None | N/A | None |
+| Start collection | POST | `/v1/collectors/{collector_id}/collections` | Starts external collection | Required | → collection in progress |
+| Get collection | GET | `/v1/collections/{collection_id}` | None | N/A | Collection status read |
+| Record observation | POST | `/v1/collections/{collection_id}/observations` | Persists observation | Required | → observation recorded |
+| Evaluate detection | POST | `/v1/observations/{observation_id}/detect` | Creates findings/event | Required | HEALTHY or ANOMALOUS |
+| Diagnose anomaly | POST | `/v1/detection-events/{event_id}/diagnose` | Creates diagnosis/request | Required | ANOMALOUS → DIAGNOSING |
+| Start repair | POST | `/v1/diagnoses/{diagnosis_id}/repairs` | Invokes adapter | Required | DIAGNOSING → HEALING |
+| Get repair attempt | GET | `/v1/repairs/{repair_id}` | None | N/A | Read |
+| List candidates | GET | `/v1/repairs/{repair_id}/candidates` | None | N/A | Read |
+| Verify candidate | POST | `/v1/candidates/{candidate_id}/verifications` | Creates verification run | Required | → VERIFYING / terminal |
+| Decide risk | POST | `/v1/candidates/{candidate_id}/risk-decisions` | Records decision | Required | ACCEPT/RETRY/QUARANTINE/ESCALATE |
+| Commit candidate | POST | `/v1/candidates/{candidate_id}/commit` | Promotes version | Required | ACCEPTED → COMMITTED |
+| Quarantine episode | POST | `/v1/episodes/{episode_id}/quarantine` | Blocks shipment | Required | → QUARANTINED |
+| Start watch | POST | `/v1/commits/{commit_id}/watch-cycles` | Schedules validation | Required | COMMITTED → WATCHING |
+| Roll back | POST | `/v1/pipelines/{pipeline_id}/rollback` | Restores known-good version | Required | REGRESSION → ROLLING_BACK |
+| Get repair episode | GET | `/v1/repair-episodes/{episode_id}` | None | N/A | Read |
+| Apply mutation | POST | `/v1/mutations/runs` | Mutates staging fixture | Required | Creates mutation run |
+| Run benchmark | POST | `/v1/benchmarks/runs` | Executes protocol | Required | Creates benchmark run |
+| Get benchmark report | GET | `/v1/benchmarks/runs/{run_id}/report` | None | N/A | Read |
+| Get product output | GET | `/v1/product/gpu-prices` | None | N/A | Reads committed, non-quarantined data |
+
+## Representative request and response schemas
+
+### Start collection
+
+```json
+{
+  "collector_id": "collector-1",
+  "input": {"target": "fixture-or-approved-url"},
+  "contract_id": "contract-1",
+  "mode": "production|laboratory",
+  "correlation_id": "episode-1"
+}
+```
+
+```json
+{
+  "collection_id": "collection-1",
+  "status": "RUNNING",
+  "accepted_data_policy": "UNTRUSTED_UNTIL_VERIFIED",
+  "request_id": "request-1"
+}
+```
+
+### Verify candidate
+
+```json
+{
+  "candidate_id": "candidate-1",
+  "contract_id": "contract-1",
+  "channels": ["contract", "history", "independent_evidence"],
+  "expected_minimum_deterministic_passes": 2,
+  "correlation_id": "episode-1"
+}
+```
+
+The response lists channel results, evidence references, normalized output comparison, unresolved findings, and `eligible_for_commit`. `eligible_for_commit` is false unless the commit gate is satisfied.
+
+### Risk decision
+
+```json
+{
+  "candidate_id": "candidate-1",
+  "decision": "ACCEPT|RETRY|QUARANTINE|ESCALATE",
+  "reason_code": "SUFFICIENT_EVIDENCE|INSUFFICIENT_EVIDENCE|HIGH_RISK|REVIEW_REQUIRED",
+  "verification_run_ids": ["verification-1"],
+  "retry_number": 0,
+  "correlation_id": "episode-1"
+}
+```
+
+### Commit
+
+The commit endpoint rejects requests without a completed verification run, at least two independent deterministic passing channels, a matching ACCEPT decision, an authorized actor, and a known-good/version record. It is not permitted to accept a client-provided override that weakens those conditions.
+
+## Error catalog
+
+| Code | Retryable | Meaning |
+| --- | --- | --- |
+| `INVALID_CONTRACT` | No | Request violates the contract schema. |
+| `NOT_FOUND` | No | Referenced entity does not exist. |
+| `STATE_CONFLICT` | Usually no | Command is invalid for the current lifecycle state. |
+| `UNAUTHORIZED` | No | Actor lacks required authority. |
+| `PROVIDER_UNAVAILABLE` | Yes, bounded | External adapter unavailable. |
+| `PROVIDER_TIMEOUT` | Yes, bounded | External call exceeded deadline. |
+| `VERIFICATION_REQUIRED` | No | Commit attempted without sufficient deterministic evidence. |
+| `QUARANTINED` | No | Output intentionally withheld. |
+| `IDEMPOTENCY_CONFLICT` | No | Same key used with a different payload. |
+| `EVIDENCE_MISSING` | No | Required evidence artifact is unavailable. |
+| `BENCHMARK_INVALID` | No | Run cannot support headline metrics. |
+
+## Authorization and state rules
+
+Read access is separated from mutation commands. Collection and repair commands require the integration role; commit and rollback require the release role; benchmark configuration freeze requires the benchmark owner; submission claims require project-owner review. State transitions are validated server-side, and the caller cannot set a terminal state directly.
+
+## External API boundary
+
+Bright Data routes, CLI verbs, authentication, response formats, healing triggers, approval operations, and version semantics are documented only as adapter interfaces until verified. The adapter exposes AEGIS-normalized operations such as `collect`, `heal`, `poll`, `inspect`, `approve_if_authorized`, and `resolve_known_good`; the underlying provider call is recorded in the integration evidence.

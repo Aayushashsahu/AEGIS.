@@ -124,3 +124,103 @@ class DeterministicBrightDataTestDouble:
         elif self.scenario is TestDoubleScenario.SEMANTIC_CORRUPTION:
             rows[0]["url"] = "not-a-url"
         return tuple(rows)
+
+
+from datetime import datetime, timedelta, timezone
+
+from .diagnosis import RepairRequest
+from .healing import (
+    HealHandle,
+    HealOperationResult,
+    HealProviderEnvelope,
+    HealState,
+    RepairCandidate,
+    VerificationStatus,
+)
+
+
+class HealTestDoubleScenario(str, Enum):
+    __test__ = False
+    HEAL_AWAITING_APPROVAL = "HEAL_AWAITING_APPROVAL"
+    HEAL_MALFORMED_RESPONSE = "HEAL_MALFORMED_RESPONSE"
+    HEAL_TIMEOUT = "HEAL_TIMEOUT"
+    HEAL_PROVIDER_FAILURE = "HEAL_PROVIDER_FAILURE"
+
+
+class DeterministicBrightDataHealingTestDouble:
+    """Local healing substitute; every result is explicitly TEST_DOUBLE and UNVERIFIED."""
+
+    provider = ProviderProvenance.TEST_DOUBLE
+
+    def __init__(self, scenario: HealTestDoubleScenario = HealTestDoubleScenario.HEAL_AWAITING_APPROVAL) -> None:
+        self.scenario = scenario
+        self._handles: dict[str, HealHandle] = {}
+        self._envelopes: dict[str, HealProviderEnvelope] = {}
+        self._candidates: dict[str, RepairCandidate] = {}
+
+    def request_healing(self, repair_request: RepairRequest, *, timeout_seconds: float = 30.0) -> HealHandle:
+        handle = HealHandle(
+            repair_request_id=repair_request.repair_request_id,
+            collector_reference=repair_request.collector_reference,
+            correlation_id=repair_request.correlation_id,
+            provider_provenance=self.provider,
+            deadline=datetime.now(timezone.utc) + timedelta(seconds=timeout_seconds),
+            evidence_refs=(f"evidence://TEST_DOUBLE/heal/{repair_request.repair_request_id}",),
+        )
+        self._handles[handle.heal_id] = handle
+        return handle
+
+    def poll_healing(self, handle: HealHandle) -> HealHandle:
+        current = self._handles[handle.heal_id]
+        if current.status in {HealState.CANDIDATE_READY, HealState.FAILED, HealState.TIMED_OUT}:
+            return current
+        if current.status is HealState.SUBMITTED:
+            current = current.transition(HealState.RUNNING)
+        elif self.scenario is HealTestDoubleScenario.HEAL_TIMEOUT:
+            current = current.transition(HealState.TIMED_OUT, error_code="PROVIDER_TIMEOUT", error_message="test-double timeout")
+        elif self.scenario is HealTestDoubleScenario.HEAL_PROVIDER_FAILURE:
+            current = current.transition(HealState.FAILED, error_code="PROVIDER_COMMAND_FAILED", error_message="test-double provider failure")
+        elif self.scenario is HealTestDoubleScenario.HEAL_MALFORMED_RESPONSE:
+            current = current.transition(HealState.FAILED, error_code="MALFORMED_PROVIDER_RESPONSE", error_message="test-double malformed response")
+        elif current.status is HealState.RUNNING:
+            envelope = HealProviderEnvelope(
+                collector_reference=current.collector_reference,
+                provider_status="awaiting_approval",
+                provider_operation_reference="test-heal-operation-1",
+                preview_result={"status": "preview", "provenance": "TEST_DOUBLE"},
+                diff_summary="test-double proposed repair",
+                approval_command="NOT_EXECUTED_TEST_DOUBLE_APPROVAL",
+                evidence_ref=current.evidence_refs[0],
+            )
+            self._envelopes[current.heal_id] = envelope
+            self._candidates[current.heal_id] = RepairCandidate(
+                repair_request_id=current.repair_request_id,
+                collector_reference=current.collector_reference,
+                provider_operation_reference=envelope.provider_operation_reference,
+                provider_status=envelope.provider_status,
+                preview_result=envelope.preview_result,
+                diff_summary=envelope.diff_summary,
+                approval_command=envelope.approval_command,
+                raw_evidence_ref=envelope.evidence_ref,
+                provenance=self.provider,
+                verification_status=VerificationStatus.UNVERIFIED,
+                latency_ms=1,
+            )
+            current = current.transition(
+                HealState.AWAITING_APPROVAL,
+                provider_operation_reference=envelope.provider_operation_reference,
+                provider_status=envelope.provider_status,
+                latency_ms=1,
+            )
+        self._handles[current.heal_id] = current
+        return current
+
+    def retrieve_heal_result(self, handle: HealHandle) -> HealOperationResult:
+        current = self.poll_healing(handle)
+        if current.status not in {HealState.AWAITING_APPROVAL, HealState.CANDIDATE_READY}:
+            raise ValueError(f"test-double heal is not ready: {current.status.value}")
+        return HealOperationResult(
+            handle=current,
+            envelope=self._envelopes.get(current.heal_id),
+            candidate=self._candidates.get(current.heal_id),
+        )

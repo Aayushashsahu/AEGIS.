@@ -154,3 +154,23 @@ A RepairRequest preserves affected fields, the extraction contract, target input
 Mission 003 does not add candidate, verification, risk, approval, commit, rollback, watch, or memory operations. The furthest reachable state is `REPAIR_REQUESTED`; no request can transition into `COMMITTED`.
 
 The model diagnostician seam is an injected structured backend that returns typed `failure_class`, qualitative `certainty`, affected fields, and rationale. It is not required for tests and cannot authorize provider operations.
+
+## Mission 004 — Bright Data healing adapter boundary
+
+Mission 004 extends the existing provider adapter with the following provider-facing boundary operations:
+
+| Purpose | Operation | Side effect | State impact |
+| --- | --- | --- | --- |
+| Submit bounded heal request | `BrightDataCliAdapter.request_healing(repair_request)` | Starts one documented CLI heal command in a background worker | `SUBMITTED` |
+| Poll provider heal | `BrightDataCliAdapter.poll_healing(handle)` | Reads the worker result and validates the provider envelope | `SUBMITTED → RUNNING → AWAITING_APPROVAL / FAILED / TIMED_OUT` |
+| Retrieve untrusted proposal | `BrightDataCliAdapter.retrieve_heal_result(handle)` | Returns redacted provider envelope and `UNVERIFIED` candidate | `AWAITING_APPROVAL → CANDIDATE_READY` |
+
+The adapter-only mapping is `RepairRequest.collector_reference → <collector_id>`, the generated bounded repair prompt → `<prompt>`, and `RepairRequest.target_input["target_url"] → --url <url>` in the documented command shape:
+
+```text
+npx -p @brightdata/cli bdata scraper heal <collector_id> <prompt> --url <url>
+```
+
+No `bdata scraper approve`, `--auto-approve`, activation, verification, risk, commit, or rollback operation is exposed by Mission 004. Provider `awaiting_approval` is data indicating a proposal, not AEGIS approval.
+
+Candidate creation requires a structured status, preview result, and provider operation identifier. Missing, malformed, unexpected, failed, or timed-out provider responses fail closed. The candidate’s only verification status in this mission is `UNVERIFIED`.

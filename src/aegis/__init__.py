@@ -1,6 +1,12 @@
-"""AEGIS Mission 003: collection, observation, detection, diagnosis, and repair request."""
+"""AEGIS Mission 004: bounded Bright Data healing and unverified candidates."""
 
-from .adapter import AdapterError, BrightDataCliAdapter, CommandResult
+from .adapter import (
+    AdapterError,
+    BrightDataCliAdapter,
+    CommandResult,
+    build_heal_command,
+    build_heal_prompt,
+)
 from .contracts import default_extraction_contract
 from .detection import evaluate_detection
 from .diagnosis import (
@@ -23,6 +29,14 @@ from .diagnosis import (
     build_repair_request,
     diagnose_deterministically,
 )
+from .healing import (
+    HealHandle,
+    HealOperationResult,
+    HealProviderEnvelope,
+    HealState,
+    RepairCandidate,
+    VerificationStatus,
+)
 from .models import (
     CollectionHandle,
     CollectionMode,
@@ -37,7 +51,12 @@ from .models import (
     Observation,
     ProviderProvenance,
 )
-from .test_double import DeterministicBrightDataTestDouble, TestDoubleScenario
+from .test_double import (
+    DeterministicBrightDataHealingTestDouble,
+    DeterministicBrightDataTestDouble,
+    HealTestDoubleScenario,
+    TestDoubleScenario,
+)
 
 __all__ = [
     "AdapterError",
@@ -52,6 +71,7 @@ __all__ = [
     "default_extraction_contract",
     "DetectionResult",
     "DetectionSignal",
+    "DeterministicBrightDataHealingTestDouble",
     "DeterministicBrightDataTestDouble",
     "Diagnosis",
     "DiagnosisCertainty",
@@ -63,18 +83,27 @@ __all__ = [
     "ExtractionContract",
     "FailureClass",
     "FieldContract",
+    "HealHandle",
+    "HealOperationResult",
+    "HealProviderEnvelope",
+    "HealState",
     "HealingRequester",
+    "HealTestDoubleScenario",
     "NoExecutionRepairBoundary",
     "Observation",
     "ProviderProvenance",
     "RepairAttemptHandle",
     "RepairAttemptState",
     "RepairBoundaryProvenance",
+    "RepairCandidate",
     "RepairRequest",
     "RepairRequestStatus",
     "StructuredModelDiagnostician",
     "TestDoubleDiagnostician",
     "TestDoubleScenario",
+    "VerificationStatus",
+    "build_heal_command",
+    "build_heal_prompt",
     "build_repair_request",
     "diagnose_deterministically",
 ]

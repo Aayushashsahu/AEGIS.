@@ -71,14 +71,14 @@ The primary artifact is a deterministic two-minute recorded video. It opens with
 
 ## Quick start
 
-Mission 003 extends the stable first vertical slice through bounded Diagnosis and provider-neutral RepairRequest creation. The repository now contains the Mission 002 collection/observation/detection path plus deterministic diagnosis, qualitative certainty, evidence/provenance propagation, a structured model seam, and an explicitly non-executing healing boundary. Bright Data healing, candidate verification, risk decisions, approval, commit, rollback, memory, benchmarking, and UI remain out of scope.
+Mission 004 extends the stable Mission 002–003 path through a bounded Bright Data healing adapter. It translates provider-neutral RepairRequest records into the verified CLI heal command, submits asynchronously, preserves `awaiting_approval`, and captures an immutable `RepairCandidate` that remains `UNVERIFIED`. Approval, candidate verification, risk decisions, activation, commit, rollback, memory, benchmarking, and UI remain out of scope.
 
 ```bash
 cd AEGIS
 PYTHONPATH=src pytest -q tests/unit tests/integration
 ```
 
-The recorded Bright Data artifact from Mission 001 is tested through `Observation → DetectionResult → Diagnosis → RepairRequest` by `tests/integration/test_mission003_recorded_artifact.py`; it does not call Bright Data or claim a live healing result. The provider adapter and diagnosis seams use injected/local execution so tests do not require credentials or provider credits. Implementation agents must first read [`docs/00_PROJECT_INFO.md`](docs/00_PROJECT_INFO.md), [`docs/04_REQUIREMENTS.md`](docs/04_REQUIREMENTS.md), and [`docs/09_AGENT_OPERATING_CONTRACT.md`](docs/09_AGENT_OPERATING_CONTRACT.md). They must not invent platform capabilities, measured results, endpoints, or schema behavior.
+The recorded Bright Data artifact from Mission 001 is tested through `Observation → DetectionResult → Diagnosis → RepairRequest → TEST_DOUBLE RepairCandidate`; it does not call Bright Data or claim a live Mission 004 healing result. The adapter and test-double seams use injected/local execution so tests do not require credentials or provider credits. Implementation agents must first read [`docs/00_PROJECT_INFO.md`](docs/00_PROJECT_INFO.md), [`docs/04_REQUIREMENTS.md`](docs/04_REQUIREMENTS.md), and [`docs/09_AGENT_OPERATING_CONTRACT.md`](docs/09_AGENT_OPERATING_CONTRACT.md). They must not invent platform capabilities, measured results, endpoints, or schema behavior.
 
 ## Repository structure
 
@@ -89,13 +89,13 @@ experiments/       Day-1 spikes and experiment records
 mutations/         Controlled mutation fixtures and manifests
 benchmarks/        Frozen baselines, runs, and reports
 scripts/           Reproducible commands and operational tooling
-src/               Mission 002–003 collection through repair-request implementation
-tests/             Mission 002–003 unit and integration tests
+src/               Mission 002–004 collection through unverified-candidate implementation
+tests/             Mission 002–004 unit and integration tests
 ```
 
 ## Limitations and open decisions
 
-The repository does not claim executed healing, candidate verification, approval, risk-governed commit, rollback, recovery rate, benchmark results, or production deployment. Mission 003 preserves provider output as untrusted, classifies known detection evidence deterministically, and stops at `REPAIR_REQUESTED`; the no-execution boundary cannot activate provider state. Provider-native version/rollback, raw response access, WARC availability, and exact LLM configuration remain open decisions tracked in [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
+The repository does not claim provider approval execution, candidate verification, activation, risk-governed commit, rollback, recovery rate, benchmark results, or production deployment. Mission 004 preserves the provider proposal as untrusted and stops at `CANDIDATE_READY / UNVERIFIED`; no approval command or `--auto-approve` path exists. Provider-native version/rollback, raw response access, WARC availability, and exact LLM configuration remain open decisions tracked in [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
 
 ## AI usage disclosure
 

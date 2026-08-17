@@ -141,3 +141,19 @@ Mission 003 does not execute Bright Data healing. It introduces a provider-neutr
 | Candidate retrieval/verification/approval/commit | UNKNOWN / DEFERRED | Mission 001 labels remain unchanged; Mission 003 cannot reach these states. |
 
 A future provider adapter must translate `RepairRequest` into a documented provider operation, preserve request hashes and evidence, poll asynchronously, and return an untrusted candidate envelope. It must not authorize AEGIS verification, risk, or commit decisions.
+
+## Mission 004 implementation outcome — 2026-08-17
+
+Mission 004 connects the existing provider-neutral RepairRequest to the verified Mission 001 CLI heal path without executing approval or claiming candidate correctness.
+
+| Capability | Status | Evidence / limitation |
+| --- | --- | --- |
+| RepairRequest → documented CLI heal command | VERIFIED for adapter mapping | `build_heal_command()` constructs `npx -p @brightdata/cli bdata scraper heal <collector_id> <prompt> --url <url>`; unit-tested with contract-preserving prompt content. |
+| Asynchronous heal submission | VERIFIED in local implementation | Existing `ThreadPoolExecutor`/injected runner boundary returns a `HealHandle` before provider completion. |
+| `awaiting_approval` recognition | VERIFIED for tested response shape in local adapter | Root provider status is preserved and mapped to `AWAITING_APPROVAL`; no approval operation is called. |
+| Preview/diff/operation envelope | VERIFIED for tested response shape in local adapter | `preview_result`, `diff_summary`, operation identifier, approval command as data, latency, provenance, and evidence reference are preserved. |
+| RepairCandidate | VERIFIED in local implementation as untrusted envelope | Candidate is immutable and always `UNVERIFIED`; no accepted/committed transition exists. |
+| Live Mission 004 heal execution | NOT EXECUTED | No live provider state was changed; Mission 001 live result remains the only provider heal evidence. |
+| Provider-native rollback, raw HTML, WARC, candidate correctness | UNKNOWN/PARTIAL as previously recorded | Mission 004 does not change Mission 001 labels. |
+
+The approval command returned by Bright Data is treated as untrusted provider data. It is not executed, and `--auto-approve` is absent from the adapter and tests. A future verification/risk mission owns the authority to decide whether any candidate may proceed.

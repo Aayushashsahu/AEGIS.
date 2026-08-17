@@ -106,3 +106,13 @@ Mission 003 adds the following immutable logical records without changing the ex
 Certainty is qualitative (`DETERMINED`, `AMBIGUOUS`, `UNKNOWN`) rather than an additive score. Correlated detector signals are not converted into independent confidence weights. Unknown or conflicting patterns preserve bounded candidate classes but select `UNKNOWN`.
 
 The Mission 003 records retain correlation IDs, source detection IDs, evidence references, provider/test-double/model provenance, and timestamps. Physical persistence and append-only audit storage remain open implementation decisions.
+
+## Mission 004 logical additions — Healing and RepairCandidate
+
+| Entity | Required fields | Lifecycle / safety boundary |
+| --- | --- | --- |
+| `HealHandle` | `heal_id`, `repair_request_id`, `collector_reference`, `correlation_id`, `status`, `provider_provenance`, timestamps, deadline, provider operation reference, provider status, evidence references, latency, error fields | `SUBMITTED → RUNNING → AWAITING_APPROVAL → CANDIDATE_READY`, or fail-closed `FAILED/TIMED_OUT`; no approval or commit state. |
+| `HealProviderEnvelope` | `collector_reference`, `provider_status`, provider operation reference, preview result, diff summary, approval command as data, redacted evidence reference, received timestamp | Immutable provider evidence; approval command is never executed. |
+| `RepairCandidate` | `candidate_id`, `repair_request_id`, collector reference, provider operation reference, provider status, preview result, diff summary, approval command, raw/redacted evidence reference, provenance, timestamp, latency, `verification_status` | Mission 004 requires `verification_status=UNVERIFIED`; no verified, accepted, committed, or activated state is available. |
+
+The candidate preview and provider envelope are recursively immutable. Provider credentials and unrestricted raw command logs are not fields in these records.

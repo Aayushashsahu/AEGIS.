@@ -352,3 +352,16 @@ Status: OPEN | RESOLVED | DEFERRED
 **Required next step:** Obtain owner approval for a new freeze correction, regenerate the participant and configuration hashes, rerun preflight, and only then consider the Baseline B smoke test. This is a `FIX` outcome, not a benchmark result or a floor-credibility claim.
 
 **Status:** STOPPED_PREFLIGHT / FIX_REQUIRED
+
+
+## Mission 017 — corrected benchmark freeze after Mission 016 invalidation
+
+**Decision:** Supersede the invalid Mission 015 participant freeze with a new owner-reviewed configuration; do not execute the benchmark in Mission 017.
+
+**Evidence:** The actual Baseline A and Baseline B implementation revision is `0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47`, and the actual AEGIS revision is `7de2bc65ed9eeb9f4abd24017543f3f366990738`. Inspection of the committed code confirms two distinct participant strategies: Baseline A uses only the deterministic static selector extractor, while Baseline B uses the pinned `gemini-3.6-flash` model boundary, exact prompts, and first-candidate policy without AEGIS verification, RiskGovernor, or CommitGate.
+
+**Corrected hashes:** Baseline A `17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f`; Baseline B `01a71de8a60c7d20e1d68744f1ffea3d5ebda0539c0a2e656d3d3e106169e113`; AEGIS `76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75`.
+
+**Freeze:** `benchmarks/configs/mission_017_corrected_frozen_config.json` has canonical hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b` and supersedes Mission 015 hash `f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96`. All approved mutation, severity, seed, fixture, timeout, retry, backoff, ground-truth, safety, and metric-formula values remain unchanged.
+
+**Validation:** All three participants are READY, fairness is PASS, and the exact validation-only CLI dry-run returns `READY_TO_EXECUTE`. The counters remain zero and execution authorization remains false. Mission 016 is not rerun by Mission 017.

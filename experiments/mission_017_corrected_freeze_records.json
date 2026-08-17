@@ -1,0 +1,472 @@
+{
+  "created_at": "2026-08-17T18:49:04.194777+00:00",
+  "dry_run_status": "READY_TO_EXECUTE",
+  "execution_counters": {
+    "benchmark_runs_executed": 0,
+    "execution_authorized": false,
+    "healing_operations_executed": 0,
+    "metric_results_generated": 0,
+    "provider_operations_executed": 0
+  },
+  "fairness": {
+    "ground_truth_runtime_payload": "NOT_PROVIDED",
+    "same_fixture": true,
+    "same_ground_truth_reference_shape": true,
+    "same_mutation": true,
+    "same_retry_policy": true,
+    "same_seed": true,
+    "same_timeout_policy": true,
+    "same_trial_metadata": true,
+    "status": "PASS"
+  },
+  "historical_mission_015_records_unchanged": true,
+  "mission": "017",
+  "new_configuration_hash": "59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b",
+  "owner_review_decisions": {
+    "AEGIS": {
+      "approved": true,
+      "corrected_participant_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "corrected_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "correlation_id": "8d654c19-398d-48f5-af8a-b160c3ff436c",
+      "owner": "PROJECT_OWNER",
+      "participant_id": "AEGIS",
+      "rationale": "Superseding owner-approved benchmark freeze after Mission 016 preflight identified a participant revision identity mismatch. All benchmark methodology, safety policy, mutation definitions, seed, fixture, timeout, retry, and metric formula remain unchanged.",
+      "reviewed_at": "2026-08-17T18:49:04.194777+00:00",
+      "reviewer": "PROJECT_OWNER"
+    },
+    "BASELINE_A": {
+      "approved": true,
+      "corrected_participant_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "corrected_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "correlation_id": "ad472cd8-1131-4e25-a5cc-e19bd44dbc11",
+      "owner": "PROJECT_OWNER",
+      "participant_id": "BASELINE_A",
+      "rationale": "Superseding owner-approved benchmark freeze after Mission 016 preflight identified a participant revision identity mismatch. All benchmark methodology, safety policy, mutation definitions, seed, fixture, timeout, retry, and metric formula remain unchanged.",
+      "reviewed_at": "2026-08-17T18:49:04.194777+00:00",
+      "reviewer": "PROJECT_OWNER"
+    },
+    "BASELINE_B": {
+      "approved": true,
+      "corrected_participant_hash": "01a71de8a60c7d20e1d68744f1ffea3d5ebda0539c0a2e656d3d3e106169e113",
+      "corrected_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "correlation_id": "b458f8b8-9a34-4eef-8a48-7c9e44a2084d",
+      "owner": "PROJECT_OWNER",
+      "participant_id": "BASELINE_B",
+      "rationale": "Superseding owner-approved benchmark freeze after Mission 016 preflight identified a participant revision identity mismatch. All benchmark methodology, safety policy, mutation definitions, seed, fixture, timeout, retry, and metric formula remain unchanged.",
+      "reviewed_at": "2026-08-17T18:49:04.194777+00:00",
+      "reviewer": "PROJECT_OWNER"
+    }
+  },
+  "participant_proposals": {
+    "AEGIS": {
+      "artifact_schema": "participant-run-evidence-v1",
+      "commit_policy": "COMMIT_GATE_REQUIRED_NO_DRY_RUN_COMMIT",
+      "configuration": {
+        "artifact_schema": "participant-run-evidence-v1",
+        "auto_approve": false,
+        "benchmark_configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "blind_commit": false,
+        "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+        "commit_gate": "USED",
+        "configuration": {
+          "adapter": "AegisAdapter",
+          "auto_approve": false,
+          "blind_commit": false,
+          "ground_truth_runtime_access": false,
+          "live_provider_execution": false,
+          "mode": "TEST_DOUBLE",
+          "verification_bypass": false
+        },
+        "description": "AEGIS safety lifecycle TEST_DOUBLE benchmark adapter.",
+        "deterministic_test_double": true,
+        "evaluator_ground_truth_runtime_access": false,
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": "1",
+        "healing": "EXISTING_AEGIS_LIFECYCLE_ONLY",
+        "live_bright_data_execution": "NOT_USED",
+        "metric_formula_version": "mission-010-metrics-v1",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "output_normalization_policy": "canonical-participant-run-v1",
+        "participant_adapter": "AegisAdapter",
+        "provenance": "TEST_DOUBLE",
+        "provider_execution": "NOT_USED_FOR_INITIAL_BENCHMARK",
+        "quarantine": "USED",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "risk_governor": "USED",
+        "rollback": "USED",
+        "safety_policy": "UNCHANGED; VERIFICATION_RISK_COMMIT_GATE_REQUIRED",
+        "seeds": [
+          12345
+        ],
+        "timeout_policy": {
+          "backoff_seconds": 0,
+          "retry_count": 0,
+          "timeout_seconds": 300
+        },
+        "verification": "USED",
+        "verification_bypass": false,
+        "watch": "USED"
+      },
+      "configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "execution_policy": "FULL_AEGIS_LIFECYCLE_TEST_DOUBLE_ONLY",
+      "implementation_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "output_normalization_policy": "canonical-participant-run-v1",
+      "participant_id": "AEGIS",
+      "prior_status": "NOT_READY",
+      "provenance": "TEST_DOUBLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "timeout_policy": {
+        "backoff_seconds": 0,
+        "retry_count": 0,
+        "timeout_seconds": 300
+      },
+      "verification_policy": "MISSION_010_DETERMINISTIC_VERIFICATION"
+    },
+    "BASELINE_A": {
+      "artifact_schema": "participant-run-evidence-v1",
+      "commit_policy": "NOT_APPLICABLE_BASELINE_NO_COMMIT",
+      "configuration": {
+        "aegis_verification": "NOT_USED",
+        "artifact_schema": "participant-run-evidence-v1",
+        "commit_gate": "NOT_USED",
+        "configuration": {
+          "mode": "STATIC_SELECTOR_ONLY",
+          "schema_version": "gpu-price-schema-v1",
+          "selector_version": "baseline-a-v1",
+          "selectors": {
+            "availability": "CSS_SELECTOR",
+            "price": "CSS_SELECTOR",
+            "product_id": "FIELD_PASSTHROUGH",
+            "rating": "CSS_SELECTOR",
+            "title": "CSS_SELECTOR",
+            "url": "CSS_SELECTOR"
+          }
+        },
+        "description": "Deterministic fixed-selector static extraction baseline.",
+        "extraction_implementation": "baseline-a-static-selector-v1",
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": "1",
+        "healing": "NOT_USED",
+        "llm": "NOT_USED",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "output_normalization_policy": "canonical-participant-run-v1",
+        "provenance": "TEST_DOUBLE",
+        "provider": "TEST_DOUBLE",
+        "quarantine": "NOT_USED",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "risk_governor": "NOT_USED",
+        "rollback": "NOT_USED",
+        "schema_version": "gpu-price-schema-v1",
+        "seed": 12345,
+        "selector_version": "baseline-a-v1",
+        "timeout_policy": {
+          "backoff_seconds": 0,
+          "retry_count": 0,
+          "timeout_seconds": 300
+        },
+        "watch": "NOT_USED"
+      },
+      "configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "execution_policy": "SINGLE_PASS_NO_HEALING",
+      "implementation_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "output_normalization_policy": "canonical-participant-run-v1",
+      "participant_id": "BASELINE_A",
+      "prior_status": "NOT_READY",
+      "provenance": "TEST_DOUBLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "timeout_policy": {
+        "backoff_seconds": 0,
+        "retry_count": 0,
+        "timeout_seconds": 300
+      },
+      "verification_policy": "NOT_APPLICABLE_BASELINE_NO_VERIFICATION"
+    },
+    "BASELINE_B": {
+      "artifact_schema": "participant-run-evidence-v1",
+      "commit_policy": "FIRST_CANDIDATE_ACCEPTED_NO_AEGIS_COMMIT_GATE",
+      "configuration": {
+        "aegis_verification": "NOT_USED",
+        "artifact_schema": "participant-run-evidence-v1",
+        "auto_accept_first_candidate": true,
+        "commit_gate": "NOT_USED",
+        "configuration": {
+          "auto_accept_first_candidate": true,
+          "first_candidate_only": true,
+          "max_output_tokens": 8192,
+          "model_identifier": "gemini-3.6-flash",
+          "model_revision": "stable",
+          "prompt_revision": "baseline-b-prompts-v1",
+          "repair_prompt_template_version": "baseline-b-repair-v1",
+          "system_prompt_version": "baseline-b-system-v1",
+          "tools_enabled": false
+        },
+        "description": "Naive Gemini first-candidate repair baseline without AEGIS verification.",
+        "first_candidate_policy": "FIRST_CANDIDATE",
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": "1",
+        "max_candidates": 1,
+        "max_output": 8192,
+        "max_output_tokens": 8192,
+        "model_identifier": "gemini-3.6-flash",
+        "model_revision": "stable",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "mutation_ground_truth_runtime_payload": "NOT_PROVIDED",
+        "output_normalization_policy": "canonical-participant-run-v1",
+        "prompt_revision": "baseline-b-prompts-v1",
+        "provenance": "MODEL_ASSISTED",
+        "provider": "GOOGLE_GEMINI_API",
+        "repair_prompt_template": "Repair the scraper for the following extraction failure.\n\nTARGET:\n{target}\n\nEXPECTED OUTPUT SCHEMA:\n{extraction_contract}\n\nOBSERVED OUTPUT:\n{observed_output}\n\nFAILURE DESCRIPTION:\n{failure_description}\n\nSCRAPER:\n{scraper_source}\n\nProduce the repaired scraper.\n",
+        "repair_prompt_template_version": "baseline-b-repair-v1",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "risk_governor": "NOT_USED",
+        "sampling_configuration": {
+          "temperature": "NOT_APPLICABLE",
+          "top_k": "NOT_APPLICABLE",
+          "top_p": "NOT_APPLICABLE"
+        },
+        "seed": 12345,
+        "system_prompt": "You repair a web scraper whose extracted output has changed.\n\nYour job is to modify the scraper so that it restores the expected\nextraction behavior while preserving the requested output schema.\n\nReturn ONLY the repaired scraper code/configuration and a concise\nexplanation of what changed.\n\nDo not discuss verification.\nDo not ask for human approval.\nDo not perform additional validation beyond what is necessary to\nproduce the repaired scraper.\n",
+        "system_prompt_version": "baseline-b-system-v1",
+        "timeout_policy": {
+          "backoff_seconds": 0,
+          "retry_count": 0,
+          "timeout_seconds": 300
+        },
+        "tools_enabled": false,
+        "tools_permitted": [
+          "DISABLED"
+        ]
+      },
+      "configuration_hash": "01a71de8a60c7d20e1d68744f1ffea3d5ebda0539c0a2e656d3d3e106169e113",
+      "execution_policy": "FIRST_CANDIDATE_ONLY",
+      "implementation_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "output_normalization_policy": "canonical-participant-run-v1",
+      "participant_id": "BASELINE_B",
+      "prior_status": "NOT_READY",
+      "provenance": "MODEL_ASSISTED",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "timeout_policy": {
+        "backoff_seconds": 0,
+        "retry_count": 0,
+        "timeout_seconds": 300
+      },
+      "verification_policy": "NO_AEGIS_VERIFICATION"
+    }
+  },
+  "participant_validations": {
+    "AEGIS": {
+      "checks": {
+        "artifact_schema": "PASS",
+        "benchmark_configuration_hash": "PASS",
+        "code_revision": "PASS",
+        "commit_policy": "PASS",
+        "deterministic_test_double": "PASS",
+        "execution_policy": "PASS",
+        "fixture_version": "PASS",
+        "implementation_revision": "PASS",
+        "metric_formula_version": "PASS",
+        "mutation_class_ids": "PASS",
+        "output_normalization_policy": "PASS",
+        "participant_adapter": "PASS",
+        "participant_hash": "PASS",
+        "provenance": "PASS",
+        "retry_policy": "PASS",
+        "safety_policy": "PASS",
+        "seeds": "PASS",
+        "timeout_policy": "PASS",
+        "verification_policy": "PASS"
+      },
+      "computed_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "errors": [],
+      "participant_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "participant_id": "AEGIS",
+      "status": "READY",
+      "warnings": []
+    },
+    "BASELINE_A": {
+      "checks": {
+        "aegis_verification": "PASS",
+        "artifact_schema": "PASS",
+        "commit_gate": "PASS",
+        "commit_policy": "PASS",
+        "configuration": "PASS",
+        "execution_policy": "PASS",
+        "extraction_implementation": "PASS",
+        "healing": "PASS",
+        "implementation_revision": "PASS",
+        "output_normalization_policy": "PASS",
+        "participant_hash": "PASS",
+        "provenance": "PASS",
+        "quarantine": "PASS",
+        "retry_policy": "PASS",
+        "risk_governor": "PASS",
+        "rollback": "PASS",
+        "timeout_policy": "PASS",
+        "verification_policy": "PASS",
+        "watch": "PASS"
+      },
+      "computed_configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "errors": [],
+      "participant_configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "participant_id": "BASELINE_A",
+      "status": "READY",
+      "warnings": []
+    },
+    "BASELINE_B": {
+      "checks": {
+        "artifact_schema": "PASS",
+        "commit_policy": "PASS",
+        "configuration": "PASS",
+        "execution_policy": "PASS",
+        "first_candidate_policy": "PASS",
+        "implementation_revision": "PASS",
+        "max_output": "PASS",
+        "model_identifier": "PASS",
+        "output_normalization_policy": "PASS",
+        "participant_hash": "PASS",
+        "provenance": "PASS",
+        "provider": "PASS",
+        "repair_prompt_template": "PASS",
+        "retry_policy": "PASS",
+        "sampling_configuration": "PASS",
+        "system_prompt": "PASS",
+        "timeout_policy": "PASS",
+        "tools_permitted": "PASS",
+        "verification_policy": "PASS"
+      },
+      "computed_configuration_hash": "01a71de8a60c7d20e1d68744f1ffea3d5ebda0539c0a2e656d3d3e106169e113",
+      "errors": [],
+      "participant_configuration_hash": "01a71de8a60c7d20e1d68744f1ffea3d5ebda0539c0a2e656d3d3e106169e113",
+      "participant_id": "BASELINE_B",
+      "status": "READY",
+      "warnings": []
+    }
+  },
+  "readiness_promotions": [
+    {
+      "configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "correlation_id": "ad472cd8-1131-4e25-a5cc-e19bd44dbc11",
+      "evidence_type": "READINESS_PROMOTION",
+      "implementation_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "new_status": "READY",
+      "owner": "PROJECT_OWNER",
+      "participant_id": "BASELINE_A",
+      "prior_status": "NOT_READY",
+      "rationale": "Superseding owner-approved benchmark freeze after Mission 016 preflight identified a participant revision identity mismatch. All benchmark methodology, safety policy, mutation definitions, seed, fixture, timeout, retry, and metric formula remain unchanged.",
+      "reviewer": "PROJECT_OWNER",
+      "timestamp": "2026-08-17T18:49:04.194777+00:00"
+    },
+    {
+      "configuration_hash": "01a71de8a60c7d20e1d68744f1ffea3d5ebda0539c0a2e656d3d3e106169e113",
+      "correlation_id": "b458f8b8-9a34-4eef-8a48-7c9e44a2084d",
+      "evidence_type": "READINESS_PROMOTION",
+      "implementation_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "new_status": "READY",
+      "owner": "PROJECT_OWNER",
+      "participant_id": "BASELINE_B",
+      "prior_status": "NOT_READY",
+      "rationale": "Superseding owner-approved benchmark freeze after Mission 016 preflight identified a participant revision identity mismatch. All benchmark methodology, safety policy, mutation definitions, seed, fixture, timeout, retry, and metric formula remain unchanged.",
+      "reviewer": "PROJECT_OWNER",
+      "timestamp": "2026-08-17T18:49:04.194777+00:00"
+    },
+    {
+      "configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "correlation_id": "8d654c19-398d-48f5-af8a-b160c3ff436c",
+      "evidence_type": "READINESS_PROMOTION",
+      "implementation_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "new_status": "READY",
+      "owner": "PROJECT_OWNER",
+      "participant_id": "AEGIS",
+      "prior_status": "NOT_READY",
+      "rationale": "Superseding owner-approved benchmark freeze after Mission 016 preflight identified a participant revision identity mismatch. All benchmark methodology, safety policy, mutation definitions, seed, fixture, timeout, retry, and metric formula remain unchanged.",
+      "reviewer": "PROJECT_OWNER",
+      "timestamp": "2026-08-17T18:49:04.194777+00:00"
+    }
+  ],
+  "revision_checks": {
+    "AEGIS": {
+      "resolves": true,
+      "revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738"
+    },
+    "BASELINE_A": {
+      "resolves": true,
+      "revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47"
+    },
+    "BASELINE_B": {
+      "resolves": true,
+      "revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47"
+    }
+  },
+  "status": "CORRECTED_FREEZE_VALIDATED_ONLY",
+  "strategy_separation": {
+    "baseline_a": {
+      "checks": {
+        "forbidden_aegis_or_llm_calls_absent": true,
+        "model_caller_absent": true,
+        "static_extractor_present": true,
+        "static_selector_execution": true
+      },
+      "pass": true
+    },
+    "baseline_b": {
+      "checks": {
+        "aegis_verification_risk_commit_calls_absent": true,
+        "approved_prompt_constants_present": true,
+        "first_candidate_configuration_present": true,
+        "gemini_model_present": true,
+        "injected_model_call_present": true
+      },
+      "pass": true
+    },
+    "commit": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+    "note": "Both participant paths are distinct classes in the same implementation commit; no participant execution was performed.",
+    "strategies_distinct": true
+  },
+  "supersedes_configuration_hash": "f48ec5c5792b09623b6b6e4bcab9da6b9c5066506a57e012826a3b837e8d7d96",
+  "supersedes_mission": "015"
+}

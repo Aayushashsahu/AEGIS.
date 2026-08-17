@@ -176,3 +176,10 @@ Mission 016 added a fail-closed preflight boundary for the minimum 180-run floor
 The Baseline B smoke test was not run because the mandatory preflight failed. No benchmark trial, provider call, healing operation, approval, commit, rollback, or metric calculation occurred. Planned runs remain 180 and executed runs remain zero. The full preflight blocker, frozen config copy, execution log, and report are preserved under `benchmarks/runs/mission_016_floor_f48ec5c5792b`, `benchmarks/reports/mission_016_floor_f48ec5c5792b/summary.md`, and `experiments/AEGIS-MISSION-016-BENCHMARK-FLOOR.md`.
 
 This is a `STOPPED_PREFLIGHT` / `FIX` result. It is not a benchmark result, not a floor-credibility claim, and not authorization to scale or continue.
+
+
+## Mission 017 corrected freeze — validation-only evidence
+
+Mission 017 added correction-only tests for exact Git revision resolution, Baseline A/B strategy separation, deterministic participant hashes, preservation of M001–M006 and the canonical L1–L5 mapping, seed `12345`, fixture `gpu-price-staging` v1, `mission-010-metrics-v1`, common 300-second timeout, zero retries, zero backoff, owner approvals, and append-only `NOT_READY → READY` promotions.
+
+The corrected configuration validates successfully, supersedes the Mission 015 configuration hash, passes fairness, and produces a validation-only `READY_TO_EXECUTE` dry-run with 18 planned manifests. The full test suite passes with 214 tests. No Baseline B smoke test, participant execution, provider operation, healing operation, approval, commit, rollback, or metric calculation was performed. Final counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`.

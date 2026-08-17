@@ -134,3 +134,10 @@ Mission 015 finalized participant metadata and a validation-only comparative exe
 The participant freeze records preserve the common mutation set `M001`–`M006`, seed `12345`, fixture `gpu-price-staging` v1, and formula version `mission-010-metrics-v1`. Any future ground-truth metric remains valid only after an authorized benchmark execution produces immutable raw evidence under the frozen configuration. `READY_TO_EXECUTE` is not a metric result and is not execution authorization.
 
 The absolute Mission 015 counters were `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`.
+
+
+## Mission 017 corrected freeze — metric boundary preserved
+
+Mission 017 corrected only participant revision identity and the immutable benchmark freeze after Mission 016 preflight invalidation. It did not execute participants, calculate metrics, or alter `mission-010-metrics-v1`. The corrected dry-run reports `READY_TO_EXECUTE` as a validation-only state with `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`.
+
+The corrected configuration preserves M001–M006, the canonical severity mapping, seed `12345`, fixture `gpu-price-staging` v1, common 300-second timeout, zero retries, zero backoff, and `ground_truth_runtime_payload=NOT_PROVIDED`. No DetectionRate, AlarmPrecision, L5, recovery, false-repair, commit, cost, latency, or model-call benchmark result is claimed by Mission 017.

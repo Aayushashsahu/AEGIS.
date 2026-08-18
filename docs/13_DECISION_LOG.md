@@ -547,3 +547,13 @@ Status: OPEN | RESOLVED | DEFERRED
 **Consequence:** The demo records real live collection and real provider failure. It does not fabricate a candidate or a downstream verification, risk, or commit result. No retry, approval, output shipment, Gemini, NVIDIA benchmark, benchmark run, or comparative metric calculation occurred.
 
 **Final safety state:** The bounded repair prompt measured 1,187 characters while the provider reported a 1,000-character limit. The candidate boundary was not reached. `pipeline_termination.json` is the authoritative Mission 029 stop record.
+
+## Mission 030 — Compact prompt validation and evidence-loader decision
+
+**Decision:** Preserve the Mission 029 RepairRequest as immutable; introduce a deterministic compact provider-transport projection and submit exactly one authorized Bright Data validation heal against the existing collector. Do not retry externally if the first corrected request fails. Replace the static Evidence Ledger’s hardcoded lifecycle values with a read-only, committed-artifact loader.
+
+**Preflight evidence:** `mission-030-compact-heal-prompt-v1` measured `676` characters, SHA-256 `d766547e1991faa67fccfdc58ed2ffe09a2b7cfc8e4a03418243db2cc407d9b5`, and `within_limit=true` at limit `1000`. Preflight made zero provider operations.
+
+**Observed evidence:** The one Bright Data heal was submitted with the compact prompt and returned terminal provider status `FAILED` / error code `PROVIDER_COMMAND_FAILED` after `407029` ms. The provider reported 500 failures before candidate creation. No candidate, verification, RiskGovernor result, CommitGate result, approval, production commit, activation, shipment, Gemini call, NVIDIA benchmark, or metric result exists.
+
+**Final safety state:** The former prompt-length boundary is resolved, but no recovery claim is permitted because the provider failed before candidate creation. The terminal Mission 030 artifact replays locally and suppresses a second external heal submission. The Evidence Ledger displays the committed Mission 029 record only; it does not present Mission 030 as a successful repair.

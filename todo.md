@@ -1,0 +1,8 @@
+- [x] Read the complete Mission 030 brief and inspect the committed Mission 029 artifact shapes.
+- [x] Create an isolated Mission 030 worktree from the pushed Mission 029 branch.
+- [x] Implement and test a deterministic <=1000-character Bright Data heal prompt projection without truncating the canonical RepairRequest.
+- [x] Run the single authorized compact-prompt Bright Data heal only after provider-free preflight passes.
+- [x] Preserve the real terminal provider response without approval, verification, commit, activation, or an external retry.
+- [x] Implement a read-only loader that normalizes the committed Mission 029 JSON bundle for the Evidence Ledger.
+- [x] Replace hardcoded UI evidence with sanitized artifact-backed data and remove the unused public debug collector.
+- [ ] Run secret scans, focused tests, full-suite validation, and commit/push the isolated Mission 030 branch.

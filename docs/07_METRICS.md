@@ -209,3 +209,7 @@ The clean recovery run `mission_028_recovery_floor_4812160675146552` preserved 1
 ## Mission 029 — Explicit non-benchmark metric boundary
 
 Mission 029 produced no benchmark metrics, comparative metrics, DetectionRate, AlarmPrecision, recovery-rate, or repair-rate claim. It is a product/demo evidence mission. The only counted values are live provider-operation facts: one collector create, one collector run, one heal request, zero approval, and zero production commit. The live AEGIS detection record is evidence for a single controlled demonstration, not a general performance metric. Mission 028 recovery remains the canonical benchmark evidence.
+
+## Mission 030 — Explicit no-metrics compatibility boundary
+
+Mission 030 produced no benchmark, comparative, detection-rate, recovery-rate, repair-rate, or provider-quality metric. It records one provider-transport compatibility preflight and one authorization-bounded heal submission only. The 676-character prompt projection removes the Mission 029 length-blocker but the provider still failed before candidate creation; this is a single provider-operation observation, not a quality or recovery metric. Mission 028 remains the only canonical benchmark metric evidence.

@@ -10,6 +10,9 @@ from pathlib import Path
 from typing import Mapping, Sequence
 
 
+BASELINE_B_SMOKE_SUBROOT = "baseline_b_execution_readiness_smoke"
+
+
 class BenchmarkLifecyclePhase(str, Enum):
     PREFLIGHT = "PREFLIGHT"
     SMOKE = "SMOKE"
@@ -41,10 +44,25 @@ class BenchmarkArtifactLayout:
     run_id: str
     runs_root: Path
     smoke_root: Path
+    baseline_b_smoke_root: Path | None = None
+
+    def __post_init__(self) -> None:
+        canonical_smoke_root = Path(self.smoke_root)
+        baseline_b_root = self.baseline_b_smoke_root
+        if baseline_b_root is None:
+            baseline_b_root = canonical_smoke_root / BASELINE_B_SMOKE_SUBROOT
+        object.__setattr__(self, "smoke_root", canonical_smoke_root)
+        object.__setattr__(self, "baseline_b_smoke_root", Path(baseline_b_root))
 
     @property
     def root(self) -> Path:
         return self.runs_root / self.run_id
+
+    @property
+    def smoke_evidence_root(self) -> Path:
+        """Exact Baseline B smoke-evidence directory."""
+        assert self.baseline_b_smoke_root is not None
+        return self.baseline_b_smoke_root
 
     @property
     def frozen_config(self) -> Path:
@@ -95,6 +113,7 @@ class BenchmarkArtifactLayout:
 
 
 __all__ = [
+    "BASELINE_B_SMOKE_SUBROOT",
     "BenchmarkArtifactLayout",
     "BenchmarkLifecyclePhase",
     "deterministic_benchmark_run_id",

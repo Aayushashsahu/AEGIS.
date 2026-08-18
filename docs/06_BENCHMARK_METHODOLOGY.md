@@ -230,3 +230,12 @@ The compatibility report covers all 180 completed synthetic records. Baseline A 
 Ground truth is never passed into participant runtime. The executor records evaluator-owned truth after each mutation application, and the adapter verifies mutation ID, seed, and severity identity before joining it. Missing truth, missing evidence references, duplicate run IDs, non-terminal evidence, or identity mismatches return `FAILED_METRIC_BOUNDARY`.
 
 The synthetic acceptance path calls only `aegis.mutation_metrics.calculate_metrics()` once after adaptation. It produces no second formula, no partial comparative report, and no real-run metric. Mission 022 does not invoke the real `--run` CLI, Gemini, Bright Data, healing, approval, commit, or rollback.
+
+
+## Mission 023 — explicit smoke-evidence path resolution
+
+Mission 023 fixes a path-resolution bug at the execution-gate boundary. The immutable Mission 019 run root is `benchmarks/runs/mission_016_floor_59a11e27a71f/`; the Baseline B smoke evidence is specifically under its `baseline_b_execution_readiness_smoke/` subdirectory. The future benchmark root remains `benchmarks/runs/mission_020_floor_2a80a8cf8d989326/`.
+
+The artifact-layout contract now exposes both `SMOKE_ROOT` and `BASELINE_B_SMOKE_ROOT`. Smoke validation reads `BASELINE_B_SMOKE_ROOT/smoke.json` and `BASELINE_B_SMOKE_ROOT/execution_log.json`, while it reads `preflight.json`, the root `execution_log.json`, and `frozen_config.json` directly from `SMOKE_ROOT`. Isolation continues to compare the future benchmark root against the canonical `SMOKE_ROOT`, not against the narrower smoke subdirectory.
+
+The validator does not search arbitrary directories, copy evidence, weaken checks, or rewrite historical files. The validation-only execution gate passes with the exact canonical evidence paths while the future benchmark root remains absent. No benchmark execution, Gemini call, Bright Data call, healing, approval, commit, rollback, or metric operation occurs.

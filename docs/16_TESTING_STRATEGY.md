@@ -251,3 +251,17 @@ PYTHONPATH=src pytest -q tests/unit tests/integration
 The synthetic acceptance test completes 180 injected TEST_DOUBLE opportunities, adapts 180 raw evidence records, joins 180 evaluator-owned truth records, and invokes only `aegis.mutation_metrics.calculate_metrics()` once with 60 honest AEGIS metric inputs. The compatibility report preserves all 180 records and retains Baseline A/B unavailable concepts as `NOT_APPLICABLE`. No second calculator, formula change, partial comparative report, real Gemini call, Bright Data call, healing, approval, commit, rollback, or real benchmark execution occurs.
 
 Mission 022 real counters remain `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated_from_real_runs=0`, and `execution_authorized=false`. Synthetic compatibility JSON is test evidence only and is not a benchmark result.
+
+
+## Mission 023 evidence — exact smoke-evidence path resolution
+
+Mission 023 adds focused tests for the five canonical evidence files, explicit `SMOKE_ROOT`, explicit `BASELINE_B_SMOKE_ROOT`, separate `BENCHMARK_ROOT`, smoke status PASS, candidate acceptance, bounded application, runtime ground truth `NOT_PROVIDED`, preflight/hash validation, all historical zero-execution counters, `pass=true`/`status=VALID`, gate PASS, artifact-root absence, and backward-compatible three-argument layout construction.
+
+The focused Mission 023 suite passed with `2 passed`. The complete repository suite passed with `257 passed`:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit/test_mission023.py
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```
+
+The validation-only gate passed with `configuration_hash`, `smoke_evidence`, `participants_ready`, `fairness`, `planned_run_count`, and `artifact_root_absent` all true. The immutable Mission 019 evidence tree was byte-identical before and after validation, and the future benchmark root was absent. No `execute()` call, trial, Gemini call, Bright Data call, healing, approval, commit, rollback, or metric operation occurred.

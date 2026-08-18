@@ -22,7 +22,7 @@ from urllib.request import Request, urlopen
 from .audit_store import _to_jsonable
 from .baseline_participants import BaselineBUnavailable
 from .benchmark_config import BenchmarkConfig, validate_config
-from .benchmark_lifecycle import BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
+from .benchmark_lifecycle import BASELINE_B_SMOKE_SUBROOT, BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
 from .benchmark_runner import (
     PARTICIPANT_IDS,
     BenchmarkRunner,
@@ -290,10 +290,12 @@ class BenchmarkExecutor:
             EXPECTED_BENCHMARK_ATTEMPT_ID,
             self.expected_source_revisions,
         )
+        smoke_root = self.repository_root / "benchmarks/runs" / EXPECTED_SMOKE_RUN_ID
         self.layout = BenchmarkArtifactLayout(
             self.benchmark_run_id,
             self.repository_root / "benchmarks/runs",
-            self.repository_root / "benchmarks/runs" / EXPECTED_SMOKE_RUN_ID,
+            smoke_root,
+            smoke_root / BASELINE_B_SMOKE_SUBROOT,
         )
         if registry is None:
             registry = ParticipantRegistry(config, self.lab)
@@ -324,7 +326,7 @@ class BenchmarkExecutor:
         return result.returncode == 0
 
     def _validate_immutable_smoke_evidence(self) -> Mapping[str, Any]:
-        root = self.layout.smoke_root
+        root = self.layout.smoke_evidence_root
         required = {
             "smoke": root / "smoke.json",
             "smoke_execution_log": root / "execution_log.json",

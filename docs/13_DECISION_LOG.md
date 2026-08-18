@@ -446,3 +446,18 @@ Status: OPEN | RESOLVED | DEFERRED
 **Validation:** The synthetic 180-opportunity TEST_DOUBLE path adapted 180 records and joined 180 evaluator truth records; 60 honest AEGIS inputs reached Mission 010. Focused tests passed `9`; the complete suite passed `255`. No real benchmark, provider, healing, approval, commit, rollback, or real-run metric operation occurred.
 
 **Status:** RESOLVED for the provider-neutral compatibility boundary; real benchmark execution remains separately authorized future work.
+
+
+## Mission 023 — fix smoke-evidence path resolution
+
+**Decision:** Represent the canonical immutable Mission 019 smoke root and the nested Baseline B smoke-evidence root as distinct artifact-layout fields. Validate smoke files from the nested root and root-level preflight/log/config files from the canonical root. Keep the future benchmark root separate and unchanged.
+
+**Root cause:** `BenchmarkExecutor` supplied `benchmarks/runs/mission_016_floor_59a11e27a71f/` as `layout.smoke_root`, but `_validate_immutable_smoke_evidence()` treated it as the Baseline B subroot. It searched for `smoke.json` and the smoke execution log at the wrong level and searched for root-level evidence one directory above the canonical root.
+
+**Corrected paths:** `SMOKE_ROOT=benchmarks/runs/mission_016_floor_59a11e27a71f/`; `BASELINE_B_SMOKE_ROOT=SMOKE_ROOT/baseline_b_execution_readiness_smoke/`; `BENCHMARK_ROOT=benchmarks/runs/mission_020_floor_2a80a8cf8d989326/`. The validator uses only these exact paths.
+
+**Safety:** No evidence file was modified, copied, deleted, or renamed. The frozen configuration, participant definitions, benchmark run ID, metric authority, and historical Mission 019–022 artifacts remain unchanged.
+
+**Validation:** Focused tests passed `2`; full suite passed `257`. The validation-only execution gate passed with all checks true, including smoke evidence, participant readiness, fairness, planned run count, artifact-root absence, and the corrected configuration hash. No benchmark, provider, healing, approval, commit, rollback, or metric operation occurred.
+
+**Status:** RESOLVED for Mission 023 path resolution; benchmark execution remains separately deferred.

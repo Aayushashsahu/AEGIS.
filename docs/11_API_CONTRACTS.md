@@ -413,3 +413,18 @@ Mission 022 adds a provider-neutral compatibility module without changing the Mi
 The adapter requires completed state, non-empty evidence references, non-empty artifact references, exact manifest/evidence run identity, matching mutation/seed/severity truth identity, and evaluator-owned ground truth. Duplicate run IDs, missing truth, missing context, mismatched context, non-terminal evidence, or missing references produce `FAILED_METRIC_BOUNDARY`. Truth is joined only after participant execution and is never included in participant runtime input.
 
 The adapter preserves the original source object and an explicit `preserved_fields` projection. It retains participant configuration hash and trial ordinal from immutable Mission 021 manifest context. It creates deterministic normalized truth references but does not copy truth content into the metric input. Mission 010’s `calculate_metrics()` remains the only calculator and receives only the honest AEGIS metric-input scope under the current v1 formula boundary.
+
+
+## Mission 023 — explicit smoke-root and Baseline B smoke-root contract
+
+`BenchmarkArtifactLayout` now represents three distinct paths:
+
+| Field | Meaning |
+|---|---|
+| `smoke_root` | Canonical immutable Mission 019 root: `benchmarks/runs/mission_016_floor_59a11e27a71f/` |
+| `baseline_b_smoke_root` / `smoke_evidence_root` | Exact Baseline B smoke subroot: `benchmarks/runs/mission_016_floor_59a11e27a71f/baseline_b_execution_readiness_smoke/` |
+| `root` | Separate future benchmark root: `benchmarks/runs/mission_020_floor_2a80a8cf8d989326/` |
+
+The smoke validator reads the two smoke files from `smoke_evidence_root` and the preflight/root-log/frozen-config files from `smoke_root`. `validate_isolation()` continues to reject a benchmark root that overlaps or contains the canonical `smoke_root`. A legacy three-argument layout construction derives the Baseline B subroot deterministically and remains compatible.
+
+The execution gate reports the smoke detail as `status=VALID`, `pass=true`, candidate accepted, bounded application, runtime ground truth not provided, preflight passed, frozen hash passed, and all historical zero-execution counters valid. Gate validation does not invoke `execute()`.

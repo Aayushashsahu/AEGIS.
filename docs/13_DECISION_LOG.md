@@ -493,3 +493,11 @@ Status: OPEN | RESOLVED | DEFERRED
 **Validation:** Focused Mission 025 tests passed `10`; the complete suite passed `269`. No real benchmark, provider, healing, approval, commit, rollback, or metric operation occurred. Real counters remain zero and `execution_authorized=false`.
 
 **Status:** RESOLVED for safe resume implementation and TEST_DOUBLE validation; the real resume command remains separately deferred.
+
+## Mission 026 — NVIDIA NIM decision
+
+**Decision:** Add NVIDIA NIM as a provider-neutral candidate replacement for the naive Gemini Baseline B while preserving the Gemini freeze and historical evidence. The selected official catalog candidate is `openai/gpt-oss-20b` at the documented NVIDIA hosted endpoint. The implementation preserves first-candidate-only semantics, disabled tools, zero retries, bounded candidate recording, and no AEGIS verification/risk/commit controls.
+
+**Evidence:** Official NVIDIA LLM API documentation lists the hosted endpoint and model catalog. The official model page documents the candidate and its OpenAI-compatible prototype. One authorized smoke returned HTTP 200 and verified model reachability and candidate-policy executability. The smoke used exactly one provider operation, recorded `runtime_ground_truth=NOT_PROVIDED`, and did not execute generated code or any AEGIS control.
+
+**Safety state:** The NVIDIA participant proposal and candidate configuration remain `NOT_READY`, owner review is required, and no promotion or production benchmark authorization occurred. NVIDIA rate limits remain UNKNOWN until a primary source or account response verifies them. The Mission 017 Gemini configuration hash and Mission 019 smoke evidence remain unchanged. No benchmark, healing, approval, commit, rollback, or metric operation occurred.

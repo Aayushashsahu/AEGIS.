@@ -259,3 +259,13 @@ A persisted raw artifact is consumed only when its manifest matches the current 
 The recovery gate computes missing manifests in deterministic manifest order. Existing failed, timed-out, and invalidated attempts remain consumed because the frozen retry count is zero. Every newly executed missing trial writes an exclusive raw artifact first and atomically reconstructs the execution log. Existing raw files, frozen configuration, and participant manifest are preserved byte-for-byte on the resume path.
 
 Metrics are prohibited until every one of the 180 opportunities has a terminal state. At terminal completion, completed evidence passes through the Mission 022 compatibility boundary and only Mission 010 remains the metric authority. Mission 025 tests use isolated TEST_DOUBLE fixtures only; the real resume command remains separately deferred.
+
+## Mission 026 — NVIDIA NIM participant capability and smoke boundary
+
+Mission 026 adds a provider-neutral NVIDIA NIM catalog and caller while preserving the historical Gemini Baseline B configuration and smoke evidence. The official NVIDIA hosted interface is the OpenAI-compatible `POST https://integrate.api.nvidia.com/v1/chat/completions` operation. The selected candidate is `openai/gpt-oss-20b`, represented by an immutable model descriptor and a new `NOT_READY` participant proposal.
+
+The replacement proposal freezes the exact provider, model identifier and revision, endpoint, prompt revision and SHA-256, sampling values, output limit, disabled tools, first-candidate policy, timeout, zero-retry policy, and an explicitly unknown provider rate limit. No 40 RPM value is assumed without primary evidence. A configurable limiter supports future provider/account limits without baking an unverified assumption into the benchmark.
+
+The authorized Mission 026 smoke performed exactly one real NVIDIA operation. It returned HTTP 200, `MODEL_REACHABLE=true`, `candidate_received=true`, `candidate_selected=true`, and `candidate_accepted=true`. The bounded application recorded `generated_code_executed=false` and invoked no AEGIS verification, RiskGovernor, CommitGate, quarantine, watch, or rollback. Runtime ground truth remained `NOT_PROVIDED`. The smoke stopped before any benchmark run, healing, approval, commit, rollback, or metrics.
+
+The new participant remains `NOT_READY` because owner review and an immutable promotion have not occurred. The new candidate configuration has its own deterministic hash and artifact root, while the Mission 017 corrected Gemini configuration and Mission 019 evidence remain immutable historical records. Dry-run remains provider-free and returns `BLOCKED_NOT_READY` for the NVIDIA candidate until promotion.

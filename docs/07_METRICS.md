@@ -179,3 +179,9 @@ DetectionRate, AlarmPrecision, UnsafeRefusalRate, L5DetectionRate, L5QuarantineR
 Baseline A and Baseline B common fields that are not defined for their strategies remain `NOT_APPLICABLE`. The compatibility report preserves their full evidence and does not reinterpret Baseline B’s first-candidate `output_eligible` policy as AEGIS shipment or correctness. Missing evidence, missing truth, duplicate identities, and mismatched manifest/evidence identity return `FAILED_METRIC_BOUNDARY`.
 
 The synthetic 180-opportunity test-double compatibility path adapted 180 records and invoked `calculate_metrics()` once over the honest 60-record AEGIS metric scope. The resulting JSON is a test artifact only. Mission 022 generated zero real-run metric results and claims no benchmark measurement.
+
+## Mission 026 — NVIDIA NIM metric boundary
+
+Mission 026 performs capability verification only. The single real NVIDIA smoke is not a benchmark trial and produces no Mission 010 metric result. Its normalized evidence records provider operation count, model reachability, candidate receipt/selection/acceptance, latency, disabled controls, and `runtime_ground_truth=NOT_PROVIDED`; it does not claim DetectionRate, VerifiedRecovery, FalseRepairRate, UnsafeRefusalRate, L5 shipment safety, or any other benchmark metric.
+
+The new NVIDIA participant proposal has a deterministic participant hash and a new candidate configuration hash, but remains `NOT_READY` pending owner review and immutable promotion. The historical Gemini configuration and Mission 019 smoke remain the comparison baseline. Any future 180-run output must pass through the existing Mission 022 compatibility boundary and the sole Mission 010 calculator. No new formula, estimator, metric fallback, or provider-derived truth is introduced.

@@ -1,0 +1,351 @@
+{
+  "artifact_contract": {
+    "configs": "benchmarks/configs",
+    "manifests": "benchmarks/manifests",
+    "reports": "benchmarks/reports",
+    "results": "benchmarks/results",
+    "runs": "benchmarks/runs"
+  },
+  "artifact_root": "benchmarks/runs/mission_026_nvidia_nim_candidate",
+  "baselines": [
+    {
+      "baseline_id": "BASELINE_A",
+      "commit_policy": "NOT_APPLICABLE_BASELINE_NO_COMMIT",
+      "configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "description": "Deterministic fixed-selector static extraction baseline.",
+      "execution_policy": "SINGLE_PASS_NO_HEALING",
+      "implementation_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "metadata": {
+        "aegis_verification": "NOT_USED",
+        "artifact_schema": "participant-run-evidence-v1",
+        "commit_gate": "NOT_USED",
+        "configuration": {
+          "mode": "STATIC_SELECTOR_ONLY",
+          "schema_version": "gpu-price-schema-v1",
+          "selector_version": "baseline-a-v1",
+          "selectors": {
+            "availability": "CSS_SELECTOR",
+            "price": "CSS_SELECTOR",
+            "product_id": "FIELD_PASSTHROUGH",
+            "rating": "CSS_SELECTOR",
+            "title": "CSS_SELECTOR",
+            "url": "CSS_SELECTOR"
+          }
+        },
+        "description": "Deterministic fixed-selector static extraction baseline.",
+        "extraction_implementation": "baseline-a-static-selector-v1",
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": "1",
+        "healing": "NOT_USED",
+        "llm": "NOT_USED",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "output_normalization_policy": "canonical-participant-run-v1",
+        "provenance": "TEST_DOUBLE",
+        "provider": "TEST_DOUBLE",
+        "quarantine": "NOT_USED",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "risk_governor": "NOT_USED",
+        "rollback": "NOT_USED",
+        "schema_version": "gpu-price-schema-v1",
+        "seed": 12345,
+        "selector_version": "baseline-a-v1",
+        "timeout_policy": {
+          "backoff_seconds": 0,
+          "retry_count": 0,
+          "timeout_seconds": 300
+        },
+        "watch": "NOT_USED"
+      },
+      "model_id": "NOT_APPLICABLE",
+      "prompt_revision": "NOT_APPLICABLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "status": "READY",
+      "verification_policy": "NOT_APPLICABLE_BASELINE_NO_VERIFICATION"
+    },
+    {
+      "baseline_id": "BASELINE_B",
+      "commit_policy": "FIRST_CANDIDATE_ACCEPTED_NO_AEGIS_COMMIT_GATE",
+      "configuration_hash": "4602d935860cbc864248d6c870a0fce597ecf6ffe1be07326f7a1b2a04321e7f",
+      "description": "Naive NVIDIA NIM first-candidate repair baseline without AEGIS verification.",
+      "execution_policy": "FIRST_CANDIDATE_ONLY",
+      "implementation_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+      "metadata": {
+        "aegis_verification": "NOT_USED",
+        "artifact_schema": "participant-run-evidence-v1",
+        "auto_accept_first_candidate": true,
+        "candidate_policy_executable": true,
+        "catalog_revision": "mission-026-catalog-v1",
+        "catalog_status": "OFFICIAL_CATALOG_ENTRY",
+        "commit_gate": "NOT_USED",
+        "description": "Naive NVIDIA NIM first-candidate repair baseline without AEGIS verification.",
+        "endpoint": "https://integrate.api.nvidia.com/v1",
+        "first_candidate_policy": "FIRST_CANDIDATE",
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": "1",
+        "interface": "OPENAI_COMPATIBLE_CHAT_COMPLETIONS",
+        "max_candidates": 1,
+        "max_output": 8192,
+        "max_output_tokens": 8192,
+        "model_identifier": "openai/gpt-oss-20b",
+        "model_reachability": "MODEL_REACHABLE",
+        "model_revision": "gpt-oss-20b-v1.0-2025-08-05",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "mutation_ground_truth_runtime_payload": "NOT_PROVIDED",
+        "output_normalization_policy": "canonical-participant-run-v1",
+        "owner_review_status": "REQUIRED",
+        "prompt_hash": "8ec87b237f687f39d4dd1f1240670e74402877a7e3d45c364d1f8010cbec85b1",
+        "prompt_revision": "mission-026-baseline-b-prompts-v1",
+        "provenance": "MODEL_ASSISTED",
+        "provider": "NVIDIA_NIM",
+        "quarantine": "NOT_USED",
+        "rate_limit": {
+          "concurrency_limit": 1,
+          "max_requests_per_minute": "UNKNOWN_UNTIL_ACCOUNT_RESPONSE",
+          "min_interval_seconds": 0,
+          "verified_limit": false
+        },
+        "repair_prompt_template": "Repair the scraper for the following extraction failure.\n\nTARGET:\n{target}\n\nEXPECTED OUTPUT SCHEMA:\n{extraction_contract}\n\nOBSERVED OUTPUT:\n{observed_output}\n\nFAILURE DESCRIPTION:\n{failure_description}\n\nSCRAPER:\n{scraper_source}\n\nProduce the repaired scraper.\n",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "risk_governor": "NOT_USED",
+        "rollback": "NOT_USED",
+        "runtime_ground_truth": "NOT_PROVIDED",
+        "sampling_configuration": {
+          "temperature": "NOT_APPLICABLE",
+          "top_k": "NOT_APPLICABLE",
+          "top_p": "NOT_APPLICABLE"
+        },
+        "seed": 12345,
+        "smoke_evidence": "experiments/mission026_nvidia_smoke.json",
+        "smoke_provider_operation_count": 1,
+        "smoke_status": "PASS",
+        "system_prompt": "You repair a web scraper whose extracted output has changed.\n\nYour job is to modify the scraper so that it restores the expected\nextraction behavior while preserving the requested output schema.\n\nReturn ONLY the repaired scraper code/configuration and a concise\nexplanation of what changed.\n\nDo not discuss verification.\nDo not ask for human approval.\nDo not perform additional validation beyond what is necessary to\nproduce the repaired scraper.\n",
+        "timeout_policy": {
+          "backoff_seconds": 0,
+          "retry_count": 0,
+          "timeout_seconds": 300
+        },
+        "tools_enabled": false,
+        "tools_permitted": [
+          "DISABLED"
+        ],
+        "watch": "NOT_USED"
+      },
+      "model_id": "openai/gpt-oss-20b",
+      "prompt_revision": "mission-026-baseline-b-prompts-v1",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "status": "NOT_READY",
+      "verification_policy": "NO_AEGIS_VERIFICATION"
+    },
+    {
+      "baseline_id": "AEGIS",
+      "commit_policy": "COMMIT_GATE_REQUIRED_NO_DRY_RUN_COMMIT",
+      "configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "description": "AEGIS safety lifecycle TEST_DOUBLE benchmark adapter.",
+      "execution_policy": "FULL_AEGIS_LIFECYCLE_TEST_DOUBLE_ONLY",
+      "implementation_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "metadata": {
+        "artifact_schema": "participant-run-evidence-v1",
+        "auto_approve": false,
+        "benchmark_configuration_hash": "fdf3b63244051f7bfc6867cc53b774285edacdd045a9b7870b9290e5974929c3",
+        "blind_commit": false,
+        "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+        "commit_gate": "USED",
+        "configuration": {
+          "adapter": "AegisAdapter",
+          "auto_approve": false,
+          "blind_commit": false,
+          "ground_truth_runtime_access": false,
+          "live_provider_execution": false,
+          "mode": "TEST_DOUBLE",
+          "verification_bypass": false
+        },
+        "description": "AEGIS safety lifecycle TEST_DOUBLE benchmark adapter.",
+        "deterministic_test_double": true,
+        "evaluator_ground_truth_runtime_access": false,
+        "fixture_id": "gpu-price-staging",
+        "fixture_version": "1",
+        "healing": "EXISTING_AEGIS_LIFECYCLE_ONLY",
+        "live_bright_data_execution": "NOT_USED",
+        "metric_formula_version": "mission-010-metrics-v1",
+        "mutation_class_ids": [
+          "M001",
+          "M002",
+          "M003",
+          "M004",
+          "M005",
+          "M006"
+        ],
+        "output_normalization_policy": "canonical-participant-run-v1",
+        "participant_adapter": "AegisAdapter",
+        "provenance": "TEST_DOUBLE",
+        "provider_execution": "NOT_USED_FOR_INITIAL_BENCHMARK",
+        "quarantine": "USED",
+        "retry_policy": {
+          "backoff_ms": 0,
+          "max_attempts": 1,
+          "mode": "BOUNDED"
+        },
+        "risk_governor": "USED",
+        "rollback": "USED",
+        "safety_policy": "UNCHANGED; VERIFICATION_RISK_COMMIT_GATE_REQUIRED",
+        "seeds": [
+          12345
+        ],
+        "timeout_policy": {
+          "backoff_seconds": 0,
+          "retry_count": 0,
+          "timeout_seconds": 300
+        },
+        "verification": "USED",
+        "verification_bypass": false,
+        "watch": "USED"
+      },
+      "model_id": "NOT_APPLICABLE",
+      "prompt_revision": "NOT_APPLICABLE",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "status": "READY",
+      "verification_policy": "MISSION_010_DETERMINISTIC_VERIFICATION"
+    }
+  ],
+  "benchmark_id": "aegis-benchmark-mission-026-nvidia-candidate",
+  "benchmark_version": "mission-026-nvidia-candidate-v1",
+  "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+  "collection_policy": {
+    "baseline_b_provider": "NVIDIA_NIM",
+    "freeze_status": "CORRECTED_SUPERSEDES_MISSION_015",
+    "mode": "CANDIDATE_NOT_READY",
+    "provenance": "TEST_DOUBLE_FIXTURE_ONLY",
+    "provider_execution": "ONE_NVIDIA_SMOKE_COMPLETED; NO_BENCHMARK_EXECUTION",
+    "supersedes_configuration_hash": "59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b"
+  },
+  "config_version": "mission-017-corrected-benchmark-config-v1",
+  "configuration_hash": "52618538bdffaba5edeadcf29257848f1f7e0744079e1f7cb9d4de22db5f859e",
+  "created_at": "2026-08-18T00:00:00+00:00",
+  "environment_reference": "AEGIS_MISSION_026_NVIDIA_CANDIDATE; SMOKE_DEFERRED; NO_BENCHMARK_EXECUTION",
+  "evidence_policy": {
+    "freeze_correction_reason": "Mission 016 preflight detected Baseline A/B implementation revision identity mismatch.",
+    "ground_truth": "MutationGroundTruth_ONLY",
+    "manual_result_editing": false,
+    "metrics": "Mission010_calculator_only",
+    "model_id": "openai/gpt-oss-20b",
+    "owner_review": "REQUIRED_BEFORE_READY",
+    "provider": "NVIDIA_NIM",
+    "raw_runs": "MutationRun_ONLY",
+    "redaction": "Mission008_audit_store",
+    "supersedes_configuration_hash": "59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b"
+  },
+  "fixture_id": "gpu-price-staging",
+  "fixture_version": "1",
+  "metric_formula_version": "mission-010-metrics-v1",
+  "model_configuration": {
+    "auto_accept_first_candidate": true,
+    "candidate_policy": "FIRST_CANDIDATE",
+    "candidate_policy_executable": true,
+    "endpoint": "https://integrate.api.nvidia.com/v1",
+    "max_candidates": 1,
+    "max_output_tokens": 8192,
+    "model_id": "openai/gpt-oss-20b",
+    "model_reachability": "MODEL_REACHABLE",
+    "model_revision": "gpt-oss-20b-v1.0-2025-08-05",
+    "prompt_hash": "8ec87b237f687f39d4dd1f1240670e74402877a7e3d45c364d1f8010cbec85b1",
+    "prompt_revision": "mission-026-baseline-b-prompts-v1",
+    "provider": "NVIDIA_NIM",
+    "rate_limit": {
+      "concurrency_limit": 1,
+      "max_requests_per_minute": "UNKNOWN_UNTIL_ACCOUNT_RESPONSE",
+      "min_interval_seconds": 0,
+      "verified_limit": false
+    },
+    "retry_policy": {
+      "backoff_ms": 0,
+      "max_attempts": 1,
+      "mode": "BOUNDED"
+    },
+    "runtime_ground_truth": "NOT_PROVIDED",
+    "sampling": {
+      "temperature": "NOT_APPLICABLE",
+      "top_k": "NOT_APPLICABLE",
+      "top_p": "NOT_APPLICABLE"
+    },
+    "smoke_evidence": "experiments/mission026_nvidia_smoke.json",
+    "smoke_provider_operation_count": 1,
+    "smoke_status": "PASS",
+    "timeout_policy": {
+      "backoff_seconds": 0,
+      "retry_count": 0,
+      "timeout_seconds": 300
+    },
+    "tools_enabled": false
+  },
+  "model_identifier": "openai/gpt-oss-20b",
+  "mutation_class_ids": [
+    "M001",
+    "M002",
+    "M003",
+    "M004",
+    "M005",
+    "M006"
+  ],
+  "mutation_severity": {
+    "M001": "L1",
+    "M002": "L2",
+    "M003": "L3",
+    "M004": "L4",
+    "M005": "L5",
+    "M006": "L5"
+  },
+  "prompt_version": "mission-026-baseline-b-prompts-v1",
+  "repository_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+  "repository_state": "DIRTY_USER_FILES_PRESERVED",
+  "retry_policy": {
+    "backoff_ms": 0,
+    "max_attempts": 1,
+    "mode": "BOUNDED"
+  },
+  "runtime_reference": "Python 3.12; standard-library application modules; pytest test environment",
+  "seeds": [
+    12345
+  ],
+  "timeout_policy": {
+    "collection_ms": 300000,
+    "healing_ms": 300000,
+    "polling_ms": 300000,
+    "total_ms": 300000,
+    "verification_ms": 300000
+  },
+  "trial_count": 1
+}

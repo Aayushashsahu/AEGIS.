@@ -1,0 +1,94 @@
+{
+  "artifact_schema": "participant-run-evidence-v1",
+  "commit_policy": "FIRST_CANDIDATE_ACCEPTED_NO_AEGIS_COMMIT_GATE",
+  "configuration": {
+    "aegis_verification": "NOT_USED",
+    "artifact_schema": "participant-run-evidence-v1",
+    "auto_accept_first_candidate": true,
+    "candidate_policy_executable": true,
+    "catalog_revision": "mission-026-catalog-v1",
+    "catalog_status": "OFFICIAL_CATALOG_ENTRY",
+    "commit_gate": "NOT_USED",
+    "description": "Naive NVIDIA NIM first-candidate repair baseline without AEGIS verification.",
+    "endpoint": "https://integrate.api.nvidia.com/v1",
+    "first_candidate_policy": "FIRST_CANDIDATE",
+    "fixture_id": "gpu-price-staging",
+    "fixture_version": "1",
+    "interface": "OPENAI_COMPATIBLE_CHAT_COMPLETIONS",
+    "max_candidates": 1,
+    "max_output": 8192,
+    "max_output_tokens": 8192,
+    "model_identifier": "openai/gpt-oss-20b",
+    "model_reachability": "MODEL_REACHABLE",
+    "model_revision": "gpt-oss-20b-v1.0-2025-08-05",
+    "mutation_class_ids": [
+      "M001",
+      "M002",
+      "M003",
+      "M004",
+      "M005",
+      "M006"
+    ],
+    "mutation_ground_truth_runtime_payload": "NOT_PROVIDED",
+    "output_normalization_policy": "canonical-participant-run-v1",
+    "owner_review_status": "REQUIRED",
+    "prompt_hash": "8ec87b237f687f39d4dd1f1240670e74402877a7e3d45c364d1f8010cbec85b1",
+    "prompt_revision": "mission-026-baseline-b-prompts-v1",
+    "provenance": "MODEL_ASSISTED",
+    "provider": "NVIDIA_NIM",
+    "quarantine": "NOT_USED",
+    "rate_limit": {
+      "concurrency_limit": 1,
+      "max_requests_per_minute": "UNKNOWN_UNTIL_ACCOUNT_RESPONSE",
+      "min_interval_seconds": 0,
+      "verified_limit": false
+    },
+    "repair_prompt_template": "Repair the scraper for the following extraction failure.\n\nTARGET:\n{target}\n\nEXPECTED OUTPUT SCHEMA:\n{extraction_contract}\n\nOBSERVED OUTPUT:\n{observed_output}\n\nFAILURE DESCRIPTION:\n{failure_description}\n\nSCRAPER:\n{scraper_source}\n\nProduce the repaired scraper.\n",
+    "retry_policy": {
+      "backoff_ms": 0,
+      "max_attempts": 1,
+      "mode": "BOUNDED"
+    },
+    "risk_governor": "NOT_USED",
+    "rollback": "NOT_USED",
+    "runtime_ground_truth": "NOT_PROVIDED",
+    "sampling_configuration": {
+      "temperature": "NOT_APPLICABLE",
+      "top_k": "NOT_APPLICABLE",
+      "top_p": "NOT_APPLICABLE"
+    },
+    "seed": 12345,
+    "smoke_evidence": "experiments/mission026_nvidia_smoke.json",
+    "smoke_provider_operation_count": 1,
+    "smoke_status": "PASS",
+    "system_prompt": "You repair a web scraper whose extracted output has changed.\n\nYour job is to modify the scraper so that it restores the expected\nextraction behavior while preserving the requested output schema.\n\nReturn ONLY the repaired scraper code/configuration and a concise\nexplanation of what changed.\n\nDo not discuss verification.\nDo not ask for human approval.\nDo not perform additional validation beyond what is necessary to\nproduce the repaired scraper.\n",
+    "timeout_policy": {
+      "backoff_seconds": 0,
+      "retry_count": 0,
+      "timeout_seconds": 300
+    },
+    "tools_enabled": false,
+    "tools_permitted": [
+      "DISABLED"
+    ],
+    "watch": "NOT_USED"
+  },
+  "configuration_hash": "4602d935860cbc864248d6c870a0fce597ecf6ffe1be07326f7a1b2a04321e7f",
+  "execution_policy": "FIRST_CANDIDATE_ONLY",
+  "implementation_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+  "output_normalization_policy": "canonical-participant-run-v1",
+  "participant_id": "BASELINE_B",
+  "prior_status": "NOT_READY",
+  "provenance": "MODEL_ASSISTED",
+  "retry_policy": {
+    "backoff_ms": 0,
+    "max_attempts": 1,
+    "mode": "BOUNDED"
+  },
+  "timeout_policy": {
+    "backoff_seconds": 0,
+    "retry_count": 0,
+    "timeout_seconds": 300
+  },
+  "verification_policy": "NO_AEGIS_VERIFICATION"
+}

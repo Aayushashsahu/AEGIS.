@@ -1,0 +1,98 @@
+{
+  "aegis_verification_invoked": false,
+  "benchmark_runs_executed": 0,
+  "candidate_accepted": true,
+  "candidate_count": 1,
+  "candidate_policy_executable": true,
+  "candidate_received": true,
+  "candidate_selected": true,
+  "commit_gate_invoked": false,
+  "evidence": {
+    "artifact_refs": [
+      "experiments/mission026_nvidia_smoke.json"
+    ],
+    "artifact_root": "experiments",
+    "candidate": {
+      "candidate": "**Repaired Scraper Configuration (JSON)**\n\n```json\n{\n  \"name\": \"gpu-price-schema-v1\",\n  \"url\": \"https://example.test/gpu-1\",\n  \"extractors\": [\n    {\n      \"name\": \"product_id\",\n      \"selector\": \"#product-id\",\n      \"attribute\": \"data-id\",\n      \"type\": \"string\",\n      \"required\": true\n    },\n    {\n      \"name\": \"price_value\",\n      \"selector\": \".price-value\",\n      \"attribute\": \"text\",\n      \"parse\": \"float\",\n      \"required\": true\n    },\n    {\n      \"name\": \"price_currency\",\n      \"selector\": \".price-value\",\n      \"attribute\": \"text\",\n      \"regex\": \"(USD|EUR|GBP|JPY)\",\n      \"default\": \"USD\",\n      \"required\": true\n    }\n  ],\n  \"output\": [\n    {\n      \"product_id\": \"$product_id\",\n      \"price\": {\n        \"value\": \"$price_value\",\n        \"currency\": \"$price_currency\"\n      }\n    }\n  ]\n}\n```\n\n**Explanation of changes**\n\n- Added a separate extractor for the currency (`price_currency`) so the price is captured as an object with `value` and `currency`, satisfying the `gpu-price-schema-v1` expectations and the NVIDIA smoke policy requirement that prices include currency.  \n- Retained the original `product_id` and `price_value` extractors.  \n- The `output` format has been updated to nest the price data under a `price` object, producing `{ \"product_id\":\"gpu-1\", \"price\":{\"value\":29.99,\"currency\":\"USD\"} }`."
+    },
+    "candidate_accepted": true,
+    "candidate_application": {
+      "aegis_verification_invoked": false,
+      "application_mode": "SAFE_TEST_DOUBLE_BOUNDARY",
+      "candidate_count_seen": 1,
+      "candidate_index": 0,
+      "candidate_sha256": "ae570410bff6c326e25fa20e8d4dfc19b74916183e2128bff70f3684c43275fb",
+      "commit_gate_invoked": false,
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "generated_code_executed": false,
+      "normalized_record_count": 1,
+      "quarantine_invoked": false,
+      "risk_governor_invoked": false,
+      "rollback_invoked": false,
+      "watch_invoked": false
+    },
+    "candidate_received": true,
+    "candidate_selected": true,
+    "code_revision": "mission-026-nvidia-smoke",
+    "configuration_hash": "NOT_READY",
+    "cost": "NOT_APPLICABLE",
+    "detected": "NOT_APPLICABLE",
+    "environment_reference": "NVIDIA_HOSTED_SMOKE_ONLY",
+    "evidence_refs": [
+      "mission026-nvidia-smoke#model-output"
+    ],
+    "failure_state": "COMPLETED",
+    "fixture_version": "1",
+    "ground_truth_reference": "NOT_PROVIDED",
+    "llm_calls": 1,
+    "mutation_id": "SMOKE",
+    "observation_reference": "mission026-nvidia-smoke#observation",
+    "output_eligible": true,
+    "participant_id": "BASELINE_B",
+    "participant_revision": "mission-026-nvidia-smoke",
+    "provenance": "MODEL_ASSISTED",
+    "retry_policy": {
+      "retry_count": 0
+    },
+    "risk_decision": "NOT_APPLICABLE",
+    "run_id": "mission026-nvidia-smoke",
+    "seed": 0,
+    "severity": "NOT_APPLICABLE",
+    "state": "COMPLETED",
+    "timeout_policy": {
+      "timeout_seconds": 300
+    },
+    "timing_ms": {
+      "model": 26105
+    },
+    "verification_status": "NOT_APPLICABLE"
+  },
+  "execution_authorized": false,
+  "generated_code_executed": false,
+  "healing_operations_executed": 0,
+  "metric_results_generated": 0,
+  "mission": "026",
+  "model_id": "openai/gpt-oss-20b",
+  "model_reachable": true,
+  "model_revision": "gpt-oss-20b-v1.0-2025-08-05",
+  "prompt_hash": "8ec87b237f687f39d4dd1f1240670e74402877a7e3d45c364d1f8010cbec85b1",
+  "provider": "NVIDIA_NIM",
+  "provider_observation": {
+    "endpoint": "https://integrate.api.nvidia.com/v1/chat/completions",
+    "failure_state": "COMPLETED",
+    "latency_ms": 26105,
+    "model_id": "openai/gpt-oss-20b",
+    "provider": "NVIDIA_NIM",
+    "provider_error": null,
+    "rate_limit_retry_after_seconds": null,
+    "request_count": 1,
+    "status_code": 200,
+    "wait_ms": 0
+  },
+  "provider_operation_count": 1,
+  "risk_governor_invoked": false,
+  "runtime_ground_truth": "NOT_PROVIDED",
+  "status": "PASS",
+  "tools_enabled": false
+}

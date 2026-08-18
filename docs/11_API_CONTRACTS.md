@@ -461,3 +461,11 @@ Mission 025 adds the following provider-neutral resume contract:
 Terminal consumption requires exact benchmark/run identity, participant, participant revision, mutation, severity, trial, seed, configuration hash, artifact filename, and a valid terminal state. `FAILED`, `TIMED_OUT`, and `INVALIDATED` are consumed attempts and are not retried. The executor computes missing entries from the frozen manifest order and executes only those entries.
 
 For an existing root, `artifact_root_absent=false` is expected, while `artifact_root_resumable`, `existing_terminal_artifacts_valid`, and `missing_run_set_computed` must be true. The normal execution authorization remains explicit and is never inferred from root existence. Existing `frozen_config.json`, `participant_manifest.json`, and terminal raw files are not rewritten by resume inspection.
+
+## Mission 026 — NVIDIA NIM API contract
+
+`src/aegis/nvidia_provider.py` defines a provider-neutral `ModelDescriptor`, `NvidiaModelCatalog`, `NvidiaModelCaller`, `NvidiaProviderError`, `RateLimitConfig`, `ProviderRateLimiter`, `NvidiaBaselineBAdapter`, and `NvidiaParticipantRegistry`. The hosted caller targets `https://integrate.api.nvidia.com/v1/chat/completions` only when explicitly constructed and invoked. It reads one of `NVIDIA_API_KEY`, `NVIDIA_NIM_API_KEY`, or `NGC_API_KEY`; no credential is written to artifacts or metadata.
+
+The caller normalizes OpenAI-compatible `choices[].message.content` into the existing Baseline B candidate mapping. It records provider, model, revision, endpoint, status, latency, request count, failure state, and retry-after observation without storing authorization headers. HTTP 429, 5xx, transport, invalid JSON, and malformed-choice failures are explicit and non-retrying by default. Rate limits remain configuration values; an unverified numeric RPM is never assumed.
+
+The CLI selects the NVIDIA registry only when the loaded Baseline B metadata declares `provider=NVIDIA_NIM`. `--dry-run` constructs no network caller and remains provider-free. `--run` remains explicit and requires `--output`; the NVIDIA candidate configuration is `NOT_READY`, so it cannot authorize the benchmark until owner review and promotion are recorded.

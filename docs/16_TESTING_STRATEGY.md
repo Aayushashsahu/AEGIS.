@@ -293,3 +293,11 @@ PYTHONPATH=src pytest -q tests/unit tests/integration
 ```
 
 The tests use only temporary TEST_DOUBLE roots and injected callers. They do not invoke the real CLI `--run`, Gemini, Bright Data, healing, approval, commit, rollback, or production metrics. The actual frozen benchmark root was absent from the inspected consolidated repository, so no real artifact was modified and no real interrupted-run counts are claimed.
+
+## Mission 026 — NVIDIA NIM testing
+
+Mission 026 adds 18 focused provider-free tests for catalog selection, model descriptors, allowed credential names, prompt hashing, OpenAI-compatible response normalization, secret redaction, HTTP/429/5xx/transport failures, no implicit retries, configurable limiting, tools-disabled enforcement, first-candidate semantics, normalized evidence, deterministic participant/configuration hashes, old Gemini preservation, and owner-review `NOT_READY` behavior.
+
+The complete suite passed with `287 passed`. The candidate CLI exposes `--run` and `--output`; its provider-free dry-run returns `BLOCKED_NOT_READY` with zero benchmark/provider/healing/metric counters. Exactly one real NVIDIA smoke operation was then performed with the visible NVIDIA API key. It returned HTTP 200, `MODEL_REACHABLE=true`, `CANDIDATE_POLICY_EXECUTABLE=true`, one candidate received/selected/accepted, and `execution_authorized=false`. No real benchmark run, Gemini call, Bright Data call, healing, approval, commit, rollback, or metric generation occurred.
+
+The model-generated candidate remains untrusted data. The bounded application records `generated_code_executed=false`, and no AEGIS verification, RiskGovernor, or CommitGate is invoked by the naive baseline. The historical Gemini smoke artifact was not modified, and the new candidate benchmark root was not created.

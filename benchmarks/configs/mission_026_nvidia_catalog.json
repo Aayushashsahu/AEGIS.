@@ -1,0 +1,34 @@
+{
+  "catalog_revision": "mission-026-catalog-v1",
+  "endpoint": "https://integrate.api.nvidia.com/v1",
+  "models": [
+    {
+      "availability": "CANDIDATE_OFFICIAL_CATALOG_NOT_SMOKE_VERIFIED",
+      "capabilities": [
+        "chat",
+        "instruction_following",
+        "structured_output",
+        "function_calling",
+        "reasoning"
+      ],
+      "context_length": 131072,
+      "display_name": "OpenAI gpt-oss-20b via NVIDIA hosted NIM",
+      "modalities": [
+        "text_input",
+        "text_output"
+      ],
+      "model_id": "openai/gpt-oss-20b",
+      "model_revision": "gpt-oss-20b-v1.0-2025-08-05",
+      "provider": "NVIDIA_NIM",
+      "provider_metadata": {
+        "catalog_source": "https://docs.api.nvidia.com/nim/reference/llm-apis",
+        "hosted_endpoint": "https://integrate.api.nvidia.com/v1",
+        "limits": "UNKNOWN_UNTIL_ACCOUNT_RESPONSE",
+        "model_revision": "gpt-oss-20b-v1.0-2025-08-05",
+        "model_source": "https://build.nvidia.com/openai/gpt-oss-20b",
+        "tools": "DISABLED_FOR_BENCHMARK"
+      }
+    }
+  ],
+  "provider": "NVIDIA_NIM"
+}

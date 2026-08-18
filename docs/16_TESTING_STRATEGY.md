@@ -301,3 +301,9 @@ Mission 026 adds 18 focused provider-free tests for catalog selection, model des
 The complete suite passed with `287 passed`. The candidate CLI exposes `--run` and `--output`; its provider-free dry-run returns `BLOCKED_NOT_READY` with zero benchmark/provider/healing/metric counters. Exactly one real NVIDIA smoke operation was then performed with the visible NVIDIA API key. It returned HTTP 200, `MODEL_REACHABLE=true`, `CANDIDATE_POLICY_EXECUTABLE=true`, one candidate received/selected/accepted, and `execution_authorized=false`. No real benchmark run, Gemini call, Bright Data call, healing, approval, commit, rollback, or metric generation occurred.
 
 The model-generated candidate remains untrusted data. The bounded application records `generated_code_executed=false`, and no AEGIS verification, RiskGovernor, or CommitGate is invoked by the naive baseline. The historical Gemini smoke artifact was not modified, and the new candidate benchmark root was not created.
+
+## Mission 027 — NVIDIA owner-review testing
+
+Mission 027 adds 14 focused provider-free tests using local deterministic objects. The tests cover complete and incomplete owner review, deterministic participant promotion, append-only readiness, inclusion of the benchmark-side rate policy in the participant hash, explicit unknown provider limits, fairness, new configuration hashing, preservation of the historical Gemini configuration and Mission 019 evidence, validation-only execution freedom, no NVIDIA/Gemini/Bright Data operations, no benchmark root, and zero counters.
+
+The focused Mission 027 tests passed with `14 passed`. The complete suite passed with `301 passed`. The validation-only CLI returned `READY_TO_EXECUTE` with `execution_authorized=false`, `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, and `metric_results_generated=0`. The future 180-run executor was not invoked.

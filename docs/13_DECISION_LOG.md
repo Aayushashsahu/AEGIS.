@@ -501,3 +501,15 @@ Status: OPEN | RESOLVED | DEFERRED
 **Evidence:** Official NVIDIA LLM API documentation lists the hosted endpoint and model catalog. The official model page documents the candidate and its OpenAI-compatible prototype. One authorized smoke returned HTTP 200 and verified model reachability and candidate-policy executability. The smoke used exactly one provider operation, recorded `runtime_ground_truth=NOT_PROVIDED`, and did not execute generated code or any AEGIS control.
 
 **Safety state:** The NVIDIA participant proposal and candidate configuration remain `NOT_READY`, owner review is required, and no promotion or production benchmark authorization occurred. NVIDIA rate limits remain UNKNOWN until a primary source or account response verifies them. The Mission 017 Gemini configuration hash and Mission 019 smoke evidence remain unchanged. No benchmark, healing, approval, commit, rollback, or metric operation occurred.
+
+## Mission 027 — NVIDIA owner-review decision
+
+**Decision:** Promote NVIDIA Baseline B from `NOT_READY` to `READY` through the explicit owner-review and append-only promotion workflow, then freeze a new benchmark configuration containing `BASELINE_A`, NVIDIA `BASELINE_B`, and `AEGIS`. Do not modify the historical Mission 017 Gemini configuration.
+
+**Owner review:** The `BASELINE_B` review is approved by `PROJECT_OWNER`, reviewed by `PROJECT_OWNER`, timestamped `2026-08-18T10:40:27+00:00`, and correlated by `2a1d3d0b-9f61-4b9f-a995-a3d6d32b1d90`. The source proposal hash is `4602d935860cbc864248d6c870a0fce597ecf6ffe1be07326f7a1b2a04321e7f`. The promoted participant hash is `9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14`.
+
+**Rate decision:** AEGIS freezes a conservative benchmark-side throttle of 6 requests per minute, a 10-second minimum interval, and concurrency 1. NVIDIA’s provider RPM/free-tier ceiling remains `UNKNOWN`; 6 RPM is not a provider-limit claim.
+
+**Freeze and validation:** The new configuration hash is `8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4`. Fairness is `PASS`, all participants are READY, and the provider-free dry run returns `READY_TO_EXECUTE`. The future execution protocol is 180 opportunities, but no opportunity was executed. All benchmark/provider/healing/metric counters remain zero and authorization remains false.
+
+**Status:** RESOLVED for owner review, NVIDIA participant promotion, new configuration freeze, fairness, and validation-only readiness. Benchmark execution remains separately deferred.

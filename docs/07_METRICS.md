@@ -185,3 +185,9 @@ The synthetic 180-opportunity test-double compatibility path adapted 180 records
 Mission 026 performs capability verification only. The single real NVIDIA smoke is not a benchmark trial and produces no Mission 010 metric result. Its normalized evidence records provider operation count, model reachability, candidate receipt/selection/acceptance, latency, disabled controls, and `runtime_ground_truth=NOT_PROVIDED`; it does not claim DetectionRate, VerifiedRecovery, FalseRepairRate, UnsafeRefusalRate, L5 shipment safety, or any other benchmark metric.
 
 The new NVIDIA participant proposal has a deterministic participant hash and a new candidate configuration hash, but remains `NOT_READY` pending owner review and immutable promotion. The historical Gemini configuration and Mission 019 smoke remain the comparison baseline. Any future 180-run output must pass through the existing Mission 022 compatibility boundary and the sole Mission 010 calculator. No new formula, estimator, metric fallback, or provider-derived truth is introduced.
+
+## Mission 027 — NVIDIA metric boundary
+
+Mission 027 produces no benchmark or metric result. Owner review, readiness promotion, the new configuration hash, fairness, and the validation-only plan are configuration/readiness evidence only. Mission 010 remains the sole metric authority, and no new formula or estimator is introduced.
+
+The future protocol records 10 trials per mutation and 180 opportunities, while the current provider-free validation runner reports its existing 18-step planning representation. Both are planning counts; neither is an executed result. The final counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`.

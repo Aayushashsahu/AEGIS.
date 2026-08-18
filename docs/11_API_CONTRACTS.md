@@ -469,3 +469,11 @@ For an existing root, `artifact_root_absent=false` is expected, while `artifact_
 The caller normalizes OpenAI-compatible `choices[].message.content` into the existing Baseline B candidate mapping. It records provider, model, revision, endpoint, status, latency, request count, failure state, and retry-after observation without storing authorization headers. HTTP 429, 5xx, transport, invalid JSON, and malformed-choice failures are explicit and non-retrying by default. Rate limits remain configuration values; an unverified numeric RPM is never assumed.
 
 The CLI selects the NVIDIA registry only when the loaded Baseline B metadata declares `provider=NVIDIA_NIM`. `--dry-run` constructs no network caller and remains provider-free. `--run` remains explicit and requires `--output`; the NVIDIA candidate configuration is `NOT_READY`, so it cannot authorize the benchmark until owner review and promotion are recorded.
+
+## Mission 027 — NVIDIA owner-review API contract
+
+Mission 027 reuses `OwnerReviewDecision`, `ParticipantFreezeProposal`, `promote_participant`, `ReadinessPromotion`, and `apply_promotions`. The owner review is immutable data containing `approved`, owner, reviewer, rationale, explicit UTC timestamp, correlation ID, source participant hash, and the owner-approved benchmark-side rate policy. Promotion records only the append-only `NOT_READY → READY` transition; it does not mutate Mission 026 history.
+
+The promoted NVIDIA metadata contains provider `NVIDIA_NIM`, model `openai/gpt-oss-20b`, its pinned revision, the existing first-candidate/no-AEGIS-control policy, and the separate rate fields `benchmark_requests_per_minute=6`, `benchmark_min_interval_seconds=10`, and `concurrency_limit=1`. `provider_limit=UNKNOWN` remains a distinct field. The new canonical configuration is frozen through `compute_configuration_hash`; the historical Gemini configuration is not rewritten.
+
+The validation-only CLI constructs an NVIDIA participant registry without a model caller and returns `READY_TO_EXECUTE` only as a planning state. It does not invoke NVIDIA, Gemini, Bright Data, healing, approval, commit, rollback, or metrics. The explicit `--run` boundary remains outside Mission 027.

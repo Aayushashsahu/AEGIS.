@@ -1,0 +1,697 @@
+{
+  "benchmark_runs_executed": 0,
+  "execution_authorized": false,
+  "expected_run_count": 18,
+  "fixture_checks": {
+    "M001": "PASS",
+    "M002": "PASS",
+    "M003": "PASS",
+    "M004": "PASS",
+    "M005": "PASS",
+    "M006": "PASS"
+  },
+  "freeze_validation": {
+    "checks": {
+      "baseline_configuration_hashes": "PASS",
+      "code_revision": "PASS",
+      "configuration_hash": "PASS",
+      "fixture_version": "PASS",
+      "metric_formula_version": "PASS",
+      "mutation_class_ids": "PASS",
+      "mutation_severity": "PASS",
+      "retry_policy": "PASS",
+      "seeds": "PASS",
+      "timeout_policy": "PASS"
+    },
+    "errors": [],
+    "valid": true
+  },
+  "generated_at": null,
+  "healing_operations_executed": 0,
+  "metric_calculator_available": true,
+  "metric_results_generated": 0,
+  "mutation_count": 6,
+  "notice": "VALIDATION ONLY \u2014 NO BENCHMARK EXECUTED",
+  "participant_count": 3,
+  "participant_readiness": {
+    "AEGIS": {
+      "benchmark_ready": true,
+      "checks": {
+        "commit_gate": "PASS",
+        "detection": "PASS",
+        "metric_calculator": "AVAILABLE_INTERFACE_ONLY",
+        "mutation_coverage": "PASS",
+        "normalization": "PASS",
+        "reviewed_metadata": "PASS",
+        "risk": "PASS",
+        "test_double_provenance": "PASS",
+        "verification": "PASS"
+      },
+      "contract_ready": true,
+      "errors": [],
+      "participant_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "participant_id": "AEGIS",
+      "participant_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "provenance": "TEST_DOUBLE",
+      "status": "READY",
+      "warnings": [
+        "TEST_DOUBLE lifecycle normalization is available; benchmark execution remains blocked."
+      ]
+    },
+    "BASELINE_A": {
+      "benchmark_ready": true,
+      "checks": {
+        "aegis_detection": "NOT_USED",
+        "aegis_verification": "NOT_USED",
+        "artifact_format": "PASS",
+        "commit_gate": "NOT_USED",
+        "mutation_coverage": "PASS",
+        "normalization": "PASS",
+        "provenance": "PASS_TEST_DOUBLE",
+        "retry_policy": "PASS",
+        "reviewed_metadata": "PASS",
+        "risk_governor": "NOT_USED",
+        "timeout_policy": "PASS"
+      },
+      "contract_ready": true,
+      "errors": [],
+      "participant_configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "participant_id": "BASELINE_A",
+      "participant_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "provenance": "TEST_DOUBLE",
+      "status": "READY",
+      "warnings": [
+        "Baseline A has no healing, AEGIS verification, RiskGovernor, or CommitGate path."
+      ]
+    },
+    "BASELINE_B": {
+      "benchmark_ready": true,
+      "checks": {
+        "aegis_verification": "NOT_USED",
+        "commit_gate": "NOT_USED",
+        "configuration_hash": "PASS",
+        "execution_policy": "PASS",
+        "implementation_revision": "PASS",
+        "model_configuration": "PASS",
+        "model_id": "PASS",
+        "prompt_revision": "PASS",
+        "provenance": "PASS_TEST_DOUBLE",
+        "retry_policy": "PASS",
+        "reviewed_metadata": "PASS",
+        "risk_governor": "NOT_USED"
+      },
+      "contract_ready": true,
+      "errors": [
+        "frozen baseline slot is NOT_READY"
+      ],
+      "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+      "participant_id": "BASELINE_B",
+      "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+      "provenance": "TEST_DOUBLE",
+      "status": "READY",
+      "warnings": [
+        "Baseline B cannot choose a model, prompt, or first-candidate policy automatically."
+      ]
+    }
+  },
+  "plan": [
+    {
+      "artifact_name": "baseline_a__m001__seed-12345__7f9750d50d09.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M001/12345",
+      "mutation_id": "M001",
+      "participant_configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "participant_id": "BASELINE_A",
+      "participant_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_a_m001_12345_7f9750d50d090e90",
+      "seed": 12345,
+      "severity": "L1",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_a__m002__seed-12345__d484c9157a9d.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M002/12345",
+      "mutation_id": "M002",
+      "participant_configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "participant_id": "BASELINE_A",
+      "participant_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_a_m002_12345_d484c9157a9d0c30",
+      "seed": 12345,
+      "severity": "L2",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_a__m003__seed-12345__5755d8c5897e.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M003/12345",
+      "mutation_id": "M003",
+      "participant_configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "participant_id": "BASELINE_A",
+      "participant_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_a_m003_12345_5755d8c5897e7b5a",
+      "seed": 12345,
+      "severity": "L3",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_a__m004__seed-12345__ce2e7b8be792.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M004/12345",
+      "mutation_id": "M004",
+      "participant_configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "participant_id": "BASELINE_A",
+      "participant_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_a_m004_12345_ce2e7b8be79261c8",
+      "seed": 12345,
+      "severity": "L4",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_a__m005__seed-12345__5310f0bcfeb2.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M005/12345",
+      "mutation_id": "M005",
+      "participant_configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "participant_id": "BASELINE_A",
+      "participant_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_a_m005_12345_5310f0bcfeb2c10f",
+      "seed": 12345,
+      "severity": "L5",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_a__m006__seed-12345__1305593d87d6.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M006/12345",
+      "mutation_id": "M006",
+      "participant_configuration_hash": "17b0f73fb909915f69e1a442959831463a08930df83dadcaedab7e543a60348f",
+      "participant_id": "BASELINE_A",
+      "participant_revision": "0e8bcc4ea8c1bbcb7dae21b12ec1710366e39f47",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_a_m006_12345_1305593d87d685ab",
+      "seed": 12345,
+      "severity": "L5",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_b__m001__seed-12345__14444e96cedf.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M001/12345",
+      "mutation_id": "M001",
+      "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+      "participant_id": "BASELINE_B",
+      "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_b_m001_12345_14444e96cedfd70c",
+      "seed": 12345,
+      "severity": "L1",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_b__m002__seed-12345__08e7ec168e2d.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M002/12345",
+      "mutation_id": "M002",
+      "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+      "participant_id": "BASELINE_B",
+      "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_b_m002_12345_08e7ec168e2d64ad",
+      "seed": 12345,
+      "severity": "L2",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_b__m003__seed-12345__652f6a26e8e5.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M003/12345",
+      "mutation_id": "M003",
+      "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+      "participant_id": "BASELINE_B",
+      "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_b_m003_12345_652f6a26e8e5cdc0",
+      "seed": 12345,
+      "severity": "L3",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_b__m004__seed-12345__19b87a15c5f8.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M004/12345",
+      "mutation_id": "M004",
+      "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+      "participant_id": "BASELINE_B",
+      "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_b_m004_12345_19b87a15c5f8495e",
+      "seed": 12345,
+      "severity": "L4",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_b__m005__seed-12345__9688040a9860.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M005/12345",
+      "mutation_id": "M005",
+      "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+      "participant_id": "BASELINE_B",
+      "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_b_m005_12345_9688040a98600e81",
+      "seed": 12345,
+      "severity": "L5",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "baseline_b__m006__seed-12345__03bb670ebd5a.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M006/12345",
+      "mutation_id": "M006",
+      "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+      "participant_id": "BASELINE_B",
+      "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_baseline_b_m006_12345_03bb670ebd5a2ab1",
+      "seed": 12345,
+      "severity": "L5",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "aegis__m001__seed-12345__fd4eb003f98f.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M001/12345",
+      "mutation_id": "M001",
+      "participant_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "participant_id": "AEGIS",
+      "participant_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_aegis_m001_12345_fd4eb003f98fe9ed",
+      "seed": 12345,
+      "severity": "L1",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "aegis__m002__seed-12345__cf4d62a019e1.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M002/12345",
+      "mutation_id": "M002",
+      "participant_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "participant_id": "AEGIS",
+      "participant_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_aegis_m002_12345_cf4d62a019e11685",
+      "seed": 12345,
+      "severity": "L2",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "aegis__m003__seed-12345__d206c96cb65e.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M003/12345",
+      "mutation_id": "M003",
+      "participant_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "participant_id": "AEGIS",
+      "participant_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_aegis_m003_12345_d206c96cb65ec22d",
+      "seed": 12345,
+      "severity": "L3",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "aegis__m004__seed-12345__eccb541bce22.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M004/12345",
+      "mutation_id": "M004",
+      "participant_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "participant_id": "AEGIS",
+      "participant_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_aegis_m004_12345_eccb541bce227f77",
+      "seed": 12345,
+      "severity": "L4",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "aegis__m005__seed-12345__9061ef8d77a1.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M005/12345",
+      "mutation_id": "M005",
+      "participant_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "participant_id": "AEGIS",
+      "participant_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_aegis_m005_12345_9061ef8d77a15ce6",
+      "seed": 12345,
+      "severity": "L5",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    },
+    {
+      "artifact_name": "aegis__m006__seed-12345__aec1d1710fdb.json",
+      "artifact_root": "benchmarks/runs/mission_027_nvidia_owner_freeze",
+      "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+      "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+      "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+      "fixture_version": "1",
+      "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M006/12345",
+      "mutation_id": "M006",
+      "participant_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+      "participant_id": "AEGIS",
+      "participant_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+      "retry_policy": {
+        "backoff_ms": 0,
+        "max_attempts": 1,
+        "mode": "BOUNDED"
+      },
+      "run_id": "benchmark_run_aegis_m006_12345_aec1d1710fdbc0df",
+      "seed": 12345,
+      "severity": "L5",
+      "state": "PLANNED",
+      "timeout_policy": {
+        "collection_ms": 300000,
+        "healing_ms": 300000,
+        "polling_ms": 300000,
+        "total_ms": 300000,
+        "verification_ms": 300000
+      }
+    }
+  ],
+  "provider_operations_executed": 0,
+  "runner_version": "mission-012-runner-v1",
+  "seed_checks": {
+    "M001:12345": "PASS",
+    "M002:12345": "PASS",
+    "M003:12345": "PASS",
+    "M004:12345": "PASS",
+    "M005:12345": "PASS",
+    "M006:12345": "PASS"
+  },
+  "seed_count": 1,
+  "status": "READY_TO_EXECUTE",
+  "validation": {
+    "checks": {
+      "artifact_contract": "PASS",
+      "artifact_root": "PASS",
+      "baseline_slots": "PASS",
+      "code_revision": "PASS",
+      "configuration_hash": "PASS",
+      "fixture": "PASS",
+      "metric_formula_version": "PASS",
+      "model_metadata": "PASS",
+      "mutation_set": "PASS",
+      "mutation_severity": "PASS",
+      "policies": "PASS",
+      "repository_state": "PASS",
+      "retry_policy": "PASS",
+      "seed_policy": "PASS",
+      "timeout_policy": "PASS"
+    },
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "errors": [],
+    "status": "VALID",
+    "warnings": [
+      "repository is not clean; no benchmark execution is authorized by this dry-run"
+    ]
+  },
+  "validation_only": true
+}

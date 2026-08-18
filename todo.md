@@ -12,5 +12,5 @@
 - [x] Harden the evidence pipeline so all UI state is artifact-backed, provenance-labeled, and fail-closed rather than silently substituting a demo state.
 - [x] Build a dedicated Judge Mode that makes the live collection, controlled corruption, detection, untrusted-heal boundary, and no-shipment decision understandable in under 30 seconds.
 - [x] Add a clearly labeled controlled-evidence replay of the candidate-verification-risk decision path only if existing legitimate test/evidence fixtures support it; never present replay data as live provider output.
-- [ ] Validate evidence integrity, safety counters, no-secret boundaries, tests, accessibility, responsive UI behavior, and visual quality before committing and pushing the isolated Mission 031 branch.
-- [ ] Append canonical documentation, checkpoint the judge-facing web project, and deliver a factually bounded final report.
+- [x] Validate evidence integrity, safety counters, no-secret boundaries, tests, accessibility, responsive UI behavior, and visual quality before committing and pushing the isolated Mission 031 branch.
+- [x] Append canonical documentation, checkpoint the judge-facing web project, and deliver a factually bounded final report.

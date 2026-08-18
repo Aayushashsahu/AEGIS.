@@ -1,0 +1,87 @@
+{
+  "attempt_id": "mission-028-nvidia-comparative-benchmark-v1",
+  "benchmark_run_id": "mission_028_floor_00c77f2abd976a10",
+  "benchmark_runs_executed": 0,
+  "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+  "execution_authorized": false,
+  "gate": {
+    "benchmark_run_id": "mission_028_floor_00c77f2abd976a10",
+    "checks": {
+      "artifact_root_absent": true,
+      "artifact_root_isolated": true,
+      "artifact_root_matches_deterministic_run": true,
+      "artifact_root_resumable": true,
+      "benchmark_run_id": true,
+      "code_config_freeze": true,
+      "configuration_hash": true,
+      "configuration_validation": true,
+      "existing_terminal_artifacts_valid": true,
+      "fairness": true,
+      "fixture_clean": true,
+      "freeze_validation": true,
+      "metric_authority_available": true,
+      "missing_run_count": 180,
+      "missing_run_set_computed": true,
+      "model_caller_available": true,
+      "no_duplicate_run_ids": true,
+      "participant_hash": true,
+      "participant_revision_checks": {
+        "AEGIS": true,
+        "BASELINE_A": true,
+        "BASELINE_B": true
+      },
+      "participant_revision_metadata": true,
+      "participant_source_revisions": true,
+      "participants_ready": true,
+      "planned_run_count": true,
+      "rate_limit_policy_valid": true,
+      "smoke_evidence": true,
+      "smoke_evidence_detail": {
+        "checks": {
+          "benchmark_runs_zero": true,
+          "bounded_application": true,
+          "candidate_accepted": true,
+          "execution_unauthorized": true,
+          "frozen_config_hash": true,
+          "healing_zero": true,
+          "metrics_zero": true,
+          "preflight_passed": true,
+          "provider_operations_zero": true,
+          "runtime_ground_truth_not_provided": true,
+          "smoke_checks": true,
+          "smoke_log_status": true,
+          "smoke_status": true
+        },
+        "errors": [],
+        "missing": [],
+        "pass": true,
+        "provider_operation_count": 1,
+        "status": "VALID"
+      },
+      "source_revision_checks": {
+        "AEGIS": true,
+        "BASELINE_A": true,
+        "BASELINE_B": true
+      }
+    },
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "errors": [],
+    "execution_authorized": false,
+    "expected_run_count": 180,
+    "passed": true
+  },
+  "healing_operations_executed": 0,
+  "metric_results_generated": 0,
+  "mission": "028",
+  "notice": "NO TRIAL EXECUTED",
+  "provider_operations_executed": 0,
+  "rate_policy": {
+    "benchmark_min_interval_seconds": 10,
+    "benchmark_requests_per_minute": 6,
+    "concurrency_limit": 1,
+    "pass": true,
+    "provider_limit": "UNKNOWN",
+    "provider_limit_status": "UNKNOWN_UNTIL_ACCOUNT_RESPONSE"
+  },
+  "status": "PREFLIGHT_PASS"
+}

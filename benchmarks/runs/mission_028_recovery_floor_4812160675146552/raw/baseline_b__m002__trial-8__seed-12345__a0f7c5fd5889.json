@@ -1,0 +1,41 @@
+{
+  "artifact_schema": "participant-run-evidence-v1",
+  "benchmark_run_id": "mission_028_recovery_floor_4812160675146552",
+  "errors": [
+    "Remote end closed connection without response"
+  ],
+  "evidence": null,
+  "manifest": {
+    "artifact_name": "baseline_b__m002__trial-8__seed-12345__a0f7c5fd5889.json",
+    "artifact_root": "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552",
+    "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+    "benchmark_run_id": "mission_028_recovery_floor_4812160675146552",
+    "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+    "fixture_version": "1",
+    "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M002/12345/trial-8",
+    "mutation_id": "M002",
+    "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+    "participant_id": "BASELINE_B",
+    "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+    "retry_policy": {
+      "backoff_ms": 0,
+      "max_attempts": 1,
+      "mode": "BOUNDED"
+    },
+    "run_id": "mission_028_recovery_floor_4812160675146552__baseline_b__m002__trial-8__a0f7c5fd58899e74",
+    "seed": 12345,
+    "severity": "L2",
+    "state": "PLANNED",
+    "timeout_policy": {
+      "collection_ms": 300000,
+      "healing_ms": 300000,
+      "polling_ms": 300000,
+      "total_ms": 300000,
+      "verification_ms": 300000
+    },
+    "trial_number": 8
+  },
+  "terminal_state": "FAILED"
+}

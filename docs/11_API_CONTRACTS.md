@@ -477,3 +477,23 @@ Mission 027 reuses `OwnerReviewDecision`, `ParticipantFreezeProposal`, `promote_
 The promoted NVIDIA metadata contains provider `NVIDIA_NIM`, model `openai/gpt-oss-20b`, its pinned revision, the existing first-candidate/no-AEGIS-control policy, and the separate rate fields `benchmark_requests_per_minute=6`, `benchmark_min_interval_seconds=10`, and `concurrency_limit=1`. `provider_limit=UNKNOWN` remains a distinct field. The new canonical configuration is frozen through `compute_configuration_hash`; the historical Gemini configuration is not rewritten.
 
 The validation-only CLI constructs an NVIDIA participant registry without a model caller and returns `READY_TO_EXECUTE` only as a planning state. It does not invoke NVIDIA, Gemini, Bright Data, healing, approval, commit, rollback, or metrics. The explicit `--run` boundary remains outside Mission 027.
+
+## Mission 028 — authorized NVIDIA execution contract
+
+Mission 028 derives `benchmark_run_id=mission_028_floor_00c77f2abd976a10` from the Mission 027 configuration hash, explicit attempt identifier `mission-028-nvidia-comparative-benchmark-v1`, and sorted participant revisions. The executor accepts explicit configuration, attempt, run-prefix, source-revision, expected-run, and additional-gate parameters while preserving Mission 020 defaults for historical behavior.
+
+The pre-execution gate requires configuration hash and validation, freeze validation, participant readiness and revision/hash checks, fairness, clean fixture, immutable smoke evidence, metric authority, model caller availability, valid benchmark-side throttle, isolated/absent artifact root, deterministic identity, duplicate-free manifests, and exactly 180 planned opportunities. A failed gate returns before trial 1 and creates no benchmark root.
+
+The authorized NVIDIA caller uses the frozen provider/model/revision and the owner-approved AEGIS throttle of 6 requests per minute, 10-second minimum interval, and concurrency 1. NVIDIA’s provider limit remains `UNKNOWN`. Credentials are read transiently from approved environment-variable names and are never persisted. Provider HTTP 429, 5xx, timeout, authentication, and transport failures remain explicit terminal provider failures with zero automatic retries.
+
+Mission 025 resume semantics remain active. Existing terminal raw artifacts are validated by run ID, configuration hash, participant revision, manifest identity, and artifact filename. A resume consumes only missing manifests and never reruns a terminal run ID. Mission 028 completed 180 terminal artifacts after one interruption, including one explicit NVIDIA HTTP 502 failure.
+
+After all terminal artifacts exist, participant evidence crosses the Mission 022 compatibility boundary and only Mission 010’s calculator may generate metrics. The completed run generated 38 canonical results. No Gemini, Bright Data, healing, approval, commit, rollback, or alternative metric calculator was invoked.
+
+## Mission 028 recovery preservation contract
+
+The first attempt `mission_028_floor_00c77f2abd976a10` is an invalidated, non-reproducible incident record and cannot be reused. Recovery derives `mission_028_recovery_floor_4812160675146552` from the same frozen configuration hash, a distinct recovery attempt identifier, and the frozen participant revisions.
+
+`BenchmarkExecutor` accepts an explicit `runs_root`. Production recovery supplies the canonical repository benchmark root; TEST_DOUBLE tests supply a temporary root explicitly. Test cleanup is permitted to remove only the temporary root and must never resolve to the production recovery root. The recovery artifact hash manifest records SHA-256 for every raw file and all run artifacts.
+
+The recovery gate passes only when the new root is absent before trial 1, the old run identity is not reused, and all existing terminal artifacts are resumable without rerun. After completion, the root is immutable for release validation: raw-file count and aggregate hashes must remain unchanged through the full test suite. Metrics remain blocked until all 180 terminal artifacts exist, then only Mission 010 may run.

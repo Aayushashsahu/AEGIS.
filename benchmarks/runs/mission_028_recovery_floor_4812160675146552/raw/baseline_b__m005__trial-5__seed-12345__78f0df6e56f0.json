@@ -1,0 +1,127 @@
+{
+  "artifact_schema": "participant-run-evidence-v1",
+  "benchmark_run_id": "mission_028_recovery_floor_4812160675146552",
+  "errors": [],
+  "evidence": {
+    "artifact_refs": [
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m005__trial-5__seed-12345__78f0df6e56f0.json"
+    ],
+    "artifact_root": "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552",
+    "candidate": {
+      "candidate": "**Repaired scraper**\n\n```python\nimport re\nimport requests\nfrom bs4 import BeautifulSoup\n\n# Expected output schema for a GPU price page (gpu-price-schema-v1)\n# {\n#   \"product_id\": str,   # e.g. \"gpu-1\"\n#   \"title\": str,        # e.g. \"DGX Spark\"\n#   \"price\": str,        # e.g. \"29.99\"  <-- note: string, not float\n#   \"availability\": str,  # e.g. \"in_stock\"\n#   \"rating\": float,     # e.g. 4.8\n#   \"url\": str           # full URL\n# }\n\ndef scrape_gpu_page(url: str) -> dict:\n    \"\"\"\n    Scrapes a single GPU product page and returns a dictionary that matches\n    the gpu-price-schema-v1 output schema.\n\n    The scraper is intentionally simple and resilient:\n    - Uses a CSS selector approach with graceful fall\u2011backs.\n    - Extracts the price text exactly as it appears on the page (no type\n      conversion to float), because the schema expects a string.\n    - Normalises the availability text to \"in_stock\" or \"out_of_stock\".\n    - Falls back to the page slug for product_id when not explicitly present.\n    \"\"\"\n\n    resp = requests.get(url)\n    resp.raise_for_status()\n    soup = BeautifulSoup(resp.text, \"html.parser\")\n\n    # Helper to get text or None\n    def txt(sel):\n        element = soup.select_one(sel)\n        return element.get_text(strip=True) if element else None\n\n    # ------------------------------------------------------------------\n    # Product ID \u2013 fall back to slug from URL if the selector is missing\n    # ------------------------------------------------------------------\n    product_id = txt(\"meta[name='product-id'][content]\")  # example: <meta name=\"product-id\" content=\"gpu-1\">\n    if not product_id:\n        # Extract slug part after last slash\n        product_id = url.rstrip(\"/\").split(\"/\")[-1]\n        if not product_id:\n            product_id = \"unknown\"\n\n    # ------------------------------------------------------------------\n    # Title\n    # ------------------------------------------------------------------\n    title = txt(\"h1.product-title\") or \"Untitled\"\n\n    # ------------------------------------------------------------------\n    # Price \u2013 keep it as the original string (e.g. \"29.99\" or \"$29.99\")\n    # ------------------------------------------------------------------\n    raw_price = txt(\"span.price\")   # or a custom selector\n    if raw_price:\n        # Remove any leading currency symbols or surrounding text\n        price_match = re.search(r'(\\d+[.,]?\\d*)', raw_price)\n        price = price_match.group(1) if price_match else raw_price\n    else:\n        price = \"0.00\"\n\n    # ------------------------------------------------------------------\n    # Availability \u2013 normalise to \"in_stock\" or \"out_of_stock\"\n    # ------------------------------------------------------------------\n    avail_raw = txt(\"div.availability\")\n    if avail_raw:\n        if any(tok in avail_raw.lower() for tok in (\"in stock\", \"available\", \"instock\", \"yes\")):\n            availability = \"in_stock\"\n        elif any(tok in avail_raw.lower() for tok in (\"out of stock\", \"unavailable\", \"sold out\", \"no\")):\n            availability = \"out_of_stock\"\n        else:\n            availability = \"unknown\"\n    else:\n        availability = \"unknown\"\n\n    # ------------------------------------------------------------------\n    # Rating \u2013 numeric rating inside an attribute or as text\n    # ------------------------------------------------------------------\n    rating = None\n    rating_el = soup.select_one(\"div.rating[data-rating]\")\n    if rating_el:\n        try:\n            rating = float(rating_el[\"data-rating\"])\n        except (ValueError, KeyError):\n            rating = None\n    else:\n        rating_text = txt(\"div.rating\")\n        if rating_text:\n            try:\n                rating = float(rating_text)\n            except ValueError:\n                rating = None\n    if rating is None:\n        rating = 0.0\n\n    # ------------------------------------------------------------------\n    # Return the dict that matches the schema\n    # ------------------------------------------------------------------\n    return {\n        \"product_id\": product_id,\n        \"title\": title,\n        \"price\": price,\n        \"availability\": availability,\n        \"rating\": rating,\n        \"url\": url,\n    }\n\n# Example use:\n# data = scrape_gpu_page(\"https://example.test/gpu-1\")\n# print(data)\n```\n\n**Explanation of the repair**\n\n1. **Price type** \u2013 The original scraper returned the price as a numeric float, but the `gpu-price-schema-v1` requires a *string*. The modified scraper now keeps the price as the exact substring captured from the page, stripping only incidental whitespace or currency symbols, and retains it as a string.\n\n2. **Robust selectors & fall\u2011backs** \u2013  \n   * `product_id` now falls back to the URL slug if a meta tag is missing.  \n   * `availability` is normalised to `\"in_stock\"` / `\"out_of_stock\"` regardless of the textual variant that appears on the page.  \n   * `rating` is extracted from either a `data-rating` attribute or plain text, with a graceful default of `0.0` if nothing is found.\n\nThese adjustments restore the intended extraction behavior while keeping the output exactly in the `gpu-price-schema-v1` format."
+    },
+    "candidate_accepted": true,
+    "candidate_application": {
+      "aegis_verification_invoked": false,
+      "application_mode": "SAFE_TEST_DOUBLE_BOUNDARY",
+      "candidate_count_seen": 1,
+      "candidate_index": 0,
+      "candidate_sha256": "639f1a50f5545ab2e588f77fe7f5bd425ef18b375002d89f166e195f16934553",
+      "commit_gate_invoked": false,
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "generated_code_executed": false,
+      "model_id": "openai/gpt-oss-20b",
+      "model_revision": "gpt-oss-20b-v1.0-2025-08-05",
+      "normalized_record_count": 1,
+      "provider": "NVIDIA_NIM",
+      "provider_observation": {
+        "endpoint": "https://integrate.api.nvidia.com/v1/chat/completions",
+        "failure_state": "COMPLETED",
+        "latency_ms": 35103,
+        "model_id": "openai/gpt-oss-20b",
+        "provider": "NVIDIA_NIM",
+        "provider_error": null,
+        "rate_limit_retry_after_seconds": null,
+        "request_count": 45,
+        "status_code": 200,
+        "wait_ms": 0
+      },
+      "quarantine_invoked": false,
+      "risk_governor_invoked": false,
+      "rollback_invoked": false,
+      "tools_enabled": false,
+      "watch_invoked": false
+    },
+    "candidate_received": true,
+    "candidate_selected": true,
+    "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "cost": "NOT_APPLICABLE",
+    "detected": "NOT_APPLICABLE",
+    "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+    "evidence_refs": [
+      "ground-truth://gpu-price-staging/v1/M005/12345/trial-5",
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m005__trial-5__seed-12345__78f0df6e56f0.json#model-output",
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m005__trial-5__seed-12345__78f0df6e56f0.json#candidate-received",
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m005__trial-5__seed-12345__78f0df6e56f0.json#candidate-selected",
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m005__trial-5__seed-12345__78f0df6e56f0.json#candidate-accepted"
+    ],
+    "failure_state": "COMPLETED",
+    "fixture_version": "1",
+    "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M005/12345/trial-5",
+    "llm_calls": 1,
+    "mutation_id": "M005",
+    "observation_reference": "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m005__trial-5__seed-12345__78f0df6e56f0.json#observation",
+    "output_eligible": true,
+    "participant_id": "BASELINE_B",
+    "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+    "provenance": "MODEL_ASSISTED",
+    "retry_policy": {
+      "backoff_ms": 0,
+      "max_attempts": 1,
+      "mode": "BOUNDED"
+    },
+    "risk_decision": "NOT_APPLICABLE",
+    "run_id": "mission_028_recovery_floor_4812160675146552__baseline_b__m005__trial-5__78f0df6e56f02213",
+    "seed": 12345,
+    "severity": "L5",
+    "state": "COMPLETED",
+    "timeout_policy": {
+      "collection_ms": 300000,
+      "healing_ms": 300000,
+      "polling_ms": 300000,
+      "total_ms": 300000,
+      "verification_ms": 300000
+    },
+    "timing_ms": {
+      "collection": 0,
+      "model": 0,
+      "total": 0
+    },
+    "verification_status": "NOT_APPLICABLE"
+  },
+  "manifest": {
+    "artifact_name": "baseline_b__m005__trial-5__seed-12345__78f0df6e56f0.json",
+    "artifact_root": "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552",
+    "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+    "benchmark_run_id": "mission_028_recovery_floor_4812160675146552",
+    "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+    "fixture_version": "1",
+    "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M005/12345/trial-5",
+    "mutation_id": "M005",
+    "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+    "participant_id": "BASELINE_B",
+    "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+    "retry_policy": {
+      "backoff_ms": 0,
+      "max_attempts": 1,
+      "mode": "BOUNDED"
+    },
+    "run_id": "mission_028_recovery_floor_4812160675146552__baseline_b__m005__trial-5__78f0df6e56f02213",
+    "seed": 12345,
+    "severity": "L5",
+    "state": "PLANNED",
+    "timeout_policy": {
+      "collection_ms": 300000,
+      "healing_ms": 300000,
+      "polling_ms": 300000,
+      "total_ms": 300000,
+      "verification_ms": 300000
+    },
+    "trial_number": 5
+  },
+  "terminal_state": "COMPLETED"
+}

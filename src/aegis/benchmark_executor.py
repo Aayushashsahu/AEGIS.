@@ -289,28 +289,41 @@ class BenchmarkExecutor:
         source_revision_checker: Callable[[str, str], bool] | None = None,
         smoke_evidence_validator: Callable[[], Mapping[str, Any]] | None = None,
         expected_source_revisions: Mapping[str, str] = EXPECTED_SOURCE_REVISIONS,
+        expected_configuration_hash: str | None = None,
+        attempt_id: str = EXPECTED_BENCHMARK_ATTEMPT_ID,
+        run_id_prefix: str = "mission_020_floor",
+        expected_benchmark_run_id: str | None = None,
+        additional_gate_checks: Mapping[str, bool] | None = None,
+        runs_root: str | Path | None = None,
     ) -> None:
         self.config = config
         self.repository_root = Path(repository_root).resolve()
         self.output_root = Path(output_root).resolve()
+        self.runs_root = (Path(runs_root) if runs_root is not None else self.repository_root / "benchmarks/runs").resolve()
         self.model_caller = model_caller
         self.lab = lab or RecordingMutationLab()
         self.fixture_controller = fixture_controller or FixtureController(self.lab)
         self.expected_source_revisions = dict(expected_source_revisions)
+        self.expected_configuration_hash = expected_configuration_hash or EXPECTED_CONFIGURATION_HASH
+        self.attempt_id = attempt_id
+        self.run_id_prefix = run_id_prefix
         self.source_revision_checker = source_revision_checker or self._source_revision_matches
         self.smoke_evidence_validator = smoke_evidence_validator or self._validate_immutable_smoke_evidence
         self._resume_inspection: ResumeInspection | None = None
         self._resume_error: str | None = None
         self.benchmark_run_id = deterministic_benchmark_run_id(
             config.configuration_hash,
-            EXPECTED_BENCHMARK_ATTEMPT_ID,
+            self.attempt_id,
             self.expected_source_revisions,
+            run_id_prefix=self.run_id_prefix,
         )
+        self.expected_benchmark_run_id = expected_benchmark_run_id or self.benchmark_run_id
+        self.additional_gate_checks = dict(additional_gate_checks or {})
         smoke_paths = resolve_immutable_smoke_evidence(self.repository_root)
         self.smoke_evidence_paths = smoke_paths
         self.layout = BenchmarkArtifactLayout(
             self.benchmark_run_id,
-            self.repository_root / "benchmarks/runs",
+            self.runs_root,
             smoke_paths.smoke_root,
             smoke_paths.baseline_b_smoke_root,
         )
@@ -459,7 +472,7 @@ class BenchmarkExecutor:
             self._resume_error = "existing benchmark root cannot be inspected before configuration validation"
         missing_count = self.expected_run_count if self._resume_inspection is None else self._resume_inspection.missing_count
         checks: dict[str, Any] = {
-            "configuration_hash": self.config.configuration_hash == EXPECTED_CONFIGURATION_HASH,
+            "configuration_hash": self.config.configuration_hash == self.expected_configuration_hash,
             "configuration_validation": validation.valid,
             "freeze_validation": freeze_validation.valid,
             "participant_source_revisions": all(source_checks.values()),
@@ -474,13 +487,14 @@ class BenchmarkExecutor:
             "artifact_root_resumable": (not output_exists) or resume_valid,
             "existing_terminal_artifacts_valid": (not output_exists) or resume_valid,
             "missing_run_set_computed": (not output_exists) or self._resume_inspection is not None,
-            "benchmark_run_id": self.benchmark_run_id == EXPECTED_BENCHMARK_RUN_ID,
+            "benchmark_run_id": self.benchmark_run_id == self.expected_benchmark_run_id,
             "no_duplicate_run_ids": duplicate_free,
             "code_config_freeze": freeze_validation.valid and all(source_checks.values()),
             "metric_authority_available": callable(getattr(__import__("aegis.mutation_metrics", fromlist=["calculate_metrics"]), "calculate_metrics", None)),
             "model_caller_available": self.model_caller is not None,
             "planned_run_count": self.expected_run_count == 180,
             "missing_run_count": missing_count,
+            **self.additional_gate_checks,
         }
         for name, passed in checks.items():
             if name == "artifact_root_absent" and output_exists and resume_valid:

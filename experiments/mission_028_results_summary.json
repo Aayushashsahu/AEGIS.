@@ -1,0 +1,102 @@
+{
+  "mission": "028",
+  "status": "INVALIDATED_NOT_REPRODUCIBLE",
+  "reproducible_benchmark_result": false,
+  "invalidation_reason": "Benchmark artifact root was removed by provider-free test cleanup before staging.",
+  "artifact_root_present": false,
+  "recovery_run_id": "mission_028_recovery_floor_4812160675146552",
+  "benchmark_run_id": "mission_028_floor_00c77f2abd976a10",
+  "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+  "planned_opportunities": 180,
+  "raw_artifact_count": 180,
+  "terminal_counts": {
+    "COMPLETED": 179,
+    "FAILED": 1,
+    "TIMED_OUT": 0,
+    "INVALIDATED": 0
+  },
+  "participant_counts": {
+    "BASELINE_A": {
+      "planned": 60,
+      "COMPLETED": 60,
+      "FAILED": 0
+    },
+    "BASELINE_B_NVIDIA": {
+      "planned": 60,
+      "COMPLETED": 59,
+      "FAILED": 1,
+      "provider_operations": 60
+    },
+    "AEGIS_TEST_DOUBLE": {
+      "planned": 60,
+      "COMPLETED": 60,
+      "FAILED": 0
+    }
+  },
+  "provider_failures": [
+    {
+      "participant": "BASELINE_B_NVIDIA",
+      "run_id": "mission_028_floor_00c77f2abd976a10__baseline_b__m002__trial-6__7e07448e97fe7405",
+      "status_code": 502,
+      "classification": "PROVIDER_FAILURE",
+      "automatic_retries": 0,
+      "detail": "Upstream request failed."
+    }
+  ],
+  "rate_policy": {
+    "benchmark_requests_per_minute": 6,
+    "benchmark_min_interval_seconds": 10,
+    "concurrency_limit": 1,
+    "provider_limit": "UNKNOWN"
+  },
+  "metric_boundary": {
+    "mission_022_compatibility": "PASS",
+    "formula_version": "mission-010-metrics-v1",
+    "metric_results_generated": 38,
+    "eligible_scope": "AEGIS_TEST_DOUBLE_CONTROLLED_HARNESS",
+    "DetectionRate_overall": {
+      "value": 1.0,
+      "numerator": 50,
+      "denominator": 50
+    },
+    "AlarmPrecision_overall": {
+      "value": 1.0,
+      "numerator": 50,
+      "denominator": 50
+    },
+    "L5DetectionRate": {
+      "value": 1.0,
+      "numerator": 20,
+      "denominator": 20
+    },
+    "L5BadDataShippedCount": 0,
+    "L5BadDataShippedRate": 0.0,
+    "non_applicable_zero_denominator_metrics": [
+      "VerifiedRecovery",
+      "VerificationMissRate",
+      "FalseRepairRate",
+      "BlindCommitRate",
+      "MTTR",
+      "CostPerRepair",
+      "LLMCallsPerRepair"
+    ]
+  },
+  "execution_counters": {
+    "benchmark_runs_executed": 180,
+    "provider_operations_executed": 60,
+    "healing_operations_executed": 0,
+    "metric_results_generated": 38,
+    "execution_authorized": true,
+    "gemini_invoked": false,
+    "bright_data_invoked": false
+  },
+  "tests": {
+    "focused_mission028": 20,
+    "full_suite_before_execution": 321
+  },
+  "resume": {
+    "interruption_occurred": true,
+    "first_terminal_artifacts_preserved": 65,
+    "terminal_run_ids_rerun": 0
+  }
+}

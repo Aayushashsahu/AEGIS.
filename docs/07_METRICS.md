@@ -191,3 +191,17 @@ The new NVIDIA participant proposal has a deterministic participant hash and a n
 Mission 027 produces no benchmark or metric result. Owner review, readiness promotion, the new configuration hash, fairness, and the validation-only plan are configuration/readiness evidence only. Mission 010 remains the sole metric authority, and no new formula or estimator is introduced.
 
 The future protocol records 10 trials per mutation and 180 opportunities, while the current provider-free validation runner reports its existing 18-step planning representation. Both are planning counts; neither is an executed result. The final counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`.
+
+## Mission 028 — completed metric boundary
+
+Mission 028 completed 180 terminal opportunities before calculating metrics. The Mission 022 compatibility boundary passed and invoked only the Mission 010 calculator, producing 38 results with `formula_version=mission-010-metrics-v1`. The eligible metric inputs are AEGIS `TEST_DOUBLE` records; the results are controlled-harness measurements, not real NVIDIA or Bright Data measurements.
+
+Overall `DetectionRate=1.0 (50/50)` and `AlarmPrecision=1.0 (50/50)`. For L5, `L5DetectionRate=1.0 (20/20)`, `L5BadDataShippedCount=0`, and `L5BadDataShippedRate=0.0`. `L5QuarantineCount=0`, `L5QuarantineRate=0.0`, and `L5OutputEligibleCount=0`. `VerifiedRecovery`, `VerificationMissRate`, `FalseRepairRate`, `BlindCommitRate`, `MTTR`, `CostPerRepair`, and `LLMCallsPerRepair` remain `NOT_APPLICABLE` with zero denominators. No `NOT_APPLICABLE` result was converted to a measured zero.
+
+The execution produced `benchmark_runs_executed=180`, `provider_operations_executed=60`, `healing_operations_executed=0`, and `metric_results_generated=38`. The one NVIDIA HTTP 502 remains provider-failure evidence and is excluded from any claim that it represents model quality. No second metric formula or provider-derived truth was introduced.
+
+## Mission 028 recovery metric disposition
+
+The first-attempt summary for `mission_028_floor_00c77f2abd976a10` is invalidated and produces no reproducible metric result because its raw artifact root was removed before staging. Its observed summary is not used as evidence.
+
+The clean recovery run `mission_028_recovery_floor_4812160675146552` preserved 180 terminal artifacts before metric calculation. Mission 022 compatibility passed, and only Mission 010 generated the 38-result metric artifact. The eligible scope is AEGIS `TEST_DOUBLE` controlled-harness evidence. Overall DetectionRate and AlarmPrecision were `1.0 (50/50)`, L5DetectionRate was `1.0 (20/20)`, and L5BadDataShippedCount/Rate were `0/20` and `0.0`. Zero-denominator repair metrics remain `NOT_APPLICABLE` and are not substituted with zero. The recovery metrics artifact is SHA-256 recorded and remained unchanged through the full suite.

@@ -307,3 +307,19 @@ The model-generated candidate remains untrusted data. The bounded application re
 Mission 027 adds 14 focused provider-free tests using local deterministic objects. The tests cover complete and incomplete owner review, deterministic participant promotion, append-only readiness, inclusion of the benchmark-side rate policy in the participant hash, explicit unknown provider limits, fairness, new configuration hashing, preservation of the historical Gemini configuration and Mission 019 evidence, validation-only execution freedom, no NVIDIA/Gemini/Bright Data operations, no benchmark root, and zero counters.
 
 The focused Mission 027 tests passed with `14 passed`. The complete suite passed with `301 passed`. The validation-only CLI returned `READY_TO_EXECUTE` with `execution_authorized=false`, `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, and `metric_results_generated=0`. The future 180-run executor was not invoked.
+
+## Mission 028 — NVIDIA benchmark execution testing
+
+Mission 028 adds 20 focused provider-free `TEST_DOUBLE` tests for deterministic run identity, new artifact-root isolation, NVIDIA readiness and participant hash, the 6 RPM/10-second/concurrency-1 policy, the 180-opportunity plan, participant and trial ordering, no Gemini invocation, provider-failure preservation, zero retries, duplicate prevention, interruption/resume safety, raw artifact persistence, fixture reset, all-terminal metric gating, Mission 022 adaptation, Mission 010-only metric invocation, historical Gemini preservation, and provider-free preflight.
+
+The focused suite passed with `20 passed`. The full repository suite passed with `321 passed` before real execution. The pre-execution gate passed all required checks and returned `PREFLIGHT_PASS` with zero execution counters and an absent run root.
+
+Post-execution validation found 180 unique terminal raw artifacts: 179 completed and 1 failed. The failed artifact records an NVIDIA HTTP 502 provider failure and no retry. Participant counts are 60 each for Baseline A, NVIDIA Baseline B, and AEGIS TEST_DOUBLE; NVIDIA provider operations are 60; healing operations are zero. Mission 022 compatibility passed, Mission 010 produced 38 results, and no alternative metric calculator was invoked. Gemini and Bright Data were not used during the benchmark, and the historical Gemini configuration/evidence remained untouched.
+
+## Mission 028 recovery preservation testing
+
+The preservation correction adds explicit `runs_root` injection. Production recovery uses the canonical benchmark root, while TEST_DOUBLE tests use temporary roots. The focused suite now contains 22 tests and passed with `22 passed`; it verifies the recovery identity `mission_028_recovery_floor_4812160675146552`, rejects reuse of `mission_028_floor_00c77f2abd976a10`, and confirms test cleanup does not touch either production root.
+
+The full suite passed with `323 passed` before recovery. After recovery, it passed again with `323 passed` while the preserved recovery root remained intact: raw count stayed at `180`, total recovery-root file count stayed at `185`, and the aggregate raw-artifact hash stayed unchanged. The hash validator reports 180 unique terminal run IDs, zero missing manifests, terminal execution log `COMPLETED`, Mission 022 compatibility `PASS`, and 38 Mission 010 results.
+
+The invalidated first-attempt summary is marked `INVALIDATED_NOT_REPRODUCIBLE` and is not used as test or benchmark evidence. Recovery artifacts are separate, hashed, and preserved. Gemini, Bright Data, healing, and alternative metric calculators were not used.

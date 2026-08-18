@@ -1,0 +1,70 @@
+{
+  "mission": "028",
+  "attempt_kind": "RECOVERY",
+  "status": "COMPLETED",
+  "run_id": "mission_028_recovery_floor_4812160675146552",
+  "invalidated_first_attempt_run_id": "mission_028_floor_00c77f2abd976a10",
+  "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+  "planned_opportunities": 180,
+  "raw_artifact_count": 180,
+  "unique_terminal_run_ids": 180,
+  "missing_terminal_artifacts": 0,
+  "terminal_counts": {
+    "COMPLETED": 179,
+    "FAILED": 1,
+    "TIMED_OUT": 0,
+    "INVALIDATED": 0
+  },
+  "participant_counts": {
+    "BASELINE_A": {"planned": 60, "COMPLETED": 60, "FAILED": 0},
+    "BASELINE_B_NVIDIA": {"planned": 60, "COMPLETED": 59, "FAILED": 1, "provider_operations": 60},
+    "AEGIS_TEST_DOUBLE": {"planned": 60, "COMPLETED": 60, "FAILED": 0}
+  },
+  "provider_failures": [
+    {
+      "run_id": "mission_028_recovery_floor_4812160675146552__baseline_b__m002__trial-8__a0f7c5fd58899e74",
+      "classification": "PROVIDER_FAILURE",
+      "detail": "Remote end closed connection without response",
+      "automatic_retries": 0
+    }
+  ],
+  "rate_policy": {
+    "benchmark_requests_per_minute": 6,
+    "benchmark_min_interval_seconds": 10,
+    "concurrency_limit": 1,
+    "provider_limit": "UNKNOWN"
+  },
+  "metrics": {
+    "compatibility": "PASS",
+    "formula_version": "mission-010-metrics-v1",
+    "metric_results_generated": 38,
+    "eligible_scope": "AEGIS_TEST_DOUBLE_CONTROLLED_HARNESS",
+    "DetectionRate_overall": {"value": 1.0, "numerator": 50, "denominator": 50},
+    "AlarmPrecision_overall": {"value": 1.0, "numerator": 50, "denominator": 50},
+    "L5DetectionRate": {"value": 1.0, "numerator": 20, "denominator": 20},
+    "L5BadDataShippedCount": 0,
+    "L5BadDataShippedRate": 0.0,
+    "non_applicable_zero_denominator": ["VerifiedRecovery", "VerificationMissRate", "FalseRepairRate", "BlindCommitRate", "MTTR", "CostPerRepair", "LLMCallsPerRepair"]
+  },
+  "artifact_integrity": {
+    "preservation_status": "PASS",
+    "raw_hash_manifest": "experiments/mission_028_recovery_artifact_hashes.json",
+    "execution_log_sha256": "caf0308a833eb37e514a1bb500118181eb0b1e9e82140c4643f8c16f0e7e6968",
+    "metrics_sha256": "d8c8b4fd50363ec950a3b79972c3a4e73942821ef6d2efdd3d86a5d0853ff29a",
+    "raw_removed_after_execution": 0,
+    "raw_hash_unchanged_after_full_suite": true
+  },
+  "safety": {
+    "benchmark_runs_executed": 180,
+    "provider_operations_executed": 60,
+    "healing_operations_executed": 0,
+    "execution_authorized": true,
+    "gemini_invoked": false,
+    "bright_data_invoked": false
+  },
+  "tests": {
+    "preservation_focused": 22,
+    "full_suite_before_recovery": 323,
+    "full_suite_after_recovery": 323
+  }
+}

@@ -513,3 +513,27 @@ Status: OPEN | RESOLVED | DEFERRED
 **Freeze and validation:** The new configuration hash is `8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4`. Fairness is `PASS`, all participants are READY, and the provider-free dry run returns `READY_TO_EXECUTE`. The future execution protocol is 180 opportunities, but no opportunity was executed. All benchmark/provider/healing/metric counters remain zero and authorization remains false.
 
 **Status:** RESOLVED for owner review, NVIDIA participant promotion, new configuration freeze, fairness, and validation-only readiness. Benchmark execution remains separately deferred.
+
+## Mission 028 — authorized NVIDIA comparative benchmark decision
+
+**Decision:** Execute one clean 180-opportunity run from the immutable Mission 027 NVIDIA configuration under a new deterministic run identity. Preserve the historical Gemini configuration and smoke evidence, use only NVIDIA for real provider calls, keep the benchmark throttle at 6 RPM/10 seconds/concurrency 1, and calculate metrics only after all terminal artifacts exist.
+
+**Pre-execution evidence:** `PREFLIGHT_PASS` for run `mission_028_floor_00c77f2abd976a10`. Configuration hash `8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4` matched; participants, participant hash, revisions, fairness, fixture, smoke, rate policy, artifact isolation, deterministic identity, duplicate-free planning, metric authority, model caller, and 180-opportunity plan all passed.
+
+**Execution evidence:** The run resumed safely after an interruption, preserving the first 65 terminal artifacts and consuming only missing manifests. Final terminal state was 179 `COMPLETED` and 1 `FAILED` across 180 unique raw artifacts. Baseline A completed 60/60, NVIDIA Baseline B completed 59/60 with one HTTP 502 provider failure, and AEGIS TEST_DOUBLE completed 60/60. No automatic retries were used.
+
+**Metric decision:** After all 180 opportunities were terminal, Mission 022 compatibility passed and Mission 010 alone generated 38 results. Overall AEGIS controlled-harness DetectionRate and AlarmPrecision were both `1.0`; L5DetectionRate was `1.0`; L5BadDataShippedCount and Rate were `0` and `0.0`. Zero-denominator repair metrics remain `NOT_APPLICABLE`.
+
+**Safety status:** `benchmark_runs_executed=180`, `provider_operations_executed=60`, `healing_operations_executed=0`, `metric_results_generated=38`, and `execution_authorized=true`. Gemini was not invoked. Bright Data was not invoked during the benchmark. No healing, approval, commit, or rollback occurred. Provider failure remains provider evidence, not a model-quality claim. The historical Gemini run was not modified.
+
+## Mission 028 — invalidation and clean recovery decision
+
+**Invalidation:** The first attempt `mission_028_floor_00c77f2abd976a10` is `INVALIDATED_NOT_REPRODUCIBLE`. Its artifact root was removed by provider-free test cleanup before staging; its surviving summary is incident evidence only and must not be treated as a benchmark result or reused.
+
+**Preservation correction:** Before recovery, the executor received an explicit production `runs_root`, while tests received temporary roots and cleaned only those roots. The focused preservation suite passed with `22 passed`, and the full suite passed with `323 passed` before recovery.
+
+**Recovery authorization and identity:** Execute a new clean run under `mission_028_recovery_floor_4812160675146552`, derived from the frozen configuration hash, recovery attempt `mission-028-nvidia-comparative-benchmark-recovery-v1`, and frozen participant revisions. The recovery identity is distinct from the invalidated first attempt.
+
+**Recovery evidence:** The recovery root contains 180 unique terminal raw artifacts, 179 completed and 1 failed, with one explicit NVIDIA provider failure and 60 provider operations. The execution log is terminal `COMPLETED`; Mission 022 compatibility passes; Mission 010 generates 38 results; SHA-256 manifests cover all raw and run artifacts. The full suite passed with `323 passed` while preserving 180 raw files and unchanged raw hashes.
+
+**Final safety state:** The frozen configuration is unchanged. Gemini, Bright Data, and healing were not used. No automatic retries, approval, commit, or rollback occurred. Recovery metrics are reported separately from the invalidated attempt and are the only reproducible Mission 028 benchmark evidence.

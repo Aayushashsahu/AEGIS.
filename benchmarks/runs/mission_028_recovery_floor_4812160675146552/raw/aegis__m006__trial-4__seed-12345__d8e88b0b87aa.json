@@ -1,0 +1,96 @@
+{
+  "artifact_schema": "participant-run-evidence-v1",
+  "benchmark_run_id": "mission_028_recovery_floor_4812160675146552",
+  "errors": [],
+  "evidence": {
+    "artifact_refs": [
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/aegis__m006__trial-4__seed-12345__d8e88b0b87aa.json"
+    ],
+    "artifact_root": "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552",
+    "candidate": "NOT_APPLICABLE",
+    "candidate_accepted": "NOT_APPLICABLE",
+    "candidate_application": "NOT_APPLICABLE",
+    "candidate_received": "NOT_APPLICABLE",
+    "candidate_selected": "NOT_APPLICABLE",
+    "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "cost": "NOT_APPLICABLE",
+    "detected": true,
+    "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+    "evidence_refs": [
+      "ground-truth://gpu-price-staging/v1/M006/12345/trial-4",
+      "ground-truth://ground_truth_f1efd35687aa494f87c810da8a8d4a95",
+      "contract://mutation-lab-gpu-price-v1",
+      "history://url:https://example.test/gpu-1.price",
+      "observation://observation_ccde534545b743508d2ef525b7bf47eb",
+      "semantic://deterministic-invariants"
+    ],
+    "failure_state": "COMPLETED",
+    "fixture_version": "1",
+    "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M006/12345/trial-4",
+    "llm_calls": 0,
+    "mutation_id": "M006",
+    "observation_reference": "observation://observation_ccde534545b743508d2ef525b7bf47eb",
+    "output_eligible": false,
+    "participant_id": "AEGIS",
+    "participant_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "provenance": "TEST_DOUBLE",
+    "retry_policy": {
+      "backoff_ms": 0,
+      "max_attempts": 1,
+      "mode": "BOUNDED"
+    },
+    "risk_decision": "REJECT",
+    "run_id": "mission_028_recovery_floor_4812160675146552__aegis__m006__trial-4__d8e88b0b87aadedc",
+    "seed": 12345,
+    "severity": "L5",
+    "state": "COMPLETED",
+    "timeout_policy": {
+      "collection_ms": 300000,
+      "healing_ms": 300000,
+      "polling_ms": 300000,
+      "total_ms": 300000,
+      "verification_ms": 300000
+    },
+    "timing_ms": {
+      "detection": 0,
+      "risk": 0,
+      "total": 0,
+      "verification": 0
+    },
+    "verification_status": "FAIL"
+  },
+  "manifest": {
+    "artifact_name": "aegis__m006__trial-4__seed-12345__d8e88b0b87aa.json",
+    "artifact_root": "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552",
+    "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+    "benchmark_run_id": "mission_028_recovery_floor_4812160675146552",
+    "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+    "fixture_version": "1",
+    "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M006/12345/trial-4",
+    "mutation_id": "M006",
+    "participant_configuration_hash": "76e4553696d6f6e8dca4d3b08d126b42d04f9cac3e8537836c19d86943a90a75",
+    "participant_id": "AEGIS",
+    "participant_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "retry_policy": {
+      "backoff_ms": 0,
+      "max_attempts": 1,
+      "mode": "BOUNDED"
+    },
+    "run_id": "mission_028_recovery_floor_4812160675146552__aegis__m006__trial-4__d8e88b0b87aadedc",
+    "seed": 12345,
+    "severity": "L5",
+    "state": "PLANNED",
+    "timeout_policy": {
+      "collection_ms": 300000,
+      "healing_ms": 300000,
+      "polling_ms": 300000,
+      "total_ms": 300000,
+      "verification_ms": 300000
+    },
+    "trial_number": 4
+  },
+  "terminal_state": "COMPLETED"
+}

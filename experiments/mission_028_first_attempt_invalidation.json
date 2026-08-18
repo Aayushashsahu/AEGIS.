@@ -1,0 +1,25 @@
+{
+  "mission": "028",
+  "attempt_kind": "FIRST_ATTEMPT",
+  "run_id": "mission_028_floor_00c77f2abd976a10",
+  "status": "INVALIDATED_NOT_REPRODUCIBLE",
+  "reproducible_benchmark_result": false,
+  "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+  "observed_execution_summary": {
+    "planned_runs": 180,
+    "benchmark_runs_executed": 180,
+    "completed_runs": 179,
+    "failed_runs": 1,
+    "timed_out_runs": 0,
+    "invalidated_runs": 0,
+    "provider_operations_executed": 60,
+    "healing_operations_executed": 0,
+    "metric_results_generated": 38,
+    "execution_authorized": true
+  },
+  "invalidation_reason": "The benchmark artifact root was removed by provider-free test cleanup before staging, so the observed summary is not reproducibly supported by preserved raw artifacts.",
+  "artifact_root_present": false,
+  "raw_artifact_count_preserved": 0,
+  "recovery_run_id": "mission_028_recovery_floor_4812160675146552",
+  "do_not_reuse": true
+}

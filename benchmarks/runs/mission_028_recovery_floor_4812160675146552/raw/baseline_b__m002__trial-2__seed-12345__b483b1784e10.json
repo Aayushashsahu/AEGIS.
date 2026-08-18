@@ -1,0 +1,127 @@
+{
+  "artifact_schema": "participant-run-evidence-v1",
+  "benchmark_run_id": "mission_028_recovery_floor_4812160675146552",
+  "errors": [],
+  "evidence": {
+    "artifact_refs": [
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m002__trial-2__seed-12345__b483b1784e10.json"
+    ],
+    "artifact_root": "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552",
+    "candidate": {
+      "candidate": "```yaml\n# Repaired scraper configuration\nschema: gpu-price-schema-v1\n\nscraper:\n  # Extract the product id from the page URL\n  product_id:\n    selector: \"body\"\n    attribute: \"data-product-id\"\n    postprocess: >-\n      return extract_from_url(context['url'])\n\n  # Extract the product title\n  title:\n    selector: \"h1.product-title\"\n    type: \"text\"\n\n  # Extract the price \u2013 the selector changed to the new #price element.\n  price:\n    selector: \"#price\"\n    type: \"text\"\n    # Grab the numeric part (e.g.\u202f$599.99 \u2192 599.99)\n    regex: \"\\\\d+(?:[\\\\.,]\\\\d+)?\"\n    # Convert the string to a float\n    postprocess: |\n      import re\n      m = re.search(r'\\\\d+(?:[\\\\.,]\\\\d+)?', context['value'])\n      return float(m.group(0).replace(',', '.'))\n\n  # Extract the rating \u2013 use a data\u2011attribute that now holds the numeric value\n  rating:\n    selector: \"div.rating-stars span[data-rating]\"\n    attribute: \"data-rating\"\n    type: \"float\"\n\n# Fallbacks (in case the new selector fails)\nfallbacks:\n  - field: price\n    selector: \"span.price\"\n    type: \"text\"\n    regex: \"\\\\d+(?:[\\\\.,]\\\\d+)?\"\n  - field: rating\n    selector: \"span.rating\"\n    type: \"text\"\n    regex: \"\\\\d+(?:\\\\.\\\\d+)?\"\n```\n\n**What changed**\n\n* Updated the **price selector** from the old `.product-price` element to the new `#price` element.\n* Added a **regex** to strip out currency symbols and a **post\u2011processing** step to convert the extracted text to a numeric float.\n* Updated the **rating selector** to pull the value from the new `data-rating` attribute on the `<span>` element.\n* Kept the rest of the extraction logic identical to preserve the `gpu-price-schema-v1` output format."
+    },
+    "candidate_accepted": true,
+    "candidate_application": {
+      "aegis_verification_invoked": false,
+      "application_mode": "SAFE_TEST_DOUBLE_BOUNDARY",
+      "candidate_count_seen": 1,
+      "candidate_index": 0,
+      "candidate_sha256": "8d090085322d8f66da52c421dc01f8ee0c3f3ab2f9cf4ee1b1f8372c82719253",
+      "commit_gate_invoked": false,
+      "fixture_id": "gpu-price-staging",
+      "fixture_version": "1",
+      "generated_code_executed": false,
+      "model_id": "openai/gpt-oss-20b",
+      "model_revision": "gpt-oss-20b-v1.0-2025-08-05",
+      "normalized_record_count": 1,
+      "provider": "NVIDIA_NIM",
+      "provider_observation": {
+        "endpoint": "https://integrate.api.nvidia.com/v1/chat/completions",
+        "failure_state": "COMPLETED",
+        "latency_ms": 24409,
+        "model_id": "openai/gpt-oss-20b",
+        "provider": "NVIDIA_NIM",
+        "provider_error": null,
+        "rate_limit_retry_after_seconds": null,
+        "request_count": 12,
+        "status_code": 200,
+        "wait_ms": 0
+      },
+      "quarantine_invoked": false,
+      "risk_governor_invoked": false,
+      "rollback_invoked": false,
+      "tools_enabled": false,
+      "watch_invoked": false
+    },
+    "candidate_received": true,
+    "candidate_selected": true,
+    "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "cost": "NOT_APPLICABLE",
+    "detected": "NOT_APPLICABLE",
+    "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+    "evidence_refs": [
+      "ground-truth://gpu-price-staging/v1/M002/12345/trial-2",
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m002__trial-2__seed-12345__b483b1784e10.json#model-output",
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m002__trial-2__seed-12345__b483b1784e10.json#candidate-received",
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m002__trial-2__seed-12345__b483b1784e10.json#candidate-selected",
+      "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m002__trial-2__seed-12345__b483b1784e10.json#candidate-accepted"
+    ],
+    "failure_state": "COMPLETED",
+    "fixture_version": "1",
+    "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M002/12345/trial-2",
+    "llm_calls": 1,
+    "mutation_id": "M002",
+    "observation_reference": "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552/baseline_b__m002__trial-2__seed-12345__b483b1784e10.json#observation",
+    "output_eligible": true,
+    "participant_id": "BASELINE_B",
+    "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+    "provenance": "MODEL_ASSISTED",
+    "retry_policy": {
+      "backoff_ms": 0,
+      "max_attempts": 1,
+      "mode": "BOUNDED"
+    },
+    "risk_decision": "NOT_APPLICABLE",
+    "run_id": "mission_028_recovery_floor_4812160675146552__baseline_b__m002__trial-2__b483b1784e100b4e",
+    "seed": 12345,
+    "severity": "L2",
+    "state": "COMPLETED",
+    "timeout_policy": {
+      "collection_ms": 300000,
+      "healing_ms": 300000,
+      "polling_ms": 300000,
+      "total_ms": 300000,
+      "verification_ms": 300000
+    },
+    "timing_ms": {
+      "collection": 0,
+      "model": 0,
+      "total": 0
+    },
+    "verification_status": "NOT_APPLICABLE"
+  },
+  "manifest": {
+    "artifact_name": "baseline_b__m002__trial-2__seed-12345__b483b1784e10.json",
+    "artifact_root": "/tmp/aegis-mission028/benchmarks/runs/mission_028_recovery_floor_4812160675146552",
+    "benchmark_id": "aegis-benchmark-mission-027-nvidia-owner-freeze",
+    "benchmark_run_id": "mission_028_recovery_floor_4812160675146552",
+    "code_revision": "7de2bc65ed9eeb9f4abd24017543f3f366990738",
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "environment_reference": "AEGIS_MISSION_027_VALIDATION_ONLY; NVIDIA_PROVIDER_LIMIT_UNKNOWN; BENCHMARK_THROTTLE_6_RPM",
+    "fixture_version": "1",
+    "ground_truth_reference": "ground-truth://gpu-price-staging/v1/M002/12345/trial-2",
+    "mutation_id": "M002",
+    "participant_configuration_hash": "9b630269de415be0f69b92e7abd62dcaf4a3a535c3e8f3df982017a50ba25c14",
+    "participant_id": "BASELINE_B",
+    "participant_revision": "mission-026-nvidia-adapter-74817617100cc17d",
+    "retry_policy": {
+      "backoff_ms": 0,
+      "max_attempts": 1,
+      "mode": "BOUNDED"
+    },
+    "run_id": "mission_028_recovery_floor_4812160675146552__baseline_b__m002__trial-2__b483b1784e100b4e",
+    "seed": 12345,
+    "severity": "L2",
+    "state": "PLANNED",
+    "timeout_policy": {
+      "collection_ms": 300000,
+      "healing_ms": 300000,
+      "polling_ms": 300000,
+      "total_ms": 300000,
+      "verification_ms": 300000
+    },
+    "trial_number": 2
+  },
+  "terminal_state": "COMPLETED"
+}

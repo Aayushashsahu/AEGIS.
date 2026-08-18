@@ -279,3 +279,17 @@ PYTHONPATH=src pytest -q tests/unit tests/integration
 ```
 
 The read-only preflight returned `PREFLIGHT_PASS`. Its smoke result and the executor’s `smoke_evidence_detail` came from the same canonical validator and both returned `pass=true`, `status=VALID`, and empty errors. The immutable Mission 019 evidence tree remained byte-identical before and after validation. The future benchmark root remained absent. No `benchmark_runner.py --run`, executor `execute()`, trial, Gemini call, Bright Data call, healing, approval, commit, rollback, or metric operation occurred.
+
+
+## Mission 025 evidence — safe interrupted-run resume
+
+Mission 025 adds focused tests for fresh-root startup, interrupted-root detection, exact terminal-state consumption, completed/failed/timed-out/invalidated classification, malformed-artifact blocking, wrong hash/revision/run-ID blocking, duplicate prevention, deterministic missing order, exact `60/36/0` participant fixture shape, total `96` persisted terminal attempts, total `84` missing manifests, no failed-run retry, no completed-run retry, per-trial interruption recovery, reconstructed execution logs, metric deferral until all 180 terminal, one Mission 022/010 metric boundary call after completion, raw-byte preservation, smoke preservation, frozen-configuration preservation, and zero real provider execution.
+
+The focused Mission 025 suite passed with `10 passed`. The complete repository suite passed with `269 passed`:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit/test_mission025.py
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```
+
+The tests use only temporary TEST_DOUBLE roots and injected callers. They do not invoke the real CLI `--run`, Gemini, Bright Data, healing, approval, commit, rollback, or production metrics. The actual frozen benchmark root was absent from the inspected consolidated repository, so no real artifact was modified and no real interrupted-run counts are claimed.

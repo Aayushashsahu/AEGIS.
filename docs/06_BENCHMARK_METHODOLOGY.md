@@ -248,3 +248,14 @@ Mission 024 unifies the read-only preflight and the benchmark execution gate beh
 The preflight wrapper and `BenchmarkExecutor` both consume this implementation. The preflight preserves its historical exported constants for compatibility, but derives them from the shared path object. The executor retains the canonical smoke root for artifact isolation and uses the same shared validator for `smoke_evidence` gate state. This removes independent interpretations of smoke root, Baseline B smoke root, preflight, root execution log, and frozen configuration evidence.
 
 Mission 024 validation returned `PREFLIGHT_PASS` and an execution gate with `passed=true`, `smoke_evidence=true`, `planned_run_count=true`, `artifact_root_absent=true`, and `execution_authorized=false`. The immutable Mission 019 evidence remained byte-identical and the future benchmark root remained absent. No benchmark, trial, provider, healing, approval, commit, rollback, or metric operation occurred.
+
+
+## Mission 025 — resumable interrupted benchmark roots
+
+Mission 025 adds a recovery path for an existing deterministic benchmark root without changing the benchmark identity or frozen configuration. An existing root is inspected through `src/aegis/benchmark_resume.py`; it is not recreated and its raw artifacts are not rewritten.
+
+A persisted raw artifact is consumed only when its manifest matches the current deterministic plan, participant identity and revision, mutation, severity, trial, seed, configuration hash, artifact identity, and benchmark run ID, and when its terminal state is one of `COMPLETED`, `FAILED`, `TIMED_OUT`, or `INVALIDATED`. Malformed JSON, missing terminal state, non-terminal state, wrong identity, wrong filename, duplicate run ID, or missing root-level frozen/manifest/log files fails closed before the next trial.
+
+The recovery gate computes missing manifests in deterministic manifest order. Existing failed, timed-out, and invalidated attempts remain consumed because the frozen retry count is zero. Every newly executed missing trial writes an exclusive raw artifact first and atomically reconstructs the execution log. Existing raw files, frozen configuration, and participant manifest are preserved byte-for-byte on the resume path.
+
+Metrics are prohibited until every one of the 180 opportunities has a terminal state. At terminal completion, completed evidence passes through the Mission 022 compatibility boundary and only Mission 010 remains the metric authority. Mission 025 tests use isolated TEST_DOUBLE fixtures only; the real resume command remains separately deferred.

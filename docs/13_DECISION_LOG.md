@@ -476,3 +476,20 @@ Status: OPEN | RESOLVED | DEFERRED
 **Validation:** The focused Mission 024 suite passed `2`; the complete suite passed `259`. The read-only preflight returned `PREFLIGHT_PASS`; the execution gate passed with smoke evidence true, planned run count true, artifact root absent, and `execution_authorized=false`. Historical evidence remained byte-identical. No benchmark, provider, healing, approval, commit, rollback, or metric operation occurred.
 
 **Status:** RESOLVED for unified smoke-evidence validation; benchmark execution remains separately deferred.
+
+
+## Mission 025 — resume interrupted benchmark without terminal retries
+
+**Decision:** Add a fail-closed resume path for the existing deterministic benchmark root. Preserve all terminal raw artifacts, consume failed attempts because retry count is zero, compute missing manifests from deterministic plan order, and execute only missing run IDs after the recovery gate passes.
+
+**Root-state finding:** The consolidated Mission 024 repository inspected in both the canonical workspace and detached `main` worktree did not contain `benchmarks/runs/mission_020_floor_2a80a8cf8d989326/`. Mission 025 therefore did not inspect or alter a real interrupted root. The brief’s 96-terminal/84-missing shape is exercised only in isolated TEST_DOUBLE fixtures.
+
+**Identity contract:** Existing root files must contain the expected benchmark run ID, frozen configuration hash, complete deterministic participant manifest, and execution log. Each raw artifact must have a matching deterministic run ID, filename, participant/revision, mutation, severity, trial, seed, configuration hash, and valid terminal state. Corruption, duplicates, non-terminal state, unknown IDs, wrong hash, wrong revision, or missing root files blocks before execution.
+
+**Failure policy:** `FAILED`, `TIMED_OUT`, and `INVALIDATED` are consumed terminal attempts. No automatic retry is allowed. The executor writes each newly produced raw artifact exclusively, then atomically reconstructs the execution log. Existing frozen configuration, manifest, and raw artifacts are not rewritten on resume.
+
+**Metric boundary:** Metrics remain zero until all 180 opportunities have terminal states. At terminal completion, completed evidence passes through Mission 022 and Mission 010 only. Failed/timed-out/invalidated evidence remains preserved.
+
+**Validation:** Focused Mission 025 tests passed `10`; the complete suite passed `269`. No real benchmark, provider, healing, approval, commit, rollback, or metric operation occurred. Real counters remain zero and `execution_authorized=false`.
+
+**Status:** RESOLVED for safe resume implementation and TEST_DOUBLE validation; the real resume command remains separately deferred.

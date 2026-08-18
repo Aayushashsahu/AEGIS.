@@ -444,3 +444,20 @@ Mission 024 adds a single provider-neutral contract:
 The required paths are `BASELINE_B_SMOKE_ROOT/smoke.json`, `BASELINE_B_SMOKE_ROOT/execution_log.json`, `SMOKE_ROOT/preflight.json`, `SMOKE_ROOT/execution_log.json`, and `SMOKE_ROOT/frozen_config.json`. No path is derived from the future benchmark output root, the deterministic benchmark run ID, or the process current working directory.
 
 `BenchmarkExecutor._validate_immutable_smoke_evidence()` remains as a compatibility method but delegates directly to `validate_immutable_smoke_evidence(self.repository_root)`. The preflight wrapper delegates to the same function. `ExecutionGateResult.execution_authorized` is explicitly `false` for gate validation; authorization occurs only in the separately invoked execution boundary.
+
+
+## Mission 025 — interrupted-root resume API
+
+Mission 025 adds the following provider-neutral resume contract:
+
+| Operation/model | Purpose | Side effect |
+|---|---|---|
+| `inspect_existing_run(root, manifests, ...)` | Validate existing frozen root and consume valid terminal artifacts | Read-only |
+| `ResumeInspection` | Expose consumed artifacts, terminal counts, missing manifests, reconstructed run records, and original raw digests | None |
+| `ResumeValidationError` | Fail closed on corruption, conflicting identity, malformed state, duplicates, or missing root files | None |
+| `deserialize_participant_evidence(payload)` | Rehydrate completed normalized evidence for the Mission 022 boundary | None |
+| `reconstruct_execution_log(inspection, ...)` | Build deterministic log state from persisted terminal artifacts | None |
+
+Terminal consumption requires exact benchmark/run identity, participant, participant revision, mutation, severity, trial, seed, configuration hash, artifact filename, and a valid terminal state. `FAILED`, `TIMED_OUT`, and `INVALIDATED` are consumed attempts and are not retried. The executor computes missing entries from the frozen manifest order and executes only those entries.
+
+For an existing root, `artifact_root_absent=false` is expected, while `artifact_root_resumable`, `existing_terminal_artifacts_valid`, and `missing_run_set_computed` must be true. The normal execution authorization remains explicit and is never inferred from root existence. Existing `frozen_config.json`, `participant_manifest.json`, and terminal raw files are not rewritten by resume inspection.

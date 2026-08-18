@@ -46,6 +46,13 @@ from .smoke_evidence import (
     resolve_immutable_smoke_evidence,
     validate_immutable_smoke_evidence,
 )
+from .benchmark_resume import (
+    ResumeInspection,
+    ResumeValidationError,
+    deserialize_participant_evidence,
+    inspect_existing_run,
+    reconstruct_execution_log,
+)
 from .mutation_lab import MutationCase, MutationLab, MutationRun, baseline_fixture
 
 
@@ -292,6 +299,8 @@ class BenchmarkExecutor:
         self.expected_source_revisions = dict(expected_source_revisions)
         self.source_revision_checker = source_revision_checker or self._source_revision_matches
         self.smoke_evidence_validator = smoke_evidence_validator or self._validate_immutable_smoke_evidence
+        self._resume_inspection: ResumeInspection | None = None
+        self._resume_error: str | None = None
         self.benchmark_run_id = deterministic_benchmark_run_id(
             config.configuration_hash,
             EXPECTED_BENCHMARK_ATTEMPT_ID,
@@ -421,8 +430,34 @@ class BenchmarkExecutor:
         except ValueError:
             isolation = False
         output_matches = self.output_root == self.layout.root.resolve()
-        output_absent = not self.output_root.exists()
-        duplicate_free = len({manifest.run_id for manifest in self.plan_manifests()}) == self.expected_run_count if validation.valid else False
+        output_exists = self.output_root.exists()
+        manifests = self.plan_manifests() if validation.valid else ()
+        duplicate_free = len({manifest.run_id for manifest in manifests}) == self.expected_run_count if validation.valid else False
+        resume_valid = True
+        if output_exists and validation.valid:
+            try:
+                expected_revisions = {
+                    participant: readiness[participant].participant_revision for participant in PARTICIPANT_IDS
+                }
+                self._resume_inspection = inspect_existing_run(
+                    self.output_root,
+                    manifests,
+                    expected_benchmark_run_id=self.benchmark_run_id,
+                    expected_configuration_hash=self.config.configuration_hash,
+                    expected_participant_revisions=expected_revisions,
+                )
+                self._resume_error = None
+            except ResumeValidationError as exc:
+                self._resume_inspection = None
+                self._resume_error = str(exc)
+                resume_valid = False
+        elif not output_exists:
+            self._resume_inspection = None
+            self._resume_error = None
+        else:
+            resume_valid = False
+            self._resume_error = "existing benchmark root cannot be inspected before configuration validation"
+        missing_count = self.expected_run_count if self._resume_inspection is None else self._resume_inspection.missing_count
         checks: dict[str, Any] = {
             "configuration_hash": self.config.configuration_hash == EXPECTED_CONFIGURATION_HASH,
             "configuration_validation": validation.valid,
@@ -435,17 +470,25 @@ class BenchmarkExecutor:
             "smoke_evidence": smoke.get("pass") is True,
             "artifact_root_isolated": isolation,
             "artifact_root_matches_deterministic_run": output_matches,
-            "artifact_root_absent": output_absent,
+            "artifact_root_absent": not output_exists,
+            "artifact_root_resumable": (not output_exists) or resume_valid,
+            "existing_terminal_artifacts_valid": (not output_exists) or resume_valid,
+            "missing_run_set_computed": (not output_exists) or self._resume_inspection is not None,
             "benchmark_run_id": self.benchmark_run_id == EXPECTED_BENCHMARK_RUN_ID,
             "no_duplicate_run_ids": duplicate_free,
             "code_config_freeze": freeze_validation.valid and all(source_checks.values()),
             "metric_authority_available": callable(getattr(__import__("aegis.mutation_metrics", fromlist=["calculate_metrics"]), "calculate_metrics", None)),
             "model_caller_available": self.model_caller is not None,
             "planned_run_count": self.expected_run_count == 180,
+            "missing_run_count": missing_count,
         }
         for name, passed in checks.items():
+            if name == "artifact_root_absent" and output_exists and resume_valid:
+                continue
             if isinstance(passed, bool) and not passed:
                 errors.append(name)
+        if self._resume_error:
+            errors.append(f"resume_validation: {self._resume_error}")
         return ExecutionGateResult(
             passed=not errors,
             benchmark_run_id=self.benchmark_run_id,
@@ -510,7 +553,204 @@ class BenchmarkExecutor:
         stable_reference = f"ground-truth://{self.config.fixture_id}/v{self.config.fixture_version}/{stable_truth_id}"
         return replace(self.lab.last_run, run_id=manifest.run_id, ground_truth_reference=stable_reference), {stable_truth_id: truth}
 
+    def _resume_metric_state(self, inspection: ResumeInspection) -> tuple[list[ParticipantRunEvidence], dict[str, Any], dict[str, ParticipantEvidenceContext]]:
+        evidence_records: list[ParticipantRunEvidence] = []
+        ground_truths_by_reference: dict[str, Any] = {}
+        contexts_by_run_id: dict[str, ParticipantEvidenceContext] = {}
+        for manifest in (artifact.manifest for artifact in inspection.artifacts_by_run_id.values()):
+            artifact = inspection.artifacts_by_run_id[manifest.run_id]
+            if artifact.state != RunnerState.COMPLETED.value:
+                continue
+            evidence = deserialize_participant_evidence(artifact.payload)
+            evidence_records.append(evidence)
+            trial_number = self._trial_number_from_manifest(manifest)
+            contexts_by_run_id[manifest.run_id] = ParticipantEvidenceContext(
+                run_id=manifest.run_id,
+                benchmark_id=manifest.benchmark_id,
+                configuration_hash=manifest.configuration_hash,
+                participant_configuration_hash=manifest.participant_configuration_hash,
+                participant_revision=manifest.participant_revision,
+                mutation_id=manifest.mutation_id,
+                severity=manifest.severity,
+                seed=manifest.seed,
+                fixture_version=manifest.fixture_version,
+                ground_truth_reference=manifest.ground_truth_reference,
+                trial_number=trial_number,
+                artifact_root=manifest.artifact_root,
+                artifact_name=manifest.artifact_name,
+            )
+            case = self.lab.apply_mutation(manifest.mutation_id, manifest.seed)
+            ground_truths_by_reference[evidence.ground_truth_reference] = case.ground_truth
+            self.fixture_controller.reset()
+        return evidence_records, ground_truths_by_reference, contexts_by_run_id
+
+    def _execute_resume(self) -> ExecutionSummary:
+        gate = self.execution_gate()
+        if not gate.passed or self._resume_inspection is None:
+            return ExecutionSummary(
+                status="BLOCKED_NOT_READY",
+                benchmark_run_id=self.benchmark_run_id,
+                configuration_hash=self.config.configuration_hash,
+                planned_runs=self.expected_run_count,
+                completed_runs=0,
+                failed_runs=0,
+                timed_out_runs=0,
+                invalidated_runs=0,
+                benchmark_runs_executed=0,
+                provider_operations_executed=0,
+                healing_operations_executed=0,
+                metric_results_generated=0,
+                execution_authorized=False,
+                gate=gate,
+                errors=gate.errors,
+            )
+
+        inspection = self._resume_inspection
+        completed = inspection.terminal_counts.get(RunnerState.COMPLETED.value, 0)
+        failed = inspection.terminal_counts.get(RunnerState.FAILED.value, 0)
+        timed_out = inspection.terminal_counts.get(RunnerState.TIMED_OUT.value, 0)
+        invalidated = inspection.terminal_counts.get(RunnerState.INVALIDATED.value, 0)
+        attempted = inspection.persisted_terminal_count
+        provider_operations = sum(
+            1 for artifact in inspection.artifacts_by_run_id.values() if artifact.manifest.participant_id == "BASELINE_B"
+        )
+        errors: list[str] = []
+        stopped_reason: str | None = None
+
+        for manifest in inspection.missing_manifests:
+            clean_before = self.fixture_controller.validate_clean()
+            if not clean_before.passed:
+                invalidated += 1
+                self._persist_raw(manifest, RunnerState.INVALIDATED, None, (clean_before.reason,))
+                errors.append(clean_before.reason)
+                stopped_reason = "fixture_not_clean_before_trial"
+                break
+            case = self.fixture_controller.apply(manifest.mutation_id, manifest.seed)
+            adapter = self.registry.get(manifest.participant_id)
+            trial_number = self._trial_number_from_manifest(manifest)
+            execution_input = self._trial_input(manifest.participant_id, manifest.mutation_id, trial_number, manifest.seed)
+            evidence: ParticipantRunEvidence | None = None
+            state = RunnerState.COMPLETED
+            trial_errors: tuple[str, ...] = ()
+            attempted += 1
+            if manifest.participant_id == "BASELINE_B":
+                provider_operations += 1
+            try:
+                prepared = adapter.prepare(execution_input)
+                evidence = adapter.return_run_evidence(adapter.collect_result(adapter.run_mutation(prepared)))
+                if isinstance(evidence, ParticipantRunEvidence):
+                    evidence = replace(evidence, participant_revision=manifest.participant_revision)
+                if isinstance(evidence, ParticipantRunEvidence) and evidence.failure_state not in {"COMPLETED", "NOT_APPLICABLE"}:
+                    state = RunnerState.FAILED
+                    trial_errors = (evidence.failure_state,)
+            except TimeoutError as exc:
+                state = RunnerState.TIMED_OUT
+                trial_errors = (str(exc),)
+            except Exception as exc:
+                state = RunnerState.FAILED
+                trial_errors = (str(exc),)
+            reset_result = self.fixture_controller.reset()
+            if not reset_result.passed:
+                state = RunnerState.INVALIDATED
+                trial_errors = (*trial_errors, reset_result.reason)
+                stopped_reason = "fixture_reset_failure"
+            if state is RunnerState.COMPLETED:
+                completed += 1
+            elif state is RunnerState.FAILED:
+                failed += 1
+            elif state is RunnerState.TIMED_OUT:
+                timed_out += 1
+            elif state is RunnerState.INVALIDATED:
+                invalidated += 1
+            self._persist_raw(manifest, state, evidence, trial_errors)
+            updated = inspect_existing_run(
+                self.output_root,
+                self.plan_manifests(),
+                expected_benchmark_run_id=self.benchmark_run_id,
+                expected_configuration_hash=self.config.configuration_hash,
+            )
+            self._write_replaceable(
+                self.layout.execution_log,
+                {
+                    **reconstruct_execution_log(updated, configuration_hash=self.config.configuration_hash, status="RUNNING", planned_runs=self.expected_run_count),
+                    "execution_authorized": True,
+                    "errors": list(errors) + list(trial_errors),
+                    "stopped_reason": stopped_reason,
+                },
+            )
+            if state is RunnerState.INVALIDATED:
+                errors.extend(trial_errors)
+                break
+
+        final_inspection = inspect_existing_run(
+            self.output_root,
+            self.plan_manifests(),
+            expected_benchmark_run_id=self.benchmark_run_id,
+            expected_configuration_hash=self.config.configuration_hash,
+        )
+        terminal_total = final_inspection.persisted_terminal_count
+        status = "COMPLETED" if terminal_total == self.expected_run_count else "RUNNING"
+        metric_results_generated = 0
+        if status == "COMPLETED":
+            evidence_records, ground_truths_by_reference, contexts_by_run_id = self._resume_metric_state(final_inspection)
+            report_path = self.layout.root / "reports" / "mission-022-metric-boundary-compatibility.json"
+            metrics_path = self.layout.root / "metrics" / "mission-010-metrics.json"
+            if not report_path.exists() or not metrics_path.exists():
+                compatibility = adapt_completed_evidence(evidence_records, ground_truths_by_reference, contexts_by_run_id)
+                if not report_path.exists():
+                    self._write_exclusive(report_path, compatibility.to_dict())
+                if not compatibility.passed:
+                    status = "FAILED_METRIC_BOUNDARY"
+                    errors.extend(compatibility.fatal_errors or ("FAILED_METRIC_BOUNDARY: no eligible metric inputs",))
+                    stopped_reason = "metric_boundary_incompatible"
+                else:
+                    try:
+                        report = calculate_compatibility_metrics(compatibility)
+                        if not metrics_path.exists():
+                            self._write_exclusive(metrics_path, json.loads(report.to_json()))
+                        metric_results_generated = len(report.results)
+                    except MetricBoundaryError as exc:
+                        status = "FAILED_METRIC_BOUNDARY"
+                        errors.append(str(exc))
+                        stopped_reason = "metric_boundary_incompatible"
+            elif metrics_path.is_file():
+                try:
+                    metric_results_generated = len(json.loads(metrics_path.read_text(encoding="utf-8")).get("results", ()))
+                except (OSError, json.JSONDecodeError):
+                    status = "FAILED_METRIC_BOUNDARY"
+                    errors.append("existing metric artifact is corrupt")
+                    stopped_reason = "metric_boundary_incompatible"
+
+        final_log = {
+            **reconstruct_execution_log(final_inspection, configuration_hash=self.config.configuration_hash, status=status, planned_runs=self.expected_run_count),
+            "execution_authorized": True,
+            "metric_results_generated": metric_results_generated,
+            "errors": errors,
+            "stopped_reason": stopped_reason,
+        }
+        self._write_replaceable(self.layout.execution_log, final_log)
+        return ExecutionSummary(
+            status=status,
+            benchmark_run_id=self.benchmark_run_id,
+            configuration_hash=self.config.configuration_hash,
+            planned_runs=self.expected_run_count,
+            completed_runs=final_inspection.terminal_counts.get(RunnerState.COMPLETED.value, 0),
+            failed_runs=final_inspection.terminal_counts.get(RunnerState.FAILED.value, 0),
+            timed_out_runs=final_inspection.terminal_counts.get(RunnerState.TIMED_OUT.value, 0),
+            invalidated_runs=final_inspection.terminal_counts.get(RunnerState.INVALIDATED.value, 0),
+            benchmark_runs_executed=final_inspection.persisted_terminal_count,
+            provider_operations_executed=sum(1 for artifact in final_inspection.artifacts_by_run_id.values() if artifact.manifest.participant_id == "BASELINE_B"),
+            healing_operations_executed=0,
+            metric_results_generated=metric_results_generated,
+            execution_authorized=True,
+            gate=gate,
+            errors=tuple(errors),
+            stopped_reason=stopped_reason,
+        )
+
     def execute(self) -> ExecutionSummary:
+        if self.output_root.exists():
+            return self._execute_resume()
         gate = self.execution_gate()
         if not gate.passed:
             return ExecutionSummary(

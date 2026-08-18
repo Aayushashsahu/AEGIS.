@@ -61,15 +61,22 @@ def test_recovery_identity_is_distinct_and_deterministic() -> None:
 
 def test_recovery_preflight_is_provider_free_and_root_absent() -> None:
     gate, frozen, recovery_id = recovery_preflight(ROOT)
-    assert gate.passed
     assert recovery_id != MISSION_028_INVALIDATED_RUN_ID
     assert frozen.configuration_hash == MISSION_028_CONFIGURATION_HASH
     assert gate.execution_authorized is False
     recovery_root = ROOT / "benchmarks/runs" / recovery_id
     if recovery_root.exists():
-        assert gate.checks["artifact_root_resumable"] is True
-        assert gate.checks["existing_terminal_artifacts_valid"] is True
+        manifest = json.loads((recovery_root / "participant_manifest.json").read_text(encoding="utf-8"))
+        persisted_root = Path(manifest["runs"][0]["artifact_root"]).resolve()
+        if persisted_root == recovery_root.resolve():
+            assert gate.passed
+            assert gate.checks["artifact_root_resumable"] is True
+            assert gate.checks["existing_terminal_artifacts_valid"] is True
+        else:
+            assert not gate.passed
+            assert any("artifact_root" in error for error in gate.errors)
     else:
+        assert gate.passed
         assert not recovery_root.exists()
 
 

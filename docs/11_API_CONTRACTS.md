@@ -497,3 +497,9 @@ The first attempt `mission_028_floor_00c77f2abd976a10` is an invalidated, non-re
 `BenchmarkExecutor` accepts an explicit `runs_root`. Production recovery supplies the canonical repository benchmark root; TEST_DOUBLE tests supply a temporary root explicitly. Test cleanup is permitted to remove only the temporary root and must never resolve to the production recovery root. The recovery artifact hash manifest records SHA-256 for every raw file and all run artifacts.
 
 The recovery gate passes only when the new root is absent before trial 1, the old run identity is not reused, and all existing terminal artifacts are resumable without rerun. After completion, the root is immutable for release validation: raw-file count and aggregate hashes must remain unchanged through the full test suite. Metrics remain blocked until all 180 terminal artifacts exist, then only Mission 010 may run.
+
+## Mission 029 — Bright Data live-demo failure contract
+
+`BrightDataCliAdapter` preserves collection mode and operation identifiers from the combined stdout/stderr provider trace, because the live CLI reported realtime-to-batch fallback and batch job identity on stderr. The original raw operation envelope remains immutable; reconciliation emits separate `*_reconciled.json` evidence with `provider_operations_executed_by_correction=0`.
+
+The Mission 029 live orchestration boundary may create one collector, run one collector, and submit one heal. If healing exits non-zero or no candidate is normalized, it emits a terminal `FAILED_BEFORE_CANDIDATE` record. That record contains the original `HealHandle`, redacted provider failure, zero retry, zero approval, zero production commit, and null candidate/verification/risk/commit identifiers. No code may fabricate a `RepairCandidate`, `VerificationResult`, `RiskDecision`, or `CommitDecision` after this terminal failure.

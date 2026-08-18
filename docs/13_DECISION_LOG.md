@@ -537,3 +537,13 @@ Status: OPEN | RESOLVED | DEFERRED
 **Recovery evidence:** The recovery root contains 180 unique terminal raw artifacts, 179 completed and 1 failed, with one explicit NVIDIA provider failure and 60 provider operations. The execution log is terminal `COMPLETED`; Mission 022 compatibility passes; Mission 010 generates 38 results; SHA-256 manifests cover all raw and run artifacts. The full suite passed with `323 passed` while preserving 180 raw files and unchanged raw hashes.
 
 **Final safety state:** The frozen configuration is unchanged. Gemini, Bright Data, and healing were not used. No automatic retries, approval, commit, or rollback occurred. Recovery metrics are reported separately from the invalidated attempt and are the only reproducible Mission 028 benchmark evidence.
+
+## Mission 029 — Fresh Bright Data live demonstration
+
+**Decision:** Use a fresh public Hacker News collector, apply a reversible AEGIS-only mutation, submit exactly one approval-gated Bright Data heal, and stop if no candidate exists.
+
+**Observed evidence:** Collector `c_msyo46bp1slx64351` was created and yielded 150 rows; the live CLI fell back from realtime to batch. The one heal request exited with a provider prompt-limit error before candidate creation.
+
+**Consequence:** The demo records real live collection and real provider failure. It does not fabricate a candidate or a downstream verification, risk, or commit result. No retry, approval, output shipment, Gemini, NVIDIA benchmark, benchmark run, or comparative metric calculation occurred.
+
+**Final safety state:** The bounded repair prompt measured 1,187 characters while the provider reported a 1,000-character limit. The candidate boundary was not reached. `pipeline_termination.json` is the authoritative Mission 029 stop record.

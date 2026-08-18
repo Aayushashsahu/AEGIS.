@@ -205,3 +205,7 @@ The execution produced `benchmark_runs_executed=180`, `provider_operations_execu
 The first-attempt summary for `mission_028_floor_00c77f2abd976a10` is invalidated and produces no reproducible metric result because its raw artifact root was removed before staging. Its observed summary is not used as evidence.
 
 The clean recovery run `mission_028_recovery_floor_4812160675146552` preserved 180 terminal artifacts before metric calculation. Mission 022 compatibility passed, and only Mission 010 generated the 38-result metric artifact. The eligible scope is AEGIS `TEST_DOUBLE` controlled-harness evidence. Overall DetectionRate and AlarmPrecision were `1.0 (50/50)`, L5DetectionRate was `1.0 (20/20)`, and L5BadDataShippedCount/Rate were `0/20` and `0.0`. Zero-denominator repair metrics remain `NOT_APPLICABLE` and are not substituted with zero. The recovery metrics artifact is SHA-256 recorded and remained unchanged through the full suite.
+
+## Mission 029 — Explicit non-benchmark metric boundary
+
+Mission 029 produced no benchmark metrics, comparative metrics, DetectionRate, AlarmPrecision, recovery-rate, or repair-rate claim. It is a product/demo evidence mission. The only counted values are live provider-operation facts: one collector create, one collector run, one heal request, zero approval, and zero production commit. The live AEGIS detection record is evidence for a single controlled demonstration, not a general performance metric. Mission 028 recovery remains the canonical benchmark evidence.

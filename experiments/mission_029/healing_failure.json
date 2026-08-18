@@ -1,0 +1,20 @@
+{
+  "collector_reference": "c_msyo46bp1slx64351",
+  "completed_at": "2026-08-18T13:02:33.669662+00:00",
+  "correlation_id": "corr_2007b48905bf4ef4bc96ce3e194708da",
+  "deadline": "2026-08-18T13:17:31.669311+00:00",
+  "error_code": "PROVIDER_COMMAND_FAILED",
+  "error_message": "\u2717 Heal prompt is 1187 chars; the API limit is 1000. Shorten it.",
+  "evidence_refs": [
+    "evidence://bright-data/cli/heal/repair_request_b969f3026be8453eb3944e5af8e06923"
+  ],
+  "heal_id": "heal_04bd6ae514d044d2ac7f6808c96a374b",
+  "latency_ms": 1163,
+  "provider_operation_reference": null,
+  "provider_provenance": "BRIGHT_DATA",
+  "provider_status": "FAILED",
+  "repair_request_id": "repair_request_b969f3026be8453eb3944e5af8e06923",
+  "started_at": "2026-08-18T13:02:31.669404+00:00",
+  "status": "FAILED",
+  "submitted_at": "2026-08-18T13:02:31.669335+00:00"
+}

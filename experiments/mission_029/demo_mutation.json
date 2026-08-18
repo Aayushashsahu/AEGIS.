@@ -1,0 +1,13 @@
+{
+  "boundary": "AEGIS_EVIDENCE_ONLY",
+  "collector_modified": false,
+  "expected_value_from_preserved_live_output": 402,
+  "external_website_modified": false,
+  "field": "points",
+  "ground_truth": "non_negative_numeric",
+  "mutation_id": "DEMO_MUTATION",
+  "observed_corrupted_value": -1,
+  "original_output_ref": "collection_output_provider_raw.json",
+  "reversible": true,
+  "row_index": 0
+}

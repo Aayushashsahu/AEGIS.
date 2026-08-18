@@ -1,0 +1,26 @@
+{
+  "collection_id": "collection_e7310c5702de41f2b0081e4eb60298f7",
+  "collector_id": "c_msyo46bp1slx64351",
+  "completed_at": "2026-08-18T13:02:31.642961+00:00",
+  "correlation_id": "corr_2007b48905bf4ef4bc96ce3e194708da",
+  "error_code": null,
+  "error_message": null,
+  "evidence_refs": [
+    "evidence://bright-data/cli/run/c_msyo46bp1slx64351"
+  ],
+  "latency_ms": 108112,
+  "mode": "REALTIME",
+  "output_schema": [
+    "title",
+    "url",
+    "points",
+    "author",
+    "comment_count"
+  ],
+  "provider_operation_ids": {},
+  "provider_provenance": "BRIGHT_DATA",
+  "provider_status": "COMPLETED",
+  "requested_at": "2026-08-18T13:00:41.628456+00:00",
+  "started_at": "2026-08-18T13:00:41.628898+00:00",
+  "status": "COMPLETED"
+}

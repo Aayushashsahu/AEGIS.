@@ -273,14 +273,15 @@ class BrightDataCliAdapter:
             self._handles[current.collection_id] = current
             return current
         output = _last_array(result.stdout) or []
+        provider_trace = f"{result.stdout}\n{result.stderr}"
         provider_ids: dict[str, str] = {}
-        response_match = re.search(r"response_id:\s*([^\s)]+)", result.stdout)
-        batch_match = re.search(r"Batch job:\s*(j_[A-Za-z0-9]+)", result.stdout)
+        response_match = re.search(r"response_id:\s*([^\s)]+)", provider_trace)
+        batch_match = re.search(r"Batch job:\s*(j_[A-Za-z0-9]+)", provider_trace)
         if response_match:
             provider_ids["response_id"] = response_match.group(1)
         if batch_match:
             provider_ids["batch_job_id"] = batch_match.group(1)
-        observed_mode = CollectionMode.BATCH if "switching to batch mode" in result.stdout.lower() else current.mode
+        observed_mode = CollectionMode.BATCH if "switching to batch mode" in provider_trace.lower() else current.mode
         schema = tuple(sorted({key for row in output for key in row}))
         current = current.transition(
             CollectionState.COMPLETED,

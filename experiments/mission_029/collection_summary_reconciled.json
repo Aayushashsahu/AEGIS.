@@ -1,0 +1,22 @@
+{
+  "collection_id": "collection_e7310c5702de41f2b0081e4eb60298f7",
+  "collector_id": "c_msyo46bp1slx64351",
+  "evidence_refs": [
+    "evidence://bright-data/cli/run/c_msyo46bp1slx64351"
+  ],
+  "latency_ms": 108112,
+  "mode": "BATCH",
+  "provider_operation_ids": {
+    "batch_job_id": "j_msyo82sl1yrlfgm5x9",
+    "response_id": "d2t1787058048204rt325p1dbgjg"
+  },
+  "provider_status": "COMPLETED",
+  "row_count": 150,
+  "schema": [
+    "title",
+    "url",
+    "points",
+    "author",
+    "comment_count"
+  ]
+}

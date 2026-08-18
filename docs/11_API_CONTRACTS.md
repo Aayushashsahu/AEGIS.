@@ -428,3 +428,19 @@ The adapter preserves the original source object and an explicit `preserved_fiel
 The smoke validator reads the two smoke files from `smoke_evidence_root` and the preflight/root-log/frozen-config files from `smoke_root`. `validate_isolation()` continues to reject a benchmark root that overlaps or contains the canonical `smoke_root`. A legacy three-argument layout construction derives the Baseline B subroot deterministically and remains compatible.
 
 The execution gate reports the smoke detail as `status=VALID`, `pass=true`, candidate accepted, bounded application, runtime ground truth not provided, preflight passed, frozen hash passed, and all historical zero-execution counters valid. Gate validation does not invoke `execute()`.
+
+
+## Mission 024 — shared immutable smoke-evidence API
+
+Mission 024 adds a single provider-neutral contract:
+
+| Operation/model | Purpose | Side effect |
+|---|---|---|
+| `resolve_immutable_smoke_evidence(repository_root)` | Resolve the canonical Mission 019 root, Baseline B subroot, and five evidence files | None |
+| `SmokeEvidencePaths` | Immutable absolute path bundle shared by preflight and executor | None |
+| `validate_immutable_smoke_evidence(repository_root)` | Apply the exact Mission 019/020 smoke checks from `repository_root` | Read-only |
+| `SmokeEvidenceValidation` | Return `pass`, `status`, checks, errors, missing paths, and preserved historical provider count | None |
+
+The required paths are `BASELINE_B_SMOKE_ROOT/smoke.json`, `BASELINE_B_SMOKE_ROOT/execution_log.json`, `SMOKE_ROOT/preflight.json`, `SMOKE_ROOT/execution_log.json`, and `SMOKE_ROOT/frozen_config.json`. No path is derived from the future benchmark output root, the deterministic benchmark run ID, or the process current working directory.
+
+`BenchmarkExecutor._validate_immutable_smoke_evidence()` remains as a compatibility method but delegates directly to `validate_immutable_smoke_evidence(self.repository_root)`. The preflight wrapper delegates to the same function. `ExecutionGateResult.execution_authorized` is explicitly `false` for gate validation; authorization occurs only in the separately invoked execution boundary.

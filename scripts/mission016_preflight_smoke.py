@@ -12,13 +12,28 @@ from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
+
+from aegis.baseline_participants import BASELINE_B_MODEL_ID, BASELINE_B_REPAIR_PROMPT_TEMPLATE, BASELINE_B_SYSTEM_PROMPT
+from aegis.benchmark_config import load_benchmark_config, validate_config
+from aegis.benchmark_lifecycle import BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
+from aegis.benchmark_runner import BenchmarkRunner, ParticipantRunEvidence, RunnerDryRunStatus
+from aegis.mutation_lab import MutationLab, baseline_fixture
+from aegis.smoke_evidence import (
+    EXPECTED_CONFIGURATION_HASH as CANONICAL_EXPECTED_CONFIGURATION_HASH,
+    CANONICAL_SMOKE_RUN_ID,
+    resolve_immutable_smoke_evidence,
+    validate_immutable_smoke_evidence,
+)
+
 CONFIG_PATH = ROOT / "benchmarks/configs/mission_017_corrected_frozen_config.json"
-EXPECTED_CONFIG_HASH = "59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b"
-PREFLIGHT_SMOKE_RUN_ID = "mission_016_floor_59a11e27a71f"
-PREFLIGHT_SMOKE_ROOT = ROOT / "benchmarks/runs" / PREFLIGHT_SMOKE_RUN_ID
+EXPECTED_CONFIG_HASH = CANONICAL_EXPECTED_CONFIGURATION_HASH
+PREFLIGHT_SMOKE_RUN_ID = CANONICAL_SMOKE_RUN_ID
+SMOKE_EVIDENCE_PATHS = resolve_immutable_smoke_evidence(ROOT)
+PREFLIGHT_SMOKE_ROOT = SMOKE_EVIDENCE_PATHS.smoke_root
 HISTORICAL_FLOOR_RUN_ID = "mission_016_floor_f48ec5c5792b"
 HISTORICAL_FLOOR_RUN_ROOT = ROOT / "benchmarks/runs" / HISTORICAL_FLOOR_RUN_ID
-SMOKE_ROOT = PREFLIGHT_SMOKE_ROOT / "baseline_b_execution_readiness_smoke"
+SMOKE_ROOT = SMOKE_EVIDENCE_PATHS.baseline_b_smoke_root
 BENCHMARK_ATTEMPT_ID = "mission-020-floor-v1"
 EXPECTED_SEED = 12345
 EXPECTED_MUTATIONS = ("M001", "M002", "M003", "M004", "M005", "M006")
@@ -38,17 +53,14 @@ FLOOR_RUN_ID = PREFLIGHT_SMOKE_RUN_ID
 FLOOR_RUN_ROOT = PREFLIGHT_SMOKE_ROOT
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
 
-sys.path.insert(0, str(ROOT / "src"))
-
-from aegis.baseline_participants import BASELINE_B_MODEL_ID, BASELINE_B_REPAIR_PROMPT_TEMPLATE, BASELINE_B_SYSTEM_PROMPT
-from aegis.benchmark_config import load_benchmark_config, validate_config
-from aegis.benchmark_lifecycle import BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
-from aegis.benchmark_runner import BenchmarkRunner, ParticipantRunEvidence, RunnerDryRunStatus
-from aegis.mutation_lab import MutationLab, baseline_fixture
-
 BENCHMARK_RUN_ID = deterministic_benchmark_run_id(EXPECTED_CONFIG_HASH, BENCHMARK_ATTEMPT_ID, EXPECTED_REVISIONS)
 BENCHMARK_RUN_ROOT = ROOT / "benchmarks/runs" / BENCHMARK_RUN_ID
-BENCHMARK_ARTIFACT_LAYOUT = BenchmarkArtifactLayout(BENCHMARK_RUN_ID, ROOT / "benchmarks/runs", SMOKE_ROOT)
+BENCHMARK_ARTIFACT_LAYOUT = BenchmarkArtifactLayout(
+    BENCHMARK_RUN_ID,
+    ROOT / "benchmarks/runs",
+    SMOKE_EVIDENCE_PATHS.smoke_root,
+    SMOKE_EVIDENCE_PATHS.baseline_b_smoke_root,
+)
 
 
 class GeminiApiError(RuntimeError):
@@ -144,62 +156,9 @@ def _benchmark_layout_isolated() -> bool:
 
 
 def _validate_existing_smoke_evidence() -> Mapping[str, Any]:
-    """Validate committed Mission 019 smoke evidence without invoking Gemini."""
+    """Backward-compatible preflight wrapper over the canonical validator."""
 
-    required = {
-        "smoke": SMOKE_ROOT / "smoke.json",
-        "smoke_execution_log": SMOKE_ROOT / "execution_log.json",
-        "preflight": PREFLIGHT_SMOKE_ROOT / "preflight.json",
-        "root_execution_log": PREFLIGHT_SMOKE_ROOT / "execution_log.json",
-        "frozen_config": PREFLIGHT_SMOKE_ROOT / "frozen_config.json",
-    }
-    missing = [name for name, path in required.items() if not path.is_file()]
-    if missing:
-        return {"pass": False, "status": "MISSING", "missing": missing, "errors": [f"missing immutable evidence: {', '.join(missing)}"]}
-    try:
-        records = {name: json.loads(path.read_text(encoding="utf-8")) for name, path in required.items()}
-    except (OSError, json.JSONDecodeError) as exc:
-        return {"pass": False, "status": "CORRUPT", "errors": [f"cannot read immutable smoke evidence: {exc}"]}
-
-    if not all(isinstance(record, Mapping) for record in records.values()):
-        return {"pass": False, "status": "INVALID", "errors": ["immutable smoke evidence has an invalid JSON object shape"]}
-    smoke = records["smoke"]
-    smoke_checks = smoke.get("checks", {})
-    adapter_value = smoke.get("adapter_evidence", {})
-    adapter = adapter_value if isinstance(adapter_value, Mapping) else {}
-    application = adapter.get("candidate_application", {}) if isinstance(adapter, Mapping) else {}
-    configured_model = smoke_checks.get("configured_model", {}) if isinstance(smoke_checks, Mapping) else {}
-    smoke_checks_pass = isinstance(smoke_checks, Mapping) and all(value is True for value in smoke_checks.values() if isinstance(value, bool))
-    configured_model_pass = isinstance(configured_model, Mapping) and configured_model.get("pass") is True
-    smoke_pass = smoke.get("name") == "BASELINE_B_EXECUTION_READINESS_SMOKE" and smoke.get("status") == "PASS"
-    root_log = records["root_execution_log"]
-    smoke_log = records["smoke_execution_log"]
-    preflight = records["preflight"].get("result", {})
-    if not isinstance(preflight, Mapping):
-        return {"pass": False, "status": "INVALID", "errors": ["immutable preflight evidence has an invalid result shape"]}
-    frozen_config = records["frozen_config"]
-    checks = {
-        "smoke_status": smoke_pass,
-        "smoke_checks": smoke_checks_pass and configured_model_pass,
-        "candidate_accepted": adapter.get("candidate_accepted") is True,
-        "bounded_application": application.get("application_mode") == "SAFE_TEST_DOUBLE_BOUNDARY" and application.get("generated_code_executed") is False,
-        "runtime_ground_truth_not_provided": smoke.get("runtime_ground_truth_payload") == "NOT_PROVIDED",
-        "smoke_log_status": smoke_log.get("status") == "BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK",
-        "preflight_passed": preflight.get("passed") is True,
-        "frozen_config_hash": frozen_config.get("configuration_hash") == EXPECTED_CONFIG_HASH,
-        "benchmark_runs_zero": root_log.get("benchmark_runs_executed") == 0,
-        "provider_operations_zero": root_log.get("provider_operations_executed") == 0,
-        "healing_zero": root_log.get("healing_operations_executed") == 0,
-        "metrics_zero": root_log.get("metric_results_generated") == 0,
-        "execution_unauthorized": root_log.get("execution_authorized") is False,
-    }
-    return {
-        "pass": all(checks.values()),
-        "status": "VALID" if all(checks.values()) else "INVALID",
-        "checks": checks,
-        "provider_operation_count": smoke.get("provider_operation_count"),
-        "errors": [name for name, value in checks.items() if value is False],
-    }
+    return validate_immutable_smoke_evidence(ROOT).to_dict()
 
 
 def run_preflight() -> tuple[PreflightResult, Any]:

@@ -12,6 +12,7 @@ import pytest
 from aegis.benchmark_config import load_benchmark_config
 from aegis.benchmark_lifecycle import BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
 from aegis.benchmark_runner import BenchmarkRunner
+from aegis.smoke_evidence import validate_immutable_smoke_evidence
 
 ROOT = Path(__file__).resolve().parents[2]
 CONFIG_PATH = ROOT / "benchmarks/configs/mission_017_corrected_frozen_config.json"
@@ -57,7 +58,8 @@ def test_preflight_does_not_call_gemini_when_existing_smoke_is_valid(monkeypatch
 
 
 def test_corrupt_smoke_evidence_fails_closed(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    isolated_root = tmp_path / SMOKE_RUN_ID
+    isolated_root = tmp_path / "benchmarks" / "runs" / SMOKE_RUN_ID
+    isolated_root.parent.mkdir(parents=True)
     shutil.copytree(SMOKE_ROOT, isolated_root)
     smoke_path = isolated_root / "baseline_b_execution_readiness_smoke/smoke.json"
     smoke = json.loads(smoke_path.read_text(encoding="utf-8"))
@@ -66,6 +68,7 @@ def test_corrupt_smoke_evidence_fails_closed(tmp_path: Path, monkeypatch: pytest
     monkeypatch.setattr(preflight, "PREFLIGHT_SMOKE_ROOT", isolated_root)
     monkeypatch.setattr(preflight, "FLOOR_RUN_ROOT", isolated_root)
     monkeypatch.setattr(preflight, "SMOKE_ROOT", isolated_root / "baseline_b_execution_readiness_smoke")
+    monkeypatch.setattr(preflight, "validate_immutable_smoke_evidence", lambda _root: validate_immutable_smoke_evidence(tmp_path))
     result, _ = preflight.run_preflight()
     assert result.passed is False
     assert result.checks["smoke_evidence"]["pass"] is False

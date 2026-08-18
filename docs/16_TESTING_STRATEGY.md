@@ -265,3 +265,17 @@ PYTHONPATH=src pytest -q tests/unit tests/integration
 ```
 
 The validation-only gate passed with `configuration_hash`, `smoke_evidence`, `participants_ready`, `fairness`, `planned_run_count`, and `artifact_root_absent` all true. The immutable Mission 019 evidence tree was byte-identical before and after validation, and the future benchmark root was absent. No `execute()` call, trial, Gemini call, Bright Data call, healing, approval, commit, rollback, or metric operation occurred.
+
+
+## Mission 024 evidence — one smoke validator for preflight and execution gate
+
+Mission 024 adds focused tests for identical absolute paths from preflight and `BenchmarkExecutor`, all five canonical evidence files, shared semantic validation, byte-identical historical evidence, no Gemini rerun, no future benchmark root, execution-gate PASS, planned-run count, artifact-root absence, and explicit gate-level `execution_authorized=false`.
+
+The focused Mission 024 suite passed with `2 passed`. The complete repository suite passed with `259 passed`:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit/test_mission024.py
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```
+
+The read-only preflight returned `PREFLIGHT_PASS`. Its smoke result and the executor’s `smoke_evidence_detail` came from the same canonical validator and both returned `pass=true`, `status=VALID`, and empty errors. The immutable Mission 019 evidence tree remained byte-identical before and after validation. The future benchmark root remained absent. No `benchmark_runner.py --run`, executor `execute()`, trial, Gemini call, Bright Data call, healing, approval, commit, rollback, or metric operation occurred.

@@ -22,7 +22,7 @@ from urllib.request import Request, urlopen
 from .audit_store import _to_jsonable
 from .baseline_participants import BaselineBUnavailable
 from .benchmark_config import BenchmarkConfig, validate_config
-from .benchmark_lifecycle import BASELINE_B_SMOKE_SUBROOT, BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
+from .benchmark_lifecycle import BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
 from .benchmark_runner import (
     PARTICIPANT_IDS,
     BenchmarkRunner,
@@ -40,12 +40,18 @@ from .metric_boundary import (
     adapt_completed_evidence,
     calculate_compatibility_metrics,
 )
+from .smoke_evidence import (
+    CANONICAL_SMOKE_RUN_ID,
+    EXPECTED_CONFIGURATION_HASH as CANONICAL_EXPECTED_CONFIGURATION_HASH,
+    resolve_immutable_smoke_evidence,
+    validate_immutable_smoke_evidence,
+)
 from .mutation_lab import MutationCase, MutationLab, MutationRun, baseline_fixture
 
 
-EXPECTED_CONFIGURATION_HASH = "59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b"
+EXPECTED_CONFIGURATION_HASH = CANONICAL_EXPECTED_CONFIGURATION_HASH
 EXPECTED_BENCHMARK_ATTEMPT_ID = "mission-020-floor-v1"
-EXPECTED_SMOKE_RUN_ID = "mission_016_floor_59a11e27a71f"
+EXPECTED_SMOKE_RUN_ID = CANONICAL_SMOKE_RUN_ID
 EXPECTED_BENCHMARK_RUN_ID = "mission_020_floor_2a80a8cf8d989326"
 EXPECTED_SEED = 12345
 EXPECTED_MUTATIONS = ("M001", "M002", "M003", "M004", "M005", "M006")
@@ -227,6 +233,7 @@ class ExecutionGateResult:
     configuration_hash: str
     expected_run_count: int
     checks: Mapping[str, Any]
+    execution_authorized: bool = False
     errors: tuple[str, ...] = ()
 
     def to_dict(self) -> Mapping[str, Any]:
@@ -290,12 +297,13 @@ class BenchmarkExecutor:
             EXPECTED_BENCHMARK_ATTEMPT_ID,
             self.expected_source_revisions,
         )
-        smoke_root = self.repository_root / "benchmarks/runs" / EXPECTED_SMOKE_RUN_ID
+        smoke_paths = resolve_immutable_smoke_evidence(self.repository_root)
+        self.smoke_evidence_paths = smoke_paths
         self.layout = BenchmarkArtifactLayout(
             self.benchmark_run_id,
             self.repository_root / "benchmarks/runs",
-            smoke_root,
-            smoke_root / BASELINE_B_SMOKE_SUBROOT,
+            smoke_paths.smoke_root,
+            smoke_paths.baseline_b_smoke_root,
         )
         if registry is None:
             registry = ParticipantRegistry(config, self.lab)
@@ -326,45 +334,9 @@ class BenchmarkExecutor:
         return result.returncode == 0
 
     def _validate_immutable_smoke_evidence(self) -> Mapping[str, Any]:
-        root = self.layout.smoke_evidence_root
-        required = {
-            "smoke": root / "smoke.json",
-            "smoke_execution_log": root / "execution_log.json",
-            "preflight": root.parent / "preflight.json",
-            "root_execution_log": root.parent / "execution_log.json",
-            "frozen_config": root.parent / "frozen_config.json",
-        }
-        missing = [name for name, path in required.items() if not path.is_file()]
-        if missing:
-            return {"pass": False, "status": "MISSING", "errors": [f"missing immutable evidence: {', '.join(missing)}"]}
-        try:
-            records = {name: json.loads(path.read_text(encoding="utf-8")) for name, path in required.items()}
-        except (OSError, json.JSONDecodeError) as exc:
-            return {"pass": False, "status": "CORRUPT", "errors": [str(exc)]}
-        smoke = records["smoke"]
-        smoke_checks = smoke.get("checks", {})
-        adapter = smoke.get("adapter_evidence", {})
-        application = adapter.get("candidate_application", {}) if isinstance(adapter, Mapping) else {}
-        root_log = records["root_execution_log"]
-        smoke_log = records["smoke_execution_log"]
-        preflight = records["preflight"].get("result", {})
-        frozen_config = records["frozen_config"]
-        checks = {
-            "smoke_status": smoke.get("name") == "BASELINE_B_EXECUTION_READINESS_SMOKE" and smoke.get("status") == "PASS",
-            "smoke_checks": isinstance(smoke_checks, Mapping) and all(value is True for value in smoke_checks.values() if isinstance(value, bool)),
-            "candidate_accepted": adapter.get("candidate_accepted") is True if isinstance(adapter, Mapping) else False,
-            "bounded_application": application.get("application_mode") == "SAFE_TEST_DOUBLE_BOUNDARY" and application.get("generated_code_executed") is False,
-            "runtime_ground_truth_not_provided": smoke.get("runtime_ground_truth_payload") == "NOT_PROVIDED",
-            "smoke_log_status": smoke_log.get("status") == "BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK",
-            "preflight_passed": preflight.get("passed") is True if isinstance(preflight, Mapping) else False,
-            "frozen_config_hash": frozen_config.get("configuration_hash") == EXPECTED_CONFIGURATION_HASH,
-            "benchmark_runs_zero": root_log.get("benchmark_runs_executed") == 0,
-            "provider_operations_zero": root_log.get("provider_operations_executed") == 0,
-            "healing_zero": root_log.get("healing_operations_executed") == 0,
-            "metrics_zero": root_log.get("metric_results_generated", root_log.get("metric_values_generated")) == 0,
-            "execution_unauthorized": root_log.get("execution_authorized", root_log.get("benchmark_execution_authorized")) is False,
-        }
-        return {"pass": all(checks.values()), "status": "VALID" if all(checks.values()) else "INVALID", "checks": checks, "errors": [name for name, value in checks.items() if value is False]}
+        """Backward-compatible executor wrapper over the canonical validator."""
+
+        return validate_immutable_smoke_evidence(self.repository_root).to_dict()
 
     def _trial_input(self, participant_id: str, mutation_id: str, trial_number: int, seed: int) -> TrialParticipantExecutionInput:
         return TrialParticipantExecutionInput(
@@ -480,6 +452,7 @@ class BenchmarkExecutor:
             configuration_hash=self.config.configuration_hash,
             expected_run_count=self.expected_run_count,
             checks={**checks, "source_revision_checks": source_checks, "participant_revision_checks": participant_revision_checks, "smoke_evidence_detail": smoke},
+            execution_authorized=False,
             errors=tuple(errors),
         )
 

@@ -239,3 +239,12 @@ Mission 023 fixes a path-resolution bug at the execution-gate boundary. The immu
 The artifact-layout contract now exposes both `SMOKE_ROOT` and `BASELINE_B_SMOKE_ROOT`. Smoke validation reads `BASELINE_B_SMOKE_ROOT/smoke.json` and `BASELINE_B_SMOKE_ROOT/execution_log.json`, while it reads `preflight.json`, the root `execution_log.json`, and `frozen_config.json` directly from `SMOKE_ROOT`. Isolation continues to compare the future benchmark root against the canonical `SMOKE_ROOT`, not against the narrower smoke subdirectory.
 
 The validator does not search arbitrary directories, copy evidence, weaken checks, or rewrite historical files. The validation-only execution gate passes with the exact canonical evidence paths while the future benchmark root remains absent. No benchmark execution, Gemini call, Bright Data call, healing, approval, commit, rollback, or metric operation occurs.
+
+
+## Mission 024 — one canonical smoke-evidence resolver and validator
+
+Mission 024 unifies the read-only preflight and the benchmark execution gate behind `src/aegis/smoke_evidence.py`. `resolve_immutable_smoke_evidence(repository_root)` returns the canonical Mission 019 smoke root, Baseline B smoke root, five exact evidence paths, and no future benchmark paths. `validate_immutable_smoke_evidence(repository_root)` applies the shared Mission 019/020 semantic checks without modifying files or invoking any provider.
+
+The preflight wrapper and `BenchmarkExecutor` both consume this implementation. The preflight preserves its historical exported constants for compatibility, but derives them from the shared path object. The executor retains the canonical smoke root for artifact isolation and uses the same shared validator for `smoke_evidence` gate state. This removes independent interpretations of smoke root, Baseline B smoke root, preflight, root execution log, and frozen configuration evidence.
+
+Mission 024 validation returned `PREFLIGHT_PASS` and an execution gate with `passed=true`, `smoke_evidence=true`, `planned_run_count=true`, `artifact_root_absent=true`, and `execution_authorized=false`. The immutable Mission 019 evidence remained byte-identical and the future benchmark root remained absent. No benchmark, trial, provider, healing, approval, commit, rollback, or metric operation occurred.

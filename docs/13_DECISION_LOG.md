@@ -461,3 +461,18 @@ Status: OPEN | RESOLVED | DEFERRED
 **Validation:** Focused tests passed `2`; full suite passed `257`. The validation-only execution gate passed with all checks true, including smoke evidence, participant readiness, fairness, planned run count, artifact-root absence, and the corrected configuration hash. No benchmark, provider, healing, approval, commit, rollback, or metric operation occurred.
 
 **Status:** RESOLVED for Mission 023 path resolution; benchmark execution remains separately deferred.
+
+
+## Mission 024 — unify preflight and execution-gate smoke validation
+
+**Decision:** Establish `src/aegis/smoke_evidence.py` as the single canonical resolver and validator for immutable Mission 019 smoke evidence. Both `scripts/mission016_preflight_smoke.py` and `BenchmarkExecutor` consume it using an explicit repository root.
+
+**Inconsistency resolved:** Mission 023 corrected the executor’s path level but still left preflight and execution gate with separate implementations. That allowed one command to return `PREFLIGHT_PASS` while the next reported `smoke_evidence=false` for the same tracked files. Mission 024 removes the duplicate interpretation rather than weakening either validator.
+
+**Exact contract:** `SMOKE_ROOT=benchmarks/runs/mission_016_floor_59a11e27a71f/`; `BASELINE_B_SMOKE_ROOT=SMOKE_ROOT/baseline_b_execution_readiness_smoke/`; smoke files are under the Baseline B subroot; preflight, root execution log, and frozen config are directly under the canonical smoke root; `BENCHMARK_ROOT=benchmarks/runs/mission_020_floor_2a80a8cf8d989326/` remains separate.
+
+**Validation semantics:** Reuse status PASS, boolean smoke checks, candidate acceptance, bounded application, generated-code prohibition, runtime ground-truth absence, smoke-log status, preflight pass, frozen hash, historical zero counters, and unauthorized execution checks. Missing, corrupt, malformed, or semantically invalid evidence fails closed.
+
+**Validation:** The focused Mission 024 suite passed `2`; the complete suite passed `259`. The read-only preflight returned `PREFLIGHT_PASS`; the execution gate passed with smoke evidence true, planned run count true, artifact root absent, and `execution_authorized=false`. Historical evidence remained byte-identical. No benchmark, provider, healing, approval, commit, rollback, or metric operation occurred.
+
+**Status:** RESOLVED for unified smoke-evidence validation; benchmark execution remains separately deferred.

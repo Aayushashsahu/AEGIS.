@@ -12,11 +12,13 @@ import hashlib
 import importlib
 import json
 from dataclasses import dataclass, field
+from pathlib import Path
 from enum import Enum
 from typing import Any, Mapping, Protocol, Sequence
 
 from .audit_store import _to_jsonable
 from .baseline_participants import BaselineAStaticExtractor, BaselineBConfiguration, BaselineBUnavailable, apply_first_candidate, baseline_b_model_call
+from .benchmark_lifecycle import BenchmarkLifecyclePhase
 from .benchmark_config import BenchmarkConfig, BaselineSpec, ValidationResult, validate_config
 from .immutability import freeze_mapping
 from .mutation_lab import MutationLab, MutationRun, MutationSeverity
@@ -770,10 +772,30 @@ class ParticipantRegistry:
 class BenchmarkRunner:
     """Common raw-evidence runner with explicit validation-only dry-run."""
 
-    def __init__(self, config: BenchmarkConfig, *, registry: ParticipantRegistry | None = None, lab: MutationLab | None = None) -> None:
+    def __init__(
+        self,
+        config: BenchmarkConfig,
+        *,
+        registry: ParticipantRegistry | None = None,
+        lab: MutationLab | None = None,
+        lifecycle_phase: BenchmarkLifecyclePhase = BenchmarkLifecyclePhase.BENCHMARK_EXECUTION,
+        artifact_root: str | None = None,
+        forbidden_artifact_roots: Sequence[str] = (),
+    ) -> None:
         self.config = config
+        self.lifecycle_phase = lifecycle_phase
+        self.artifact_root = artifact_root or config.artifact_root
+        self.forbidden_artifact_roots = tuple(forbidden_artifact_roots)
+        self._validate_artifact_root_isolation()
         self.lab = lab or MutationLab()
         self.registry = registry or ParticipantRegistry(config, self.lab)
+
+    def _validate_artifact_root_isolation(self) -> None:
+        candidate = Path(self.artifact_root).resolve()
+        for forbidden in self.forbidden_artifact_roots:
+            blocked = Path(forbidden).resolve()
+            if candidate == blocked or candidate.is_relative_to(blocked) or blocked.is_relative_to(candidate):
+                raise ValueError(f"artifact root {candidate} overlaps forbidden root {blocked}")
 
     def build_input(self, participant_id: str, mutation_id: str, seed: int) -> ParticipantExecutionInput:
         if participant_id not in PARTICIPANT_IDS:
@@ -791,7 +813,7 @@ class BenchmarkRunner:
             environment_reference=self.config.environment_reference,
             timeout_policy=self.config.timeout_policy,
             retry_policy=self.config.retry_policy,
-            artifact_root=self.config.artifact_root,
+            artifact_root=self.artifact_root,
             trial_metadata={
                 "baseline_independent": True,
                 "ground_truth_runtime_payload": "NOT_PROVIDED",

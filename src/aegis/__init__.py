@@ -3,6 +3,7 @@
 from .adapter import AdapterError, BrightDataCliAdapter, CommandResult, build_heal_command, build_heal_prompt
 from .audit_store import AuditEvent, AuditEventType, AuditStore, SCHEMA_VERSION, SQLiteAuditStore
 from .benchmark_config import BaselineSpec, BenchmarkConfig, DryRunResult, DryRunStatus, ValidationResult, ValidationStatus, compute_configuration_hash, default_validation_config, dry_run, freeze_config, load_benchmark_config, run_dry_run, validate_config
+from .benchmark_lifecycle import BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
 from .benchmark_runner import AegisAdapter, BaselineAAdapter, BaselineBAdapter, BenchmarkRunner, ExecutionAttempt, FreezeSnapshot, FreezeValidation, NOT_APPLICABLE, ParticipantAdapter, ParticipantExecutionInput, ParticipantId, ParticipantNotReady, ParticipantReadiness, ParticipantReadinessStatus, ParticipantRegistry, ParticipantRunEvidence, PreparedParticipantRun, RunManifest, RunnerDryRunResult, RunnerDryRunStatus, RunnerState, deterministic_artifact_name, deterministic_run_id, normalize_mutation_run, planned_ground_truth_reference, validate_freeze
 from .participant_freeze import OwnerReviewDecision, ParticipantFreezeProposal, ParticipantFreezeValidation, PromotionError, PromotionResult, PromotionStatus, ReadinessPromotion, apply_promotions, compute_participant_hash, default_mission013_proposals, promote_participant, proposal_from_spec, validate_participant_proposal
 from .owner_approved_validation import FairnessValidation, OwnerApprovedValidationReport, OwnerReviewValidation, OwnerValidationStatus, ParticipantApprovalValidation, load_owner_payload, validate_owner_configuration
@@ -129,6 +130,8 @@ __all__ = [
     "BaselineSpec",
     "BenchmarkRunner",
     "BenchmarkConfig",
+    "BenchmarkArtifactLayout",
+    "BenchmarkLifecyclePhase",
     "AuthorizationContext",
     "CommitBlockReason",
     "CommitDecision",
@@ -289,6 +292,7 @@ __all__ = [
     "run_dry_run",
     "validate_config",
     "deterministic_artifact_name",
+    "deterministic_benchmark_run_id",
     "deterministic_run_id",
     "normalize_mutation_run",
     "planned_ground_truth_reference",

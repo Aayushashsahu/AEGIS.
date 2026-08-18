@@ -1,0 +1,25 @@
+flowchart TD
+  BD[Bright Data Scraper Studio<br/>real collector / bounded heal] -->|REAL_PROVIDER_EVIDENCE| O[Immutable Observation]
+  O --> D[Deterministic Detection]
+  D --> G[Diagnosis + RepairRequest]
+  G --> H[Bright Data heal request]
+  H -->|candidate returned| C[UNVERIFIED candidate]
+  H -->|candidate absent / provider failure| T[Terminal failure record<br/>no approval · no commit · no shipment]
+  C --> V[Independent verification<br/>contract · history · semantics · alternate evidence]
+  V --> R[Risk Governor]
+  R -->|accept with deterministic evidence| K[Commit Gate]
+  R -->|reject / quarantine| Q[Shipment blocked]
+  K -->|eligible only| W[Post-commit watch]
+  L[Mutation lab + frozen benchmark] --> D
+  L --> B[Controlled-harness metrics]
+  T --> J[Judge Mode]
+  Q --> J
+  B --> J
+  J --> P[Read-only evidence surface]
+
+  classDef provider fill:#18332e,stroke:#8bbfb1,color:#eaf7f3
+  classDef safety fill:#3a1d1a,stroke:#d84a3a,color:#ffe7e3
+  classDef evidence fill:#3a3021,stroke:#b59a5c,color:#fff4d8
+  class BD,H provider
+  class T,Q safety
+  class O,D,G,C,V,R,K,W,L,B,J,P evidence

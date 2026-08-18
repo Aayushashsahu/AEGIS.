@@ -5,4 +5,12 @@
 - [x] Preserve the real terminal provider response without approval, verification, commit, activation, or an external retry.
 - [x] Implement a read-only loader that normalizes the committed Mission 029 JSON bundle for the Evidence Ledger.
 - [x] Replace hardcoded UI evidence with sanitized artifact-backed data and remove the unused public debug collector.
-- [ ] Run secret scans, focused tests, full-suite validation, and commit/push the isolated Mission 030 branch.
+- [x] Run secret scans, focused tests, full-suite validation, and commit/push the isolated Mission 030 branch.
+- [x] Read the complete Master Mission brief and audit the frozen documentation, current repository, Mission 001–030 evidence, benchmark artifacts, frontend, and public assets.
+- [x] Write an evidence-backed dependency map and a prioritized judge-readiness gap register without changing frozen benchmark methodology or historical evidence.
+- [x] Compare the Mission 001 and Mission 029/030 Bright Data heal request paths, research only official provider documentation, and define a reasoned authorization gate before any additional live operation.
+- [x] Harden the evidence pipeline so all UI state is artifact-backed, provenance-labeled, and fail-closed rather than silently substituting a demo state.
+- [x] Build a dedicated Judge Mode that makes the live collection, controlled corruption, detection, untrusted-heal boundary, and no-shipment decision understandable in under 30 seconds.
+- [x] Add a clearly labeled controlled-evidence replay of the candidate-verification-risk decision path only if existing legitimate test/evidence fixtures support it; never present replay data as live provider output.
+- [ ] Validate evidence integrity, safety counters, no-secret boundaries, tests, accessibility, responsive UI behavior, and visual quality before committing and pushing the isolated Mission 031 branch.
+- [ ] Append canonical documentation, checkpoint the judge-facing web project, and deliver a factually bounded final report.

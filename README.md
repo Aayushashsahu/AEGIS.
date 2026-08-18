@@ -48,18 +48,18 @@ The laboratory represents five severity levels: L1 Cosmetic, L2 Structural, L3 S
 
 ## Results
 
-Results are intentionally placeholders until measured:
+## Evidence at a glance
 
-| Metric | Target | Measured result |
-| --- | ---: | --- |
-| Detection Rate | ≥90% | `[MEASURED_RESULT]` |
-| Alarm Precision | ≥90% | `[MEASURED_RESULT]` |
-| Verified Recovery | ≥85% | `[MEASURED_RESULT]` |
-| Verification Miss Rate | <1% | `[MEASURED_RESULT]` |
-| Blind Commit Rate | 0% | `[MEASURED_RESULT]` |
-| L5 bad-data-shipped rate | Safety objective | `[MEASURED_RESULT]` |
+AEGIS distinguishes **live provider evidence** from **controlled-harness measurement**. The following records are preserved facts, not generalized SLAs or production reliability claims.
 
-Targets are not results. The benchmark report must include per-severity results and the exact environment, seeds, configurations, and output artifacts needed for reproduction.
+| Evidence stream | Verified fact | Boundary |
+| --- | --- | --- |
+| Mission 029 Bright Data collection | Fresh collector `c_msyo46bp1slx64351` produced 150 structured Hacker News rows; the CLI observed realtime-to-batch fallback. | One public-target demonstration; output remained untrusted. |
+| Mission 030 compact heal | The provider transport projection was reduced from 1,187 to 676 characters, under the documented 1,000-character limit. The single authorized heal then failed with provider HTTP 500 before candidate creation. | No candidate, approval, verification, commit, shipment, or retry by AEGIS. |
+| Mission 028 recovery benchmark | 180 opportunities were preserved: 179 completed, 1 provider failure, and 38 metric artifacts. | The AEGIS metric scope is the controlled `TEST_DOUBLE` harness, not live Bright Data reliability. |
+| Controlled AEGIS safety metrics | DetectionRate `50/50`; L5DetectionRate `20/20`; L5BadDataShipped `0/20`. | Measured against frozen controlled mutation ground truth only. |
+
+The NVIDIA NIM baseline uses `openai/gpt-oss-20b` under a **benchmark-side** 6 RPM, 10-second minimum interval, concurrency-1 throttle. The provider limit is explicitly **UNKNOWN**.
 
 ## Bright Data integration
 
@@ -67,11 +67,21 @@ The integration contract covers Scraper Studio collectors, structured output, ex
 
 ## Demo
 
-The primary artifact is a deterministic two-minute recorded video. It opens with a green-but-wrong extraction, shows detection, diagnosis, Bright Data healing, candidate verification, commit or rejection, benchmark evidence, and a small GPU-price intelligence surface. Captions, large text, muted-video comprehension, and actual measured values are mandatory. See [`docs/08_DEMO_SCRIPT.md`](docs/08_DEMO_SCRIPT.md).
+**Judge Mode** is a static, artifact-backed surface built from committed Mission 029/030 evidence, the preserved Mission 028 recovery benchmark, and a separately labeled `TEST_DOUBLE` silent-corruption replay. It never impersonates the replay as a Bright Data candidate and exposes no provider approval or commit control.
+
+```bash
+# From the repository: regenerate the provider-free evidence snapshot and DemoSession.
+PYTHONPATH=src:. python3 scripts/run_demo.py
+
+# Launch Judge Mode from the static web project.
+cd /home/ubuntu/aegis-mission029-demo && pnpm run dev
+```
+
+The default runner is **replay-only** and performs zero Bright Data, NVIDIA, Gemini, benchmark, approval, commit, or rollback operations. `--live` fails closed until a separately reviewed provider authorization gate is implemented. Use [`experiments/mission_031/judge_script.md`](experiments/mission_031/judge_script.md) for the approximately 2:30 presentation flow and [`experiments/mission_031/architecture.mmd`](experiments/mission_031/architecture.mmd) for the architecture diagram source.
 
 ## Quick start
 
-Missions 002–005 extend the stable collection path through immutable Observation, deterministic Detection, Diagnosis, provider-neutral RepairRequest, bounded Bright Data healing, candidate Verification, and RiskGovernor decisions. Mission 006 adds a fail-closed AEGIS `CommitGate`, an immutable `QuarantineLedger`, provider-neutral `KnownGoodVersion` references, and a downstream output-eligibility decision. `ACCEPT` means eligible for a later commit stage only; it does not approve Bright Data, activate a provider version, commit production data, or perform rollback.
+Missions 002–030 extend the stable collection path through immutable Observation, deterministic Detection, Diagnosis, provider-neutral RepairRequest, bounded Bright Data healing, candidate Verification, RiskGovernor decisions, a fail-closed CommitGate, frozen benchmark execution, live-provider evidence capture, compact prompt projection, and read-only evidence loading. Mission 031 adds the provider-free Judge Mode snapshot and explicit controlled replay boundary. `ACCEPT` means eligible for a later commit stage only; it does not approve Bright Data, activate a provider version, commit production data, or perform rollback.
 
 ```bash
 cd AEGIS
@@ -89,13 +99,13 @@ experiments/       Day-1 spikes and experiment records
 mutations/         Controlled mutation fixtures and manifests
 benchmarks/        Frozen baselines, runs, and reports
 scripts/           Reproducible commands and operational tooling
-src/               Mission 002–006 collection through fail-closed eligibility implementation
-tests/             Mission 002–006 unit and integration tests
+src/               Collection, detection, verification, risk, commit, benchmark, and evidence modules
+tests/             Unit and integration evidence/safety coverage through Mission 031
 ```
 
 ## Limitations and open decisions
 
-The repository does not claim provider approval execution, provider-native activation, provider-native commit, provider-native rollback, recovery rate, benchmark results, or production deployment. Mission 006 decides only AEGIS-level future eligibility: `REJECT`, `QUARANTINE`, unknown evidence, missing known-good references, invalid authorization, and `UNVERIFIED` candidates are blocked; quarantined records are retained but have no release mechanism. Provider-native version/rollback, raw response access, WARC availability, and exact LLM configuration remain open decisions tracked in [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
+The repository does not claim provider approval execution, provider-native activation, provider-native commit, provider-native rollback, a successful Mission 029/030 repair candidate, or production deployment. The Mission 030 HTTP 500 root cause remains unresolved; the corrected compact prompt proves only that the documented length boundary was met. `REJECT`, `QUARANTINE`, unknown evidence, missing known-good references, invalid authorization, and `UNVERIFIED` candidates remain blocked. Provider-native version/rollback, raw response access, WARC delivery, and exact LLM configuration remain open decisions tracked in [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
 
 ## AI usage disclosure
 

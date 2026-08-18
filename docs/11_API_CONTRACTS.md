@@ -511,3 +511,11 @@ The Mission 029 live orchestration boundary may create one collector, run one co
 `mission030_validate_heal.py` is replay-safe. Before `--live`, it records a zero-operation preflight. With `--live`, it permits at most one external heal submission, records the redacted provider envelope, and writes a terminal result. A candidate remains `UNVERIFIED` if normalized. If no candidate exists, candidate/verification/risk/commit identifiers remain null and no downstream record is fabricated. A completed terminal artifact replays locally rather than making a second provider call.
 
 `Mission029ArtifactLoader` is read-only. It validates the committed artifact bundle for schema, identity, safe HTTPS target, consistent row count, and sensitive keys; it raises an explicit load error on missing, malformed, inconsistent, or unsafe evidence. It must never contact a provider or invent candidate, verification, risk, or commit state.
+
+## Mission 031 — Judge Mode snapshot and demo-session contract
+
+`scripts/mission031_build_demo_snapshot.py` creates `experiments/mission_031/judge_mode_snapshot.json` only from committed Mission 029/030 artifacts, the frozen Mission 028 recovery run, and the deterministic `VerificationFixture.SILENT_CORRUPTION` test double. It performs zero provider, benchmark, NVIDIA, Gemini, approval, commit, or rollback operations. It validates input shape and redaction, records source SHA-256 values, preserves the terminal real-provider lane, and separates it from the `TEST_DOUBLE_CONTROLLED_REPLAY` lane.
+
+The real-provider lane may report `HEAL_FAILED_BEFORE_CANDIDATE` only when its terminal Mission 030 artifact supplies the status. The controlled replay must contain `mode=TEST_DOUBLE_CONTROLLED_REPLAY`, `candidate.provenance=TEST_DOUBLE`, a prominent non-provider disclaimer, and deterministic verification/risk/commit data derived through the existing modules. It cannot be represented as a candidate emitted by Bright Data.
+
+`scripts/run_demo.py` defaults to `REPLAY_READY`. It writes `demo_session.json` with zero external-operation counters and the Judge Mode launch instruction. Its `--live` branch returns `BLOCKED_PROVIDER_AUTHORIZATION_REQUIRED` and exits without calling a provider. A future live mode must implement and record the documented G1–G5 authorization gates before it can create, run, or heal a collector.

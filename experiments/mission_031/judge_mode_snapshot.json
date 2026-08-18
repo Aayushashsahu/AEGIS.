@@ -1,0 +1,325 @@
+{
+  "benchmark": {
+    "configuration_hash": "8f926adfe2f50a1b404e5f28a9e6b0bf5ad62edfba13f3e0bbf29c16cf204bd4",
+    "controlled_aegis_metrics": {
+      "caveat": "These AEGIS metrics measure the controlled TEST_DOUBLE harness only. They are not live Bright Data reliability metrics and Baseline A/B are not included in their denominator.",
+      "detection_rate": {
+        "denominator": 50,
+        "numerator": 50
+      },
+      "l5_bad_data_shipped": {
+        "denominator": 20,
+        "numerator": 0
+      },
+      "l5_detection_rate": {
+        "denominator": 20,
+        "numerator": 20
+      },
+      "metric_input_count": 60,
+      "provenance": "TEST_DOUBLE_CONTROLLED_HARNESS"
+    },
+    "execution": {
+      "completed_opportunities": 179,
+      "failed_opportunities": 1,
+      "healing_operations": 0,
+      "metric_results_generated": 38,
+      "planned_opportunities": 180,
+      "provider_operations": 60
+    },
+    "mode": "REPRODUCIBLE_BENCHMARK_EVIDENCE",
+    "protocol": {
+      "mutation_classes": [
+        "M001",
+        "M002",
+        "M003",
+        "M004",
+        "M005",
+        "M006"
+      ],
+      "nvidia_model": "openai/gpt-oss-20b",
+      "nvidia_provider_limit": "UNKNOWN",
+      "nvidia_throttle": "6 RPM benchmark-side; 10 second minimum interval; concurrency 1",
+      "participants": [
+        "BASELINE_A",
+        "BASELINE_B / NVIDIA NIM",
+        "AEGIS / TEST_DOUBLE"
+      ],
+      "seed": 12345,
+      "trials_per_mutation": 10
+    },
+    "run_id": "mission_028_recovery_floor_4812160675146552"
+  },
+  "controlled_replay": {
+    "ai_proposal": {
+      "overall": "PASS",
+      "rationale": "ignored auxiliary opinion"
+    },
+    "candidate": {
+      "id": "replay_candidate_mission031_silent_corruption",
+      "provenance": "TEST_DOUBLE",
+      "provider_status": "awaiting_approval",
+      "row": {
+        "price": 29.99,
+        "product_id": "gpu-1",
+        "title": "DGX Spark",
+        "url": "https://example.test/gpu-1"
+      },
+      "verification_status_before_review": "UNVERIFIED"
+    },
+    "commit": {
+      "data_shipped": false,
+      "eligibility": "BLOCKED",
+      "output_eligible": false,
+      "reason_code": "RISK_NOT_ACCEPT"
+    },
+    "disclaimer": "This is a deterministic TEST_DOUBLE verification fixture. It is not a Bright Data candidate and was not produced by a live provider heal.",
+    "expected_value": {
+      "field": "price",
+      "value": 599
+    },
+    "fixture": "SILENT_CORRUPTION",
+    "mode": "TEST_DOUBLE_CONTROLLED_REPLAY",
+    "observed_value": {
+      "field": "price",
+      "value": 29.99
+    },
+    "risk": {
+      "decision": "REJECT",
+      "provenance": "DETERMINISTIC_TEST_DOUBLE",
+      "reason_code": "CRITICAL_CONTRADICTION"
+    },
+    "verification": {
+      "checks": [
+        {
+          "affected_fields": [],
+          "category": "CONTRACT_COMPATIBILITY",
+          "channel": "CONTRACT",
+          "critical": false,
+          "evidence_refs": [
+            "contract://mission-005-price-v1",
+            "evidence://TEST_DOUBLE/mission-005/silent_corruption"
+          ],
+          "message": "required fields, types, nullability, schema, and configured unaffected fields pass",
+          "status": "PASS"
+        },
+        {
+          "affected_fields": [
+            "price"
+          ],
+          "category": "HISTORICAL_CONTINUITY",
+          "channel": "HISTORY",
+          "critical": false,
+          "evidence_refs": [
+            "evidence://TEST_DOUBLE/mission-005/silent_corruption",
+            "history://url:https://example.test/gpu-1.price"
+          ],
+          "message": "candidate conflicts with known-good observation history",
+          "status": "FAIL"
+        },
+        {
+          "affected_fields": [
+            "price"
+          ],
+          "category": "SEMANTIC_INVARIANTS",
+          "channel": "SEMANTIC_INVARIANT",
+          "critical": true,
+          "evidence_refs": [
+            "evidence://TEST_DOUBLE/mission-005/silent_corruption",
+            "semantic://deterministic-invariants"
+          ],
+          "message": "row 0 price does not match deterministic semantic expectation",
+          "status": "FAIL"
+        },
+        {
+          "affected_fields": [
+            "price"
+          ],
+          "category": "INDEPENDENT_MATCH",
+          "channel": "INDEPENDENT_EVIDENCE",
+          "critical": true,
+          "evidence_refs": [
+            "evidence://TEST_DOUBLE/mission-005/independent",
+            "evidence://TEST_DOUBLE/mission-005/silent_corruption"
+          ],
+          "message": "candidate conflicts with independent evidence",
+          "status": "FAIL"
+        }
+      ],
+      "eligible_for_future_commit": false,
+      "id": "verification_mission031_silent_corruption",
+      "overall_status": "FAIL"
+    }
+  },
+  "live_lane": {
+    "artifact_hashes": {
+      "mission_029/collection_summary_reconciled.json": "14904882605895f1f7dfc5170cc0180d4f0ea30203d2040e5b0c981fc7f7ff63",
+      "mission_029/demo_manifest.json": "6baf17f45a5dee21d5dfd65f6b43c021f1b52556a957883af9fbc8bd61a72bf9",
+      "mission_029/demo_mutation.json": "9cb370f6d6e92f1e4f31a3b67f9d539b2dc17dfa42d1159bb2e00a9e8a375c34",
+      "mission_029/detection_result.json": "02442cdd138adb04fafbab57d2007bfd4c27dd3d22935d1cd41eab6d529cec1c",
+      "mission_029/diagnosis.json": "d475b6187fbdbb5b4554088bdb5bb6d8ca1de7c81f1d060fc33a26fb7b046615",
+      "mission_029/healing_failure.json": "22a5d2236bcf32ba8af62da20010b385f1c4ec5da3ec968d68fc262737a5f6a7",
+      "mission_029/observation_original.json": "04128d346d2bbbf5daf000c5fb7f30ef4c678e16651fb7c59b66e30a31147f71",
+      "mission_029/pipeline_termination.json": "3671ba1dc2632775128a8248290cef76948afcb825331f0b7f50067e52b34407",
+      "mission_029/repair_request.json": "8f1e355fdb12f3c4e8a7e173ad149ce2a85d778ddb14cb76c9087ea9a162e58d",
+      "mission_030/live_heal_result.json": "b97d0fada4f6c272def4d16d2072c7d407804cd2ad18329b2c156e69307dffc9"
+    },
+    "collector": {
+      "collection_mode": "BATCH",
+      "id": "c_msyo46bp1slx64351",
+      "latency_ms": 108112,
+      "provider_operation_ids": {
+        "batch_job_id": "j_msyo82sl1yrlfgm5x9",
+        "response_id": "d2t1787058048204rt325p1dbgjg"
+      },
+      "row_count": 150,
+      "target_url": "https://news.ycombinator.com"
+    },
+    "corruption": {
+      "collector_modified": false,
+      "expected_value": 402,
+      "external_website_modified": false,
+      "field": "points",
+      "mutation_id": "DEMO_MUTATION",
+      "observed_value": -1,
+      "provenance": "DEMO_CONTROLLED",
+      "severity": "L3"
+    },
+    "mission": "029",
+    "mode": "LIVE_HISTORICAL_EVIDENCE",
+    "provider_heal": {
+      "candidate_created": false,
+      "data_shipped": false,
+      "error_code": "PROVIDER_COMMAND_FAILED",
+      "heal_id": "heal_1df2f17572334e228be9302f83f09ac7",
+      "latency_ms": 407029,
+      "production_commit_performed": false,
+      "provenance": "REAL_PROVIDER_EVIDENCE",
+      "provider_status": "FAILED",
+      "repair_request_id": "repair_request_b969f3026be8453eb3944e5af8e06923",
+      "risk_governor_invoked": false,
+      "status": "FAILED",
+      "transport_prompt": {
+        "hash": "d766547e1991faa67fccfdc58ed2ffe09a2b7cfc8e4a03418243db2cc407d9b5",
+        "length": 676,
+        "limit": 1000,
+        "policy_version": "mission-030-compact-heal-prompt-v1",
+        "within_limit": true
+      },
+      "verification_invoked": false
+    },
+    "stages": [
+      {
+        "artifact": "collection_summary_reconciled.json",
+        "detail": "Committed Bright Data collector/run evidence.",
+        "id": "collector",
+        "label": "Collector",
+        "provenance": "REAL_PROVIDER_EVIDENCE",
+        "record_id": "c_msyo46bp1slx64351",
+        "status": "SUCCESS"
+      },
+      {
+        "artifact": "observation_original.json",
+        "detail": "Untrusted AEGIS observation recorded from live output.",
+        "id": "observation",
+        "label": "Observation",
+        "provenance": "REAL_PROVIDER_EVIDENCE",
+        "record_id": "observation_b36bac143cc24947a12573587d80626c",
+        "status": "RECORDED"
+      },
+      {
+        "artifact": "demo_mutation.json",
+        "detail": "Controlled reversible AEGIS-only evidence mutation.",
+        "id": "mutation",
+        "label": "Mutation",
+        "provenance": "DEMO_CONTROLLED",
+        "record_id": "DEMO_MUTATION",
+        "status": "DEMO_MUTATION / L3"
+      },
+      {
+        "artifact": "detection_result.json",
+        "detail": "Deterministic detection result from the controlled observation.",
+        "id": "detection",
+        "label": "Detection",
+        "provenance": "DEMO_CONTROLLED",
+        "record_id": "detection_observation_558e5ee217634aaf9cbd4e044ae55ef3",
+        "status": "DETECTED"
+      },
+      {
+        "artifact": "diagnosis.json",
+        "detail": "Existing deterministic diagnosis; ambiguity is retained.",
+        "id": "diagnosis",
+        "label": "Diagnosis",
+        "provenance": "DEMO_CONTROLLED",
+        "record_id": "diagnosis_0cfcfa38187a499e8985c696f691b8b6",
+        "status": "AMBIGUOUS"
+      },
+      {
+        "artifact": "repair_request.json",
+        "detail": "Canonical provider-neutral repair intent exists.",
+        "id": "repair_request",
+        "label": "Repair request",
+        "provenance": "DEMO_CONTROLLED",
+        "record_id": "repair_request_b969f3026be8453eb3944e5af8e06923",
+        "status": "CREATED"
+      },
+      {
+        "artifact": "healing_failure.json",
+        "detail": "The historical provider request failed before a candidate was created.",
+        "id": "bright_data_heal",
+        "label": "Bright Data heal",
+        "provenance": "REAL_PROVIDER_EVIDENCE",
+        "record_id": "heal_04bd6ae514d044d2ac7f6808c96a374b",
+        "status": "FAILED / PROMPT_LIMIT"
+      },
+      {
+        "artifact": "pipeline_termination.json",
+        "detail": "No candidate record is synthesized when the provider did not create one.",
+        "id": "candidate",
+        "label": "Candidate",
+        "provenance": "NOT_CREATED",
+        "record_id": null,
+        "status": "NOT_CREATED"
+      },
+      {
+        "artifact": "pipeline_termination.json",
+        "detail": "No candidate exists, so verification was not invoked.",
+        "id": "verification",
+        "label": "Verification",
+        "provenance": "NOT_RUN",
+        "record_id": null,
+        "status": "NOT_RUN"
+      },
+      {
+        "artifact": "pipeline_termination.json",
+        "detail": "No candidate exists, so RiskGovernor was not invoked.",
+        "id": "risk",
+        "label": "Risk",
+        "provenance": "NOT_RUN",
+        "record_id": null,
+        "status": "NOT_RUN"
+      },
+      {
+        "artifact": "pipeline_termination.json",
+        "detail": "No candidate, approval, or production commit occurred.",
+        "id": "commit",
+        "label": "Commit",
+        "provenance": "NOT_RUN",
+        "record_id": null,
+        "status": "NOT_PERFORMED"
+      }
+    ],
+    "terminal_status": "HEAL_FAILED_BEFORE_CANDIDATE"
+  },
+  "provider_operations_executed_by_builder": 0,
+  "read_only": true,
+  "safety": {
+    "approval_operations": 0,
+    "benchmark_runs_executed_by_builder": 0,
+    "claim": "AI proposes. Evidence decides.",
+    "gemini_invocations": 0,
+    "nvidia_invocations": 0,
+    "production_commits": 0,
+    "rollbacks": 0
+  },
+  "schema_version": "mission-031-judge-mode-snapshot-v1"
+}

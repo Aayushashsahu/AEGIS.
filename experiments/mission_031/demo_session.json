@@ -1,0 +1,21 @@
+{
+  "approval_operations": 0,
+  "benchmark_runs_executed": 0,
+  "bright_data_create_operations": 0,
+  "bright_data_heal_operations": 0,
+  "bright_data_run_operations": 0,
+  "claim": "AI proposes. Evidence decides.",
+  "controlled_replay_mode": "TEST_DOUBLE_CONTROLLED_REPLAY",
+  "controlled_replay_output_eligible": false,
+  "created_at": "2026-08-18T15:15:48.638349+00:00",
+  "gemini_invocations": 0,
+  "judge_mode_launch": "cd /home/ubuntu/aegis-mission029-demo && pnpm run dev",
+  "live_lane_status": "HEAL_FAILED_BEFORE_CANDIDATE",
+  "live_provider_invoked": false,
+  "nvidia_invocations": 0,
+  "production_commits": 0,
+  "schema_version": "mission-031-demo-session-v1",
+  "session_type": "JUDGE_MODE_REPLAY",
+  "snapshot_schema_version": "mission-031-judge-mode-snapshot-v1",
+  "status": "REPLAY_READY"
+}

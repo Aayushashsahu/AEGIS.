@@ -557,3 +557,13 @@ Status: OPEN | RESOLVED | DEFERRED
 **Observed evidence:** The one Bright Data heal was submitted with the compact prompt and returned terminal provider status `FAILED` / error code `PROVIDER_COMMAND_FAILED` after `407029` ms. The provider reported 500 failures before candidate creation. No candidate, verification, RiskGovernor result, CommitGate result, approval, production commit, activation, shipment, Gemini call, NVIDIA benchmark, or metric result exists.
 
 **Final safety state:** The former prompt-length boundary is resolved, but no recovery claim is permitted because the provider failed before candidate creation. The terminal Mission 030 artifact replays locally and suppresses a second external heal submission. The Evidence Ledger displays the committed Mission 029 record only; it does not present Mission 030 as a successful repair.
+
+## Mission 031 — Judge Mode, evidence snapshot, and no-second-provider-call decision
+
+**Decision:** Build the judge-facing product around a provenance-separated snapshot, not an invented end-to-end provider success. Use the committed Mission 029/030 artifacts for the live lane, use the preserved Mission 028 recovery run only for its controlled-harness benchmark scope, and use the existing deterministic silent-corruption fixture only as a visibly labeled `TEST_DOUBLE` replay.
+
+**Observed evidence:** The Mission 030 compact transport prompt remains 676/1000 characters but the one authorized heal remains a terminal provider HTTP 500 before candidate creation. Official Bright Data documentation confirms the documented CLI shape and prompt ceiling but does not establish a root cause for the recorded 500. The current resolved CLI version was recorded as `0.3.5` without a collector operation.
+
+**Consequence:** Mission 031 made zero Bright Data, NVIDIA, Gemini, approval, production-commit, rollback, or benchmark operations. It introduced a snapshot builder, a replay-only DemoSession runner, an artifact-backed Judge Mode, a deterministic architecture diagram, and a 2:30 judge script. The runner's live flag is fail-closed until a separately reviewed authorization gate exists.
+
+**Final safety state:** A genuine candidate remains the strongest missing evidence. Judge Mode may demonstrate the deterministic downstream trust boundary only with an explicit `TEST_DOUBLE` label; it must never call that replay a Bright Data repair or claim recovery. No retry was issued for the Mission 030 failure.

@@ -168,3 +168,14 @@ Mission 021 adds no metric formula or calculator. The explicit executor persists
 The current Mission 010 `calculate_metrics()` API consumes `MutationRun` records plus `MutationGroundTruth`, while the Mission 021 common participant boundary produces normalized `ParticipantRunEvidence` for all three participants. The executor therefore fails closed after raw execution with `FAILED_METRIC_BOUNDARY` when it cannot construct a complete, all-participant compatible input. It does not calculate partial metrics, coerce participant evidence into a second formula, or present test-double output as benchmark measurement.
 
 Mission 021’s real execution counters remain zero. The focused test executor deliberately uses an injected model caller and temporary artifacts to prove 180 terminal raw records, but those are test-double opportunities, not benchmark results. No DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, LLM-call, or L5 benchmark result is claimed.
+
+
+## Mission 022 — deterministic compatibility boundary
+
+Mission 022 keeps Mission 010 as the sole metric authority. The adapter does not alter `mission-010-metrics-v1`, recalculate formulas, or convert unavailable concepts into zero. It reports an immutable metric-by-metric compatibility matrix with numerator source, denominator source, required evidence, zero-denominator behavior, and missing-data behavior.
+
+DetectionRate, AlarmPrecision, UnsafeRefusalRate, L5DetectionRate, L5QuarantineRate, and L5BadDataShippedRate can consume honest AEGIS evidence after evaluator-owned truth is joined. VerifiedRecovery, VerificationMissRate, FalseRepairRate, BlindCommitRate, MTTR, CostPerRepair, and LLMCallsPerRepair remain Mission 010 `NOT_APPLICABLE` because the current formula boundary has no repair, verified-commit, cost-ledger, or repair-episode denominator. L5VerifiedReExtraction is not exposed by Mission 010 v1 and therefore remains unavailable rather than being synthesized.
+
+Baseline A and Baseline B common fields that are not defined for their strategies remain `NOT_APPLICABLE`. The compatibility report preserves their full evidence and does not reinterpret Baseline B’s first-candidate `output_eligible` policy as AEGIS shipment or correctness. Missing evidence, missing truth, duplicate identities, and mismatched manifest/evidence identity return `FAILED_METRIC_BOUNDARY`.
+
+The synthetic 180-opportunity test-double compatibility path adapted 180 records and invoked `calculate_metrics()` once over the honest 60-record AEGIS metric scope. The resulting JSON is a test artifact only. Mission 022 generated zero real-run metric results and claims no benchmark measurement.

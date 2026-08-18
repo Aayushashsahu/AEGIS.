@@ -217,3 +217,16 @@ Each opportunity validates clean fixture state, obtains evaluator-owned `Mutatio
 The executor uses the existing Baseline A, Baseline B, and AEGIS adapters. Baseline B’s model caller is injected in tests and is constructed from the frozen Gemini Developer API boundary only when the real CLI is explicitly invoked with `--run`. The existing AEGIS TEST_DOUBLE lifecycle remains responsible for detection, verification, RiskGovernor, CommitGate, quarantine, watch, and rollback semantics.
 
 Mission 010 remains the sole metric authority. Its current calculator consumes `MutationRun` records, whereas the common execution output is `ParticipantRunEvidence`. If an all-participant compatible adaptation is unavailable after raw execution, the executor records `FAILED_METRIC_BOUNDARY` and does not calculate partial metrics or create a second calculator. This incompatibility is an implementation finding, not a benchmark result.
+
+
+## Mission 022 — bridge ParticipantRunEvidence into Mission 010 metric authority
+
+Mission 022 resolves the Mission 021 compatibility boundary without modifying Mission 010 formulas or adding a second calculator. The new provider-neutral adapter consumes completed `ParticipantRunEvidence`, joins evaluator-owned `MutationGroundTruth` by immutable reference after participant execution, and creates an immutable metric-input projection accepted by the existing Mission 010 calculator.
+
+The adapter preserves the original evidence object, manifest context, participant configuration hash, participant revision, benchmark/configuration identity, mutation/severity/trial/seed/fixture identity, ground-truth reference, run state, detection, candidate, verification, risk, output eligibility, quarantine, timing, cost, LLM calls, evidence references, artifact references, and provenance. Mission 021 fields that are not in the common evidence record, such as participant configuration hash and explicit trial ordinal, are joined from the immutable manifest by exact run ID. A missing or mismatched manifest context fails closed.
+
+The compatibility report covers all 180 completed synthetic records. Baseline A and Baseline B records remain explicit in the report with `NOT_APPLICABLE` metric fields where the common contract does not define AEGIS detection, verification, risk, commit, or shipment concepts. Only the 60 AEGIS records have the boolean detection/risk/output fields required by the current Mission 010 formulas; this is an honest metric scope, not a comparative benchmark result or a fabricated baseline zero.
+
+Ground truth is never passed into participant runtime. The executor records evaluator-owned truth after each mutation application, and the adapter verifies mutation ID, seed, and severity identity before joining it. Missing truth, missing evidence references, duplicate run IDs, non-terminal evidence, or identity mismatches return `FAILED_METRIC_BOUNDARY`.
+
+The synthetic acceptance path calls only `aegis.mutation_metrics.calculate_metrics()` once after adaptation. It produces no second formula, no partial comparative report, and no real-run metric. Mission 022 does not invoke the real `--run` CLI, Gemini, Bright Data, healing, approval, commit, or rollback.

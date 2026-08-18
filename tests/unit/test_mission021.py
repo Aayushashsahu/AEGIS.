@@ -185,7 +185,7 @@ def test_trial_ids_are_deterministic_and_unique_across_trials() -> None:
 def test_exact_180_execution_opportunities_and_raw_terminal_evidence(tmp_path: Path) -> None:
     executor = make_executor(tmp_path)
     summary = executor.execute()
-    assert summary.status == "FAILED_METRIC_BOUNDARY"
+    assert summary.status == "COMPLETED"
     assert summary.execution_authorized is True
     assert summary.planned_runs == 180
     assert summary.completed_runs == 180
@@ -203,9 +203,9 @@ def test_exact_180_execution_opportunities_and_raw_terminal_evidence(tmp_path: P
     log = json.loads((tmp_path / "benchmarks/runs" / EXPECTED_BENCHMARK_RUN_ID / "execution_log.json").read_text(encoding="utf-8"))
     assert log["planned_runs"] == 180
     assert log["completed_runs"] == 180
-    assert log["metric_results_generated"] == 0
-    assert "Mission 010 metric boundary incompatibility" in summary.errors[0]
-    assert not (tmp_path / "benchmarks/runs" / EXPECTED_BENCHMARK_RUN_ID / "metrics/mission-010-metrics.json").exists()
+    assert log["metric_results_generated"] > 0
+    assert (tmp_path / "benchmarks/runs" / EXPECTED_BENCHMARK_RUN_ID / "metrics/mission-010-metrics.json").is_file()
+    assert (tmp_path / "benchmarks/runs" / EXPECTED_BENCHMARK_RUN_ID / "reports/mission-022-metric-boundary-compatibility.json").is_file()
 
 
 def test_reset_is_called_between_trials(tmp_path: Path) -> None:
@@ -221,7 +221,7 @@ def test_reset_is_called_between_trials(tmp_path: Path) -> None:
     controller = CountingFixtureController(make_executor(tmp_path).lab)
     executor = make_executor(tmp_path, fixture_controller=controller)
     summary = executor.execute()
-    assert summary.status == "FAILED_METRIC_BOUNDARY"
+    assert summary.status == "COMPLETED"
     assert controller.reset_calls == 180
 
 
@@ -256,6 +256,6 @@ def test_mission019_smoke_root_is_not_touched_by_test_execution(tmp_path: Path) 
     marker.write_text("immutable", encoding="utf-8")
     executor = make_executor(tmp_path)
     summary = executor.execute()
-    assert summary.status == "FAILED_METRIC_BOUNDARY"
+    assert summary.status == "COMPLETED"
     assert marker.read_text(encoding="utf-8") == "immutable"
     assert not (smoke_root / "raw").exists()

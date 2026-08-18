@@ -235,3 +235,19 @@ PYTHONPATH=src pytest -q tests/unit tests/integration
 CLI help passed and exposed `--config`, `--dry-run`, `--run`, and `--output`. The frozen-config dry-run passed with the canonical hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b`, historical 18-step validation plan, zero benchmark/provider/healing/metric counters, `execution_authorized=false`, and no future root creation.
 
 The 180-opportunity tests use an injected fake model caller and temporary output roots only. They do not call the real CLI `--run`, Gemini, Bright Data, healing, provider approval, commit, rollback, or production systems. The executor’s current metric incompatibility is asserted as `FAILED_METRIC_BOUNDARY` with raw terminal evidence preserved and zero metric results, not converted into a benchmark success.
+
+
+## Mission 022 evidence — deterministic metric-boundary compatibility
+
+Mission 022 adds focused tests for complete evidence adaptation, missing evidence failure, evaluator-only truth joining, deterministic output, evidence/artifact reference preservation, L1–L5 severity preservation, Baseline A/B `NOT_APPLICABLE` honesty, AEGIS verification/risk/output preservation, zero-denominator `NOT_APPLICABLE` behavior, complete metric-matrix coverage, exactly one call to the existing Mission 010 calculator, and zero real provider execution.
+
+The focused Mission 022 suite passed with `9 passed`. The complete repository suite passed with `255 passed`:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit/test_mission022.py
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```
+
+The synthetic acceptance test completes 180 injected TEST_DOUBLE opportunities, adapts 180 raw evidence records, joins 180 evaluator-owned truth records, and invokes only `aegis.mutation_metrics.calculate_metrics()` once with 60 honest AEGIS metric inputs. The compatibility report preserves all 180 records and retains Baseline A/B unavailable concepts as `NOT_APPLICABLE`. No second calculator, formula change, partial comparative report, real Gemini call, Bright Data call, healing, approval, commit, rollback, or real benchmark execution occurs.
+
+Mission 022 real counters remain `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated_from_real_runs=0`, and `execution_authorized=false`. Synthetic compatibility JSON is test evidence only and is not a benchmark result.

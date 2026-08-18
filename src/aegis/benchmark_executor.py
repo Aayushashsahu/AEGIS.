@@ -34,6 +34,12 @@ from .benchmark_runner import (
     RunnerState,
     validate_freeze,
 )
+from .metric_boundary import (
+    MetricBoundaryError,
+    ParticipantEvidenceContext,
+    adapt_completed_evidence,
+    calculate_compatibility_metrics,
+)
 from .mutation_lab import MutationCase, MutationLab, MutationRun, baseline_fixture
 
 
@@ -558,8 +564,9 @@ class BenchmarkExecutor:
 
         completed = failed = timed_out = invalidated = attempted = provider_operations = 0
         run_records: list[Mapping[str, Any]] = []
-        metric_runs: list[MutationRun] = []
-        ground_truths: dict[str, Any] = {}
+        evidence_records: list[ParticipantRunEvidence] = []
+        ground_truths_by_reference: dict[str, Any] = {}
+        contexts_by_run_id: dict[str, ParticipantEvidenceContext] = {}
         errors: list[str] = []
         stopped_reason: str | None = None
 
@@ -579,6 +586,22 @@ class BenchmarkExecutor:
             case = self.fixture_controller.apply(manifest.mutation_id, manifest.seed)
             adapter = self.registry.get(manifest.participant_id)
             execution_input = self._trial_input(manifest.participant_id, manifest.mutation_id, trial_number, manifest.seed)
+            ground_truths_by_reference[execution_input.ground_truth_reference] = case.ground_truth
+            contexts_by_run_id[manifest.run_id] = ParticipantEvidenceContext(
+                run_id=manifest.run_id,
+                benchmark_id=manifest.benchmark_id,
+                configuration_hash=manifest.configuration_hash,
+                participant_configuration_hash=manifest.participant_configuration_hash,
+                participant_revision=manifest.participant_revision,
+                mutation_id=manifest.mutation_id,
+                severity=manifest.severity,
+                seed=manifest.seed,
+                fixture_version=manifest.fixture_version,
+                ground_truth_reference=manifest.ground_truth_reference,
+                trial_number=trial_number,
+                artifact_root=manifest.artifact_root,
+                artifact_name=manifest.artifact_name,
+            )
             evidence: ParticipantRunEvidence | None = None
             state = RunnerState.COMPLETED
             trial_errors: tuple[str, ...] = ()
@@ -616,10 +639,7 @@ class BenchmarkExecutor:
                 invalidated += 1
 
             if state is RunnerState.COMPLETED and evidence is not None:
-                metric = self._metric_run(manifest, trial_number, manifest.seed)
-                if metric is not None:
-                    metric_runs.append(metric[0])
-                    ground_truths.update(metric[1])
+                evidence_records.append(evidence)
             self._persist_raw(manifest, state, evidence, trial_errors)
             run_records.append({"run_id": manifest.run_id, "state": state.value, "errors": trial_errors, "evidence_present": evidence is not None})
             if state is RunnerState.INVALIDATED:
@@ -629,25 +649,36 @@ class BenchmarkExecutor:
         metric_results_generated = 0
         status = "COMPLETED" if completed == self.expected_run_count else "FAILED"
         if status == "COMPLETED":
-            if len(metric_runs) != self.expected_run_count:
+            if len(evidence_records) != self.expected_run_count:
                 status = "FAILED_METRIC_BOUNDARY"
                 errors.append(
-                    "Mission 010 metric boundary incompatibility: calculate_metrics accepts MutationRun records, "
-                    f"but the executor produced {self.expected_run_count} ParticipantRunEvidence records and only "
-                    f"{len(metric_runs)} evaluator MutationRun records; no compatible all-participant adaptation exists."
+                    "FAILED_METRIC_BOUNDARY: completed run count does not equal completed ParticipantRunEvidence count: "
+                    f"{completed} vs {len(evidence_records)}"
                 )
                 stopped_reason = "metric_boundary_incompatible"
             else:
-                try:
-                    from .mutation_metrics import calculate_metrics
-
-                    report = calculate_metrics(metric_runs, ground_truths, generated_at=None)
-                    self._write_exclusive(self.layout.root / "metrics" / "mission-010-metrics.json", json.loads(report.to_json()))
-                    metric_results_generated = len(report.results)
-                except Exception as exc:
+                compatibility = adapt_completed_evidence(
+                    evidence_records,
+                    ground_truths_by_reference,
+                    contexts_by_run_id,
+                )
+                self._write_exclusive(
+                    self.layout.root / "reports" / "mission-022-metric-boundary-compatibility.json",
+                    compatibility.to_dict(),
+                )
+                if not compatibility.passed:
                     status = "FAILED_METRIC_BOUNDARY"
-                    errors.append(f"Mission 010 metric boundary incompatibility: {exc}")
+                    errors.extend(compatibility.fatal_errors or ("FAILED_METRIC_BOUNDARY: no eligible metric inputs",))
                     stopped_reason = "metric_boundary_incompatible"
+                else:
+                    try:
+                        report = calculate_compatibility_metrics(compatibility)
+                        self._write_exclusive(self.layout.root / "metrics" / "mission-010-metrics.json", json.loads(report.to_json()))
+                        metric_results_generated = len(report.results)
+                    except MetricBoundaryError as exc:
+                        status = "FAILED_METRIC_BOUNDARY"
+                        errors.append(str(exc))
+                        stopped_reason = "metric_boundary_incompatible"
         final_log = {
             "status": status,
             "benchmark_run_id": self.benchmark_run_id,

@@ -429,3 +429,20 @@ Status: OPEN | RESOLVED | DEFERRED
 **Metric boundary:** Do not add a second calculator. The current Mission 010 calculator consumes `MutationRun` records, while the executor’s common raw boundary emits `ParticipantRunEvidence` for all participants. If a complete all-participant adaptation is unavailable, persist raw terminal evidence and stop with `FAILED_METRIC_BOUNDARY`; do not calculate partial or invented results.
 
 **Validation:** Mission 021 focused tests use only injected fake model calls and temporary roots. The real `--run` command, Gemini, Bright Data, healing, approval, commit, rollback, and metrics remain deferred. This decision is **RESOLVED for the explicit CLI and executor boundary; actual benchmark execution remains separately authorized future work**.
+
+
+## Mission 022 — bridge benchmark evidence into Mission 010 metric authority
+
+**Decision:** Add a deterministic provider-neutral adapter from completed `ParticipantRunEvidence` into an immutable Mission 010-compatible metric-input projection. Do not create a second calculator, modify Mission 010 formulas, modify the frozen configuration, or weaken Mission 009 `MutationRun` safety invariants.
+
+**Root cause resolved:** Mission 021 had only 60 AEGIS `MutationRun` inputs for 180 participant evidence records and correctly returned `FAILED_METRIC_BOUNDARY` rather than calculating a partial comparative report. Mission 022 preserves all 180 evidence records, retains Baseline A/B `NOT_APPLICABLE` concepts, and calculates only the honest AEGIS scope supported by Mission 010 v1.
+
+**Ground truth:** Join evaluator-owned `MutationGroundTruth` only after participant execution by exact immutable reference. Verify mutation ID, seed, and severity. Do not pass truth content to participant runtime and do not serialize truth content into metric inputs. Missing or mismatched truth fails closed.
+
+**Evidence preservation:** Retain source evidence, manifest context, participant configuration hash, participant revision, benchmark/configuration identity, mutation/severity/trial/seed/fixture identity, detection, candidate, verification, risk, output eligibility, quarantine, timing, cost, LLM calls, evidence references, artifact references, and provenance. Missing context, duplicate IDs, non-terminal state, or empty references fail closed.
+
+**Metric integrity:** The existing `aegis.mutation_metrics.calculate_metrics()` function is invoked exactly once in the synthetic acceptance test. Unavailable repair, commit, cost, LLM-repair, and verified-reextraction metrics remain `NOT_APPLICABLE` or unavailable under the existing Mission 010 semantics. No zero is manufactured from missing evidence.
+
+**Validation:** The synthetic 180-opportunity TEST_DOUBLE path adapted 180 records and joined 180 evaluator truth records; 60 honest AEGIS inputs reached Mission 010. Focused tests passed `9`; the complete suite passed `255`. No real benchmark, provider, healing, approval, commit, rollback, or real-run metric operation occurred.
+
+**Status:** RESOLVED for the provider-neutral compatibility boundary; real benchmark execution remains separately authorized future work.

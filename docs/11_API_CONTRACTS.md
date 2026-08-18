@@ -393,3 +393,23 @@ Mission 021 retains the frozen configuration and seed `12345`. Its executor-leve
 Each raw record includes a participant-run evidence envelope, deterministic run identity, benchmark/configuration/run references, participant identity/revision/configuration hash, mutation/severity/trial/seed/fixture identity, ground-truth reference, code/environment revision, timeout/retry policies, provenance, timing, failure state, detection/diagnosis/repair/candidate/verification/risk fields where applicable, output eligibility, cost, LLM calls, evidence references, and artifact references. Terminal states are `COMPLETED`, `FAILED`, `TIMED_OUT`, and `INVALIDATED`; failures are never converted into success.
 
 The CLI constructs the real Gemini caller only after explicit `--run`; tests inject a fake caller. No arbitrary generated code is executed, no ground-truth payload is supplied to participants, and no AEGIS verification is bypassed. Mission 010 remains the sole metric authority; an incompatible all-participant metric input fails closed with `FAILED_METRIC_BOUNDARY` rather than invoking a second calculator.
+
+
+## Mission 022 — ParticipantRunEvidence to Mission 010 compatibility contract
+
+Mission 022 adds a provider-neutral compatibility module without changing the Mission 010 calculator:
+
+| Operation/model | Purpose | Side effect |
+| --- | --- | --- |
+| `ParticipantEvidenceContext` | Immutable RunManifest fields joined by exact run ID | None |
+| `MetricMutationInput` | Immutable duck-typed `MutationRun` projection plus traceability fields | None |
+| `EvidenceCompatibilityRecord` | Preserve original evidence, context, bridge result, truth join, and missing fields | None |
+| `MetricCompatibilityReport` | Deterministic matrix, all source records, metric-ready scope, and fatal errors | None |
+| `adapt_completed_evidence()` | Validate identity, join evaluator-owned truth, preserve evidence, and build metric inputs | None; fail-closed |
+| `calculate_compatibility_metrics()` | Invoke only `aegis.mutation_metrics.calculate_metrics()` after bridge validation | Existing Mission 010 calculator only |
+
+`MetricCompatibilityReport.passed` means that all supplied evidence records adapted without integrity failure. `metric_calculation_ready` is separate and requires at least one honest metric-input scope. This distinction allows complete Baseline A/B evidence to remain in the report with explicit `NOT_APPLICABLE` fields without converting unavailable concepts into false values.
+
+The adapter requires completed state, non-empty evidence references, non-empty artifact references, exact manifest/evidence run identity, matching mutation/seed/severity truth identity, and evaluator-owned ground truth. Duplicate run IDs, missing truth, missing context, mismatched context, non-terminal evidence, or missing references produce `FAILED_METRIC_BOUNDARY`. Truth is joined only after participant execution and is never included in participant runtime input.
+
+The adapter preserves the original source object and an explicit `preserved_fields` projection. It retains participant configuration hash and trial ordinal from immutable Mission 021 manifest context. It creates deterministic normalized truth references but does not copy truth content into the metric input. Mission 010’s `calculate_metrics()` remains the only calculator and receives only the honest AEGIS metric-input scope under the current v1 formula boundary.

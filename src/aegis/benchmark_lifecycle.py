@@ -23,6 +23,8 @@ def deterministic_benchmark_run_id(
     configuration_hash: str,
     attempt_id: str,
     participant_revisions: Mapping[str, str],
+    *,
+    run_id_prefix: str = "mission_020_floor",
 ) -> str:
     """Derive a stable benchmark-run identity from frozen execution inputs."""
 
@@ -34,7 +36,9 @@ def deterministic_benchmark_run_id(
         "participant_revisions": dict(sorted(participant_revisions.items())),
     }
     digest = hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()[:16]
-    return f"mission_020_floor_{digest}"
+    if not run_id_prefix or any(character.isspace() for character in run_id_prefix):
+        raise ValueError("run ID prefix must be non-empty and whitespace-free")
+    return f"{run_id_prefix}_{digest}"
 
 
 @dataclass(frozen=True)

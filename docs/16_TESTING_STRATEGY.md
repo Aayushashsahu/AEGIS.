@@ -205,3 +205,18 @@ PYTHONPATH=src pytest -q tests/unit tests/integration
 The corrected preflight was executed and passed. The authorized real Gemini readiness smoke returned `BASELINE_B_EXECUTION_READINESS_SMOKE` status `PASS` with `first_candidate_policy_executable=true`, explicit candidate received/selected/accepted fields, bounded safe application, exact approved model/prompts, disabled tools, no AEGIS controls, and runtime ground truth `NOT_PROVIDED`. One provider operation was used for this smoke only. The repaired entry point stops with `BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK` and does not activate the 180-run floor.
 
 Mission 019 generated no benchmark trial, healing operation, approval, production commit, rollback, or metric result. Counters remain `benchmark_runs_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`; the smoke-only provider count is recorded separately as `1`.
+
+
+## Mission 020 evidence — immutable smoke reuse and benchmark-root separation
+
+Mission 020 adds focused tests for: accepting existing Mission 019 smoke evidence; proving preflight does not recreate or overwrite it; proving valid evidence does not call Gemini; fail-closed handling of corrupt smoke evidence; deterministic benchmark run-ID derivation; distinct smoke and benchmark roots; explicit `PREFLIGHT`, `SMOKE`, and `BENCHMARK_EXECUTION` phases; benchmark-root rejection when it overlaps the smoke root; byte-identical historical artifacts; and zero benchmark/provider/healing/metric counters.
+
+The focused Mission 020 suite passed with `7 passed`. The Mission 018 compatibility tests passed with `7 passed` in the combined focused run, and the complete repository suite passed with `234 passed`:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```
+
+The repaired command was run in read-only mode and returned `PREFLIGHT_PASS`. It validated existing smoke evidence as `VALID`, reported benchmark run ID `mission_020_floor_2a80a8cf8d989326`, and did not rerun Gemini or write any artifact. Mission 020 did not execute `BenchmarkRunner.execute_one()`, create the future benchmark root, call Bright Data, execute healing, or generate metrics.
+
+Mission 020 counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. The historical Mission 019 smoke directory and Mission 016 STOPPED_PREFLIGHT directory remained byte-identical.

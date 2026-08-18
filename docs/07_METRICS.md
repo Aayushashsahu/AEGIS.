@@ -150,3 +150,12 @@ Mission 019 repaired Baseline B’s first-candidate execution representation and
 No MutationLab benchmark trial was executed, no metric calculator was invoked, and no Mission 010 formula was changed. The frozen configuration remains hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b`, with M001–M006, seed `12345`, `gpu-price-staging` v1, and `mission-010-metrics-v1` unchanged. Mission 019 therefore publishes no DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, or benchmark L5 result.
 
 Mission 019 counters are `benchmark_runs_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. The one authorized Gemini readiness provider operation is smoke evidence only and is not a benchmark metric denominator.
+
+
+## Mission 020 — artifact-separation metric boundary
+
+Mission 020 only validates committed preflight/smoke evidence and plans a distinct future benchmark artifact root. It does not execute a participant, invoke `execute_one()`, run MutationLab trials, calculate metrics, or alter `mission-010-metrics-v1`.
+
+The existing smoke `output_eligible=true` remains Baseline B policy evidence, not a correctness or benchmark metric. The future run ID `mission_020_floor_2a80a8cf8d989326` is an artifact identity only; no run directory or raw result exists for it after Mission 020.
+
+Mission 020 counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. No DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, latency, model-call benchmark result, or L5 result is claimed.

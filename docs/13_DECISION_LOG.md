@@ -397,3 +397,20 @@ Status: OPEN | RESOLVED | DEFERRED
 **Execution boundary:** The entry point records `BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK` and returns without activating the 180-run floor. Benchmark runs, healing, approval, production commit, rollback, and metrics remain zero/false.
 
 **Status:** RESOLVED for Baseline B readiness smoke; Mission 016 benchmark execution remains a separate future action and is not started by Mission 019.
+
+
+## Mission 020 — separate preflight/smoke evidence from benchmark artifacts
+
+**Decision:** Treat `benchmarks/runs/mission_016_floor_59a11e27a71f/` as immutable Mission 019 preflight/smoke evidence. Do not delete, overwrite, recreate, or reuse it as the actual 180-run benchmark output directory.
+
+**Root cause:** The Mission 019 entry point used `FLOOR_RUN_ROOT.mkdir(..., exist_ok=False)` and rewrote frozen configuration, preflight, smoke, and execution-log files into a directory that Mission 019 had intentionally committed. A valid historical evidence directory therefore caused `FileExistsError` rather than evidence validation.
+
+**Corrected lifecycle:** The preflight is read-only and validates the corrected Mission 017 configuration, hash, source revisions, fixture, mutation set, seed, fairness, participant readiness, dry-run status, and the existing smoke evidence. It never reruns Gemini because smoke files already exist. Missing, corrupt, or semantically invalid smoke evidence fails closed.
+
+**Future identity:** The provider-neutral future benchmark root is `mission_020_floor_2a80a8cf8d989326`, derived deterministically from the corrected configuration hash, attempt ID `mission-020-floor-v1`, and participant revisions. It is distinct from `mission_016_floor_59a11e27a71f` and is not created in Mission 020.
+
+**Isolation:** `BenchmarkLifecyclePhase` distinguishes `PREFLIGHT`, `SMOKE`, and `BENCHMARK_EXECUTION`. `BenchmarkArtifactLayout` and the runner artifact-root override reject any future benchmark root that overlaps the immutable smoke root. `execute_one()` remains uncalled.
+
+**Validation:** The repaired command returns `PREFLIGHT_PASS`, confirms existing smoke status `VALID`, reports the future benchmark ID, and records zero benchmark/provider/healing/metric counters with `execution_authorized=false`. Mission 020 does not run Gemini, Bright Data, healing, the benchmark, or metrics.
+
+**Status:** RESOLVED for artifact separation; the 180-run benchmark remains a separately authorized future operation.

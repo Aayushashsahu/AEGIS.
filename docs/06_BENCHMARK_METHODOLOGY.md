@@ -191,3 +191,14 @@ Mission 019 traced and repaired the Baseline B first-candidate contract. The pri
 The authorized corrected preflight passed, and the real `BASELINE_B_EXECUTION_READINESS_SMOKE` returned `PASS` with `first_candidate_policy_executable=true`. The smoke used the frozen `gemini-3.6-flash` model and exact prompts, disabled tools, no runtime ground-truth content, no AEGIS verification/risk/CommitGate controls, and one provider operation. The safe application boundary never executed generated code; it recorded candidate digest and fixture identity only.
 
 The entry point records `BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK`. No 180-run trial, additional benchmark trial, Bright Data call, healing, approval, production commit, rollback, or metric calculation occurred. The frozen Mission 017 configuration and historical Mission 015–018 artifacts remain unchanged. The smoke result is readiness evidence, not a benchmark result or correctness claim.
+
+
+## Mission 020 — separate immutable preflight/smoke evidence from benchmark artifacts
+
+Mission 020 resolves the artifact collision introduced when the successful Mission 019 preflight/smoke evidence was committed under `benchmarks/runs/mission_016_floor_59a11e27a71f/` and the future entry point still treated that directory as absent. The Mission 019 directory is now explicitly immutable validation evidence; it is not a benchmark output directory and is never recreated or overwritten.
+
+The read-only preflight loads `benchmarks/configs/mission_017_corrected_frozen_config.json`, validates the canonical hash and participant/fixture/mutation/seed/fairness contracts, validates the existing smoke evidence, and returns `PREFLIGHT_PASS` only when that evidence is valid. It does not rerun Gemini merely because the smoke files exist. Corrupt, missing, or incomplete smoke evidence fails closed.
+
+The future benchmark namespace is provider-neutral and separate. Mission 020 derives `mission_020_floor_2a80a8cf8d989326` from configuration hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b`, attempt identifier `mission-020-floor-v1`, and the frozen participant source revisions. The ID is deterministic, differs from `mission_016_floor_59a11e27a71f`, and is not created by Mission 020. Its planned layout is `frozen_config.json`, `participant_manifest.json`, `raw/`, `observations/`, `decisions/`, `metrics/`, `reports/`, and `execution_log.json`. The lifecycle contract rejects any benchmark artifact root that equals, contains, or is contained by the immutable smoke root.
+
+The runner distinguishes `PREFLIGHT`, `SMOKE`, and `BENCHMARK_EXECUTION` phases. `READY_TO_EXECUTE` remains planning-only, and Mission 020 does not activate `execute_one`, create benchmark output, call Bright Data, execute healing, or calculate metrics.

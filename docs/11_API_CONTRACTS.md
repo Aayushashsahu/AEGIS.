@@ -361,3 +361,12 @@ For an available model response, Baseline B now applies the frozen `FIRST_CANDID
 The application boundary is `SAFE_TEST_DOUBLE_BOUNDARY`. It records a candidate digest and controlled fixture identity, explicitly sets `generated_code_executed=false`, and records that AEGIS verification, RiskGovernor, CommitGate, quarantine, watch, and rollback were not invoked. It does not execute arbitrary generated code and does not receive `MutationGroundTruth` content. `output_eligible=true` means only that Baseline B accepted its first candidate under its naive policy; it is not a correctness or production-commit decision.
 
 Unavailable or malformed model results remain fail-closed as unavailable/failed evidence and never become output eligible. The authorized Mission 019 real smoke produced `BASELINE_B_EXECUTION_READINESS_SMOKE` status `PASS`; the benchmark and metric boundaries remained unused.
+
+
+## Mission 020 — lifecycle phase and artifact-root separation
+
+Mission 020 introduces the provider-neutral `BenchmarkLifecyclePhase` values `PREFLIGHT`, `SMOKE`, and `BENCHMARK_EXECUTION`. The preflight runner and smoke runner carry their respective phase explicitly; the existing `BenchmarkRunner.execute_one()` boundary remains a separate benchmark-execution operation and is not called by Mission 020.
+
+`deterministic_benchmark_run_id(configuration_hash, attempt_id, participant_revisions)` derives a stable `mission_020_floor_<digest>` identity from the corrected configuration hash, an explicit attempt/version identifier, and sorted participant source revisions. It is distinct from the Mission 019 preflight/smoke run ID and does not use wall-clock time as its identity.
+
+`BenchmarkArtifactLayout` describes the future benchmark output tree and rejects roots that overlap, contain, or are contained by the immutable Mission 019 smoke root. `BenchmarkRunner` accepts an optional artifact-root override and forbidden-root set for the future execution boundary; default frozen configuration metadata remains unchanged. Mission 020 uses these contracts only for validation and planning, not for run creation or output writing.

@@ -14,32 +14,41 @@ from urllib.request import Request, urlopen
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_PATH = ROOT / "benchmarks/configs/mission_017_corrected_frozen_config.json"
 EXPECTED_CONFIG_HASH = "59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b"
-FLOOR_RUN_ID = "mission_016_floor_59a11e27a71f"
-FLOOR_RUN_ROOT = ROOT / "benchmarks/runs" / FLOOR_RUN_ID
+PREFLIGHT_SMOKE_RUN_ID = "mission_016_floor_59a11e27a71f"
+PREFLIGHT_SMOKE_ROOT = ROOT / "benchmarks/runs" / PREFLIGHT_SMOKE_RUN_ID
 HISTORICAL_FLOOR_RUN_ID = "mission_016_floor_f48ec5c5792b"
 HISTORICAL_FLOOR_RUN_ROOT = ROOT / "benchmarks/runs" / HISTORICAL_FLOOR_RUN_ID
-SMOKE_ROOT = FLOOR_RUN_ROOT / "baseline_b_execution_readiness_smoke"
+SMOKE_ROOT = PREFLIGHT_SMOKE_ROOT / "baseline_b_execution_readiness_smoke"
+BENCHMARK_ATTEMPT_ID = "mission-020-floor-v1"
 EXPECTED_SEED = 12345
 EXPECTED_MUTATIONS = ("M001", "M002", "M003", "M004", "M005", "M006")
 EXPECTED_MODEL = "gemini-3.6-flash"
 EXPECTED_REVISIONS = {
     "BASELINE_A": "067c06d8d41b2c23a93aebdcc45ac46a2c71351e",
     "BASELINE_B": "067c06d8d41b2c23a93aebdcc45ac46a2c71351e",
-    "AEGIS": "067c06d8d41b2c23a93aebdcc45ac46a2c71351e",
+    "AEGIS": "b79050044be0a6d919eecd5633f72188469022df",
 }
 SOURCE_FILES = {
     "BASELINE_A": "src/aegis/baseline_participants.py",
     "BASELINE_B": "src/aegis/baseline_participants.py",
     "AEGIS": "src/aegis/benchmark_runner.py",
 }
+# Backward-compatible names now refer to the immutable preflight/smoke evidence.
+FLOOR_RUN_ID = PREFLIGHT_SMOKE_RUN_ID
+FLOOR_RUN_ROOT = PREFLIGHT_SMOKE_ROOT
 GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta"
 
 sys.path.insert(0, str(ROOT / "src"))
 
 from aegis.baseline_participants import BASELINE_B_MODEL_ID, BASELINE_B_REPAIR_PROMPT_TEMPLATE, BASELINE_B_SYSTEM_PROMPT
 from aegis.benchmark_config import load_benchmark_config, validate_config
+from aegis.benchmark_lifecycle import BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
 from aegis.benchmark_runner import BenchmarkRunner, ParticipantRunEvidence, RunnerDryRunStatus
 from aegis.mutation_lab import MutationLab, baseline_fixture
+
+BENCHMARK_RUN_ID = deterministic_benchmark_run_id(EXPECTED_CONFIG_HASH, BENCHMARK_ATTEMPT_ID, EXPECTED_REVISIONS)
+BENCHMARK_RUN_ROOT = ROOT / "benchmarks/runs" / BENCHMARK_RUN_ID
+BENCHMARK_ARTIFACT_LAYOUT = BenchmarkArtifactLayout(BENCHMARK_RUN_ID, ROOT / "benchmarks/runs", SMOKE_ROOT)
 
 
 class GeminiApiError(RuntimeError):
@@ -126,10 +135,77 @@ def _serialize(value: Any) -> Any:
     return value
 
 
+def _benchmark_layout_isolated() -> bool:
+    try:
+        BENCHMARK_ARTIFACT_LAYOUT.validate_isolation()
+        return True
+    except ValueError:
+        return False
+
+
+def _validate_existing_smoke_evidence() -> Mapping[str, Any]:
+    """Validate committed Mission 019 smoke evidence without invoking Gemini."""
+
+    required = {
+        "smoke": SMOKE_ROOT / "smoke.json",
+        "smoke_execution_log": SMOKE_ROOT / "execution_log.json",
+        "preflight": PREFLIGHT_SMOKE_ROOT / "preflight.json",
+        "root_execution_log": PREFLIGHT_SMOKE_ROOT / "execution_log.json",
+        "frozen_config": PREFLIGHT_SMOKE_ROOT / "frozen_config.json",
+    }
+    missing = [name for name, path in required.items() if not path.is_file()]
+    if missing:
+        return {"pass": False, "status": "MISSING", "missing": missing, "errors": [f"missing immutable evidence: {', '.join(missing)}"]}
+    try:
+        records = {name: json.loads(path.read_text(encoding="utf-8")) for name, path in required.items()}
+    except (OSError, json.JSONDecodeError) as exc:
+        return {"pass": False, "status": "CORRUPT", "errors": [f"cannot read immutable smoke evidence: {exc}"]}
+
+    if not all(isinstance(record, Mapping) for record in records.values()):
+        return {"pass": False, "status": "INVALID", "errors": ["immutable smoke evidence has an invalid JSON object shape"]}
+    smoke = records["smoke"]
+    smoke_checks = smoke.get("checks", {})
+    adapter_value = smoke.get("adapter_evidence", {})
+    adapter = adapter_value if isinstance(adapter_value, Mapping) else {}
+    application = adapter.get("candidate_application", {}) if isinstance(adapter, Mapping) else {}
+    configured_model = smoke_checks.get("configured_model", {}) if isinstance(smoke_checks, Mapping) else {}
+    smoke_checks_pass = isinstance(smoke_checks, Mapping) and all(value is True for value in smoke_checks.values() if isinstance(value, bool))
+    configured_model_pass = isinstance(configured_model, Mapping) and configured_model.get("pass") is True
+    smoke_pass = smoke.get("name") == "BASELINE_B_EXECUTION_READINESS_SMOKE" and smoke.get("status") == "PASS"
+    root_log = records["root_execution_log"]
+    smoke_log = records["smoke_execution_log"]
+    preflight = records["preflight"].get("result", {})
+    if not isinstance(preflight, Mapping):
+        return {"pass": False, "status": "INVALID", "errors": ["immutable preflight evidence has an invalid result shape"]}
+    frozen_config = records["frozen_config"]
+    checks = {
+        "smoke_status": smoke_pass,
+        "smoke_checks": smoke_checks_pass and configured_model_pass,
+        "candidate_accepted": adapter.get("candidate_accepted") is True,
+        "bounded_application": application.get("application_mode") == "SAFE_TEST_DOUBLE_BOUNDARY" and application.get("generated_code_executed") is False,
+        "runtime_ground_truth_not_provided": smoke.get("runtime_ground_truth_payload") == "NOT_PROVIDED",
+        "smoke_log_status": smoke_log.get("status") == "BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK",
+        "preflight_passed": preflight.get("passed") is True,
+        "frozen_config_hash": frozen_config.get("configuration_hash") == EXPECTED_CONFIG_HASH,
+        "benchmark_runs_zero": root_log.get("benchmark_runs_executed") == 0,
+        "provider_operations_zero": root_log.get("provider_operations_executed") == 0,
+        "healing_zero": root_log.get("healing_operations_executed") == 0,
+        "metrics_zero": root_log.get("metric_results_generated") == 0,
+        "execution_unauthorized": root_log.get("execution_authorized") is False,
+    }
+    return {
+        "pass": all(checks.values()),
+        "status": "VALID" if all(checks.values()) else "INVALID",
+        "checks": checks,
+        "provider_operation_count": smoke.get("provider_operation_count"),
+        "errors": [name for name, value in checks.items() if value is False],
+    }
+
+
 def run_preflight() -> tuple[PreflightResult, Any]:
     config = load_benchmark_config(CONFIG_PATH)
     validation = validate_config(config)
-    runner = BenchmarkRunner(config)
+    runner = BenchmarkRunner(config, lifecycle_phase=BenchmarkLifecyclePhase.PREFLIGHT)
     dry_run = runner.dry_run() if validation.valid else None
     lab = MutationLab()
     shared = [runner.build_input(participant, "M001", EXPECTED_SEED).shared_metadata() for participant in ("BASELINE_A", "BASELINE_B", "AEGIS")]
@@ -162,11 +238,15 @@ def run_preflight() -> tuple[PreflightResult, Any]:
         "artifact_paths": {
             "pass": all((ROOT / path).is_dir() for path in ("benchmarks/configs", "benchmarks/manifests", "benchmarks/runs", "benchmarks/results", "benchmarks/reports")),
             "paths": [str(ROOT / path) for path in ("benchmarks/configs", "benchmarks/manifests", "benchmarks/runs", "benchmarks/results", "benchmarks/reports")],
-            "floor_run_absent": not FLOOR_RUN_ROOT.exists(),
-            "corrected_floor_run_id": FLOOR_RUN_ID,
+            "preflight_smoke_run_id": PREFLIGHT_SMOKE_RUN_ID,
+            "preflight_smoke_root_present": PREFLIGHT_SMOKE_ROOT.is_dir(),
+            "benchmark_run_id": BENCHMARK_RUN_ID,
+            "benchmark_run_root_absent": not BENCHMARK_RUN_ROOT.exists(),
+            "benchmark_root_isolated": _benchmark_layout_isolated(),
             "historical_floor_run_id": HISTORICAL_FLOOR_RUN_ID,
             "historical_floor_run_preserved": HISTORICAL_FLOOR_RUN_ROOT.is_dir(),
         },
+        "smoke_evidence": _validate_existing_smoke_evidence(),
         "clean_fixture_state": {"pass": lab.fixture == baseline_fixture(), "provenance": "TEST_DOUBLE_IMMUTABLE_FIXTURE"},
         "dry_run": {"status": None if dry_run is None else dry_run.status.value, "pass": bool(dry_run) and dry_run.status is RunnerDryRunStatus.READY_TO_EXECUTE},
     }
@@ -182,8 +262,8 @@ def run_preflight() -> tuple[PreflightResult, Any]:
             if not check["pass"]:
                 errors.append("fairness validation failed")
         elif name == "artifact_paths":
-            if not check["pass"] or not check["floor_run_absent"]:
-                errors.append("artifact path validation failed or corrected floor run already exists")
+            if not check["pass"] or not check["benchmark_run_root_absent"] or not check["benchmark_root_isolated"]:
+                errors.append("artifact path validation failed or benchmark root is unavailable or overlaps smoke evidence")
             if not check["historical_floor_run_preserved"]:
                 errors.append("historical Mission 016 floor run is missing")
         elif not check.get("pass", False):
@@ -259,7 +339,7 @@ def run_baseline_b_smoke(config: Any) -> Mapping[str, Any]:
         spec = next(spec for spec in config.baselines if spec.baseline_id == "BASELINE_B")
         adapter = BaselineBAdapter(spec, MutationLab(), model_caller=injected_caller)
         adapter._benchmark_config = config
-        input_record = BenchmarkRunner(config).build_input("BASELINE_B", "M001", EXPECTED_SEED)
+        input_record = BenchmarkRunner(config, lifecycle_phase=BenchmarkLifecyclePhase.SMOKE).build_input("BASELINE_B", "M001", EXPECTED_SEED)
         prepared = adapter.prepare(input_record)
         evidence: ParticipantRunEvidence = adapter.return_run_evidence(adapter.collect_result(adapter.run_mutation(prepared)))
         checks["model_reachable"] = True
@@ -303,38 +383,29 @@ def run_baseline_b_smoke(config: Any) -> Mapping[str, Any]:
         return {"name": "BASELINE_B_EXECUTION_READINESS_SMOKE", "status": "FAIL", "checks": checks, "errors": [f"smoke adapter failure: {type(exc).__name__}: {exc}"], "provider_operation_count": 1}
 
 
-def write_json(path: Path, payload: Mapping[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(_serialize(payload), sort_keys=True, indent=2) + "\n", encoding="utf-8")
-
-
 def main() -> int:
+    """Validate immutable preflight/smoke evidence; never recreate or rerun it."""
+
     preflight, config = run_preflight()
-    FLOOR_RUN_ROOT.mkdir(parents=True, exist_ok=False)
-    write_json(FLOOR_RUN_ROOT / "frozen_config.json", config.to_dict())
-    write_json(FLOOR_RUN_ROOT / "preflight.json", {"mission": "016", "run_id": FLOOR_RUN_ID, "result": preflight.to_dict(), "current_commit": _git("rev-parse", "HEAD"), "repository_status": _git("status", "--short")})
-    if not preflight.passed:
-        write_json(FLOOR_RUN_ROOT / "execution_log.json", {"status": "STOPPED_PREFLIGHT", "benchmark_runs_executed": 0, "provider_operations_executed": 0, "healing_operations_executed": 0, "metric_results_generated": 0, "execution_authorized": False, "errors": preflight.errors})
-        print(json.dumps({"status": "STOPPED_PREFLIGHT", "errors": preflight.errors}, indent=2))
-        return 2
-    smoke = run_baseline_b_smoke(config)
-    write_json(SMOKE_ROOT / "smoke.json", smoke)
-    write_json(SMOKE_ROOT / "execution_log.json", {"status": smoke["status"], "provider_operation_count": smoke.get("provider_operation_count", 0), "benchmark_runs_executed": 0, "healing_operations_executed": 0, "metric_results_generated": 0, "execution_authorized": False})
-    if smoke["status"] != "PASS":
-        write_json(FLOOR_RUN_ROOT / "execution_log.json", {"status": "STOPPED_BASELINE_B_SMOKE", "benchmark_runs_executed": 0, "provider_operations_executed": 0, "smoke_provider_operation_count": smoke.get("provider_operation_count", 0), "healing_operations_executed": 0, "metric_results_generated": 0, "execution_authorized": False, "errors": smoke.get("errors", [])})
-        print(json.dumps({"status": "STOPPED_BASELINE_B_SMOKE", "errors": smoke.get("errors", []), "checks": smoke.get("checks", {})}, indent=2))
-        return 3
-    write_json(FLOOR_RUN_ROOT / "execution_log.json", {
-        "status": "BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK",
+    smoke_evidence = preflight.checks.get("smoke_evidence", {})
+    payload = {
+        "lifecycle_phase": BenchmarkLifecyclePhase.PREFLIGHT.value,
+        "status": "PREFLIGHT_PASS" if preflight.passed else "STOPPED_PREFLIGHT",
+        "preflight": preflight.to_dict(),
+        "smoke_evidence": smoke_evidence,
+        "preflight_smoke_run_id": PREFLIGHT_SMOKE_RUN_ID,
+        "benchmark_run_id": BENCHMARK_RUN_ID,
+        "benchmark_run_root": str(BENCHMARK_RUN_ROOT),
+        "benchmark_execution_available": False,
         "benchmark_runs_executed": 0,
         "provider_operations_executed": 0,
-        "smoke_provider_operation_count": smoke.get("provider_operation_count", 0),
         "healing_operations_executed": 0,
         "metric_results_generated": 0,
         "execution_authorized": False,
-    })
-    print(json.dumps({"status": "BASELINE_B_SMOKE_PASS_STOPPED_BEFORE_BENCHMARK", "smoke_status": smoke["status"], "benchmark_runs_executed": 0}, indent=2))
-    return 0
+        "configuration_hash": config.configuration_hash,
+    }
+    print(json.dumps(_serialize(payload), sort_keys=True, indent=2))
+    return 0 if preflight.passed else 2
 
 
 if __name__ == "__main__":

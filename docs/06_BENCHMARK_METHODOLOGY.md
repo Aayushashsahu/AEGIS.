@@ -202,3 +202,18 @@ The read-only preflight loads `benchmarks/configs/mission_017_corrected_frozen_c
 The future benchmark namespace is provider-neutral and separate. Mission 020 derives `mission_020_floor_2a80a8cf8d989326` from configuration hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b`, attempt identifier `mission-020-floor-v1`, and the frozen participant source revisions. The ID is deterministic, differs from `mission_016_floor_59a11e27a71f`, and is not created by Mission 020. Its planned layout is `frozen_config.json`, `participant_manifest.json`, `raw/`, `observations/`, `decisions/`, `metrics/`, `reports/`, and `execution_log.json`. The lifecycle contract rejects any benchmark artifact root that equals, contains, or is contained by the immutable smoke root.
 
 The runner distinguishes `PREFLIGHT`, `SMOKE`, and `BENCHMARK_EXECUTION` phases. `READY_TO_EXECUTE` remains planning-only, and Mission 020 does not activate `execute_one`, create benchmark output, call Bright Data, execute healing, or calculate metrics.
+
+
+## Mission 021 — explicit benchmark execution CLI and 180-opportunity boundary
+
+Mission 021 replaces the Mission 012 validation-only wrapper with an explicit CLI boundary. `--dry-run` remains validation-only; execution requires both `--run` and `--output`. Without either mode the command fails closed. Importing the executor has no side effects and does not create the future run directory.
+
+The execution identity remains the Mission 020 deterministic run `mission_020_floor_2a80a8cf8d989326`, derived from the corrected configuration hash, `mission-020-floor-v1`, and the verified participant source revisions. The immutable Mission 019 evidence directory `benchmarks/runs/mission_016_floor_59a11e27a71f/` is a forbidden root for execution. The future root is created only after all pre-execution gates pass and is never used by preflight or smoke validation.
+
+Mission 021 expands only the explicit execution plan to the requested minimum floor of `3 participants × 6 mutations × 10 trial ordinals = 180 opportunities`. The frozen configuration remains unchanged, including seed `12345`; trial ordinal is an executor-level deterministic identity dimension rather than a modification to the frozen seed list or configuration hash. The validation-only dry-run therefore retains its historical 18-step plan, while the separately authorized execution boundary plans 180 raw participant opportunities.
+
+Each opportunity validates clean fixture state, obtains evaluator-owned `MutationGroundTruth` without exposing its contents to a participant, applies the declared mutation, executes one participant, persists immutable raw evidence, resets the fixture, verifies reset determinism, and records one of `COMPLETED`, `FAILED`, `TIMED_OUT`, or `INVALIDATED`. A reset failure preserves the artifact and halts according to fail-closed policy. No generated participant code is executed.
+
+The executor uses the existing Baseline A, Baseline B, and AEGIS adapters. Baseline B’s model caller is injected in tests and is constructed from the frozen Gemini Developer API boundary only when the real CLI is explicitly invoked with `--run`. The existing AEGIS TEST_DOUBLE lifecycle remains responsible for detection, verification, RiskGovernor, CommitGate, quarantine, watch, and rollback semantics.
+
+Mission 010 remains the sole metric authority. Its current calculator consumes `MutationRun` records, whereas the common execution output is `ParticipantRunEvidence`. If an all-participant compatible adaptation is unavailable after raw execution, the executor records `FAILED_METRIC_BOUNDARY` and does not calculate partial metrics or create a second calculator. This incompatibility is an implementation finding, not a benchmark result.

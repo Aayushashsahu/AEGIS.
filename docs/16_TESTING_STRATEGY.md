@@ -220,3 +220,18 @@ PYTHONPATH=src pytest -q tests/unit tests/integration
 The repaired command was run in read-only mode and returned `PREFLIGHT_PASS`. It validated existing smoke evidence as `VALID`, reported benchmark run ID `mission_020_floor_2a80a8cf8d989326`, and did not rerun Gemini or write any artifact. Mission 020 did not execute `BenchmarkRunner.execute_one()`, create the future benchmark root, call Bright Data, execute healing, or generate metrics.
 
 Mission 020 counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. The historical Mission 019 smoke directory and Mission 016 STOPPED_PREFLIGHT directory remained byte-identical.
+
+
+## Mission 021 evidence — explicit executor boundary and zero real benchmark execution
+
+Mission 021 adds focused tests for the explicit CLI mode contract, dry-run non-execution, required `--run`/`--output`, corrected configuration acceptance, wrong hash blocking, participant revision blocking, fairness blocking, output-root collision blocking, deterministic ten-trial IDs, exactly 180 planned manifests, exactly 180 injected execution opportunities, participant-specific semantics, reset between trials, reset-failure invalidation, immutable raw evidence, terminal-state persistence, duplicate-free artifacts, Mission 010 metric-boundary incompatibility, and Mission 019 smoke-root preservation.
+
+The focused Mission 021 suite passed with `12 passed`. The complete suite passed with `246 passed`:
+
+```bash
+PYTHONPATH=src pytest -q tests/unit tests/integration
+```
+
+CLI help passed and exposed `--config`, `--dry-run`, `--run`, and `--output`. The frozen-config dry-run passed with the canonical hash `59a11e27a71f241dbf58d1d41bc37a53ba52b2652cbe23f7e2d46891c63e0f0b`, historical 18-step validation plan, zero benchmark/provider/healing/metric counters, `execution_authorized=false`, and no future root creation.
+
+The 180-opportunity tests use an injected fake model caller and temporary output roots only. They do not call the real CLI `--run`, Gemini, Bright Data, healing, provider approval, commit, rollback, or production systems. The executor’s current metric incompatibility is asserted as `FAILED_METRIC_BOUNDARY` with raw terminal evidence preserved and zero metric results, not converted into a benchmark success.

@@ -370,3 +370,26 @@ Mission 020 introduces the provider-neutral `BenchmarkLifecyclePhase` values `PR
 `deterministic_benchmark_run_id(configuration_hash, attempt_id, participant_revisions)` derives a stable `mission_020_floor_<digest>` identity from the corrected configuration hash, an explicit attempt/version identifier, and sorted participant source revisions. It is distinct from the Mission 019 preflight/smoke run ID and does not use wall-clock time as its identity.
 
 `BenchmarkArtifactLayout` describes the future benchmark output tree and rejects roots that overlap, contain, or are contained by the immutable Mission 019 smoke root. `BenchmarkRunner` accepts an optional artifact-root override and forbidden-root set for the future execution boundary; default frozen configuration metadata remains unchanged. Mission 020 uses these contracts only for validation and planning, not for run creation or output writing.
+
+
+## Mission 021 — explicit benchmark execution CLI and executor contract
+
+Mission 021 adds an explicit execution boundary without changing the Mission 012–020 validation contracts:
+
+| Operation/model | Purpose | Side effect |
+| --- | --- | --- |
+| `scripts/benchmark_runner.py --help` | Expose `--config`, `--dry-run`, `--run`, and `--output` | None |
+| `scripts/benchmark_runner.py --dry-run` | Preserve validation-only behavior and zero counters | None; future root remains absent |
+| `scripts/benchmark_runner.py --run --output PATH` | Authorize the frozen execution boundary only after all gates pass | Creates only the isolated future run root |
+| `BenchmarkExecutor.execution_gate()` | Validate hash, freeze, revisions, readiness, fairness, fixture, smoke, isolation, deterministic ID, absence, and metric interface | None; fail-closed |
+| `BenchmarkExecutor.plan_manifests()` | Produce exactly `3 × 6 × 10 = 180` deterministic opportunities | In-memory only |
+| `BenchmarkExecutor.execute()` | Execute one participant per planned opportunity and persist raw evidence | Explicit execution only |
+| `ExecutionSummary` | Report planned/completed/failed/timed-out/invalidated counts and authorization | Immutable result |
+
+The explicit run command must use `benchmarks/configs/mission_017_corrected_frozen_config.json` and output `benchmarks/runs/mission_020_floor_2a80a8cf8d989326`. The root is created only after authorization and cannot overlap `benchmarks/runs/mission_016_floor_59a11e27a71f/`.
+
+Mission 021 retains the frozen configuration and seed `12345`. Its executor-level `trial_number` from 1 through 10 is included in deterministic trial IDs, artifact names, manifests, and raw evidence, allowing the requested ten opportunities per mutation without editing the frozen configuration hash or seed list. The historical validation-only plan remains 18 steps; the explicit execution plan is 180 steps.
+
+Each raw record includes a participant-run evidence envelope, deterministic run identity, benchmark/configuration/run references, participant identity/revision/configuration hash, mutation/severity/trial/seed/fixture identity, ground-truth reference, code/environment revision, timeout/retry policies, provenance, timing, failure state, detection/diagnosis/repair/candidate/verification/risk fields where applicable, output eligibility, cost, LLM calls, evidence references, and artifact references. Terminal states are `COMPLETED`, `FAILED`, `TIMED_OUT`, and `INVALIDATED`; failures are never converted into success.
+
+The CLI constructs the real Gemini caller only after explicit `--run`; tests inject a fake caller. No arbitrary generated code is executed, no ground-truth payload is supplied to participants, and no AEGIS verification is bypassed. Mission 010 remains the sole metric authority; an incompatible all-participant metric input fails closed with `FAILED_METRIC_BOUNDARY` rather than invoking a second calculator.

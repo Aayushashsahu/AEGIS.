@@ -159,3 +159,12 @@ Mission 020 only validates committed preflight/smoke evidence and plans a distin
 The existing smoke `output_eligible=true` remains Baseline B policy evidence, not a correctness or benchmark metric. The future run ID `mission_020_floor_2a80a8cf8d989326` is an artifact identity only; no run directory or raw result exists for it after Mission 020.
 
 Mission 020 counters are `benchmark_runs_executed=0`, `provider_operations_executed=0`, `healing_operations_executed=0`, `metric_results_generated=0`, and `execution_authorized=false`. No DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, latency, model-call benchmark result, or L5 result is claimed.
+
+
+## Mission 021 — execution metric boundary remains Mission 010
+
+Mission 021 adds no metric formula or calculator. The explicit executor persists immutable raw `ParticipantRunEvidence` and preserves evaluator-owned `MutationGroundTruth` references. Mission 010 remains the sole authority at `mission-010-metrics-v1`.
+
+The current Mission 010 `calculate_metrics()` API consumes `MutationRun` records plus `MutationGroundTruth`, while the Mission 021 common participant boundary produces normalized `ParticipantRunEvidence` for all three participants. The executor therefore fails closed after raw execution with `FAILED_METRIC_BOUNDARY` when it cannot construct a complete, all-participant compatible input. It does not calculate partial metrics, coerce participant evidence into a second formula, or present test-double output as benchmark measurement.
+
+Mission 021’s real execution counters remain zero. The focused test executor deliberately uses an injected model caller and temporary artifacts to prove 180 terminal raw records, but those are test-double opportunities, not benchmark results. No DetectionRate, AlarmPrecision, VerifiedRecovery, VerificationMissRate, FalseRepairRate, UnsafeRefusalRate, BlindCommitRate, MTTR, cost, LLM-call, or L5 benchmark result is claimed.

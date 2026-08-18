@@ -414,3 +414,18 @@ Status: OPEN | RESOLVED | DEFERRED
 **Validation:** The repaired command returns `PREFLIGHT_PASS`, confirms existing smoke status `VALID`, reports the future benchmark ID, and records zero benchmark/provider/healing/metric counters with `execution_authorized=false`. Mission 020 does not run Gemini, Bright Data, healing, the benchmark, or metrics.
 
 **Status:** RESOLVED for artifact separation; the 180-run benchmark remains a separately authorized future operation.
+
+
+## Mission 021 — explicit benchmark execution CLI
+
+**Decision:** Replace the validation-only CLI wrapper with an explicit `--run --output` boundary for the frozen Mission 020 benchmark identity. Preserve `--dry-run` as side-effect-free validation, reject no-mode invocation, and never make execution the default.
+
+**Execution scope:** The authorized executor plans exactly 180 opportunities: three participants, six frozen mutations, ten deterministic trial ordinals, and the frozen seed `12345`. The trial ordinal is an executor identity dimension; the frozen configuration and canonical hash remain unchanged.
+
+**Pre-execution gate:** Before creating the future root or attempting trial 1, require the corrected configuration hash, valid freeze, verified source revisions, participant revision metadata, all participant readiness, fairness, clean fixture, valid Mission 019 smoke evidence, isolated/absent deterministic output root, correct deterministic run ID, duplicate-free manifests, code/config freeze, and Mission 010 interface availability. Any failure returns `BLOCKED_NOT_READY` with `execution_authorized=false`.
+
+**Artifact policy:** Create only `benchmarks/runs/mission_020_floor_2a80a8cf8d989326/` after the gate. Persist frozen configuration, participant manifest, raw evidence, execution log, and downstream directories. Use exclusive raw writes and deterministic run IDs. The immutable Mission 019 smoke root is never written by the executor.
+
+**Metric boundary:** Do not add a second calculator. The current Mission 010 calculator consumes `MutationRun` records, while the executor’s common raw boundary emits `ParticipantRunEvidence` for all participants. If a complete all-participant adaptation is unavailable, persist raw terminal evidence and stop with `FAILED_METRIC_BOUNDARY`; do not calculate partial or invented results.
+
+**Validation:** Mission 021 focused tests use only injected fake model calls and temporary roots. The real `--run` command, Gemini, Bright Data, healing, approval, commit, rollback, and metrics remain deferred. This decision is **RESOLVED for the explicit CLI and executor boundary; actual benchmark execution remains separately authorized future work**.

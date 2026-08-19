@@ -11,8 +11,9 @@ def test_real_provider_case_preserves_terminal_no_candidate_boundary() -> None:
     graph = payload["graph"]
     assert payload["case"]["case_id"] == "mission_029_real_provider"
     assert graph["mode"] == "REAL_PROVIDER"
-    assert graph["decision"] == "BLOCKED"
-    status = {node["id"]: node["status"] for node in graph["nodes"]}
+    assert graph["domain_decision"] == "blocked"
+    assert graph["display_decision"] == "BLOCKED"
+    status = {node["id"]: node["display_status"] for node in graph["nodes"]}
     assert status["CANDIDATE"] == "UNAVAILABLE"
     assert status["VERIFICATION"] == "UNAVAILABLE"
     assert status["COMMIT"] == "BLOCKED"
@@ -22,7 +23,8 @@ def test_controlled_replay_uses_canonical_verification_risk_and_commit_logic() -
     payload = dispatch(ROOT, {"action": "controlled"})
     graph = payload["graph"]
     assert graph["mode"] == "TEST_DOUBLE_CONTROLLED_REPLAY"
-    assert graph["decision"] == "REJECT"
+    assert graph["domain_decision"] == "reject"
+    assert graph["display_decision"] == "REJECT"
     assert payload["replay"]["verification"]["overall_status"] == "FAIL"
     assert payload["replay"]["risk"]["decision"] == "REJECT"
     assert payload["replay"]["output_eligible"] is False

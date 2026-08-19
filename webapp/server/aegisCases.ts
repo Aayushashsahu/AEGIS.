@@ -25,6 +25,11 @@ function serialize(record: ReliabilityCase) {
 export async function createAegisCase(input: CreateCaseInput) {
   const db = await getDb();
   if (!db) throw new Error("AEGIS case database is unavailable");
+  const fieldsJson = JSON.stringify(input.fields);
+  const invariantsJson = JSON.stringify(input.invariants);
+  const sameTargetRecords = await db.select().from(reliabilityCases).where(eq(reliabilityCases.targetUrl, input.targetUrl)).limit(25);
+  const existing = sameTargetRecords.find((record) => record.fieldsJson === fieldsJson && record.invariantsJson === invariantsJson && record.collectorId === (input.collectorId?.trim() || null));
+  if (existing) return serialize(existing);
   const caseId = `case_${nanoid(16)}`;
   const now = new Date();
   await db.insert(reliabilityCases).values({
@@ -33,8 +38,8 @@ export async function createAegisCase(input: CreateCaseInput) {
     targetUrl: input.targetUrl,
     collectorId: input.collectorId?.trim() || null,
     description: input.description?.trim() || null,
-    fieldsJson: JSON.stringify(input.fields),
-    invariantsJson: JSON.stringify(input.invariants),
+    fieldsJson,
+    invariantsJson,
     correlationId: `corr_${nanoid(20)}`,
     createdAt: now,
     updatedAt: now,
@@ -54,6 +59,6 @@ export async function getAegisCase(caseId: string) {
 export async function listAegisCases() {
   const db = await getDb();
   if (!db) return [];
-  const records = await db.select().from(reliabilityCases).orderBy(desc(reliabilityCases.updatedAt));
+  const records = await db.select().from(reliabilityCases).orderBy(desc(reliabilityCases.updatedAt)).limit(100);
   return records.map(serialize);
 }

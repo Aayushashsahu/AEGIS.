@@ -23,7 +23,7 @@ from scripts.mission031_build_demo_snapshot import build_snapshot
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def run_demo(root: Path, *, live: bool = False) -> dict[str, Any]:
+def run_demo(root: Path, *, live: bool = False, output_path: Path | None = None) -> dict[str, Any]:
     root = root.resolve()
     if live:
         return {
@@ -55,10 +55,10 @@ def run_demo(root: Path, *, live: bool = False) -> dict[str, Any]:
         "live_lane_status": snapshot["live_lane"]["terminal_status"],
         "controlled_replay_mode": snapshot["controlled_replay"]["mode"],
         "controlled_replay_output_eligible": snapshot["controlled_replay"]["commit"]["output_eligible"],
-        "judge_mode_launch": "cd /home/ubuntu/aegis-mission029-demo && pnpm run dev",
+        "judge_mode_launch": "cd webapp && pnpm dev",
         "claim": "AI proposes. Evidence decides.",
     }
-    session_path = root / "experiments" / "mission_031" / "demo_session.json"
+    session_path = output_path or root / "experiments" / "mission_031" / "demo_session.json"
     session_path.parent.mkdir(parents=True, exist_ok=True)
     session_path.write_text(json.dumps(_redact(_to_jsonable(session)), sort_keys=True, indent=2) + "\n", encoding="utf-8")
     return session

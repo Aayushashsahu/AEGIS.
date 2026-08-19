@@ -65,21 +65,35 @@ The NVIDIA NIM baseline uses `openai/gpt-oss-20b` under a **benchmark-side** 6 R
 
 The integration contract covers Scraper Studio collectors, structured output, execution, healing, approval, versioning, rollback, raw response evidence, WARC where available, and coding-agent interaction. The current documentation deliberately distinguishes project strategy from unverified platform behavior. See [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
 
-## Demo
+## Web application and demo
 
-**Judge Mode** is a static, artifact-backed surface built from committed Mission 029/030 evidence, the preserved Mission 028 recovery benchmark, and a separately labeled `TEST_DOUBLE` silent-corruption replay. It never impersonates the replay as a Bright Data candidate and exposes no provider approval or commit control.
+`webapp/` is the frozen supplied frontend with a narrow tRPC boundary. It reads **canonical** `src/aegis/`, `benchmarks/`, `experiments/`, and `scripts/` from the repository root; it does not contain a second AEGIS implementation or copied evidence. Mission 029/030 remains read-only `REAL_PROVIDER` evidence. Candidate through commit eligibility is a separately labeled `TEST_DOUBLE` replay. The web UI exposes no live provider, benchmark, approval, commit, or rollback action.
+
+The default web mode is provider-free. Public demo case creation persists only a bounded configuration contract; it never persists lifecycle decisions or invokes a provider. Its input and in-memory rate limits are deliberately modest demonstration safeguards rather than an identity system.
+
+### Linux and macOS
 
 ```bash
-# From the repository: regenerate the provider-free evidence snapshot and DemoSession.
-PYTHONPATH=src:. python3 scripts/run_demo.py
-
-# Launch Judge Mode from the static web project.
-cd /home/ubuntu/aegis-mission029-demo && pnpm run dev
+git clone <repository-url> AEGIS
+cd AEGIS/webapp
+pnpm install
+pnpm dev
 ```
 
-The default runner is **replay-only** and performs zero Bright Data, NVIDIA, Gemini, benchmark, approval, commit, or rollback operations. `--live` fails closed until a separately reviewed provider authorization gate is implemented. Use [`experiments/mission_031/judge_script.md`](experiments/mission_031/judge_script.md) for the approximately 2:30 presentation flow and [`experiments/mission_031/architecture.mmd`](experiments/mission_031/architecture.mmd) for the architecture diagram source.
+### Windows PowerShell
 
-## Quick start
+```powershell
+git clone <repository-url> AEGIS
+cd AEGIS\webapp
+pnpm install
+$env:AEGIS_PYTHON = "python"
+$env:AEGIS_ROOT = (Resolve-Path ..).Path
+pnpm dev
+```
+
+The adapter uses `AEGIS_PYTHON` first, then discovers `python3`/`python`, and resolves the repository through `AEGIS_ROOT` or canonical root markers. From the repository root, run `PYTHONPATH=src:. python3 scripts/run_demo.py` for the provider-free replay DemoSession. Use [`experiments/mission_031/judge_script.md`](experiments/mission_031/judge_script.md) for the approximately 2:30 narration and [`experiments/mission_031/architecture.mmd`](experiments/mission_031/architecture.mmd) for the architecture diagram source.
+
+## Canonical Python quick start
 
 Missions 002–030 extend the stable collection path through immutable Observation, deterministic Detection, Diagnosis, provider-neutral RepairRequest, bounded Bright Data healing, candidate Verification, RiskGovernor decisions, a fail-closed CommitGate, frozen benchmark execution, live-provider evidence capture, compact prompt projection, and read-only evidence loading. Mission 031 adds the provider-free Judge Mode snapshot and explicit controlled replay boundary. `ACCEPT` means eligible for a later commit stage only; it does not approve Bright Data, activate a provider version, commit production data, or perform rollback.
 
@@ -95,12 +109,13 @@ The recorded Bright Data artifact from Mission 001 is tested through `Observatio
 ```text
 README.md
 docs/              Canonical internal documentation
-experiments/       Day-1 spikes and experiment records
+experiments/       Immutable provider and controlled evidence records
 mutations/         Controlled mutation fixtures and manifests
 benchmarks/        Frozen baselines, runs, and reports
-scripts/           Reproducible commands and operational tooling
-src/               Collection, detection, verification, risk, commit, benchmark, and evidence modules
-tests/             Unit and integration evidence/safety coverage through Mission 031
+scripts/           Reproducible provider-free projections and tooling
+src/               Canonical AEGIS collection, detection, verification, risk, commit, benchmark, and evidence modules
+tests/             Canonical unit and integration evidence/safety coverage
+webapp/            Frozen supplied frontend, tRPC API, configuration persistence, and canonical-root adapter
 ```
 
 ## Limitations and open decisions

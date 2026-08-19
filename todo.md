@@ -21,3 +21,12 @@
 - [x] Bind the graph and stage views to canonical lifecycle state, using Mission 029 for real-provider evidence, controlled replay for downstream candidate flow, and Mission 028 read-only benchmark evidence.
 - [x] Run API, route, lifecycle, frontend, backend, build, lint, responsive, secret, and historical-hash validation without external provider execution.
 - [x] Commit only focused integration changes, push a new isolated branch, create a pull request if available, and report exact validation evidence and limitations.
+- [x] Audit the current PR branch for duplicated AEGIS source or evidence, machine-specific paths, debug assets, unbounded case input, and expensive list projections.
+- [x] Remove `webapp/aegis_backend` and refactor the web adapter to consume only canonical repository-root source and immutable evidence.
+- [x] Make Python interpreter and repository-root resolution portable across Windows, Linux, macOS, and CI, with safe structured adapter errors and timeouts.
+- [x] Separate domain status from display status in the canonical lifecycle projection without changing the frozen frontend visual baseline.
+- [x] Bound public case creation with strict normalization, payload limits, idempotency, and an explicit demo-use rate-limit boundary while retaining the database as configuration-only storage.
+- [x] Make list-case metadata inexpensive and ensure full historical or controlled lifecycle projections run only on case-detail access.
+- [x] Add provider-free GitHub Actions validation for Python, web, integration, evidence integrity, and secret scanning.
+- [x] Update clone-portable documentation with the canonical-root architecture, Windows/Linux/macOS commands, provider-free default mode, and immutable evidence boundaries.
+- [x] Run full validation, historical evidence hashes, secret/path/debug scans, build, route checks, and responsive checks; then update PR #1 with focused hardening commits.

@@ -7,8 +7,11 @@ RUN apt-get update \
 WORKDIR /app
 COPY . .
 RUN npm install -g corepack@latest \
-  && corepack pnpm install \
+  && cd webapp \
+  && corepack pnpm install --frozen-lockfile \
   && corepack pnpm run build
 
+WORKDIR /app/webapp
 ENV NODE_ENV=production
+ENV AEGIS_ROOT=/app
 CMD ["node", "dist/index.js"]

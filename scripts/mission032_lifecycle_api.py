@@ -30,17 +30,29 @@ ORDER = ("TARGET", "COLLECTOR", "OBSERVATION", "DETECTION", "DIAGNOSIS", "REPAIR
 
 def _node(
     stage: str,
-    status: str,
+    display_status: str,
     provenance: str,
     detail: str,
     refs: tuple[str, ...] = (),
     *,
     provider: str | None = None,
+    domain_status: str | None = None,
 ) -> dict[str, Any]:
+    default_domain_status = {
+        "CONFIGURED": "configured",
+        "ACTIVE": "evidence_recorded",
+        "PENDING": "not_evaluated",
+        "ANOMALY": "anomaly_detected",
+        "VERIFIED": "verified",
+        "QUARANTINED": "quarantined",
+        "BLOCKED": "blocked",
+        "UNAVAILABLE": "not_run",
+    }[display_status]
     return {
         "id": stage,
         "label": {"TARGET": "Target", "COLLECTOR": "Collector", "OBSERVATION": "Observation", "DETECTION": "Detection", "DIAGNOSIS": "Diagnosis", "REPAIR": "Repair request", "CANDIDATE": "Candidate", "VERIFICATION": "Verification", "RISK": "Risk", "COMMIT": "Commit gate"}[stage],
-        "status": status,
+        "domain_status": domain_status or default_domain_status,
+        "display_status": display_status,
         "provenance": provenance,
         "detail": detail,
         "evidenceRefs": list(refs),
@@ -49,7 +61,7 @@ def _node(
 
 
 def _edges(nodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    statuses = {str(node["id"]): str(node["status"]) for node in nodes}
+    statuses = {str(node["id"]): str(node["display_status"]) for node in nodes}
     output: list[dict[str, Any]] = []
     for source, target in zip(ORDER, ORDER[1:]):
         target_status = statuses.get(target, "PENDING")
@@ -62,21 +74,22 @@ def _edges(nodes: list[dict[str, Any]]) -> list[dict[str, Any]]:
             edge_status = "PENDING"
         elif target_status == "VERIFIED":
             edge_status = "VERIFIED"
-        output.append({"id": f"{source}->{target}", "source": source, "target": target, "status": edge_status, "provenance": next((node["provenance"] for node in nodes if node["id"] == target), "NORMALIZED_CASE"), "evidenceRefs": next((node["evidenceRefs"] for node in nodes if node["id"] == target), [])})
+        target_node = next((node for node in nodes if node["id"] == target), None)
+        output.append({"id": f"{source}->{target}", "source": source, "target": target, "display_status": edge_status, "domain_status": str(target_node["domain_status"]) if target_node else "not_evaluated", "provenance": target_node["provenance"] if target_node else "NORMALIZED_CASE", "evidenceRefs": target_node["evidenceRefs"] if target_node else []})
     return output
 
 
 def _graph(case_id: str, mode: str, nodes: list[dict[str, Any]], message: str, decision: str) -> dict[str, Any]:
-    active = next((node for node in reversed(nodes) if node["status"] in {"ACTIVE", "ANOMALY", "VERIFIED", "QUARANTINED"}), nodes[0])
+    active = next((node for node in reversed(nodes) if node["display_status"] in {"ACTIVE", "ANOMALY", "VERIFIED", "QUARANTINED"}), nodes[0])
     refs = sorted({ref for node in nodes for ref in node["evidenceRefs"]})
     severity = "UNKNOWN"
-    if any(node["status"] == "QUARANTINED" for node in nodes):
+    if any(node["display_status"] == "QUARANTINED" for node in nodes):
         severity = "QUARANTINE"
-    elif any(node["status"] == "ANOMALY" for node in nodes):
+    elif any(node["display_status"] == "ANOMALY" for node in nodes):
         severity = "ANOMALY"
-    elif any(node["status"] == "BLOCKED" for node in nodes):
+    elif any(node["display_status"] == "BLOCKED" for node in nodes):
         severity = "BLOCKED"
-    elif any(node["status"] == "VERIFIED" for node in nodes):
+    elif any(node["display_status"] == "VERIFIED" for node in nodes):
         severity = "HEALTHY"
     return {
         "case_id": case_id,
@@ -84,11 +97,12 @@ def _graph(case_id: str, mode: str, nodes: list[dict[str, Any]], message: str, d
         "nodes": nodes,
         "edges": _edges(nodes),
         "activeNodeId": active["id"],
-        "activeEdgeIds": [edge["id"] for edge in _edges(nodes) if edge["status"] in {"ACTIVE", "BROKEN", "VERIFIED"}],
+        "activeEdgeIds": [edge["id"] for edge in _edges(nodes) if edge["display_status"] in {"ACTIVE", "BROKEN", "VERIFIED"}],
         "currentStage": active["id"],
         "severity": severity,
         "provenance": "REAL_PROVIDER" if any(node["provenance"] == "REAL_PROVIDER" for node in nodes) else nodes[0]["provenance"],
-        "decision": decision,
+        "domain_decision": decision.lower(),
+        "display_decision": decision,
         "evidenceRefs": refs,
         "message": message,
     }
@@ -101,16 +115,16 @@ def _historical(root: Path) -> dict[str, Any]:
     stages = {stage.stage_id: stage for stage in evidence.stages}
     refs = tuple(live["artifact_hashes"].keys())
     nodes = [
-        _node("TARGET", "CONFIGURED", "REAL_PROVIDER", evidence.target_url, refs),
-        _node("COLLECTOR", "ACTIVE", "REAL_PROVIDER", evidence.collector_id, refs, provider="Bright Data Scraper Studio"),
-        _node("OBSERVATION", "ACTIVE", "REAL_PROVIDER", f"Recorded live collection contains {evidence.row_count} rows.", refs),
-        _node("DETECTION", "ANOMALY", "CONTROLLED_DEMONSTRATOR", stages["detection"].detail, refs),
-        _node("DIAGNOSIS", "ANOMALY", "CONTROLLED_DEMONSTRATOR", stages["diagnosis"].detail, refs),
-        _node("REPAIR", "ANOMALY", "REAL_PROVIDER", live["provider_heal"]["error_code"], refs, provider="Bright Data Scraper Studio"),
-        _node("CANDIDATE", "UNAVAILABLE", "REAL_PROVIDER", "Provider terminal record confirms no candidate was created.", refs),
-        _node("VERIFICATION", "UNAVAILABLE", "REAL_PROVIDER", "No candidate exists; verification was not invoked.", refs),
-        _node("RISK", "UNAVAILABLE", "REAL_PROVIDER", "No candidate exists; risk was not invoked.", refs),
-        _node("COMMIT", "BLOCKED", "REAL_PROVIDER", "No candidate, approval, or production commit occurred.", refs),
+        _node("TARGET", "CONFIGURED", "REAL_PROVIDER", evidence.target_url, refs, domain_status="target_configured"),
+        _node("COLLECTOR", "ACTIVE", "REAL_PROVIDER", evidence.collector_id, refs, provider="Bright Data Scraper Studio", domain_status="collector_run_completed"),
+        _node("OBSERVATION", "ACTIVE", "REAL_PROVIDER", f"Recorded live collection contains {evidence.row_count} rows.", refs, domain_status="observation_recorded"),
+        _node("DETECTION", "ANOMALY", "CONTROLLED_DEMONSTRATOR", stages["detection"].detail, refs, domain_status="l3_anomaly_detected"),
+        _node("DIAGNOSIS", "ANOMALY", "CONTROLLED_DEMONSTRATOR", stages["diagnosis"].detail, refs, domain_status="diagnosis_ambiguous"),
+        _node("REPAIR", "ANOMALY", "REAL_PROVIDER", live["provider_heal"]["error_code"], refs, provider="Bright Data Scraper Studio", domain_status="provider_heal_failed"),
+        _node("CANDIDATE", "UNAVAILABLE", "REAL_PROVIDER", "Provider terminal record confirms no candidate was created.", refs, domain_status="candidate_absent"),
+        _node("VERIFICATION", "UNAVAILABLE", "REAL_PROVIDER", "No candidate exists; verification was not invoked.", refs, domain_status="verification_not_run"),
+        _node("RISK", "UNAVAILABLE", "REAL_PROVIDER", "No candidate exists; risk was not invoked.", refs, domain_status="risk_not_run"),
+        _node("COMMIT", "BLOCKED", "REAL_PROVIDER", "No candidate, approval, or production commit occurred.", refs, domain_status="production_commit_blocked"),
     ]
     graph = _graph("mission_029_real_provider", "REAL_PROVIDER", nodes, "Canonical Mission 029/030 evidence reaches a terminal provider failure before a candidate. Downstream stages remain unavailable rather than fabricated.", "BLOCKED")
     events = [
@@ -132,7 +146,24 @@ def _historical(root: Path) -> dict[str, Any]:
         "actions": [],
         "action_policy": "Historical provider evidence is read-only. The terminal no-candidate boundary blocks verification, risk, approval, and commit.",
     }
-    return {"case": case, "events": events, "graph": graph}
+    replay = {
+        "status": "AVAILABLE",
+        "presentation": "HISTORICAL_REAL_PROVIDER_EVIDENCE",
+        "provenance": "REAL_PROVIDER",
+        "artifact_path": "experiments/mission_029",
+        "artifacts": list(refs),
+        "collection": {
+            "collector_id": evidence.collector_id,
+            "target_url": evidence.target_url,
+            "row_count": evidence.row_count,
+            "run_behavior": "RECORDED",
+        },
+        "candidate_status": "UNAVAILABLE",
+        "verification_status": "UNAVAILABLE",
+        "risk_status": "UNAVAILABLE",
+        "commit_status": "BLOCKED",
+    }
+    return {"case": case, "events": events, "graph": graph, "replay": replay}
 
 
 def _controlled(root: Path) -> dict[str, Any]:
@@ -143,16 +174,16 @@ def _controlled(root: Path) -> dict[str, Any]:
     eligibility = OutputEligibilityBoundary.evaluate(commit)
     refs = tuple(verification.evidence_refs)
     nodes = [
-        _node("TARGET", "CONFIGURED", "TEST_DOUBLE", "Controlled silent-corruption fixture target.", refs),
-        _node("COLLECTOR", "ACTIVE", "TEST_DOUBLE", "No Bright Data operation was invoked.", refs, provider="TEST_DOUBLE"),
-        _node("OBSERVATION", "ACTIVE", "TEST_DOUBLE", "Deterministic fixture observation.", refs),
-        _node("DETECTION", "ANOMALY", "TEST_DOUBLE", "Silent corruption fixture is selected.", refs),
-        _node("DIAGNOSIS", "ACTIVE", "TEST_DOUBLE", "Controlled deterministic diagnosis context.", refs),
-        _node("REPAIR", "ACTIVE", "TEST_DOUBLE", "Controlled candidate lifecycle only; no provider repair occurred.", refs),
-        _node("CANDIDATE", "ACTIVE", "TEST_DOUBLE", "Candidate contains a plausible but incorrect price.", refs),
-        _node("VERIFICATION", "ANOMALY", "TEST_DOUBLE", verification.overall_status.value, refs),
-        _node("RISK", "ANOMALY", "TEST_DOUBLE", risk.decision.value, refs),
-        _node("COMMIT", "BLOCKED", "TEST_DOUBLE", f"{commit.reason_code}; output eligible={eligibility.eligible}", refs),
+        _node("TARGET", "CONFIGURED", "TEST_DOUBLE", "Controlled silent-corruption fixture target.", refs, domain_status="fixture_configured"),
+        _node("COLLECTOR", "ACTIVE", "TEST_DOUBLE", "No Bright Data operation was invoked.", refs, provider="TEST_DOUBLE", domain_status="test_double_no_provider"),
+        _node("OBSERVATION", "ACTIVE", "TEST_DOUBLE", "Deterministic fixture observation.", refs, domain_status="fixture_observation_recorded"),
+        _node("DETECTION", "ANOMALY", "TEST_DOUBLE", "Silent corruption fixture is selected.", refs, domain_status="silent_corruption_selected"),
+        _node("DIAGNOSIS", "ACTIVE", "TEST_DOUBLE", "Controlled deterministic diagnosis context.", refs, domain_status="controlled_diagnosis"),
+        _node("REPAIR", "ACTIVE", "TEST_DOUBLE", "Controlled candidate lifecycle only; no provider repair occurred.", refs, domain_status="no_provider_repair"),
+        _node("CANDIDATE", "ACTIVE", "TEST_DOUBLE", "Candidate contains a plausible but incorrect price.", refs, domain_status="test_double_candidate_created"),
+        _node("VERIFICATION", "ANOMALY", "TEST_DOUBLE", verification.overall_status.value, refs, domain_status="verification_failed"),
+        _node("RISK", "ANOMALY", "TEST_DOUBLE", risk.decision.value, refs, domain_status="risk_reject"),
+        _node("COMMIT", "BLOCKED", "TEST_DOUBLE", f"{commit.reason_code}; output eligible={eligibility.eligible}", refs, domain_status="commit_ineligible"),
     ]
     graph = _graph("controlled_silent_corruption", "TEST_DOUBLE_CONTROLLED_REPLAY", nodes, "Controlled replay uses canonical verification, risk, and commit-gate modules. It is not a Bright Data candidate.", risk.decision.value)
     events = [
@@ -176,7 +207,7 @@ def _configured(payload: Mapping[str, Any]) -> dict[str, Any]:
     case_id = str(payload["case_id"])
     fields = list(payload.get("fields", []))
     case = {**payload, "lifecycle": {"current_status": "CONFIGURED", "event_count": 0, "latest_event_type": None, "evidence_refs": []}, "actions": [], "action_policy": "Configuration is persisted, but no collection, observation, repair, verification, risk, or commit evidence has been recorded."}
-    nodes = [_node("TARGET", "CONFIGURED", "USER_CONFIGURED", str(payload["target_url"]))]
+    nodes = [_node("TARGET", "CONFIGURED", "USER_CONFIGURED", str(payload["target_url"]), domain_status="user_configured")]
     graph = _graph(case_id, "CONFIGURED_CASE", nodes, "This case has only user-configured target and contract data. AEGIS has not inferred lifecycle evidence.", "NOT_EVALUATED")
     return {"case": case, "events": [], "graph": graph, "fields": fields}
 

@@ -1,7 +1,9 @@
 import { COOKIE_NAME } from "@shared/const";
 import { z } from "zod";
 import { createAegisCase, getAegisCase, listAegisCases } from "./aegisCases";
+import { enforcePublicCaseCreationRateLimit, normalizeCreateCaseInput } from "./aegisCaseBoundary";
 import { invokeAegis } from "./aegisBridge";
+import { SEEDED_CASE_METADATA } from "./aegisSeedMetadata";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
@@ -21,24 +23,24 @@ export const appRouter = router({
   }),
   aegis: router({
     listCases: publicProcedure.query(async () => {
-      const seeded = invokeAegis({ action: "seed_cases" }).cases as Record<string, any>[];
       const persisted = await listAegisCases();
-      const cases = [...seeded, ...persisted as Record<string, any>[]].map((item) => ({
+      const cases = [...SEEDED_CASE_METADATA as unknown as Record<string, any>[], ...persisted as Record<string, any>[]].map((item) => ({
         case_id: item.case_id,
         name: item.name,
         target_url: item.target_url,
         created_at: item.created_at,
-        evidence_status: item.lifecycle?.current_status ?? "CONFIGURED",
-        event_count: item.lifecycle?.event_count ?? 0,
+        evidence_status: item.evidence_status ?? item.lifecycle?.current_status ?? "CONFIGURED",
+        event_count: item.event_count ?? item.lifecycle?.event_count ?? 0,
       }));
       return { cases };
     }),
     createCase: publicProcedure.input(z.object({
-      targetUrl: z.string().url(),
-      fields: z.array(z.object({ name: z.string().min(1), type: z.enum(["text", "number", "url", "boolean", "date"]), description: z.string() })).min(1),
-      invariants: z.array(z.string()), name: z.string().optional(), collectorId: z.string().optional(), description: z.string().optional(),
-    })).mutation(async ({ input }) => {
-      const configured = await createAegisCase(input);
+      targetUrl: z.string(), fields: z.array(z.object({ name: z.string(), type: z.enum(["text", "number", "url", "boolean", "date"]), description: z.string() })), invariants: z.array(z.string()), name: z.string().optional(), collectorId: z.string().optional(), description: z.string().optional(),
+    })).mutation(async ({ input, ctx }) => {
+      const forwarded = ctx.req.headers["x-forwarded-for"];
+      const clientKey = Array.isArray(forwarded) ? forwarded[0] : (forwarded?.split(",")[0]?.trim() || "public-demo");
+      enforcePublicCaseCreationRateLimit(clientKey);
+      const configured = await createAegisCase(normalizeCreateCaseInput(input));
       return invokeAegis({ action: "configured", case: configured }).case;
     }),
     caseLifecycle: publicProcedure.input(z.object({ caseId: z.string().min(1) })).query(async ({ input }) => {

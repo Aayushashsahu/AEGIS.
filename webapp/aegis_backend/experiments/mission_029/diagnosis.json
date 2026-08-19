@@ -1,0 +1,48 @@
+{
+  "affected_fields": [
+    "author",
+    "comment_count",
+    "points"
+  ],
+  "candidate_classes": [
+    "SCHEMA_DRIFT",
+    "SEMANTIC_INVARIANT",
+    "STATISTICAL_DRIFT"
+  ],
+  "certainty": "AMBIGUOUS",
+  "correlation_id": "corr_2007b48905bf4ef4bc96ce3e194708da",
+  "detection_id": "detection_observation_558e5ee217634aaf9cbd4e044ae55ef3",
+  "detector_provenance": [
+    "schema",
+    "semantic",
+    "statistical"
+  ],
+  "diagnosis_id": "diagnosis_0cfcfa38187a499e8985c696f691b8b6",
+  "diagnosis_provenance": "DETERMINISTIC",
+  "evidence_references": [
+    "evidence://bright-data/cli/run/c_msyo46bp1slx64351",
+    "evidence://mission-029/demo-mutation",
+    "observation://row/0/field/points",
+    "observation://row/108/field/comment_count",
+    "observation://row/109/field/comment_count",
+    "observation://row/126/field/comment_count",
+    "observation://row/143/field/comment_count",
+    "observation://row/28/field/comment_count",
+    "observation://row/34/field/author",
+    "observation://row/34/field/comment_count",
+    "observation://row/34/field/points",
+    "observation://row/48/field/comment_count",
+    "observation://row/54/field/comment_count",
+    "observation://row/79/field/comment_count",
+    "observation://row/84/field/comment_count",
+    "observation://row/85/field/comment_count",
+    "observation://row/91/field/comment_count",
+    "observation://row/98/field/comment_count"
+  ],
+  "failure_class": "UNKNOWN",
+  "observation_id": "observation_558e5ee217634aaf9cbd4e044ae55ef3",
+  "rationale": "Evidence maps to multiple or partially unknown failure classes; no single class is asserted.",
+  "severity": "L3",
+  "status": "CREATED",
+  "timestamp": "2026-08-18T13:02:31.668208+00:00"
+}

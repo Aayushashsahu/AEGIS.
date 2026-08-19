@@ -1,0 +1,43 @@
+from pathlib import Path
+
+from scripts.mission032_lifecycle_api import dispatch
+
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+def test_real_provider_case_preserves_terminal_no_candidate_boundary() -> None:
+    payload = dispatch(ROOT, {"action": "historical"})
+    graph = payload["graph"]
+    assert payload["case"]["case_id"] == "mission_029_real_provider"
+    assert graph["mode"] == "REAL_PROVIDER"
+    assert graph["decision"] == "BLOCKED"
+    status = {node["id"]: node["status"] for node in graph["nodes"]}
+    assert status["CANDIDATE"] == "UNAVAILABLE"
+    assert status["VERIFICATION"] == "UNAVAILABLE"
+    assert status["COMMIT"] == "BLOCKED"
+
+
+def test_controlled_replay_uses_canonical_verification_risk_and_commit_logic() -> None:
+    payload = dispatch(ROOT, {"action": "controlled"})
+    graph = payload["graph"]
+    assert graph["mode"] == "TEST_DOUBLE_CONTROLLED_REPLAY"
+    assert graph["decision"] == "REJECT"
+    assert payload["replay"]["verification"]["overall_status"] == "FAIL"
+    assert payload["replay"]["risk"]["decision"] == "REJECT"
+    assert payload["replay"]["output_eligible"] is False
+
+
+def test_configured_case_is_provider_free_and_has_no_inferred_evidence() -> None:
+    payload = dispatch(ROOT, {"action": "configured", "case": {"case_id": "case_test", "name": "Test", "target_url": "https://example.com", "collector_id": None, "description": None, "fields": [{"name": "title", "type": "text", "description": "title"}], "invariants": ["title_present"], "correlation_id": "corr_test", "created_at": "2026-08-19T00:00:00+00:00", "updated_at": "2026-08-19T00:00:00+00:00"}})
+    assert payload["case"]["lifecycle"]["event_count"] == 0
+    assert payload["graph"]["mode"] == "CONFIGURED_CASE"
+    assert payload["graph"]["nodes"] == [payload["graph"]["nodes"][0]]
+    assert payload["graph"]["nodes"][0]["id"] == "TARGET"
+
+
+def test_benchmark_projection_is_read_only_and_preserves_scope() -> None:
+    payload = dispatch(ROOT, {"action": "benchmark"})
+    assert payload["status"] == "AVAILABLE"
+    assert payload["summary"]["run_id"] == "mission_028_recovery_floor_4812160675146552"
+    assert payload["summary"]["controlled_aegis_metrics"]["provenance"] == "TEST_DOUBLE_CONTROLLED_HARNESS"

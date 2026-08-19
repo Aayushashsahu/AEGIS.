@@ -14,3 +14,10 @@
 - [x] Add a clearly labeled controlled-evidence replay of the candidate-verification-risk decision path only if existing legitimate test/evidence fixtures support it; never present replay data as live provider output.
 - [x] Validate evidence integrity, safety counters, no-secret boundaries, tests, accessibility, responsive UI behavior, and visual quality before committing and pushing the isolated Mission 031 branch.
 - [x] Append canonical documentation, checkpoint the judge-facing web project, and deliver a factually bounded final report.
+- [x] Inspect the current isolated branch, supplied frontend ZIP, package structure, and canonical AEGIS backend seams without altering the user-supplied design.
+- [x] Install the ZIP frontend as the frozen visual baseline and document a file-level visual-preservation manifest.
+- [x] Define a read-only case lifecycle API backed by existing AEGIS domain logic and canonical `AegisGraphState` projections.
+- [x] Replace runtime fixture state in the supplied frontend with lifecycle API consumption, preserving all user-supplied colors, layout, components, and visual metaphors.
+- [x] Bind the graph and stage views to canonical lifecycle state, using Mission 029 for real-provider evidence, controlled replay for downstream candidate flow, and Mission 028 read-only benchmark evidence.
+- [x] Run API, route, lifecycle, frontend, backend, build, lint, responsive, secret, and historical-hash validation without external provider execution.
+- [ ] Commit only focused integration changes, push a new isolated branch, create a pull request if available, and report exact validation evidence and limitations.

@@ -212,6 +212,53 @@ def _configured(payload: Mapping[str, Any]) -> dict[str, Any]:
     return {"case": case, "events": [], "graph": graph, "fields": fields}
 
 
+def _downstream(root: Path) -> dict[str, Any]:
+    """Project the canonical controlled decision into a consumer-safe output view.
+
+    This is deliberately not a second verification or risk implementation. It
+    runs the existing deterministic fixture and domain modules through
+    ``_controlled`` and exposes only the resulting output boundary.
+    """
+    context = build_verification_fixture(VerificationFixture.SILENT_CORRUPTION)
+    controlled = _controlled(root)
+    candidate_row = dict(context.candidate_output[0])
+    expected_price = context.semantic_expectations.get("price")
+    verification = controlled["replay"]["verification"]
+    risk = controlled["replay"]["risk"]
+    commit = controlled["replay"]["commit"]
+    checks = [
+        {
+            "channel": check["channel"],
+            "status": check["status"],
+            "critical": check["critical"],
+            "message": check["message"],
+            "evidence_refs": check["evidence_refs"],
+        }
+        for check in verification["checks"]
+    ]
+    return {
+        "status": "AVAILABLE",
+        "provenance": "TEST_DOUBLE",
+        "mode": "CONTROLLED_REPLAY",
+        "product": {
+            "product_id": candidate_row["product_id"],
+            "title": candidate_row["title"],
+            "url": candidate_row["url"],
+            "expected_price": expected_price,
+            "observed_price": candidate_row["price"],
+        },
+        "verification": {"status": verification["overall_status"], "checks": checks},
+        "risk": {"decision": risk["decision"], "reason_code": risk["reason_code"]},
+        "commit": {"eligibility": commit["eligibility"], "reason_code": commit["reason_code"], "block_reasons": commit["block_reasons"]},
+        "output": {
+            "status": "BLOCKED" if not controlled["replay"]["output_eligible"] else "ELIGIBLE",
+            "eligible": controlled["replay"]["output_eligible"],
+            "consumer_message": "Output is withheld because the controlled candidate failed deterministic verification and cannot pass the Commit Gate.",
+        },
+        "evidence_refs": sorted(set(verification["evidence_refs"] + commit["evidence_refs"])),
+    }
+
+
 def dispatch(root: Path, request: Mapping[str, Any]) -> Mapping[str, Any]:
     action = str(request.get("action", ""))
     historical = _historical(root)
@@ -230,6 +277,8 @@ def dispatch(root: Path, request: Mapping[str, Any]) -> Mapping[str, Any]:
     if action == "benchmark":
         snapshot = build_snapshot(root)
         return {"status": "AVAILABLE", "classification": "READ_ONLY_REPRODUCIBLE_ARTIFACT", "artifact_root": f"benchmarks/runs/{RECOVERY_RUN_ID}", "summary": snapshot["benchmark"], "artifacts": [f"benchmarks/runs/{RECOVERY_RUN_ID}/execution_log.json", f"benchmarks/runs/{RECOVERY_RUN_ID}/reports/mission-022-metric-boundary-compatibility.json"]}
+    if action == "downstream":
+        return _downstream(root)
     raise ValueError(f"unsupported AEGIS lifecycle action: {action}")
 
 

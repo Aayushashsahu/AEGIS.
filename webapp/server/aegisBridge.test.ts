@@ -34,4 +34,15 @@ describe("canonical AEGIS lifecycle adapter", () => {
     expect(result.status).toBe("AVAILABLE");
     expect(result.summary.controlled_aegis_metrics.provenance).toBe("TEST_DOUBLE_CONTROLLED_HARNESS");
   });
+
+  it("projects a controlled downstream output that is blocked by canonical verification, risk, and commit decisions", () => {
+    const result = invokeAegis({ action: "downstream" });
+    expect(result.provenance).toBe("TEST_DOUBLE");
+    expect(result.product.expected_price).toBe(599);
+    expect(result.product.observed_price).toBe(29.99);
+    expect(result.verification.status).toBe("FAIL");
+    expect(result.risk.decision).toBe("REJECT");
+    expect(result.commit.eligibility).toBe("BLOCKED");
+    expect(result.output.eligible).toBe(false);
+  });
 });

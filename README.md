@@ -93,6 +93,12 @@ pnpm dev
 
 The adapter uses `AEGIS_PYTHON` first, then discovers `python3`/`python`, and resolves the repository through `AEGIS_ROOT` or canonical root markers. From the repository root, run `PYTHONPATH=src:. python3 scripts/run_demo.py` for the provider-free replay DemoSession. Use [`experiments/mission_031/judge_script.md`](experiments/mission_031/judge_script.md) for the approximately 2:30 narration and [`experiments/mission_031/architecture.mmd`](experiments/mission_031/architecture.mmd) for the architecture diagram source.
 
+## Final hackathon package
+
+The final judge path is documented in [`experiments/mission_032/final_demo_script.md`](experiments/mission_032/final_demo_script.md). It begins with Mission 029/030 `REAL_PROVIDER` evidence and, after the recorded no-candidate provider failure, explicitly transitions to a `TEST_DOUBLE` controlled replay for verification, risk, commit, and blocked downstream output. The package also includes the [architecture](experiments/mission_032/architecture.md), [evidence map](experiments/mission_032/evidence_map.md), [demo checklist](experiments/mission_032/demo_checklist.md), and [submission description](experiments/mission_032/submission_description.md).
+
+The demo-video location is **TBD by the project owner**. The release is deployment-ready but not publicly deployed by this task; see [`webapp/DEPLOYMENT.md`](webapp/DEPLOYMENT.md). Scraper Studio workflow details and the AI-use disclosure remain bounded by the authenticated evidence and policy records in this repository; no provider action occurs on page load.
+
 ## Canonical Python quick start
 
 Missions 002–030 extend the stable collection path through immutable Observation, deterministic Detection, Diagnosis, provider-neutral RepairRequest, bounded Bright Data healing, candidate Verification, RiskGovernor decisions, a fail-closed CommitGate, frozen benchmark execution, live-provider evidence capture, compact prompt projection, and read-only evidence loading. Mission 031 adds the provider-free Judge Mode snapshot and explicit controlled replay boundary. `ACCEPT` means eligible for a later commit stage only; it does not approve Bright Data, activate a provider version, commit production data, or perform rollback.

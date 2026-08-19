@@ -43,3 +43,15 @@ def test_benchmark_projection_is_read_only_and_preserves_scope() -> None:
     assert payload["status"] == "AVAILABLE"
     assert payload["summary"]["run_id"] == "mission_028_recovery_floor_4812160675146552"
     assert payload["summary"]["controlled_aegis_metrics"]["provenance"] == "TEST_DOUBLE_CONTROLLED_HARNESS"
+
+
+def test_downstream_projection_blocks_the_controlled_silent_corruption_output() -> None:
+    payload = dispatch(ROOT, {"action": "downstream"})
+    assert payload["provenance"] == "TEST_DOUBLE"
+    assert payload["mode"] == "CONTROLLED_REPLAY"
+    assert payload["product"]["expected_price"] == 599
+    assert payload["product"]["observed_price"] == 29.99
+    assert payload["verification"]["status"] == "FAIL"
+    assert payload["risk"]["decision"] == "REJECT"
+    assert payload["commit"]["eligibility"] == "BLOCKED"
+    assert payload["output"]["eligible"] is False

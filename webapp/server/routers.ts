@@ -51,6 +51,7 @@ export const appRouter = router({
       return invokeAegis({ action: "configured", case: configured });
     }),
     benchmark: publicProcedure.query(() => invokeAegis({ action: "benchmark" })),
+    downstream: publicProcedure.query(() => invokeAegis({ action: "downstream" })),
   }),
 });
 

@@ -11,6 +11,7 @@ import { aegisApi, type BenchmarkSummary } from "@/lib/aegisApi";
 
 export default function Benchmark() {
   const [summary, setSummary] = useState<BenchmarkSummary | null>(null);
+  const execution = summary?.summary?.execution;
   useEffect(() => { void aegisApi.getBenchmark().then(setSummary).catch(() => setSummary({ status: "NOT_AVAILABLE", classification: "CONTROLLED_HARNESS_METRICS", reason: "Local AEGIS API is unavailable." })); }, []);
   return (
     <AppShell>
@@ -34,9 +35,9 @@ export default function Benchmark() {
         </section>
 
         <section className="benchmark-rules">
-          <div><FlaskConical size={20} /><h3>Controlled ground truth</h3><p>Detection and safety claims require the mutation laboratory’s independent truth; production-like observations alone are not a metric source.</p></div>
-          <div><LockKeyhole size={20} /><h3>Frozen methodology</h3><p>Model, prompts, seeds, policies, and environment are recorded before large-scale execution. A frontend cannot silently change them.</p></div>
-          <div><FileWarning size={20} /><h3>Unavailable stays unavailable</h3><p>Absent denominators, incomplete evidence, and unrun measurements remain explicit. The product never paints missing results as zero or success.</p></div>
+          <div><FlaskConical size={20} /><h3>{execution?.planned_opportunities ?? "—"} opportunities</h3><p>{execution ? `${execution.completed_opportunities} completed; ${execution.failed_opportunities} provider failure.` : "Counts remain unavailable until the immutable artifact is read."}</p></div>
+          <div><LockKeyhole size={20} /><h3>{execution?.provider_operations ?? "—"} NVIDIA operations</h3><p>Controlled-harness provider operations only. This is not a Bright Data or production reliability metric.</p></div>
+          <div><FileWarning size={20} /><h3>{execution?.metric_results_generated ?? "—"} metric artifacts</h3><p>{summary?.summary?.controlled_aegis_metrics?.caveat ?? "Unavailable stays unavailable; the frontend never re-scores the artifact."}</p></div>
         </section>
       </main>
     </AppShell>

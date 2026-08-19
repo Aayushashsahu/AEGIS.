@@ -30,3 +30,12 @@
 - [x] Add provider-free GitHub Actions validation for Python, web, integration, evidence integrity, and secret scanning.
 - [x] Update clone-portable documentation with the canonical-root architecture, Windows/Linux/macOS commands, provider-free default mode, and immutable evidence boundaries.
 - [x] Run full validation, historical evidence hashes, secret/path/debug scans, build, route checks, and responsive checks; then update PR #1 with focused hardening commits.
+- [x] Audit the current branch, PR #1, CI, frozen evidence hashes, provider authorization gate, duplicate-source absence, and remaining release blockers.
+- [x] Determine whether a new Bright Data operation is authorized by the existing gate; otherwise formalize the truthful Mission 029/030 provider-failure fallback without an external call.
+- [x] Complete the canonical historical-to-controlled lifecycle route flow through observation, detection, diagnosis, repair attempt, candidate boundary, verification, risk, and commit eligibility without claiming an unsupported live candidate.
+- [x] Add one backend-owned downstream price-intelligence output proof that explicitly blocks unverified or rejected data and never claims a live provider candidate.
+- [x] Ensure Judge Mode and the read-only Mission 028 page present the final evidence sequence, exact benchmark counters, and unmistakable provenance labels without visual redesign.
+- [x] Create the Mission 032 endgame submission package: final demo script, architecture, evidence map, demo checklist, and judge-readable submission description.
+- [x] Update release documentation with deployment readiness, health-check behavior, provider-free defaults, video placeholder, and truthful limitations.
+- [x] Run final functional, route, API, responsive, evidence-integrity, secret, CI, and judge-readiness validation with zero unauthorized provider, NVIDIA, Gemini, or benchmark operations.
+- [ ] Commit focused endgame work, push the existing isolated branch, update PR #1, and report exact provider, lifecycle, deployment, validation, and remaining-blocker status.

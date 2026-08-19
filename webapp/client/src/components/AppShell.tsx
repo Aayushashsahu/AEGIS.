@@ -10,6 +10,7 @@ const navItems = [
   { href: "/evidence", label: "Evidence" },
   { href: "/judge", label: "Judge Mode" },
   { href: "/benchmark", label: "Benchmark" },
+  { href: "/downstream", label: "Output" },
 ];
 
 export function AppShell({ children }: { children: React.ReactNode }) {

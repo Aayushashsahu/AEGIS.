@@ -9,6 +9,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Benchmark from "./pages/Benchmark";
 import CaseDetail from "./pages/CaseDetail";
 import Cases from "./pages/Cases";
+import DownstreamOutput from "./pages/DownstreamOutput";
 import Evidence from "./pages/Evidence";
 import Home from "./pages/Home";
 import JudgeMode from "./pages/JudgeMode";
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/judge" component={JudgeMode} />
       <Route path="/silent-corruption" component={SilentCorruption} />
       <Route path="/benchmark" component={Benchmark} />
+      <Route path="/downstream" component={DownstreamOutput} />
       <Route component={NotFound} />
     </Switch>
   );

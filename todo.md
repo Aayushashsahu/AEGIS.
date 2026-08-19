@@ -20,4 +20,4 @@
 - [x] Replace runtime fixture state in the supplied frontend with lifecycle API consumption, preserving all user-supplied colors, layout, components, and visual metaphors.
 - [x] Bind the graph and stage views to canonical lifecycle state, using Mission 029 for real-provider evidence, controlled replay for downstream candidate flow, and Mission 028 read-only benchmark evidence.
 - [x] Run API, route, lifecycle, frontend, backend, build, lint, responsive, secret, and historical-hash validation without external provider execution.
-- [ ] Commit only focused integration changes, push a new isolated branch, create a pull request if available, and report exact validation evidence and limitations.
+- [x] Commit only focused integration changes, push a new isolated branch, create a pull request if available, and report exact validation evidence and limitations.

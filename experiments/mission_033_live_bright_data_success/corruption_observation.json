@@ -1,0 +1,37 @@
+{
+  "baseline_provider_response_id": "d2t1787154717186rcrv13vh136g",
+  "baseline_rows": [
+    {
+      "availability": "Available",
+      "price": {
+        "currency": "USD",
+        "symbol": "$",
+        "value": 599
+      },
+      "title": "AEGIS Verification Widget"
+    }
+  ],
+  "baseline_target_version": "v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "controlled_target_change": "v1 semantic CSS elements changed to v2 definition-list labels; visible business facts remained unchanged.",
+  "drifted_provider_response_id": "d2t1787154855638r65uq98pata",
+  "drifted_rows": [
+    {}
+  ],
+  "drifted_target_version": "v2",
+  "expected_fields": [
+    "title",
+    "price",
+    "availability"
+  ],
+  "observed_missing_fields": [
+    "title",
+    "price",
+    "availability"
+  ],
+  "provenance": "REAL_PROVIDER",
+  "provider_output_fabricated": false,
+  "same_url": true,
+  "schema_version": "mission-033-corruption-observation-v1",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+}

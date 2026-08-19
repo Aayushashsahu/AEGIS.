@@ -1,0 +1,51 @@
+{
+  "auto_approval_used": false,
+  "collector_id": null,
+  "command": [
+    "npx",
+    "-p",
+    "@brightdata/cli",
+    "bdata",
+    "--timing",
+    "scraper",
+    "create",
+    "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+    "Extract one product with exactly these fields: title, price, availability. Return the visible product title, displayed price, and stock availability from this public page.",
+    "--name",
+    "aegis-mission-033-v1",
+    "--json"
+  ],
+  "command_sha256": "93b7ff66436c88e60f63ccc04406ec8708cbf43d9e2e62ae53ae73ca48fa3491",
+  "completed_at": "2026-08-19T15:51:25.305313Z",
+  "elapsed_ms": 84618,
+  "operation": "bright_data_collector_create",
+  "operation_id": "operation_001_create",
+  "production_commit_executed": false,
+  "prompt_length": null,
+  "prompt_sha256": null,
+  "provider_approval_executed": false,
+  "returncode": 0,
+  "schema_version": "mission-033-provider-operation-v1",
+  "started_at": "2026-08-19T15:50:00.686941Z",
+  "status": "COMPLETED",
+  "stderr": "Creating scraper template...\nTiming: 5100ms\n                    (attempt 1)\nTemplate created: c_mt09pib13nxqz1coi\nTriggering AI generation...\nTiming: 2809ms\n                    (attempt 1)\nGenerating scraper...\nTiming: 705ms\n                    (attempt 1)\nStep: user_intent_analyzer \u2014 polling (attempt 1/600)\nTiming: 692ms\n                    (attempt 1)\nStep: user_intent_analyzer \u2014 polling (attempt 2/600)\nTiming: 751ms\n                    (attempt 1)\nStep: user_intent_analyzer \u2014 polling (attempt 3/600)\nTiming: 735ms\n                    (attempt 1)\nStep: user_intent_analyzer \u2014 polling (attempt 4/600)\nTiming: 786ms\n                    (attempt 1)\nStep: user_intent_analyzer \u2014 polling (attempt 5/600)\nTiming: 691ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 6/600)\nTiming: 700ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 7/600)\nTiming: 694ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 8/600)\nTiming: 696ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 9/600)\nTiming: 716ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 10/600)\nTiming: 699ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 11/600)\nTiming: 687ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 12/600)\nTiming: 695ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 13/600)\nTiming: 699ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 14/600)\nTiming: 698ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 15/600)\nTiming: 741ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 16/600)\nTiming: 719ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 17/600)\nTiming: 689ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 18/600)\nTiming: 716ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 19/600)\nTiming: 710ms\n                    (attempt 1)\nStep: output_schema_generator \u2014 polling (attempt 20/600)\nTiming: 692ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 21/600)\nTiming: 699ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 22/600)\nTiming: 709ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 23/600)\nTiming: 695ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 24/600)\nTiming: 698ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 25/600)\nTiming: 699ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 26/600)\nTiming: 701ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 27/600)\nTiming: 698ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 28/600)\nTiming: 693ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 29/600)\nTiming: 692ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 30/600)\nTiming: 713ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 31/600)\nTiming: 756ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 32/600)\nTiming: 719ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 33/600)\nTiming: 745ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 34/600)\nTiming: 699ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 35/600)\nTiming: 751ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 36/600)\nTiming: 705ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 37/600)\nTiming: 763ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 38/600)\nTiming: 784ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 39/600)\nTiming: 690ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 40/600)\nTiming: 701ms\n                    (attempt 1)\nStep: code_generator \u2014 polling (attempt 41/600)\nTiming: 690ms\n                    (attempt 1)\nStep: preview_runner \u2014 polling (attempt 42/600)\nTiming: 1568ms\n                    (attempt 1)\nStep: preview_picker \u2014 polling (attempt 43/600)\nTiming: 697ms\n                    (attempt 1)\nDone in 44 poll attempts.",
+  "stdout": {
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "completed_steps": [
+      "prepare_intent_analyzer",
+      "planner",
+      "collector_mainatiner",
+      "output_schema_generator",
+      "code_generator",
+      "input_schema_generator",
+      "preview_runner",
+      "preview_picker"
+    ],
+    "created_at": "2026-08-19T15:50:04.525Z",
+    "name": "aegis-mission-033-v1",
+    "status": "done",
+    "view_url": "https://brightdata.com/cp/scrapers/c_mt09pib13nxqz1coi"
+  },
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+  "timed_out": false
+}

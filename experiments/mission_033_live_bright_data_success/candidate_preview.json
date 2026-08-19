@@ -1,0 +1,23 @@
+{
+  "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+  "candidate_state": "UNVERIFIED",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "diff_summary": "proposed template has 1 step(s) \u2014 review at view_url",
+  "latency_ms": 66413,
+  "preview_result": [
+    {
+      "availability": "Available",
+      "price": {
+        "currency": "USD",
+        "value": 599
+      },
+      "title": "AEGIS Verification Widget"
+    }
+  ],
+  "provenance": "REAL_PROVIDER",
+  "provider_approval_command_present": true,
+  "provider_approval_executed": false,
+  "provider_status": "awaiting_approval",
+  "raw_evidence_ref": "evidence://mission-033/provider-operations/operation_001_heal.json",
+  "schema_version": "mission-033-real-provider-candidate-v1"
+}

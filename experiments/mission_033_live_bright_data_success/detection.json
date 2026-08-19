@@ -1,0 +1,56 @@
+{
+  "affected_fields": [
+    "availability",
+    "price",
+    "title"
+  ],
+  "detected": true,
+  "detector_provenance": [
+    "schema"
+  ],
+  "evaluated_at": "2026-08-19T15:58:40.018167+00:00",
+  "evidence_refs": [
+    "observation://row/0/field/availability",
+    "observation://row/0/field/price",
+    "observation://row/0/field/title"
+  ],
+  "severity": "L2",
+  "signals": [
+    {
+      "affected_fields": [
+        "title"
+      ],
+      "code": "MISSING_FIELD",
+      "detector": "schema",
+      "evidence_refs": [
+        "observation://row/0/field/title"
+      ],
+      "message": "row 0 is missing required field title",
+      "severity": "L2"
+    },
+    {
+      "affected_fields": [
+        "price"
+      ],
+      "code": "MISSING_FIELD",
+      "detector": "schema",
+      "evidence_refs": [
+        "observation://row/0/field/price"
+      ],
+      "message": "row 0 is missing required field price",
+      "severity": "L2"
+    },
+    {
+      "affected_fields": [
+        "availability"
+      ],
+      "code": "MISSING_FIELD",
+      "detector": "schema",
+      "evidence_refs": [
+        "observation://row/0/field/availability"
+      ],
+      "message": "row 0 is missing required field availability",
+      "severity": "L2"
+    }
+  ]
+}

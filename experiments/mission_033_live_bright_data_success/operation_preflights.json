@@ -14,7 +14,7 @@
     {
       "sequence": 1,
       "operation": "collector_create",
-      "status": "READY",
+      "status": "COMPLETED",
       "correlation_id": "m033-create-20260819-001",
       "target_version": "v1",
       "preconditions": [
@@ -26,7 +26,7 @@
     {
       "sequence": 2,
       "operation": "collector_run",
-      "status": "PENDING_BASELINE_CREATION",
+      "status": "COMPLETED",
       "correlation_id": "m033-run-v1-20260819-001",
       "target_version": "v1",
       "preconditions": [
@@ -37,7 +37,7 @@
     {
       "sequence": 3,
       "operation": "collector_run",
-      "status": "PENDING_CONTROLLED_DRIFT",
+      "status": "COMPLETED",
       "correlation_id": "m033-run-v2-20260819-001",
       "target_version": "v2",
       "preconditions": [
@@ -49,7 +49,7 @@
     {
       "sequence": 4,
       "operation": "heal",
-      "status": "PENDING_DETECTION_AND_DIAGNOSIS",
+      "status": "READY",
       "correlation_id": "m033-heal-20260819-001",
       "target_version": "v2",
       "preconditions": [

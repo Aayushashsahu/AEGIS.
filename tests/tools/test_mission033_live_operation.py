@@ -68,4 +68,4 @@ def test_driver_requires_explicit_execution_and_redacts_tokens(tmp_path: Path, m
             execute=False,
         )
 
-    assert operation.redact("Bearer sk-exampletokenmaterial123456") == "Bearer [REDACTED]"
+    assert operation.redact("Bearer sk-this-must-not-persist") == "Bearer [REDACTED]"

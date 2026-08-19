@@ -1,0 +1,8 @@
+{
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "corrected_live_output_claimed": false,
+  "reason": "The candidate remains awaiting provider approval. No provider approval and no third collector run are authorized by the bounded Mission 033 budget.",
+  "same_collector_run_after_approval": false,
+  "schema_version": "mission-033-post-heal-run-boundary-v1",
+  "status": "NOT_EXECUTED_APPROVAL_REQUIRED"
+}

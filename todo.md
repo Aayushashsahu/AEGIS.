@@ -41,10 +41,10 @@
 - [x] Commit focused endgame work, push the existing isolated branch, update PR #1, and report exact provider, lifecycle, deployment, validation, and remaining-blocker status.
 - [x] Read the complete Mission 033 live Bright Data validation brief and reconcile its explicit one-heal authorization with existing safety and immutable-evidence boundaries.
 - [x] Inspect official Bright Data CLI capability and create a new isolated Mission 033 evidence directory, provider operation budget, authorization record, and artifact-hash manifest plan.
-- [ ] Create one fresh simple public demo collector, preserve the provider response, and run it once to capture non-empty baseline structured output.
-- [ ] Establish a clearly labeled controlled drift or mutation against the contract, then run the same collector once more to capture a visible broken/incomplete output without fabricating provider data.
-- [ ] Run canonical AEGIS observation, detection, diagnosis, and compact prompt generation against the Mission 033 evidence before any heal operation.
-- [ ] Execute exactly one authorized Bright Data heal, preserve the complete response, and do not retry, approve, activate, commit, or roll back automatically.
-- [ ] If a provider candidate is returned, pass it through canonical deterministic verification and risk logic; preserve a blocked or quarantined result unless exact owner approval conditions are satisfied.
-- [ ] Hash all Mission 033 evidence, update the frozen frontend and judge package only with truthful provenance, and preserve Mission 028–032 artifacts unchanged.
+- [x] Create one fresh simple public demo collector, preserve the provider response, and run it once to capture non-empty baseline structured output.
+- [x] Establish a clearly labeled controlled drift or mutation against the contract, then run the same collector once more to capture a visible broken/incomplete output without fabricating provider data.
+- [x] Run canonical AEGIS observation, detection, diagnosis, and compact prompt generation against the Mission 033 evidence before any heal operation.
+- [x] Execute exactly one authorized Bright Data heal, preserve the complete response, and do not retry, approve, activate, commit, or roll back automatically.
+- [x] If a provider candidate is returned, pass it through canonical deterministic verification and risk logic; preserve a blocked or quarantined result unless exact owner approval conditions are satisfied.
+- [x] Hash all Mission 033 evidence, update the frozen frontend and judge package only with truthful provenance, and preserve Mission 028–032 artifacts unchanged.
 - [ ] Run provider-free regression, artifact, secret, route, build, and responsive validation; commit, push the existing PR branch, and report the precise live outcome and remaining boundary.

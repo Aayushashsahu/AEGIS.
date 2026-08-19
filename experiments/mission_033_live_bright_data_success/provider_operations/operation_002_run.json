@@ -1,0 +1,41 @@
+{
+  "auto_approval_used": false,
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "command": [
+    "npx",
+    "-p",
+    "@brightdata/cli",
+    "bdata",
+    "--timing",
+    "scraper",
+    "run",
+    "c_mt09pib13nxqz1coi",
+    "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+    "--timeout",
+    "600",
+    "--json"
+  ],
+  "command_sha256": "3097cd4c0621aaf0a08893681e7161990bb4eff8a7a546696a486223812b62e0",
+  "completed_at": "2026-08-19T15:54:19.063920Z",
+  "elapsed_ms": 7742,
+  "operation": "bright_data_collector_run",
+  "operation_id": "operation_002_run",
+  "production_commit_executed": false,
+  "prompt_length": null,
+  "prompt_sha256": null,
+  "provider_approval_executed": false,
+  "returncode": 0,
+  "schema_version": "mission-033-provider-operation-v1",
+  "started_at": "2026-08-19T15:54:11.322265Z",
+  "status": "COMPLETED",
+  "stderr": "Triggering scrape...\nTiming: 3214ms\n                    (attempt 1)\nTriggered (response_id: d2t1787154855638r65uq98pata)\nWaiting for results...",
+  "stdout": [
+    {
+      "input": {
+        "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+      }
+    }
+  ],
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+  "timed_out": false
+}

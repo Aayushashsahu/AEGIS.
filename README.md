@@ -56,6 +56,7 @@ AEGIS distinguishes **live provider evidence** from **controlled-harness measure
 | --- | --- | --- |
 | Mission 029 Bright Data collection | Fresh collector `c_msyo46bp1slx64351` produced 150 structured Hacker News rows; the CLI observed realtime-to-batch fallback. | One public-target demonstration; output remained untrusted. |
 | Mission 030 compact heal | The provider transport projection was reduced from 1,187 to 676 characters, under the documented 1,000-character limit. The single authorized heal then failed with provider HTTP 500 before candidate creation. | No candidate, approval, verification, commit, shipment, or retry by AEGIS. |
+| Mission 033 owned-target validation | Fresh collector `c_mt09pib13nxqz1coi` captured a one-row baseline, exposed a real same-URL markup drift, and returned an `awaiting_approval` Bright Data preview after one heal. Canonical contract, history, semantic, and independent-evidence checks passed; RiskGovernor returned `ACCEPT`. | Provider approval, activation, post-heal rerun, production commit, and downstream output were not authorised or executed. The final CommitGate therefore remains `BLOCKED`. |
 | Mission 028 recovery benchmark | 180 opportunities were preserved: 179 completed, 1 provider failure, and 38 metric artifacts. | The AEGIS metric scope is the controlled `TEST_DOUBLE` harness, not live Bright Data reliability. |
 | Controlled AEGIS safety metrics | DetectionRate `50/50`; L5DetectionRate `20/20`; L5BadDataShipped `0/20`. | Measured against frozen controlled mutation ground truth only. |
 
@@ -67,7 +68,7 @@ The integration contract covers Scraper Studio collectors, structured output, ex
 
 ## Web application and demo
 
-`webapp/` is the frozen supplied frontend with a narrow tRPC boundary. It reads **canonical** `src/aegis/`, `benchmarks/`, `experiments/`, and `scripts/` from the repository root; it does not contain a second AEGIS implementation or copied evidence. Mission 029/030 remains read-only `REAL_PROVIDER` evidence. Candidate through commit eligibility is a separately labeled `TEST_DOUBLE` replay. The web UI exposes no live provider, benchmark, approval, commit, or rollback action.
+`webapp/` is the frozen supplied frontend with a narrow tRPC boundary. It reads **canonical** `src/aegis/`, `benchmarks/`, `experiments/`, and `scripts/` from the repository root; it does not contain a second AEGIS implementation or copied evidence. Mission 029/030 and Mission 033 are read-only `REAL_PROVIDER` evidence. Mission 033 makes the provider candidate, deterministic verification pass, risk acceptance, and blocked provider-approval/output boundary visible without providing any live action. Candidate through commit eligibility is also available as a separately labeled `TEST_DOUBLE` replay. The web UI exposes no live provider, benchmark, approval, commit, or rollback action.
 
 The default web mode is provider-free. Public demo case creation persists only a bounded configuration contract; it never persists lifecycle decisions or invokes a provider. Its input and in-memory rate limits are deliberately modest demonstration safeguards rather than an identity system.
 
@@ -95,7 +96,7 @@ The adapter uses `AEGIS_PYTHON` first, then discovers `python3`/`python`, and re
 
 ## Final hackathon package
 
-The final judge path is documented in [`experiments/mission_032/final_demo_script.md`](experiments/mission_032/final_demo_script.md). It begins with Mission 029/030 `REAL_PROVIDER` evidence and, after the recorded no-candidate provider failure, explicitly transitions to a `TEST_DOUBLE` controlled replay for verification, risk, commit, and blocked downstream output. The package also includes the [architecture](experiments/mission_032/architecture.md), [evidence map](experiments/mission_032/evidence_map.md), [demo checklist](experiments/mission_032/demo_checklist.md), and [submission description](experiments/mission_032/submission_description.md).
+The final judge path is documented in [`experiments/mission_032/final_demo_script.md`](experiments/mission_032/final_demo_script.md) and strengthened by the [Mission 033 real-provider evidence summary](experiments/mission_033_live_bright_data_success/summary.json). It can now show Mission 029/030’s terminal no-candidate lane, Mission 033’s real candidate-through-verification lane with an explicit approval/output block, and a `TEST_DOUBLE` controlled replay for silent-corruption refusal. The package also includes the [architecture](experiments/mission_032/architecture.md), [evidence map](experiments/mission_032/evidence_map.md), [demo checklist](experiments/mission_032/demo_checklist.md), and [submission description](experiments/mission_032/submission_description.md).
 
 The demo-video location is **TBD by the project owner**. The release is deployment-ready but not publicly deployed by this task; see [`webapp/DEPLOYMENT.md`](webapp/DEPLOYMENT.md). Scraper Studio workflow details and the AI-use disclosure remain bounded by the authenticated evidence and policy records in this repository; no provider action occurs on page load.
 
@@ -126,7 +127,7 @@ webapp/            Frozen supplied frontend, tRPC API, configuration persistence
 
 ## Limitations and open decisions
 
-The repository does not claim provider approval execution, provider-native activation, provider-native commit, provider-native rollback, a successful Mission 029/030 repair candidate, or production deployment. The Mission 030 HTTP 500 root cause remains unresolved; the corrected compact prompt proves only that the documented length boundary was met. `REJECT`, `QUARANTINE`, unknown evidence, missing known-good references, invalid authorization, and `UNVERIFIED` candidates remain blocked. Provider-native version/rollback, raw response access, WARC delivery, and exact LLM configuration remain open decisions tracked in [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
+The repository does not claim provider approval execution, provider-native activation, provider-native commit, provider-native rollback, a post-approval Mission 033 live rerun, corrected live output shipment, or production deployment. Mission 033’s real provider preview passed deterministic verification, but its `awaiting_approval` candidate remains unapproved and blocked by the CommitGate. The Mission 030 HTTP 500 root cause remains unresolved; the corrected compact prompt proves only that the documented length boundary was met. `REJECT`, `QUARANTINE`, unknown evidence, missing known-good references, invalid authorization, and `UNVERIFIED` candidates remain blocked. Provider-native version/rollback, raw response access, WARC delivery, and exact LLM configuration remain open decisions tracked in [`docs/18_BRIGHT_DATA_INTEGRATION.md`](docs/18_BRIGHT_DATA_INTEGRATION.md).
 
 ## AI usage disclosure
 

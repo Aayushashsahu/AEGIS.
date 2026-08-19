@@ -1,0 +1,106 @@
+{
+  "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+  "checks": [
+    {
+      "affected_fields": [],
+      "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+      "category": "CONTRACT_COMPATIBILITY",
+      "channel": "CONTRACT",
+      "check_id": "check_55960c0267e24e0182c5bf051660e44b",
+      "correlation_id": "mission033-operation_001_heal",
+      "created_at": "2026-08-19T16:04:58.933142+00:00",
+      "critical": false,
+      "details": {},
+      "evidence_refs": [
+        "contract://mission-033-owned-product-v1",
+        "evidence://mission-033/initial-run",
+        "evidence://mission-033/post-drift-run",
+        "evidence://mission-033/provider-candidate"
+      ],
+      "message": "required fields, types, nullability, schema, and configured unaffected fields pass",
+      "provenance": "DETERMINISTIC",
+      "status": "PASS"
+    },
+    {
+      "affected_fields": [],
+      "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+      "category": "HISTORICAL_CONTINUITY",
+      "channel": "HISTORY",
+      "check_id": "check_53657c045f44461fab2af2c8d83d6f45",
+      "correlation_id": "mission033-operation_001_heal",
+      "created_at": "2026-08-19T16:04:58.933182+00:00",
+      "critical": false,
+      "details": {},
+      "evidence_refs": [
+        "evidence://mission-033/initial-run",
+        "evidence://mission-033/operation_001_run",
+        "evidence://mission-033/post-drift-run",
+        "evidence://mission-033/provider-candidate"
+      ],
+      "message": "candidate agrees with supplied known-good observation history",
+      "provenance": "DETERMINISTIC",
+      "status": "PASS"
+    },
+    {
+      "affected_fields": [],
+      "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+      "category": "SEMANTIC_INVARIANTS",
+      "channel": "SEMANTIC_INVARIANT",
+      "check_id": "check_f29a7d1811344accb8f13fff7cb4298f",
+      "correlation_id": "mission033-operation_001_heal",
+      "created_at": "2026-08-19T16:04:58.933207+00:00",
+      "critical": false,
+      "details": {},
+      "evidence_refs": [
+        "evidence://mission-033/initial-run",
+        "evidence://mission-033/post-drift-run",
+        "evidence://mission-033/provider-candidate",
+        "semantic://deterministic-invariants"
+      ],
+      "message": "known URL, numeric, relation, and supplied semantic invariants pass",
+      "provenance": "DETERMINISTIC",
+      "status": "PASS"
+    },
+    {
+      "affected_fields": [],
+      "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+      "category": "INDEPENDENT_MATCH",
+      "channel": "INDEPENDENT_EVIDENCE",
+      "check_id": "check_537a3c44f9694da19b3d5544ec45f244",
+      "correlation_id": "mission033-operation_001_heal",
+      "created_at": "2026-08-19T16:04:58.933234+00:00",
+      "critical": false,
+      "details": {},
+      "evidence_refs": [
+        "evidence://mission-033/independent-target-snapshot.html",
+        "evidence://mission-033/initial-run",
+        "evidence://mission-033/post-drift-run",
+        "evidence://mission-033/provider-candidate",
+        "evidence://mission-033/target-contract.json"
+      ],
+      "message": "candidate agrees with independent source AEGIS-owned public target contract and direct v2 target snapshot",
+      "provenance": "DETERMINISTIC",
+      "status": "PASS"
+    }
+  ],
+  "completed_at": "2026-08-19T16:04:58.933252+00:00",
+  "correlation_id": "mission033-operation_001_heal",
+  "eligible_for_future_commit": true,
+  "evidence_refs": [
+    "contract://mission-033-owned-product-v1",
+    "evidence://mission-033/independent-target-snapshot.html",
+    "evidence://mission-033/initial-run",
+    "evidence://mission-033/operation_001_run",
+    "evidence://mission-033/post-drift-run",
+    "evidence://mission-033/provider-candidate",
+    "evidence://mission-033/target-contract.json",
+    "semantic://deterministic-invariants"
+  ],
+  "failed_checks": [],
+  "overall_status": "PASS",
+  "started_at": "2026-08-19T16:04:58.933092+00:00",
+  "verification_id": "verification_208276c6de644fdfa49982a4b48e13df",
+  "verification_provenance": [
+    "DETERMINISTIC"
+  ]
+}

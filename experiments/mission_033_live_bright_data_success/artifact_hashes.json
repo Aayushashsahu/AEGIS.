@@ -1,6 +1,6 @@
 {
   "schema_version": "mission-033-artifact-hash-manifest-v1",
-  "status": "PRE_PROVIDER_OPERATION_BASELINE",
+  "status": "FINALIZED_REAL_PROVIDER_CANDIDATE_AWAITING_APPROVAL",
   "algorithm": "SHA-256",
   "historical_guard": {
     "benchmarks/runs/mission_028_recovery_floor_4812160675146552/execution_log.json": "caf0308a833eb37e514a1bb500118181eb0b1e9e82140c4643f8c16f0e7e6968",
@@ -12,6 +12,41 @@
     "experiments/mission_030/provider_operations/operation_001.json": "90eaedfadafdead567289345e6e5ac62369bb01a7981eb1fb94871b95d17df3a",
     "experiments/mission_031/demo_session.json": "25e0edcd5eab8f797f7bc60c509c4f9750b7cd9d2452755c51c02cef5d43eb9a"
   },
-  "mission_033_artifacts": {},
-  "finalization_note": "This manifest will gain only hashes of preserved Mission 033 artifacts after the terminal provider outcome. Historical guard entries are revalidated before and after the operation."
+  "mission_033_artifacts": {
+    "README.md": "c3d8ed1c7910f2b4517f2044b434fbcf0d01daaab9e3f32d519946c3ea1bbad0",
+    "approval.json": "4662342b6869023395cbee5f190c4693270f4e9c98edd56934597d3963ac495d",
+    "authorization.json": "7c386a15ee4a4b82538c74de9cbbbf0fa20830bdd83a61a0e74ed5ed72d7bc5a",
+    "candidate_preview.json": "a19480c4e0edf8693ac91a056df2605b4f7d6f0d6f9874362cece390f036a723",
+    "collector_creation.json": "56ad1e54a5d49b396fd78b2ed884f98f77ef9e961b5f37910b97290e742ba878",
+    "commit_decision.json": "5155f3667c15522b4d60f76ffaf2a6cca05deb29eef10f62a53d716a8fa07eb9",
+    "corruption_observation.json": "aead92a73c39a806ad47625380a8d71e4505a7702b74ce057188b6990edd8d25",
+    "detection.json": "d8876d6d7952f8b29980851b3ce24c9895b2cd164ba273f23bd009360019eb36",
+    "diagnosis.json": "025885408ef41754acc4e84349a41f2b1ccb07d6afe99d9ea9a737c88aec6fca",
+    "heal_request.json": "09fe8eb625ab2342918e516acf86f8fba968dd724db3a5c5ce7090e1f01cb007",
+    "independent_target_snapshot.html": "7ee6c50aa12b6a7ee907934cf03c3c852a77caef0760519cc3578a28ce6fbadd",
+    "initial_run.json": "7addbd1ecf113af7f99f9b0ac548c24d177172f93bbbe01d7118e62e3e0d6d89",
+    "observation.json": "5695e909f906f8058e74f5278ff6df15b660447de9a760010b97ebc204779dd9",
+    "operation_ledger.json": "2a45a1ada172e2bd4c2a0d9e2848bc5595a5c3e39bf79075656a7aed9746caaa",
+    "operation_preflights.json": "f615aa66923bfcf694ca1b15051cff7f7ca16f39a25d89b39f019192defecc82",
+    "output_eligibility.json": "5a85b87f4e5ac6660ab7d31961458b8047eb5443479dd9b841e4f801ab1e5afc",
+    "post_heal_run.json": "04f9a1eb50474aa8e0d86edc0610a4de0631be7c9800ae9db6913f3074824805",
+    "preflight_validation.json": "e917b091c29683c6557321164bbe451511d4922688d29894259f50de20508f97",
+    "provider_operations/operation_001_create.json": "56ad1e54a5d49b396fd78b2ed884f98f77ef9e961b5f37910b97290e742ba878",
+    "provider_operations/operation_001_heal.json": "c6d6433db5aa44abff439a5fb9f968316e5c090beb89433a8252bb063b2af034",
+    "provider_operations/operation_001_run.json": "7addbd1ecf113af7f99f9b0ac548c24d177172f93bbbe01d7118e62e3e0d6d89",
+    "provider_operations/operation_002_run.json": "8db1044c02cc03f3f8898e3a9628840d2a5e96c06a55aadd1b06468665a46f1f",
+    "repair_request.json": "f6724e4b362bec4a820df105767504c4c5646094b6fe3e12fd45afb9719cad39",
+    "risk_decision.json": "286c8318d2e6a7ca64eb00e179a8a12e87939586423c66261fc854bc66a885ae",
+    "summary.json": "7340f44d0af84c1cb0f222ce9855caed3c9d14f5878c8c25de9d47f1cb7c9fc4",
+    "target_contract.json": "9d40929bb53def0c8ac7d09dc61d420aa98c4408e11d23404974db0352c467b9",
+    "verification.json": "17e0f1b5cce8374c7392bd36f1cd57420475ee9f35187f8e6aee357fb00fd05c"
+  },
+  "manifest_exclusion": "artifact_hashes.json is intentionally excluded from self-hashing.",
+  "terminal_boundary": {
+    "provider_candidate_status": "awaiting_approval",
+    "provider_approval_executed": false,
+    "production_commit_executed": false,
+    "post_heal_run_executed": false,
+    "corrected_live_output_claimed": false
+  }
 }

@@ -1,0 +1,10 @@
+{
+  "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "provider_approval_command_returned": true,
+  "provider_approval_executed": false,
+  "provider_status": "awaiting_approval",
+  "reason": "Mission 033 authorizes exactly one heal request but no provider approval, activation, or production commit.",
+  "schema_version": "mission-033-provider-approval-boundary-v1",
+  "status": "NOT_AUTHORIZED_NOT_EXECUTED"
+}

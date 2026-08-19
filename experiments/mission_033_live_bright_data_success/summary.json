@@ -1,0 +1,88 @@
+{
+  "schema_version": "mission-033-summary-v1",
+  "mission": "mission_033_live_bright_data_success",
+  "status": "REAL_PROVIDER_CANDIDATE_VERIFIED_AWAITING_PROVIDER_APPROVAL",
+  "claim_boundary": "A real Bright Data collector was created, successfully ran, observed a real owned-target markup drift, and produced a real awaiting-approval repair preview. AEGIS deterministic verification passed and the Risk Governor returned ACCEPT. The provider approval command, production commit, post-heal collector run, and downstream output were not authorized or executed, so no claim is made that corrected live output was activated or shipped.",
+  "collector": {
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+    "creation_status": "COMPLETED",
+    "creation_latency_ms": 84618
+  },
+  "collection": {
+    "same_collector_id_reused": true,
+    "baseline_run": {
+      "status": "COMPLETED",
+      "latency_ms": 7059,
+      "response_id": "d2t1787154717186rcrv13vh136g",
+      "observed_fields": ["title", "price", "availability"],
+      "row_count": 1
+    },
+    "post_drift_run": {
+      "status": "COMPLETED",
+      "latency_ms": 7742,
+      "response_id": "d2t1787154855638r65uq98pata",
+      "observed_fields": [],
+      "row_count": 1,
+      "contract_deviation": "The row retained only its input URL; title, price, and availability were absent after the same owned target URL changed from v1 to v2 markup."
+    }
+  },
+  "detection_and_diagnosis": {
+    "detected": true,
+    "severity": "L2",
+    "affected_fields": ["availability", "price", "title"],
+    "failure_class": "SCHEMA_DRIFT",
+    "diagnosis_provenance": "DETERMINISTIC"
+  },
+  "heal": {
+    "attempts": 1,
+    "retries": 0,
+    "prompt_length": 324,
+    "prompt_sha256": "5eca28e4d47aeb3ba319779ad91baccd2bbbebd66cc25a90e74fbc390897af4e",
+    "status": "awaiting_approval",
+    "latency_ms": 66413,
+    "preview_contains_expected_fields": true
+  },
+  "verification_and_risk": {
+    "candidate_provenance": "REAL_PROVIDER",
+    "candidate_state": "UNVERIFIED",
+    "verification_status": "PASS",
+    "verification_channels": ["CONTRACT", "HISTORY", "SEMANTIC_INVARIANT", "INDEPENDENT_EVIDENCE"],
+    "risk_decision": "ACCEPT",
+    "commit_eligibility": "BLOCKED",
+    "commit_block_reasons": ["CANDIDATE_NOT_VERIFIED", "KNOWN_GOOD_MISSING", "INVALID_AUTHORIZATION"],
+    "downstream_output_eligible": false
+  },
+  "safety_counters": {
+    "bright_data_collector_create": 1,
+    "bright_data_collector_run": 2,
+    "bright_data_collector_heal": 1,
+    "bright_data_approve": 0,
+    "bright_data_production_commit": 0,
+    "bright_data_rollback": 0,
+    "benchmark_runs_executed": 0,
+    "nvidia_invocations": 0,
+    "gemini_invocations": 0,
+    "blind_commit_rate": 0
+  },
+  "historical_evidence": {
+    "mission_028_to_032_modified": false,
+    "historical_integrity_gate": "PASS"
+  },
+  "success_criteria": {
+    "real_collector_exists": true,
+    "real_collector_run_succeeds": true,
+    "real_extraction_drift_observed": true,
+    "aegis_detects_drift": true,
+    "aegis_diagnoses_drift": true,
+    "real_bright_data_heal_runs": true,
+    "provider_candidate_preview_returned": true,
+    "candidate_preserved": true,
+    "aegis_verifies_candidate": true,
+    "aegis_risk_decision_recorded": true,
+    "provider_approval_occurs_only_if_authorized": true,
+    "same_collector_post_approval_rerun": false,
+    "corrected_live_output_returned_after_approval": false,
+    "reason_full_activation_is_not_claimed": "The owner authorization permitted one heal request but expressly excluded provider approval, production commit, and any unauthorized additional run."
+  }
+}

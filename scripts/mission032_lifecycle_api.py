@@ -15,6 +15,13 @@ import sys
 from pathlib import Path
 from typing import Any, Mapping
 
+ROOT = Path(__file__).resolve().parents[1]
+SOURCE_ROOT = ROOT / "src"
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+if str(SOURCE_ROOT) not in sys.path:
+    sys.path.insert(0, str(SOURCE_ROOT))
+
 from aegis.audit_store import _redact, _to_jsonable
 from aegis.commit_gate import CommitGate, OutputEligibilityBoundary
 from aegis.mission030_evidence import Mission029ArtifactLoader
@@ -24,7 +31,6 @@ from aegis.verification_double import VerificationFixture, build_verification_fi
 from scripts.mission031_build_demo_snapshot import RECOVERY_RUN_ID, build_snapshot
 
 
-ROOT = Path(__file__).resolve().parents[1]
 ORDER = ("TARGET", "COLLECTOR", "OBSERVATION", "DETECTION", "DIAGNOSIS", "REPAIR", "CANDIDATE", "VERIFICATION", "RISK", "COMMIT")
 
 
@@ -166,6 +172,83 @@ def _historical(root: Path) -> dict[str, Any]:
     return {"case": case, "events": events, "graph": graph, "replay": replay}
 
 
+def _mission033(root: Path) -> dict[str, Any]:
+    """Project preserved Mission 033 real-provider candidate evidence read-only."""
+
+    evidence_root = root / "experiments" / "mission_033_live_bright_data_success"
+    required = {
+        "creation": evidence_root / "collector_creation.json",
+        "drifted_run": evidence_root / "provider_operations" / "operation_002_run.json",
+        "candidate": evidence_root / "candidate_preview.json",
+        "verification": evidence_root / "verification.json",
+        "risk": evidence_root / "risk_decision.json",
+        "commit": evidence_root / "commit_decision.json",
+        "approval": evidence_root / "approval.json",
+        "post_heal": evidence_root / "post_heal_run.json",
+        "observation": evidence_root / "corruption_observation.json",
+        "heal": evidence_root / "provider_operations" / "operation_001_heal.json",
+    }
+    if not all(path.is_file() for path in required.values()):
+        raise RuntimeError("Mission 033 evidence bundle is incomplete; refusing to project partial provider state.")
+    records = {name: json.loads(path.read_text(encoding="utf-8")) for name, path in required.items()}
+    creation = records["creation"]
+    drifted_run = records["drifted_run"]
+    candidate = records["candidate"]
+    verification = records["verification"]
+    risk = records["risk"]
+    commit = records["commit"]
+    approval = records["approval"]
+    post_heal = records["post_heal"]
+    observation = records["observation"]
+    heal = records["heal"]
+    refs = tuple(f"evidence://mission-033/{path.relative_to(evidence_root)}" for path in required.values())
+    collector_id = str(candidate["collector_id"])
+    target_url = str(observation["target_url"])
+    nodes = [
+        _node("TARGET", "CONFIGURED", "REAL_PROVIDER", "AEGIS-owned public target; v1→v2 markup drift at the same URL.", refs, domain_status="owned_target_v2"),
+        _node("COLLECTOR", "ACTIVE", "REAL_PROVIDER", collector_id, refs, provider="Bright Data Scraper Studio", domain_status="collector_created_and_reused"),
+        _node("OBSERVATION", "ACTIVE", "REAL_PROVIDER", "Baseline contained all contract fields; v2 run returned only the input URL.", refs, domain_status="contract_deviation_observed"),
+        _node("DETECTION", "ANOMALY", "REAL_PROVIDER", "Canonical schema detector found title, price, and availability missing.", refs, domain_status="schema_drift_detected"),
+        _node("DIAGNOSIS", "ANOMALY", "REAL_PROVIDER", "Deterministic diagnosis: SCHEMA_DRIFT.", refs, domain_status="schema_drift_diagnosed"),
+        _node("REPAIR", "ACTIVE", "REAL_PROVIDER", f"One bounded heal completed in {heal['elapsed_ms']} ms and returned awaiting_approval.", refs, provider="Bright Data Scraper Studio", domain_status="provider_heal_awaiting_approval"),
+        _node("CANDIDATE", "ACTIVE", "REAL_PROVIDER", "Provider preview exists and remains UNVERIFIED until AEGIS evaluation; approval was not executed.", refs, provider="Bright Data Scraper Studio", domain_status="candidate_unverified"),
+        _node("VERIFICATION", "VERIFIED", "AEGIS_DETERMINISTIC", f"{verification['overall_status']}: contract, history, semantics, and independent owned-target evidence passed.", refs, domain_status="verification_pass"),
+        _node("RISK", "VERIFIED", "AEGIS_DETERMINISTIC", f"{risk['decision']}: eligible only for a future commit stage.", refs, domain_status="risk_accept"),
+        _node("COMMIT", "BLOCKED", "AEGIS_DETERMINISTIC", f"{commit['reason_code']}; provider approval={approval['status']}; post-heal run={post_heal['status']}.", refs, domain_status="provider_approval_and_output_blocked"),
+    ]
+    graph = _graph(
+        "mission_033_real_provider_candidate",
+        "REAL_PROVIDER_CANDIDATE_AWAITING_APPROVAL",
+        nodes,
+        "Mission 033 is a real Bright Data create → run → owned-target drift → heal → candidate → deterministic verification story. The candidate passed deterministic checks, but AEGIS still blocks provider approval, a post-heal run, and downstream output until separately authorised.",
+        "BLOCKED",
+    )
+    events = [
+        {"event_id": "m033-create", "event_type": "COLLECTOR", "label": "Fresh collector created", "timestamp": creation["completed_at"], "provenance": "REAL_PROVIDER", "status": "COMPLETED", "evidence_refs": list(refs)},
+        {"event_id": "m033-drift", "event_type": "DETECTION", "label": "Same collector observed v2 contract drift", "timestamp": drifted_run["completed_at"], "provenance": "REAL_PROVIDER", "status": "SCHEMA_DRIFT", "evidence_refs": list(refs)},
+        {"event_id": "m033-heal", "event_type": "REPAIR", "label": "One Bright Data heal returned an awaiting-approval preview", "timestamp": heal["completed_at"], "provenance": "REAL_PROVIDER", "status": candidate["provider_status"], "evidence_refs": list(refs)},
+        {"event_id": "m033-verification", "event_type": "VERIFICATION", "label": "Deterministic candidate verification", "timestamp": verification["completed_at"], "provenance": "AEGIS_DETERMINISTIC", "status": verification["overall_status"], "evidence_refs": list(refs)},
+        {"event_id": "m033-risk", "event_type": "RISK_DECISION", "label": "Risk governor", "timestamp": risk["created_at"], "provenance": "AEGIS_DETERMINISTIC", "status": risk["decision"], "evidence_refs": list(refs)},
+        {"event_id": "m033-commit", "event_type": "COMMIT_DECISION", "label": "Approval and downstream-output boundary", "timestamp": commit["created_at"], "provenance": "AEGIS_DETERMINISTIC", "status": commit["eligibility"], "evidence_refs": list(refs)},
+    ]
+    case = {
+        "case_id": "mission_033_real_provider_candidate",
+        "name": "Mission 033 / Bright Data real candidate",
+        "target_url": target_url,
+        "collector_id": collector_id,
+        "description": "Real Bright Data candidate preview following an AEGIS-owned controlled markup drift; no provider approval or post-heal run was authorised.",
+        "fields": [{"name": name, "type": "text", "description": "Mission 033 owned-product contract field"} for name in ("title", "price", "availability")],
+        "invariants": ["same_collector_id", "exact_owned_product_contract", "independent_owned_target_evidence"],
+        "correlation_id": str(verification["correlation_id"]),
+        "created_at": str(heal["started_at"]),
+        "updated_at": str(commit["created_at"]),
+        "lifecycle": {"current_status": "AWAITING_PROVIDER_APPROVAL_COMMIT_BLOCKED", "event_count": len(events), "latest_event_type": "COMMIT_DECISION", "evidence_refs": list(refs)},
+        "actions": [],
+        "action_policy": "Read-only real-provider evidence. AEGIS verification passed and risk accepted, but the provider candidate remains unapproved; provider approval, post-heal run, and output consumption are blocked.",
+    }
+    return {"case": case, "events": events, "graph": graph, "replay": {"candidate": candidate, "verification": verification, "risk": risk, "commit": commit, "approval": approval, "post_heal": post_heal, "output_eligible": False}}
+
+
 def _controlled(root: Path) -> dict[str, Any]:
     context = build_verification_fixture(VerificationFixture.SILENT_CORRUPTION)
     verification = verify_candidate(context)
@@ -264,11 +347,13 @@ def dispatch(root: Path, request: Mapping[str, Any]) -> Mapping[str, Any]:
     historical = _historical(root)
     controlled = _controlled(root)
     if action == "seed_cases":
-        return {"cases": [historical["case"], controlled["case"]]}
+        return {"cases": [historical["case"], _mission033(root)["case"], controlled["case"]]}
     if action == "historical":
         return historical
     if action == "controlled":
         return controlled
+    if action == "mission033":
+        return _mission033(root)
     if action == "configured":
         config = request.get("case")
         if not isinstance(config, Mapping):

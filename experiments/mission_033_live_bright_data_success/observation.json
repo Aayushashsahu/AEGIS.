@@ -1,0 +1,27 @@
+{
+  "collected_at": "2026-08-19T15:58:40.018079+00:00",
+  "collection_id": "d2t1787154855638r65uq98pata",
+  "collection_mode": "REALTIME",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "evidence_refs": [
+    "evidence://mission-033/operation_002_run",
+    "evidence://mission-033/target-contract"
+  ],
+  "input": {
+    "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+    "target_version": "v2"
+  },
+  "latency_ms": 7742,
+  "observation_id": "observation_803f9be5193e433f8bde191c2865b8eb",
+  "output": [
+    {}
+  ],
+  "provider_operation_ids": {
+    "operation_id": "operation_002_run",
+    "response_id": "d2t1787154855638r65uq98pata"
+  },
+  "provider_provenance": "BRIGHT_DATA",
+  "row_count": 1,
+  "schema": [],
+  "trust_status": "UNTRUSTED_UNTIL_VERIFIED"
+}

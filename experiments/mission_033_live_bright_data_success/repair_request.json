@@ -1,0 +1,85 @@
+{
+  "affected_fields": [
+    "availability",
+    "price",
+    "title"
+  ],
+  "collector_reference": "c_mt09pib13nxqz1coi",
+  "constraints": [
+    "Preserve the frozen extraction contract and its field semantics.",
+    "Preserve known invariants and unaffected fields.",
+    "Do not approve, activate, or commit a candidate."
+  ],
+  "correlation_id": "d2t1787154855638r65uq98pata",
+  "detection_id": "detection_observation_803f9be5193e433f8bde191c2865b8eb",
+  "diagnosis_id": "diagnosis_c9fdbe7b4c2d4210939f612d3cd0839b",
+  "evidence_references": [
+    "evidence://mission-033/initial-run",
+    "evidence://mission-033/operation_002_run",
+    "evidence://mission-033/post-drift-run",
+    "evidence://mission-033/target-contract",
+    "evidence://mission-033/target-v2",
+    "observation://row/0/field/availability",
+    "observation://row/0/field/price",
+    "observation://row/0/field/title"
+  ],
+  "extraction_contract": {
+    "contract_id": "mission-033-owned-product-v1",
+    "expected_row_count": null,
+    "expected_schema": [
+      "title",
+      "price",
+      "availability"
+    ],
+    "fields": [
+      {
+        "allow_null": false,
+        "expected_types": [
+          "<class 'str'>"
+        ],
+        "name": "title",
+        "required": true
+      },
+      {
+        "allow_null": false,
+        "expected_types": [
+          "<class 'dict'>"
+        ],
+        "name": "price",
+        "required": true
+      },
+      {
+        "allow_null": false,
+        "expected_types": [
+          "<class 'str'>"
+        ],
+        "name": "availability",
+        "required": true
+      }
+    ],
+    "invariants": [],
+    "max_rows": null,
+    "min_rows": 1,
+    "numeric_bounds": {},
+    "row_count_tolerance": 0
+  },
+  "failure_class": "SCHEMA_DRIFT",
+  "mutation_context": {
+    "baseline_run_artifact": "initial_run.json",
+    "boundary": "OWNED_PUBLIC_TARGET",
+    "drifted_run_artifact": "provider_operations/operation_002_run.json",
+    "external_provider_output_modified": false,
+    "mutation_id": "M033_OWNED_TARGET_V2_MARKUP_DRIFT",
+    "same_url": true
+  },
+  "observation_id": "observation_803f9be5193e433f8bde191c2865b8eb",
+  "provenance": "DETERMINISTIC",
+  "repair_objective": "Restore extraction of availability, price, title without changing the output schema, while preserving all unaffected fields.",
+  "repair_request_id": "repair_request_278099e788374c2abf2024266c99bb19",
+  "severity": "L2",
+  "status": "REPAIR_REQUESTED",
+  "target_input": {
+    "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+  },
+  "timestamp": "2026-08-19T15:58:40.018271+00:00"
+}

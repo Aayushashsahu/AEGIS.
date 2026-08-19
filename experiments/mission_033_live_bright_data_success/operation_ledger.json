@@ -1,25 +1,54 @@
 {
-  "schema_version": "mission-033-operation-ledger-v1",
-  "updated_at": "2026-08-19T15:46:23Z",
   "counts": {
-    "bright_data_read_only_auth_probe": 1,
-    "bright_data_collector_create": 0,
-    "bright_data_collector_run": 0,
-    "bright_data_heal": 0,
-    "bright_data_approve": 0,
-    "bright_data_production_commit": 0,
-    "bright_data_rollback": 0,
     "benchmark_runs_executed": 0,
-    "nvidia_invocations": 0,
-    "gemini_invocations": 0
+    "bright_data_approve": 0,
+    "bright_data_collector_create": 1,
+    "bright_data_collector_heal": 1,
+    "bright_data_collector_run": 2,
+    "bright_data_heal": 0,
+    "bright_data_production_commit": 0,
+    "bright_data_read_only_auth_probe": 1,
+    "bright_data_rollback": 0,
+    "gemini_invocations": 0,
+    "nvidia_invocations": 0
   },
   "records": [
     {
-      "operation": "bright_data_read_only_auth_probe",
-      "status": "COMPLETED",
       "command_shape": "npx -p @brightdata/cli bdata zones --json --timing",
+      "latency_ms": 2896,
+      "operation": "bright_data_read_only_auth_probe",
       "result": "Four active zones observed; no credential material captured.",
-      "latency_ms": 2896
+      "status": "COMPLETED"
+    },
+    {
+      "artifact": "provider_operations/operation_001_create.json",
+      "elapsed_ms": 84618,
+      "operation": "bright_data_collector_create",
+      "operation_id": "operation_001_create",
+      "status": "COMPLETED"
+    },
+    {
+      "artifact": "provider_operations/operation_001_run.json",
+      "elapsed_ms": 7059,
+      "operation": "bright_data_collector_run",
+      "operation_id": "operation_001_run",
+      "status": "COMPLETED"
+    },
+    {
+      "artifact": "provider_operations/operation_002_run.json",
+      "elapsed_ms": 7742,
+      "operation": "bright_data_collector_run",
+      "operation_id": "operation_002_run",
+      "status": "COMPLETED"
+    },
+    {
+      "artifact": "provider_operations/operation_001_heal.json",
+      "elapsed_ms": 66413,
+      "operation": "bright_data_collector_heal",
+      "operation_id": "operation_001_heal",
+      "status": "COMPLETED"
     }
-  ]
+  ],
+  "schema_version": "mission-033-operation-ledger-v1",
+  "updated_at": "2026-08-19T16:01:12.718905Z"
 }

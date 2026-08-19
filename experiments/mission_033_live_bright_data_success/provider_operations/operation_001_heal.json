@@ -1,0 +1,64 @@
+{
+  "auto_approval_used": false,
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "command": [
+    "npx",
+    "-p",
+    "@brightdata/cli",
+    "bdata",
+    "--timing",
+    "scraper",
+    "heal",
+    "c_mt09pib13nxqz1coi",
+    "The page markup changed and the current run returns only the input URL. Restore title, price, and availability from the current semantic labels: Item name, Current price, and Stock state. Preserve the existing output schema. Return title as text, price with USD currency and numeric value 599, and availability as Available.",
+    "--url",
+    "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+    "--timeout",
+    "900",
+    "--max-retries",
+    "0",
+    "--json"
+  ],
+  "command_sha256": "5b0ed8f3b31049d10f0334d144f320bef0c0683e2c873ae9c52b4c8c36e82337",
+  "completed_at": "2026-08-19T16:01:12.718905Z",
+  "elapsed_ms": 66413,
+  "operation": "bright_data_collector_heal",
+  "operation_id": "operation_001_heal",
+  "production_commit_executed": false,
+  "prompt_length": 324,
+  "prompt_sha256": "5eca28e4d47aeb3ba319779ad91baccd2bbbebd66cc25a90e74fbc390897af4e",
+  "provider_approval_executed": false,
+  "returncode": 0,
+  "schema_version": "mission-033-provider-operation-v1",
+  "started_at": "2026-08-19T16:00:06.305949Z",
+  "status": "COMPLETED",
+  "stderr": "Triggering self-healing...\nTiming: 3595ms\n                    (attempt 1)\nHealing scraper...\nTiming: 3308ms\n                    (attempt 1)\nStep: planner \u2014 polling (attempt 1/900)\nTiming: 3053ms\n                    (attempt 1)\nStep: control_preview_runner \u2014 polling (attempt 2/900)\nTiming: 736ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 3/900)\nTiming: 723ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 4/900)\nTiming: 712ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 5/900)\nTiming: 726ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 6/900)\nTiming: 713ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 7/900)\nTiming: 717ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 8/900)\nTiming: 730ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 9/900)\nTiming: 712ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 10/900)\nTiming: 714ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 11/900)\nTiming: 714ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 12/900)\nTiming: 721ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 13/900)\nTiming: 727ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 14/900)\nTiming: 720ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 15/900)\nTiming: 714ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 16/900)\nTiming: 717ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 17/900)\nTiming: 730ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 18/900)\nTiming: 707ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 19/900)\nTiming: 732ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 20/900)\nTiming: 730ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 21/900)\nTiming: 732ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 22/900)\nTiming: 730ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 23/900)\nTiming: 717ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 24/900)\nTiming: 715ms\n                    (attempt 1)\nStep: code_fixer \u2014 polling (attempt 25/900)\nTiming: 708ms\n                    (attempt 1)\nStep: step_preview_runner \u2014 polling (attempt 26/900)\nTiming: 713ms\n                    (attempt 1)\nStep: step_preview_runner \u2014 polling (attempt 27/900)\nTiming: 727ms\n                    (attempt 1)\nStep: request_fulfillment_validator \u2014 polling (attempt 28/900)\nTiming: 720ms\n                    (attempt 1)\nStep: request_fulfillment_validator \u2014 polling (attempt 29/900)\nTiming: 725ms\n                    (attempt 1)\nStep: request_fulfillment_validator \u2014 polling (attempt 30/900)\nTiming: 712ms\n                    (attempt 1)\nStep: request_fulfillment_validator \u2014 polling (attempt 31/900)\nTiming: 709ms\n                    (attempt 1)\nStep: request_fulfillment_validator \u2014 polling (attempt 32/900)\nTiming: 1021ms\n                    (attempt 1)\nDone in 33 poll attempts.\nHeal ready \u2014 awaiting approval (collector c_mt09pib13nxqz1coi).",
+  "stdout": {
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "completed_steps": [
+      "planner",
+      "control_preview_runner",
+      "code_fixer",
+      "step_preview_runner",
+      "request_fulfillment_validator",
+      "step_advance"
+    ],
+    "diff_summary": "proposed template has 1 step(s) \u2014 review at view_url",
+    "next_step": "bdata scraper approve c_mt09pib13nxqz1coi --url https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+    "preview_result": [
+      {
+        "availability": "Available",
+        "price": {
+          "currency": "USD",
+          "value": 599
+        },
+        "title": "AEGIS Verification Widget"
+      }
+    ],
+    "prompt": "The page markup changed and the current run returns only the input URL. Restore title, price, and availability from the current semantic labels: Item name, Current price, and Stock state. Preserve the existing output schema. Return title as text, price with USD currency and numeric value 599, and availability as Available.",
+    "status": "awaiting_approval",
+    "view_url": "https://brightdata.com/cp/scrapers/c_mt09pib13nxqz1coi"
+  },
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+  "timed_out": false
+}

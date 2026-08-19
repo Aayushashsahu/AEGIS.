@@ -1,0 +1,17 @@
+{
+  "approval_authorized": false,
+  "auto_approve": false,
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "diagnosis_id": "diagnosis_c9fdbe7b4c2d4210939f612d3cd0839b",
+  "prompt": "The page markup changed and the current run returns only the input URL. Restore title, price, and availability from the current semantic labels: Item name, Current price, and Stock state. Preserve the existing output schema. Return title as text, price with USD currency and numeric value 599, and availability as Available.",
+  "prompt_length": 324,
+  "prompt_sha256": "5eca28e4d47aeb3ba319779ad91baccd2bbbebd66cc25a90e74fbc390897af4e",
+  "provenance": "AEGIS_DETERMINISTIC_PROJECTION",
+  "provider_command_authorized": "bdata scraper heal <collector_id> <prompt> --url <target_url> --max-retries 0 --json",
+  "repair_request_id": "repair_request_278099e788374c2abf2024266c99bb19",
+  "retries": 0,
+  "schema_version": "mission-033-heal-request-v1",
+  "status": "READY_FOR_ONE_AUTHORIZED_HEAL",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+  "within_documented_limit": true
+}

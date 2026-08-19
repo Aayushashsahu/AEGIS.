@@ -1,0 +1,34 @@
+{
+  "affected_fields": [
+    "availability",
+    "price",
+    "title"
+  ],
+  "candidate_classes": [
+    "SCHEMA_DRIFT"
+  ],
+  "certainty": "DETERMINED",
+  "correlation_id": "d2t1787154855638r65uq98pata",
+  "detection_id": "detection_observation_803f9be5193e433f8bde191c2865b8eb",
+  "detector_provenance": [
+    "schema"
+  ],
+  "diagnosis_id": "diagnosis_c9fdbe7b4c2d4210939f612d3cd0839b",
+  "diagnosis_provenance": "DETERMINISTIC",
+  "evidence_references": [
+    "evidence://mission-033/initial-run",
+    "evidence://mission-033/operation_002_run",
+    "evidence://mission-033/post-drift-run",
+    "evidence://mission-033/target-contract",
+    "evidence://mission-033/target-v2",
+    "observation://row/0/field/availability",
+    "observation://row/0/field/price",
+    "observation://row/0/field/title"
+  ],
+  "failure_class": "SCHEMA_DRIFT",
+  "observation_id": "observation_803f9be5193e433f8bde191c2865b8eb",
+  "rationale": "Deterministic rule matched evidence codes for SCHEMA_DRIFT.",
+  "severity": "L2",
+  "status": "CREATED",
+  "timestamp": "2026-08-19T15:58:40.018227+00:00"
+}

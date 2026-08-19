@@ -45,6 +45,7 @@ export const appRouter = router({
     }),
     caseLifecycle: publicProcedure.input(z.object({ caseId: z.string().min(1) })).query(async ({ input }) => {
       if (input.caseId === "mission_029_real_provider") return invokeAegis({ action: "historical" });
+      if (input.caseId === "mission_033_real_provider_candidate") return invokeAegis({ action: "mission033" });
       if (input.caseId === "controlled_silent_corruption") return invokeAegis({ action: "controlled" });
       const configured = await getAegisCase(input.caseId);
       if (!configured) throw new Error("AEGIS case not found");

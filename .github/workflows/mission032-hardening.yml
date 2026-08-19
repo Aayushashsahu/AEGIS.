@@ -13,6 +13,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Materialize frozen main baseline for historical integrity tests
+        run: git fetch origin main:main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"

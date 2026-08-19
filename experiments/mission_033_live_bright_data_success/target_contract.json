@@ -1,0 +1,37 @@
+{
+  "schema_version": "mission-033-owned-target-contract-v1",
+  "target_owner": "AEGIS_PROJECT",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+  "route": "/mission-033/target",
+  "initial_target_version": "v1",
+  "controlled_drift_version": "v2",
+  "contract": {
+    "entity": "single public product",
+    "fields": [
+      {
+        "name": "title",
+        "type": "string",
+        "expected_value": "AEGIS Verification Widget"
+      },
+      {
+        "name": "price",
+        "type": "string",
+        "expected_value": "$599.00"
+      },
+      {
+        "name": "availability",
+        "type": "string",
+        "expected_value": "Available"
+      }
+    ]
+  },
+  "v1_markup_intent": "Three semantically labelled product fields in separate, stable elements.",
+  "v2_markup_intent": "The same facts remain public at the same URL but their DOM relationships and labels change, creating controlled extraction drift without fabricating or altering provider output.",
+  "data_safety": {
+    "public": true,
+    "login_required": false,
+    "contains_personal_data": false,
+    "contains_customer_reviews_or_testimonials": false,
+    "provider_output_is_untrusted": true
+  }
+}

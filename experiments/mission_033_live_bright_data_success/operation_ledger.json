@@ -1,0 +1,25 @@
+{
+  "schema_version": "mission-033-operation-ledger-v1",
+  "updated_at": "2026-08-19T15:46:23Z",
+  "counts": {
+    "bright_data_read_only_auth_probe": 1,
+    "bright_data_collector_create": 0,
+    "bright_data_collector_run": 0,
+    "bright_data_heal": 0,
+    "bright_data_approve": 0,
+    "bright_data_production_commit": 0,
+    "bright_data_rollback": 0,
+    "benchmark_runs_executed": 0,
+    "nvidia_invocations": 0,
+    "gemini_invocations": 0
+  },
+  "records": [
+    {
+      "operation": "bright_data_read_only_auth_probe",
+      "status": "COMPLETED",
+      "command_shape": "npx -p @brightdata/cli bdata zones --json --timing",
+      "result": "Four active zones observed; no credential material captured.",
+      "latency_ms": 2896
+    }
+  ]
+}

@@ -8,6 +8,7 @@ import { registerStorageProxy } from "./storageProxy";
 import { appRouter } from "../routers";
 import { createContext } from "./context";
 import { serveStatic, setupVite } from "./vite";
+import { mission033TargetHtml } from "../mission033Target";
 
 function isPortAvailable(port: number): Promise<boolean> {
   return new Promise(resolve => {
@@ -36,6 +37,9 @@ async function startServer() {
   app.use(express.urlencoded({ limit: "50mb", extended: true }));
   app.get("/healthz", (_req, res) => {
     res.status(200).json({ status: "ok", service: "aegis-webapp", mode: "provider-free-by-default" });
+  });
+  app.get("/mission-033/target", (_req, res) => {
+    res.status(200).type("html").send(mission033TargetHtml());
   });
   registerStorageProxy(app);
   registerOAuthRoutes(app);

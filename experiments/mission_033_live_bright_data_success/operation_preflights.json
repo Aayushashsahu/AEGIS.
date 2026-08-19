@@ -1,0 +1,63 @@
+{
+  "schema_version": "mission-033-operation-preflights-v1",
+  "policy": {
+    "collector_create": 1,
+    "collector_run": 2,
+    "heal": 1,
+    "retries": 0,
+    "auto_approve": false,
+    "approve": false,
+    "production_commit": false,
+    "rollback": false
+  },
+  "operations": [
+    {
+      "sequence": 1,
+      "operation": "collector_create",
+      "status": "READY",
+      "correlation_id": "m033-create-20260819-001",
+      "target_version": "v1",
+      "preconditions": [
+        "G1 through G6 PASS in authorization.json",
+        "provider-free preflight PASS",
+        "public target route returned the expected v1 facts"
+      ]
+    },
+    {
+      "sequence": 2,
+      "operation": "collector_run",
+      "status": "PENDING_BASELINE_CREATION",
+      "correlation_id": "m033-run-v1-20260819-001",
+      "target_version": "v1",
+      "preconditions": [
+        "collector_creation.json records one successful collector ID",
+        "operation ledger count is within budget"
+      ]
+    },
+    {
+      "sequence": 3,
+      "operation": "collector_run",
+      "status": "PENDING_CONTROLLED_DRIFT",
+      "correlation_id": "m033-run-v2-20260819-001",
+      "target_version": "v2",
+      "preconditions": [
+        "initial_run.json is preserved",
+        "the owned target has changed from v1 to v2 at the same URL",
+        "operation ledger count is within budget"
+      ]
+    },
+    {
+      "sequence": 4,
+      "operation": "heal",
+      "status": "PENDING_DETECTION_AND_DIAGNOSIS",
+      "correlation_id": "m033-heal-20260819-001",
+      "target_version": "v2",
+      "preconditions": [
+        "corruption_observation.json identifies a real contract deviation in the second provider run",
+        "canonical AEGIS detection and diagnosis records exist",
+        "prompt has a recorded SHA-256 and length at most 1000 characters",
+        "the command contains no --auto-approve and no retry"
+      ]
+    }
+  ]
+}

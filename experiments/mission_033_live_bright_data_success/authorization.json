@@ -1,0 +1,56 @@
+{
+  "schema_version": "mission-033-live-authorization-v1",
+  "mission": "mission_033_live_bright_data_success",
+  "status": "AUTHORIZED_FOR_BOUNDED_EXECUTION",
+  "authorized_at": "2026-08-19T15:46:23Z",
+  "authorization_source": {
+    "type": "PROJECT_OWNER_ATTACHED_BRIEF",
+    "artifact": "/home/ubuntu/upload/pasted_content_36.txt",
+    "scope": "One new public collector, exactly two collector runs, and exactly one non-auto-approved heal request; no automatic approval or production commit."
+  },
+  "operator": "MANUS_AGENT_ON_BEHALF_OF_PROJECT_OWNER",
+  "operation_budget": {
+    "bright_data_read_only_auth_probe": 1,
+    "bright_data_collector_create": 1,
+    "bright_data_collector_run": 2,
+    "bright_data_heal": 1,
+    "bright_data_approve": 0,
+    "bright_data_production_commit": 0,
+    "bright_data_rollback": 0,
+    "benchmark_runs_executed": 0,
+    "nvidia_invocations": 0,
+    "gemini_invocations": 0,
+    "healing_retries": 0
+  },
+  "gates": {
+    "G1_immutable_history_guard": {
+      "status": "PASS",
+      "evidence": "The provider-free integrity verifier accepted eight immutable Mission 028–031 artifacts before authorization. Their SHA-256 values are recorded in artifact_hashes.json."
+    },
+    "G2_environment_guard": {
+      "status": "PASS",
+      "evidence": "Official Bright Data CLI 0.3.5 was installed on demand. A documented read-only zones request completed in 2,896 ms and returned four active zones. No credential value was emitted or persisted."
+    },
+    "G3_request_rationale": {
+      "status": "PASS",
+      "evidence": "The mission validates the documented create → run → controlled owned-target drift → heal candidate workflow. It does not describe the evidence-only Mission 029 mutation as a provider-side page change."
+    },
+    "G4_budget_guard": {
+      "status": "PASS",
+      "evidence": "The budget is fixed above. Each mutation-capable operation must receive a separate preflight record; no over-budget action is allowed."
+    },
+    "G5_safety_guard": {
+      "status": "PASS",
+      "evidence": "The live commands prohibit --auto-approve, approve, production commit, rollback, benchmark execution, NVIDIA, Gemini, and looped retries."
+    },
+    "G6_candidate_guard": {
+      "status": "PASS",
+      "evidence": "Any provider preview is persisted as REAL_PROVIDER and UNVERIFIED, then evaluated by canonical AEGIS verification and risk logic without provider approval."
+    }
+  },
+  "terminal_conditions": [
+    "A provider error, timeout, empty response, malformed envelope, budget breach, or failed gate stops further mutation-capable provider calls.",
+    "A returned awaiting_approval candidate is preserved and deterministically evaluated but is not approved.",
+    "A provider candidate that cannot pass independent verification remains blocked or quarantined."
+  ]
+}

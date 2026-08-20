@@ -41,13 +41,17 @@ def test_progress_lookup_is_one_get_and_retains_only_safe_candidate_preview_meta
 
     def opener(request, *, timeout):
         calls.append((request, timeout))
-        return FakeResponse(200, b'{"status":"pending_answer","preview_result":[{"title":"not retained"}],"candidate_id":"candidate_m033_a0d9aa5a0d056720"}')
+        return FakeResponse(200, b'{"status":"pending_answer","preview_result":[{"title":"not retained"}],"candidate_id":"candidate_m033_a0d9aa5a0d056720","job_id":"j_safe","revision_id":"r_safe","updated_at":"2026-08-20T00:00:00Z"}')
 
     result = request_readonly_heal_progress("token-not-retained", collector_id=COLLECTOR, candidate_id=CANDIDATE, timeout_seconds=2, opener=opener)
 
     assert result.success is True
     assert result.http_status == 200
     assert result.provider_status == "pending_answer"
+    assert result.progress_status == "PENDING"
+    assert result.provider_job_id == "j_safe"
+    assert result.provider_revision == "r_safe"
+    assert result.provider_timestamp == "2026-08-20T00:00:00Z"
     assert result.preview_present is True
     assert result.candidate_found == "YES"
     assert result.collector_match == "YES"
@@ -71,6 +75,19 @@ def test_successful_response_without_aeigis_candidate_identifier_reports_no_matc
     assert result.candidate_found == "NO"
     assert result.preview_present is False
     assert result.retry_count == 0
+
+
+@pytest.mark.parametrize(("provider_status", "expected_progress"), [("done", "COMPLETED"), ("running", "RUNNING"), ("failed", "FAILED"), ("unlisted_state", "UNKNOWN")])
+def test_progress_status_is_classified_only_from_explicit_provider_status(provider_status: str, expected_progress: str) -> None:
+    result = request_readonly_heal_progress(
+        "token-not-retained",
+        collector_id=COLLECTOR,
+        candidate_id=CANDIDATE,
+        opener=lambda _request, *, timeout: FakeResponse(200, ('{"status":"' + provider_status + '"}').encode("utf-8")),
+    )
+
+    assert result.provider_status == provider_status
+    assert result.progress_status == expected_progress
 
 
 @pytest.mark.parametrize(("status", "expected_error"), [(401, "HTTP_401"), (403, "HTTP_403_SCOPE"), (404, "HTTP_404")])

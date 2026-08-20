@@ -1,0 +1,15 @@
+{
+  "schema_version": "mission-041a-summary-v1",
+  "mission_id": "mission_041a_post_approval_progress",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "approval": "COMPLETED_IN_MISSION_040",
+  "progress_status": "COMPLETED",
+  "provider_job_id": null,
+  "provider_revision": null,
+  "post_heal_rerun": "NOT_AUTHORIZED",
+  "provider_requests_this_mission": 1,
+  "mutations_this_mission": 0,
+  "retries": 0,
+  "historical_evidence": "UNCHANGED",
+  "terminal_statement": "APPROVAL COMPLETED PLUS PROVIDER HEAL COMPLETION CONFIRMED; NO RERUN OCCURRED"
+}

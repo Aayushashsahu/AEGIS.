@@ -1,0 +1,17 @@
+{
+  "schema_version": "mission-041a-artifact-hash-manifest-v1",
+  "algorithm": "SHA-256",
+  "terminal_state": "COMPLETED_READ_ONLY_PROGRESS_CHECK",
+  "artifacts": {
+    "progress_check.json": "ce1e4b4187e9ea0ba5f2c8b9cb1776f66df2a15c938d1a00037c8a28d1a705a3",
+    "summary.json": "b43b2a1d4273de3182a885c296afcedb9935cb4b0a71358a4380d0a32799a300"
+  },
+  "intentionally_absent": [
+    "rerun_request.json",
+    "rerun_result.json",
+    "post_heal_output.json",
+    "verification.json",
+    "risk_decision.json"
+  ],
+  "reason": "Mission 041A authorizes only one read-only progress request. The explicit provider state is COMPLETED, but the rerun remains separately unauthorized."
+}

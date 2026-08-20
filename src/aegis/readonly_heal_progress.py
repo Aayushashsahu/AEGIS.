@@ -30,6 +30,10 @@ class ReadOnlyHealProgressResult:
     http_status: int | None
     content_type: str | None
     provider_status: str | None
+    progress_status: str
+    provider_job_id: str | None
+    provider_revision: str | None
+    provider_timestamp: str | None
     preview_present: bool | None
     candidate_found: str
     collector_match: str
@@ -75,6 +79,29 @@ def _find_key(value: object, key: str) -> object | None:
     return None
 
 
+def _first_string_for_keys(value: object, keys: tuple[str, ...]) -> str | None:
+    for key in keys:
+        candidate = _find_key(value, key)
+        if isinstance(candidate, str):
+            return candidate
+    return None
+
+
+def _classify_progress_status(provider_status: str | None) -> str:
+    if provider_status is None:
+        return "UNKNOWN"
+    normalized = provider_status.strip().lower()
+    if normalized in {"done", "completed", "complete", "success", "succeeded"}:
+        return "COMPLETED"
+    if normalized in {"failed", "error", "rejected", "cancelled", "canceled"}:
+        return "FAILED"
+    if normalized in {"pending", "pending_answer", "awaiting_approval", "queued"}:
+        return "PENDING"
+    if normalized in {"running", "in_progress", "processing"}:
+        return "RUNNING"
+    return "UNKNOWN"
+
+
 def _result(
     *,
     started: float,
@@ -86,6 +113,10 @@ def _result(
     http_status: int | None,
     content_type: str | None,
     provider_status: str | None = None,
+    progress_status: str = "UNKNOWN",
+    provider_job_id: str | None = None,
+    provider_revision: str | None = None,
+    provider_timestamp: str | None = None,
     preview_present: bool | None = None,
     candidate_found: str = "UNKNOWN",
     collector_match: str = "UNKNOWN",
@@ -101,6 +132,10 @@ def _result(
         http_status=http_status,
         content_type=content_type,
         provider_status=provider_status,
+        progress_status=progress_status,
+        provider_job_id=provider_job_id,
+        provider_revision=provider_revision,
+        provider_timestamp=provider_timestamp,
         preview_present=preview_present,
         candidate_found=candidate_found,
         collector_match=collector_match,
@@ -159,6 +194,10 @@ def request_readonly_heal_progress(
                 raise ValueError("expected JSON object")
             status_value = _find_key(payload, "status")
             provider_status = status_value if isinstance(status_value, str) else None
+            progress_status = _classify_progress_status(provider_status)
+            provider_job_id = _first_string_for_keys(payload, ("job_id", "operation_id", "automation_job_id"))
+            provider_revision = _first_string_for_keys(payload, ("revision_id", "template_id", "template_revision"))
+            provider_timestamp = _first_string_for_keys(payload, ("completed_at", "updated_at", "created_at", "timestamp"))
             preview_present = _find_key(payload, "preview_result") is not None
             candidate_found = "YES" if _contains_exact(payload, candidate_id) else "NO"
         except (UnicodeDecodeError, json.JSONDecodeError, ValueError, TypeError):
@@ -182,6 +221,10 @@ def request_readonly_heal_progress(
             http_status=status,
             content_type=content_type,
             provider_status=provider_status,
+            progress_status=progress_status,
+            provider_job_id=provider_job_id,
+            provider_revision=provider_revision,
+            provider_timestamp=provider_timestamp,
             preview_present=preview_present,
             candidate_found=candidate_found,
             collector_match="YES",

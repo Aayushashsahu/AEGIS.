@@ -1,0 +1,31 @@
+{
+  "schema_version": "mission-041a-progress-check-v1",
+  "mission_id": "mission_041a_post_approval_progress",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "approval": "COMPLETED_IN_MISSION_040",
+  "request": {
+    "method": "GET",
+    "endpoint": "https://api.brightdata.com/dca/collectors/c_mt09pib13nxqz1coi/refactor_template/progress",
+    "http_timeout_seconds": 10,
+    "subprocess_timeout_seconds": 15,
+    "request_count": 1,
+    "retries": 0
+  },
+  "response": {
+    "http_status": 200,
+    "content_type": "application/json",
+    "elapsed_ms": 3392,
+    "provider_status": "done",
+    "progress_status": "COMPLETED",
+    "collector_match": "YES",
+    "preview_present": true,
+    "provider_job_id": null,
+    "provider_revision": null,
+    "provider_timestamp": null,
+    "raw_response_retained": false
+  },
+  "post_heal_rerun": "NOT_AUTHORIZED",
+  "provider_mutations": 0,
+  "credentials_exposed": false,
+  "historical_evidence": "UNCHANGED"
+}

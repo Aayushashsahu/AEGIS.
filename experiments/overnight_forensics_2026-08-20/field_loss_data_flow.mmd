@@ -1,0 +1,18 @@
+flowchart LR
+    A["Bright Data response body<br/>Mission 041B<br/>NOT RETAINED"] --> B["JSON decode<br/>json.loads(raw)"]
+    B --> C["Decoded provider rows<br/>tuple(dict(row))"]
+    C --> D["First persisted evidence<br/>post_heal_output.json<br/>input.url only"]
+    D --> E["Verification projection<br/>_canonical_row"]
+    E --> F["Deterministic verification<br/>FAIL"]
+    F --> G["Risk Governor<br/>REJECT"]
+    G --> H["Commit gate<br/>BLOCKED"]
+
+    X["Mission 033 candidate<br/>title / price / availability"] -. expected contract .-> E
+    Y["Dashboard active v1 (prod)<br/>parser + schema contain all fields"] -. configuration evidence .-> C
+
+    classDef unknown fill:#fff5f5,stroke:#9b1c1c,color:#111;
+    classDef evidence fill:#edf7ff,stroke:#155e75,color:#111;
+    classDef safety fill:#fff7ed,stroke:#9a3412,color:#111;
+    class A unknown;
+    class B,C,D,E,Y evidence;
+    class F,G,H safety;

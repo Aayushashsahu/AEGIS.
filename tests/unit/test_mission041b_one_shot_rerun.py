@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import socket
+from hashlib import sha256
 from urllib.error import HTTPError
 
 import pytest
@@ -38,12 +39,13 @@ class FakeResponse:
         return self.body
 
 
-def test_sync_rerun_uses_exactly_one_documented_post_and_preserves_real_rows() -> None:
+def test_sync_rerun_uses_exactly_one_documented_post_and_preserves_real_rows(tmp_path) -> None:
     calls = []
+    body = b'[{"title":"Widget","price":{"currency":"USD","value":599},"availability":"Available"}]'
 
     def opener(request, *, timeout):
         calls.append((request, timeout))
-        return FakeResponse(200, b'[{"title":"Widget","price":{"currency":"USD","value":599},"availability":"Available"}]')
+        return FakeResponse(200, body)
 
     result = rerun_collector_once("token-not-retained", collector_id=COLLECTOR, target_url=TARGET, correlation_id=CORRELATION, opener=opener)
 
@@ -54,7 +56,20 @@ def test_sync_rerun_uses_exactly_one_documented_post_and_preserves_real_rows() -
     assert result.output_schema == {"availability": "str", "price": "dict", "title": "str"}
     assert result.retry_count == 0
     assert result.key_exposed is False
+    assert result.to_evidence_dict()["rows"] == [
+        {"title": "Widget", "price": {"currency": "USD", "value": 599}, "availability": "Available"}
+    ]
     assert "token-not-retained" not in repr(result.to_evidence_dict())
+    assert result.raw_response_sha256 == sha256(body).hexdigest()
+    raw_path = tmp_path / "response.json"
+    assert result.preserve_raw_response(raw_path) == {
+        "path": str(raw_path),
+        "sha256": sha256(body).hexdigest(),
+        "bytes": len(body),
+    }
+    assert raw_path.read_bytes() == body
+    with pytest.raises(FileExistsError):
+        result.preserve_raw_response(raw_path)
     assert len(calls) == 1
     request, timeout = calls[0]
     assert request.full_url == rerun_endpoint(COLLECTOR)

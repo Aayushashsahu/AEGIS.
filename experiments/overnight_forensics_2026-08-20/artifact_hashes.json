@@ -1,0 +1,19 @@
+{
+  "schema_version": "overnight-forensics-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "artifacts": {
+    "authorization.json": "ad6962a5012a6e544d0c110466c256f510c59df22cc2d63cee471eeebda665d8",
+    "field_loss_data_flow.mmd": "ed0a20231b1e8251dc0bae2b639991649f00e3ba767d5ff3c043058927e72b02",
+    "field_loss_data_flow.png": "742c6f6e0f0d2b1dee554c31c16cab884681ccf65cd3401b8bcd46515e851b91",
+    "findings.json": "e9de14b30175335b2bfe791c2b607c72f145865879b41ef719f1fca685519514",
+    "forensic_timeline.md": "a1d453d53167e9cf495d6f3622eb077b1bd426f56ced33aedbcdc60e89b61820",
+    "forensic_timeline.png": "ca5d7e9666f23c80f096f415a469ca5a613d02139998b9a081e3c5e485640c26",
+    "provider_validation_gate.md": "b59b46d38f2ff689a1dfbaf415900b42e0f4b55d7a2bd8ff6410fb2d943d563e",
+    "release_validation.json": "eb23156d494d24c25ba361c30999ff263fd92d9b2882fcdbff5eb07329527dd3"
+  },
+  "historical_integrity": {
+    "canonical_protected_paths_git_diff_exit": 0,
+    "managed_protected_records_git_diff_exit": 0,
+    "result": "UNCHANGED"
+  }
+}

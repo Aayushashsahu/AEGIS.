@@ -1,0 +1,38 @@
+{
+  "schema_version": "overnight-forensics-authorization-v1",
+  "purpose": "Locate the first evidence-supported loss point for title, price, and availability in the Mission 041B post-heal path; fix only a verified AEGIS-side defect; otherwise prepare a provider-gated next step.",
+  "allowed": [
+    "local repository and evidence inspection",
+    "official provider documentation review",
+    "read-only dashboard inspection",
+    "provider-free tests and diagnostics",
+    "local code fixes with regression coverage",
+    "evidence and documentation updates"
+  ],
+  "prohibited_provider_operations": [
+    "approval",
+    "heal",
+    "collector creation",
+    "collector modification",
+    "collector run or rerun",
+    "commit",
+    "rollback"
+  ],
+  "provider_mutation_budget": 0,
+  "provider_retry_budget": 0,
+  "provider_calls_during_forensics": 0,
+  "prohibited_external_workloads": ["benchmark", "NVIDIA", "Gemini"],
+  "historical_evidence_must_remain_unchanged": [
+    "mission_028",
+    "mission_029",
+    "mission_030",
+    "mission_033_live_bright_data_success",
+    "mission_034_bright_data_approval_rerun",
+    "mission_040",
+    "mission_041a_post_approval_progress",
+    "mission_041_post_heal_rerun",
+    "mission_044_final_template_snapshot",
+    "mission_046_dashboard_forensics"
+  ],
+  "stop_condition": "Prepare but do not execute any provider action that would be needed for further validation."
+}

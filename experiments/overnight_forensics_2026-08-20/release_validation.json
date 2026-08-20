@@ -1,0 +1,58 @@
+{
+  "schema_version": "overnight-forensics-release-validation-v1",
+  "canonical": {
+    "branch": "mission-035-cli-transport-timeout",
+    "base_commit_before_overnight_changes": "9c6f726dd9a45fe0d16975893b346399373f1a09",
+    "pull_request": {
+      "number": 5,
+      "state": "OPEN",
+      "url": "https://github.com/Aayushashsahu/AEGIS./pull/5",
+      "checks": {
+        "canonical-python-and-evidence": "SUCCESS",
+        "webapp": "SUCCESS"
+      }
+    },
+    "python_tests": {
+      "passed": 458,
+      "provider_calls": 0
+    },
+    "tracked_debug_artifacts": 0,
+    "secret_scan": {
+      "real_secret_exposed": false,
+      "matched_file_classification": "Five expected scanner/test fixture files only; no matched value was displayed or retained in this record."
+    }
+  },
+  "managed": {
+    "branch": "mission-034-managed-transport-blocked-projection",
+    "provider_free_vitest": {
+      "files_passed": 11,
+      "tests_passed": 18,
+      "excluded_external_credential_probe_file": "server/brightDataCredential.test.ts"
+    },
+    "typescript": "PASS",
+    "production_build": "PASS",
+    "secret_scan": {
+      "real_secret_exposed": false
+    },
+    "tracked_debug_artifacts": {
+      "count": 35,
+      "classification": "PRE_EXISTING_STALE_BYTECODE_UNRELATED_TO_OVERNIGHT_CHANGE",
+      "action": "Not removed during a focused field-loss forensic session."
+    }
+  },
+  "integrity": {
+    "canonical_protected_paths": "UNCHANGED",
+    "managed_protected_records": "UNCHANGED",
+    "whitespace_check": "PASS"
+  },
+  "provider_activity_this_session": {
+    "read_only_documentation_requests": 1,
+    "provider_dashboard_mutations": 0,
+    "provider_api_calls": 0,
+    "provider_mutations": 0,
+    "retries": 0,
+    "benchmark_runs": 0,
+    "nvidia_calls": 0,
+    "gemini_calls": 0
+  }
+}

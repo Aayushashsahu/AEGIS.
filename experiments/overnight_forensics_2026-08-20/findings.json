@@ -1,0 +1,33 @@
+{
+  "schema_version": "overnight-forensics-findings-v1",
+  "classification": "ENGINEERING_COMPLETE_PROVIDER_STATE_UNOBSERVABLE",
+  "historical_field_loss": {
+    "root_cause": "UNOBSERVABLE_WITH_RETAINED_EVIDENCE",
+    "confidence": "HIGH",
+    "first_observed_loss_point": "The first persisted Mission 041B decoded provider row in post_heal_output.json contains only input.url; the original response body is not retained.",
+    "provider_raw_response_status": "NOT_RETAINED",
+    "aegis_normalized_output_status": "input.url only; verification correctly failed",
+    "aegis_transport_field_filter_found": false,
+    "exact_mission_041b_run_binding": "YES: vj_mt1pakyc14nagbhvo5",
+    "provider_incomplete_output_proven": false,
+    "aegis_normalization_loss_proven": false
+  },
+  "verified_aeigs_defect": {
+    "kind": "OBSERVABILITY_EVIDENCE_GAP",
+    "historical_impact": "The original Mission 041B response bytes and a raw-to-derived lineage record were not retained, preventing a conclusive provider-versus-AEGIS attribution after the fact.",
+    "fix": "OneShotRerunResult now retains response bytes in memory, computes a safe SHA-256, and can preserve those bytes once to an explicit non-overwriting evidence path. Future reruns also emit decoded-provider-to-derived-AEGIS field lineage.",
+    "provider_calls_for_fix": 0
+  },
+  "active_state": {
+    "dashboard_template": "v1 (prod)",
+    "visible_parser_fields": ["title", "price", "availability"],
+    "visible_schema_fields": ["title", "price", "availability"],
+    "target_route_match": true
+  },
+  "provider_actions_this_session": {
+    "calls": 0,
+    "mutations": 0,
+    "retries": 0
+  },
+  "next_step": "Use the already authorized read-only dashboard access to open Quick View for the uniquely correlated run if the browser bridge becomes available. Do not run a new collection. If the historical output cannot be retrieved before retention expires, require a new explicit authorization for one bounded rerun using the revised evidence-preserving transport."
+}

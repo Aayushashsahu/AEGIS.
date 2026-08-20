@@ -10,12 +10,14 @@ from pathlib import Path
 
 from aegis.approval_boundary import BRIGHT_DATA_DCA_TOKEN_ENV, MISSION034_COLLECTOR_ID
 from aegis.one_shot_rerun import DEFAULT_RERUN_HTTP_TIMEOUT_SECONDS, DEFAULT_RERUN_WAIT_SECONDS, rerun_collector_once
+from aegis.output_lineage import analyze_output_lineage
 
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET_URL = "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
 CORRELATION_ID = "mission041b-rerun-c_mt09pib13nxqz1coi"
 MAX_RERUN_OPERATIONS = 1
+REQUIRED_OUTPUT_FIELDS = ("title", "price", "availability")
 
 
 def _read_json(path: Path) -> dict[str, object]:
@@ -53,7 +55,12 @@ def preflight() -> dict[str, object]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--execute", action="store_true", help="Perform the exactly-one owner-authorized rerun after preflight passes.")
+    parser.add_argument("--raw-response-path", type=Path, help="New controlled-evidence path for the exact provider response body; required with --execute.")
     args = parser.parse_args()
+    if args.execute and args.raw_response_path is None:
+        parser.error("--raw-response-path is required with --execute to preserve the exact provider response")
+    if not args.execute and args.raw_response_path is not None:
+        parser.error("--raw-response-path is valid only with --execute")
     report = preflight()
     if not report["all_pass"]:
         report["rerun"] = "NOT_ATTEMPTED"
@@ -75,6 +82,17 @@ def main() -> int:
     report["requested_at_utc"] = requested_at_utc
     report["rerun"] = "SUCCESS" if result.success else "FAILED"
     report["rerun_result"] = result.to_evidence_dict()
+    if args.raw_response_path is not None:
+        report["raw_response_evidence"] = result.preserve_raw_response(args.raw_response_path)
+    if result.success:
+        # This transport performs no field projection: its decoded provider rows
+        # are the derived AEGIS rows. The diagnostic makes that fact explicit
+        # without claiming the original response body was retained.
+        report["decoded_output_lineage"] = analyze_output_lineage(
+            result.rows,
+            result.rows,
+            REQUIRED_OUTPUT_FIELDS,
+        ).to_evidence_dict()
     print(json.dumps(report, sort_keys=True))
     return 0 if result.success else 3
 

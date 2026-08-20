@@ -2,9 +2,11 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import socket
-from dataclasses import asdict, dataclass
+from dataclasses import asdict, dataclass, field
+from pathlib import Path
 from time import perf_counter
 from typing import Any, Callable, Mapping
 from urllib.error import HTTPError, URLError
@@ -39,18 +41,41 @@ class OneShotRerunResult:
     rows: tuple[dict[str, Any], ...]
     row_count: int | None
     output_schema: dict[str, str] | None
+    raw_response_sha256: str | None
     retry_count: int
     key_exposed: bool
+    raw_response_bytes: bytes | None = field(repr=False, compare=False)
 
     def to_safe_metadata(self) -> dict[str, object]:
         result = asdict(self)
         result.pop("rows")
+        result.pop("raw_response_bytes")
         return result
 
     def to_evidence_dict(self) -> dict[str, object]:
         result = self.to_safe_metadata()
         result["rows"] = list(self.rows)
         return result
+
+    def preserve_raw_response(self, path: Path) -> dict[str, object]:
+        """Write the exact provider response once to controlled evidence storage.
+
+        The caller must choose an explicit path. Existing evidence is never
+        overwritten, and regular metadata/evidence methods never include the
+        raw bytes. This preserves the first provider boundary for future
+        diagnosis without leaking arbitrary response content into logs.
+        """
+
+        if self.raw_response_bytes is None or self.raw_response_sha256 is None:
+            raise ValueError("no provider response body is available to preserve")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("xb") as handle:
+            handle.write(self.raw_response_bytes)
+        return {
+            "path": str(path),
+            "sha256": self.raw_response_sha256,
+            "bytes": len(self.raw_response_bytes),
+        }
 
 
 UrlOpener = Callable[..., Any]
@@ -88,6 +113,7 @@ def _result(
     provider_status: str | None = None,
     response_id: str | None = None,
     rows: tuple[dict[str, Any], ...] = (),
+    raw_response_bytes: bytes | None = None,
 ) -> OneShotRerunResult:
     return OneShotRerunResult(
         operation="synchronous_collector_rerun",
@@ -107,8 +133,10 @@ def _result(
         rows=rows,
         row_count=len(rows) if success else None,
         output_schema=_schema(rows) if success else None,
+        raw_response_sha256=hashlib.sha256(raw_response_bytes).hexdigest() if raw_response_bytes is not None else None,
         retry_count=0,
         key_exposed=False,
+        raw_response_bytes=raw_response_bytes,
     )
 
 
@@ -158,22 +186,22 @@ def rerun_collector_once(
                 started=started, endpoint=endpoint, collector_id=collector_id, target_url=target_url,
                 correlation_id=correlation_id, http_timeout_seconds=http_timeout_seconds, attempted=True,
                 success=False, error_class="MALFORMED_PROVIDER_RESPONSE", http_status=status,
-                content_type=content_type,
+                content_type=content_type, raw_response_bytes=raw,
             )
         if status == 200:
             if not isinstance(payload, list) or not all(isinstance(row, Mapping) for row in payload):
                 return _result(
                     started=started, endpoint=endpoint, collector_id=collector_id, target_url=target_url,
-                    correlation_id=correlation_id, http_timeout_seconds=http_timeout_seconds, attempted=True,
-                    success=False, error_class="MALFORMED_PROVIDER_RESPONSE", http_status=status,
-                    content_type=content_type,
+                correlation_id=correlation_id, http_timeout_seconds=http_timeout_seconds, attempted=True,
+                success=False, error_class="MALFORMED_PROVIDER_RESPONSE", http_status=status,
+                content_type=content_type, raw_response_bytes=raw,
                 )
             rows = tuple(dict(row) for row in payload)
             return _result(
                 started=started, endpoint=endpoint, collector_id=collector_id, target_url=target_url,
                 correlation_id=correlation_id, http_timeout_seconds=http_timeout_seconds, attempted=True,
                 success=True, error_class=None, http_status=status, content_type=content_type,
-                provider_status="COMPLETED", rows=rows,
+                provider_status="COMPLETED", rows=rows, raw_response_bytes=raw,
             )
         if status == 202 and isinstance(payload, Mapping):
             response_id = payload.get("response_id")
@@ -182,11 +210,13 @@ def rerun_collector_once(
                 correlation_id=correlation_id, http_timeout_seconds=http_timeout_seconds, attempted=True,
                 success=False, error_class="RERUN_ASYNC_PENDING", http_status=status, content_type=content_type,
                 provider_status="PENDING", response_id=response_id if isinstance(response_id, str) else None,
+                raw_response_bytes=raw,
             )
         return _result(
             started=started, endpoint=endpoint, collector_id=collector_id, target_url=target_url,
-            correlation_id=correlation_id, http_timeout_seconds=http_timeout_seconds, attempted=True,
-            success=False, error_class=f"HTTP_{status}", http_status=status, content_type=content_type,
+                correlation_id=correlation_id, http_timeout_seconds=http_timeout_seconds, attempted=True,
+                success=False, error_class=f"HTTP_{status}", http_status=status, content_type=content_type,
+                raw_response_bytes=raw,
         )
     except HTTPError as error:
         return _result(

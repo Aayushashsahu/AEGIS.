@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import re
+import signal
 import subprocess
 from concurrent.futures import Future, ThreadPoolExecutor
 from dataclasses import dataclass
@@ -146,16 +148,40 @@ def build_bright_data_heal_prompt(repair_request: RepairRequest, *, limit: int =
     return BrightDataHealPromptBuilder(limit=limit).build(repair_request)
 
 
-def subprocess_runner(command: Sequence[str]) -> CommandResult:
-    """Run one documented CLI command without embedding credentials."""
+def subprocess_runner(command: Sequence[str], *, timeout_seconds: float | None = None) -> CommandResult:
+    """Run one documented CLI command with an optional process-group deadline.
+
+    The Bright Data CLI currently has no HTTP abort signal on its request path.
+    A bounded AEGIS lifecycle deadline must therefore also bound the child
+    process so a stalled transport cannot outlive its collection or heal job.
+    """
 
     started = perf_counter()
-    completed = subprocess.run(command, capture_output=True, text=True, check=False)
+    process = subprocess.Popen(
+        command,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        start_new_session=True,
+    )
+    try:
+        stdout, stderr = process.communicate(timeout=timeout_seconds)
+        returncode = process.returncode
+    except subprocess.TimeoutExpired:
+        os.killpg(process.pid, signal.SIGTERM)
+        try:
+            stdout, stderr = process.communicate(timeout=2)
+        except subprocess.TimeoutExpired:
+            os.killpg(process.pid, signal.SIGKILL)
+            stdout, stderr = process.communicate()
+        detail = f"command exceeded bounded timeout of {timeout_seconds} seconds"
+        stderr = "\n".join(part for part in (stderr, detail) if part)
+        returncode = 124
     latency_ms = round((perf_counter() - started) * 1000)
     return CommandResult(
-        stdout=completed.stdout,
-        stderr=completed.stderr,
-        returncode=completed.returncode,
+        stdout=stdout,
+        stderr=stderr,
+        returncode=returncode,
         latency_ms=latency_ms,
     )
 
@@ -280,6 +306,13 @@ class BrightDataCliAdapter:
     def __exit__(self, *_: object) -> None:
         self.close()
 
+    def _run_with_timeout(self, command: Sequence[str], *, timeout_seconds: float) -> CommandResult:
+        """Bound only the built-in subprocess runner; fixture runners stay deterministic."""
+
+        if self._runner is subprocess_runner:
+            return subprocess_runner(command, timeout_seconds=timeout_seconds)
+        return self._runner(command)
+
     def create_collector(self, request: CollectorRequest) -> CollectorHandle:
         if request.provider is not ProviderProvenance.BRIGHT_DATA:
             raise AdapterError("BrightDataCliAdapter accepts BRIGHT_DATA requests only")
@@ -341,7 +374,7 @@ class BrightDataCliAdapter:
             target_url,
             "--pretty",
         ]
-        future = self._executor.submit(self._runner, command)
+        future = self._executor.submit(self._run_with_timeout, command, timeout_seconds=timeout_seconds)
         self._jobs[handle.collection_id] = future
         self._handles[handle.collection_id] = handle
         setattr(future, "_aegis_deadline", deadline)
@@ -427,7 +460,7 @@ class BrightDataCliAdapter:
             provider_provenance=self.provider,
             evidence_refs=(f"evidence://bright-data/cli/heal/{repair_request.repair_request_id}",),
         )
-        future = self._executor.submit(self._runner, command)
+        future = self._executor.submit(self._run_with_timeout, command, timeout_seconds=timeout_seconds)
         self._heal_jobs[handle.heal_id] = future
         self._heal_handles[handle.heal_id] = handle
         setattr(future, "_aegis_heal_deadline", self._clock() + timeout_seconds)

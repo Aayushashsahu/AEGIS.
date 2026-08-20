@@ -1,0 +1,20 @@
+{
+  "schema_version": "mission-045-summary-v1",
+  "lookup": "NOT_DOCUMENTED",
+  "request_count": 0,
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "http": "NOT_APPLICABLE",
+  "revision": "NOT_PROVIDED",
+  "template_source": "NOT_PROVIDED",
+  "runtime_mapping": "NOT_PROVIDED",
+  "contract_match": "YES",
+  "candidate_match": "YES",
+  "runtime_match": "UNKNOWN",
+  "post_heal_output_match": "NO",
+  "root_cause": "UNKNOWN",
+  "confidence": "LOW",
+  "provider_mutations": 0,
+  "retries": 0,
+  "historical_evidence": "UNCHANGED",
+  "minimum_required_next_step": "Obtain provider documentation for a read-only source/revision/runtime-detail API or separately authorize dashboard-only inspection that captures the active template implementation, field/selector mapping, and execution trace without mutating the collector."
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": "mission-045-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "artifacts": {
+    "snapshot.json": "ce1e3acea139642379f5cbfaaff98d3bc339ff6fc3619d953b0b5e3a2cdd00a4",
+    "comparison.json": "e4d4dbf4834d87dde2d37b0399098632ee349f5a4f65d00225120c7af62e34ec",
+    "summary.json": "4d3a94f0685c767674e42ea246b4870d931c336b7dfe74b7dca9dce17105b110"
+  },
+  "historical_integrity": {
+    "canonical_protected_paths_git_diff_exit": 0,
+    "managed_protected_records_git_diff_exit": 0,
+    "result": "UNCHANGED"
+  }
+}

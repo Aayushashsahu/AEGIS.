@@ -1,0 +1,37 @@
+{
+  "schema_version": "mission-045-template-revision-snapshot-v1",
+  "mission": "045",
+  "authorization": {
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "provider_requests_authorized": 1,
+    "provider_requests_executed": 0,
+    "provider_mutations_authorized": 0,
+    "provider_mutations_executed": 0,
+    "retries_authorized": 0,
+    "retries_executed": 0
+  },
+  "documentation_review": {
+    "source_index": "https://docs.brightdata.com/llms.txt",
+    "scraper_studio_api_reference": "https://docs.brightdata.com/api-reference/scraper-studio-api/list-scrapers.md",
+    "ide_reference": "https://docs.brightdata.com/datasets/scraper-studio/develop-a-scraper",
+    "documented_read_only_operations_found": [
+      "list scrapers/collectors",
+      "read job/progress state where previously documented"
+    ],
+    "documented_template_source_lookup": "NOT_FOUND",
+    "documented_revision_detail_lookup": "NOT_FOUND",
+    "documented_selector_mapping_lookup": "NOT_FOUND",
+    "documented_runtime_configuration_lookup": "NOT_FOUND",
+    "decision": "NO_PROVIDER_REQUEST_EXECUTED"
+  },
+  "safe_provider_metadata": {
+    "http": "NOT_APPLICABLE",
+    "elapsed_ms": "NOT_APPLICABLE",
+    "revision": "NOT_PROVIDED",
+    "template_id": "NOT_PROVIDED",
+    "template_source": "NOT_PROVIDED",
+    "field_mappings": "NOT_PROVIDED",
+    "selectors": "NOT_PROVIDED",
+    "runtime_configuration": "NOT_PROVIDED"
+  }
+}

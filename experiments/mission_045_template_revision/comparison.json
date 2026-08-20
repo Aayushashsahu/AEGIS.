@@ -1,0 +1,43 @@
+{
+  "schema_version": "mission-045-template-revision-comparison-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "fields": [
+    {
+      "field": "title",
+      "contract": "PRESENT",
+      "candidate_preview": "PRESENT",
+      "active_provider_schema": "PRESENT_ACTIVE_TEXT",
+      "runtime_configuration": "NOT_PROVIDED",
+      "mission_041b_post_heal_output": "ABSENT"
+    },
+    {
+      "field": "price",
+      "contract": "PRESENT",
+      "candidate_preview": "PRESENT",
+      "active_provider_schema": "PRESENT_ACTIVE_PRICE",
+      "runtime_configuration": "NOT_PROVIDED",
+      "mission_041b_post_heal_output": "ABSENT"
+    },
+    {
+      "field": "availability",
+      "contract": "PRESENT",
+      "candidate_preview": "PRESENT",
+      "active_provider_schema": "PRESENT_ACTIVE_TEXT",
+      "runtime_configuration": "NOT_PROVIDED",
+      "mission_041b_post_heal_output": "ABSENT"
+    }
+  ],
+  "post_heal_output_shape": ["input.url"],
+  "first_evidence_divergence": "MISSION_033_CANDIDATE_PREVIEW_TO_MISSION_041B_RUNTIME_OUTPUT",
+  "runtime_revision_evidence": "NOT_PROVIDED",
+  "runtime_mapping_evidence": "NOT_PROVIDED",
+  "cause_assessment": {
+    "A_runtime_revision_differs_from_active_schema": "UNKNOWN",
+    "B_output_configuration_differs_from_schema": "UNKNOWN",
+    "C_template_source_differs_from_candidate": "UNKNOWN",
+    "D_execution_selected_unexpected_revision": "UNKNOWN",
+    "E_provider_did_not_expose_runtime_mapping": "YES",
+    "F_aegis_rerun_invocation_incorrect": "UNKNOWN",
+    "G_unknown": "YES"
+  }
+}

@@ -1,6 +1,22 @@
 """AEGIS Mission 005: deterministic candidate verification and risk policy."""
 
 from .adapter import AdapterError, BrightDataCliAdapter, CommandResult, build_heal_command, build_heal_prompt
+from .approval_boundary import (
+    BRIGHT_DATA_CLI_CREDENTIAL_ENV,
+    BRIGHT_DATA_DCA_TOKEN_ENV,
+    MISSION034_CANDIDATE_ID,
+    MISSION034_COLLECTOR_ID,
+    ApprovalBoundaryError,
+    ApprovalResult,
+    CollectorAccessStatus,
+    CliCredentialConfiguration,
+    FixtureApprovalAuthorization,
+    FixtureApprovalRecord,
+    FixtureOnlyApprovalGate,
+    ReadOnlyCollectorAccessBoundary,
+    ReadOnlyCollectorAccessResult,
+    validate_cli_credential_environment,
+)
 from .audit_store import AuditEvent, AuditEventType, AuditStore, SCHEMA_VERSION, SQLiteAuditStore
 from .benchmark_config import BaselineSpec, BenchmarkConfig, DryRunResult, DryRunStatus, ValidationResult, ValidationStatus, compute_configuration_hash, default_validation_config, dry_run, freeze_config, load_benchmark_config, run_dry_run, validate_config
 from .benchmark_lifecycle import BenchmarkArtifactLayout, BenchmarkLifecyclePhase, deterministic_benchmark_run_id
@@ -121,9 +137,13 @@ from .verification_double import VerificationFixture, build_verification_fixture
 
 __all__ = [
     "AdapterError",
+    "ApprovalBoundaryError",
+    "ApprovalResult",
     "AuditEvent",
     "AuditEventType",
     "AuditStore",
+    "BRIGHT_DATA_CLI_CREDENTIAL_ENV",
+    "BRIGHT_DATA_DCA_TOKEN_ENV",
     "AegisAdapter",
     "BaselineAAdapter",
     "BaselineBAdapter",
@@ -142,6 +162,8 @@ __all__ = [
     "CommitGateFixture",
     "CommitSafetyMetricHooks",
     "BrightDataCliAdapter",
+    "CliCredentialConfiguration",
+    "CollectorAccessStatus",
     "CheckStatus",
     "CollectionHandle",
     "CollectionMode",
@@ -171,6 +193,9 @@ __all__ = [
     "ExtractionContract",
     "FailureClass",
     "FieldContract",
+    "FixtureApprovalAuthorization",
+    "FixtureApprovalRecord",
+    "FixtureOnlyApprovalGate",
     "HealHandle",
     "HealOperationResult",
     "HealProviderEnvelope",
@@ -191,6 +216,8 @@ __all__ = [
     "MetricReport",
     "MetricResult",
     "MetricStatus",
+    "MISSION034_CANDIDATE_ID",
+    "MISSION034_COLLECTOR_ID",
     "NOT_APPLICABLE",
     "OwnerApprovedValidationReport",
     "OwnerReviewDecision",
@@ -227,6 +254,8 @@ __all__ = [
     "RepairRequest",
     "RepairRequestStatus",
     "ReadinessPromotion",
+    "ReadOnlyCollectorAccessBoundary",
+    "ReadOnlyCollectorAccessResult",
     "FairnessValidation",
     "RiskDecisionType",
     "SCHEMA_VERSION",
@@ -291,6 +320,7 @@ __all__ = [
     "mission005_contract",
     "run_dry_run",
     "validate_config",
+    "validate_cli_credential_environment",
     "deterministic_artifact_name",
     "deterministic_benchmark_run_id",
     "deterministic_run_id",

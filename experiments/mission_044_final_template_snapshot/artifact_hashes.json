@@ -1,0 +1,14 @@
+{
+  "schema_version": "mission-044-artifact-hash-manifest-v1",
+  "algorithm": "SHA-256",
+  "terminal_state": "READONLY_SCHEMA_SNAPSHOT_COMPLETED",
+  "artifacts": {
+    "snapshot.json": "2867bae1cf2a4781a6f941b08b7f9bcc3a23d6bb3a35ff6d811772ac74b92793",
+    "comparison.json": "58b23edd76609fc004a5bad819425ec9553a0ae3c083643972e84f8ead7f5f5c",
+    "summary.json": "0d11198b5d9ec3ed2ed5c6d284ab2c6fc0f3a6a93c27fa5a087f143910318efc"
+  },
+  "manifest_exclusion": "artifact_hashes.json is intentionally excluded from self-hashing.",
+  "provider_requests": 1,
+  "provider_mutations": 0,
+  "retries": 0
+}

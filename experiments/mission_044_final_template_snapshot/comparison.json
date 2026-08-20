@@ -1,0 +1,32 @@
+{
+  "schema_version": "mission-044-schema-comparison-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "contract_match": "YES",
+  "candidate_to_final_match": "YES",
+  "comparison_scope": "Declared active output fields and provider field types only; selector/template implementation was not provided.",
+  "fields": {
+    "title": {
+      "contract": {"required": true, "allow_null": false, "expected_type": "str"},
+      "candidate_preview": {"present": true, "value_type": "str"},
+      "provider_final_state": {"present": true, "active": true, "type": "text"},
+      "post_heal_rerun": {"present": false}
+    },
+    "price": {
+      "contract": {"required": true, "allow_null": false, "expected_type": "dict"},
+      "candidate_preview": {"present": true, "value_type": "dict"},
+      "provider_final_state": {"present": true, "active": true, "type": "price"},
+      "post_heal_rerun": {"present": false}
+    },
+    "availability": {
+      "contract": {"required": true, "allow_null": false, "expected_type": "str"},
+      "candidate_preview": {"present": true, "value_type": "str"},
+      "provider_final_state": {"present": true, "active": true, "type": "text"},
+      "post_heal_rerun": {"present": false}
+    }
+  },
+  "root_cause": "UNKNOWN",
+  "root_cause_confidence": "LOW",
+  "root_cause_rationale": "The one read-only final-state snapshot proves that the declared active output schema retains all three contract fields. It does not provide template source, selector mapping, target binding, revision, or an execution trace, so it cannot distinguish template execution failure, response shaping, or an incorrect runtime template.",
+  "provider_mutations": 0,
+  "retries": 0
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": "mission-044-summary-v1",
+  "final_template_lookup": "DOCUMENTED",
+  "request_count": 1,
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "contract_match": "YES",
+  "candidate_to_final_match": "YES",
+  "title": "PRESENT",
+  "price": "PRESENT",
+  "availability": "PRESENT",
+  "root_cause": "UNKNOWN",
+  "confidence": "LOW",
+  "provider_mutations": 0,
+  "retries": 0,
+  "historical_evidence": "UNCHANGED",
+  "minimum_next_step": "Before any future mutation, obtain a separately authorized read-only final template implementation, selector mapping, revision detail, or execution trace that can explain why the declared active schema returned only input.url during Mission 041B."
+}

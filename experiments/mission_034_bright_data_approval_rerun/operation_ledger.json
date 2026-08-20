@@ -1,0 +1,17 @@
+{
+  "schema_version": "mission-034-operation-ledger-v1",
+  "status": "TERMINAL_BLOCKED_PRECHECK",
+  "operations": {
+    "bright_data_approve": 0,
+    "bright_data_collector_run": 0,
+    "bright_data_heal": 0,
+    "additional_collector_create": 0,
+    "additional_retries": 0,
+    "benchmark_runs": 0,
+    "nvidia_invocations": 0,
+    "gemini_invocations": 0,
+    "production_commit": 0,
+    "rollback": 0
+  },
+  "stop_reason": "Collector identifier mismatch and unresolved authorization timestamp blocked preflight before provider transport validation."
+}

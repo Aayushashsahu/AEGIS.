@@ -1,0 +1,22 @@
+{
+  "schema_version": "mission-034-summary-v1",
+  "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+  "canonical_collector_id": "c_mt09pib13nxqz1coi",
+  "authorization_collector_id": "c_mt09pib13nxqz1co",
+  "approval": "NOT_ATTEMPTED",
+  "post_approval_rerun": "NOT_ATTEMPTED",
+  "verification": "NOT_APPLICABLE",
+  "risk": "NOT_APPLICABLE",
+  "commit": "BLOCKED_BY_OWNER_POLICY",
+  "downstream": "NONE",
+  "provenance": "NO_MISSION_034_PROVIDER_OUTPUT",
+  "provider_operations": 0,
+  "retries": 0,
+  "terminal_state": "BLOCKED_INVALID_AUTHORIZATION",
+  "block_reasons": [
+    "COLLECTOR_ID_MISMATCH",
+    "UTC_AUTHORIZATION_TIME_UNRESOLVED",
+    "OPERATOR_DELEGATION_NOT_EXPLICIT",
+    "MUTATION_CAPABLE_TRANSPORT_UNAVAILABLE"
+  ]
+}

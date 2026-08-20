@@ -1,0 +1,21 @@
+{
+  "schema_version": "mission-034-final-transport-preflight-v1",
+  "mission": "mission_034_bright_data_approval_rerun",
+  "recorded_at": "2026-08-20T09:17:55Z",
+  "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "candidate_provenance": "REAL_PROVIDER",
+  "provider_state": "awaiting_approval",
+  "preapproval_verification": "PASS",
+  "preapproval_risk": "ACCEPT",
+  "authorization_scope_exact": true,
+  "operation_budget_exact": true,
+  "authenticated_mutation_transport": {
+    "status": "FAIL",
+    "reason": "No configured Bright Data connector was found by current-task configuration inspection; the available Bright Data MCP tool-list call failed during OAuth protected-resource discovery with a TLS handshake timeout; no brightdata CLI binary was present.",
+    "mutation_attempted": false
+  },
+  "overall_preflight": "FAIL",
+  "terminal_state": "BLOCKED_TRANSPORT_AUTHENTICATION_UNAVAILABLE",
+  "provider_action_allowed": false
+}

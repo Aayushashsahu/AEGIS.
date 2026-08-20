@@ -1,0 +1,11 @@
+{
+  "schema_version": "mission-034-final-artifact-hashes-v1",
+  "generated_at": "2026-08-20T09:17:55Z",
+  "algorithm": "sha256",
+  "artifacts": {
+    "authorization.json": "a783dd72a0f10b579ae10e012d33f0bf7c6cb6adbb8c900ac82af4c3fbcf8a22",
+    "transport_preflight.json": "d616952d4c8138a725bae6448b48a7844901cfeaac8b764f2809dc89cbb1a541",
+    "terminal_report.json": "fb85dd14659c82bd6bf4c81418d2e88ae125b3917eccab4cc9bd6b2fca4fb41b",
+    "README.md": "42b3776f3b825aa064dcf9f5c61773f3df7f7bc726886934fed1e2e2d32254c3"
+  }
+}

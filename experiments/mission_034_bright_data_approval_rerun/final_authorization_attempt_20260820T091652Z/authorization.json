@@ -1,0 +1,34 @@
+{
+  "schema_version": "mission-034-final-bounded-authorization-v1",
+  "mission": "mission_034_bright_data_approval_rerun",
+  "recorded_at": "2026-08-20T09:17:55Z",
+  "status": "AUTHORIZED_PENDING_PREFLIGHT",
+  "authorization_source": "PROJECT_OWNER_CHAT_AUTHORIZATION",
+  "authorized_at": "2026-08-20T09:16:52Z",
+  "operator": "Aayush Sahu",
+  "agent_delegation": "The AEGIS execution agent is explicitly delegated to perform only the bounded collector/candidate operation on the owner's behalf.",
+  "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "operation_budget": {
+    "bright_data_approve": 1,
+    "bright_data_collector_run": 1,
+    "bright_data_heal": 0,
+    "additional_collector_create": 0,
+    "additional_approval": 0,
+    "additional_rerun": 0,
+    "additional_retries": 0,
+    "benchmark_runs": 0,
+    "nvidia_invocations": 0,
+    "gemini_invocations": 0,
+    "production_commit": 0,
+    "rollback": 0
+  },
+  "rerun_policy": {
+    "authorized_only_after_approval_success": true,
+    "max_reruns": 1,
+    "retry_limit": 0
+  },
+  "commit_policy": "BLOCKED",
+  "rollback_policy": "BLOCKED",
+  "credential_handling": "The locally supplied credential may be used only through a verified documented mutation-capable provider transport. Its value is not persisted in this artifact, logs, source, or Git history."
+}

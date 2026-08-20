@@ -1,0 +1,9 @@
+{
+  "schema_version": "mission-041-commit-decision-v1",
+  "mission_id": "mission_041_post_heal_rerun",
+  "decision": "BLOCKED",
+  "reason_code": "BLOCKED_PRECONDITION_NO_POST_HEAL_OUTPUT",
+  "owner_policy": "Automatic commit is prohibited.",
+  "provider_commit_executed": false,
+  "repository_commit_executed": false
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "mission-041-operation-ledger-v1",
+  "mission_id": "mission_041_post_heal_rerun",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "terminal_state": "BLOCKED_PRECONDITION",
+  "provider_operations": {
+    "approval": 0,
+    "rerun": 0,
+    "heal": 0,
+    "collector_creation": 0,
+    "collector_modification": 0,
+    "commit": 0,
+    "rollback": 0
+  },
+  "retries": 0,
+  "provider_requests_executed": 0,
+  "notes": "No rerun request was made because the no-conflicting-pending-operation precondition was not proven."
+}

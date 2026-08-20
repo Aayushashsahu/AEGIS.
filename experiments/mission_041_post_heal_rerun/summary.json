@@ -1,0 +1,17 @@
+{
+  "schema_version": "mission-041-summary-v1",
+  "mission_id": "mission_041_post_heal_rerun",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "approval": "ALREADY_COMPLETED_IN_MISSION_040",
+  "rerun": "NOT_ATTEMPTED",
+  "provider_http": null,
+  "provider_operation": null,
+  "output": "ABSENT",
+  "post_heal_verification": "NOT_APPLICABLE",
+  "risk": "NOT_APPLICABLE",
+  "commit": "BLOCKED",
+  "mutations_this_mission": 0,
+  "retries": 0,
+  "historical_evidence": "UNCHANGED",
+  "terminal_statement": "REAL SELF-HEAL LOOP NOT COMPLETED — PRECONDITION UNPROVEN; PROVIDER RERUN NOT ATTEMPTED"
+}

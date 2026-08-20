@@ -1,0 +1,19 @@
+{
+  "schema_version": "mission-041-artifact-hash-manifest-v1",
+  "algorithm": "SHA-256",
+  "terminal_state": "BLOCKED_PRECONDITION",
+  "artifacts": {
+    "commit_decision.json": "e82a1d2f25867197f7783cc38cc3449d86a1b10bad16c8b2536a5191735bf3bc",
+    "operation_ledger.json": "6e22cc23e9d342ea90543c1b498b0af3ee487d5adcb8acd1bd1fb127e6237456",
+    "preflight.json": "99d7b0f2387b3b7fe7b46c4f30457e89feb107a7d0da4b181637e1b2ab2750ae",
+    "summary.json": "9f441aff6e769341912848359474a15e6aff2b555e54868cb70f283e37729dcd"
+  },
+  "intentionally_absent": [
+    "rerun_request.json",
+    "rerun_result.json",
+    "post_heal_output.json",
+    "verification.json",
+    "risk_decision.json"
+  ],
+  "reason": "The required no-conflicting-pending-operation precondition was UNKNOWN, so no provider rerun was attempted and no downstream output, verification, or risk artifact exists."
+}

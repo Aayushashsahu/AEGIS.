@@ -1,0 +1,52 @@
+{
+  "schema_version": "mission-046-dashboard-comparison-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "fields": [
+    {
+      "field": "title",
+      "frozen_contract": "PRESENT_STRING",
+      "mission_033_candidate_preview": "PRESENT_STRING",
+      "active_dashboard_configuration": "PRESENT_SELECTOR_AND_RETURN_FIELD",
+      "active_dashboard_schema": "PRESENT_STRING",
+      "mission_041b_output": "ABSENT"
+    },
+    {
+      "field": "price",
+      "frozen_contract": "PRESENT_STRING",
+      "mission_033_candidate_preview": "PRESENT_MONEY_OBJECT",
+      "active_dashboard_configuration": "PRESENT_SELECTOR_TYPED_MONEY_RETURN",
+      "active_dashboard_schema": "PRESENT_PRICE_MONEY",
+      "mission_041b_output": "ABSENT"
+    },
+    {
+      "field": "availability",
+      "frozen_contract": "PRESENT_STRING",
+      "mission_033_candidate_preview": "PRESENT_STRING",
+      "active_dashboard_configuration": "PRESENT_SELECTOR_AND_RETURN_FIELD",
+      "active_dashboard_schema": "PRESENT_STRING",
+      "mission_041b_output": "ABSENT"
+    }
+  ],
+  "target_route": {
+    "frozen_contract": "/mission-033/target",
+    "active_dashboard_configuration": "/mission-033/target",
+    "match": "YES"
+  },
+  "revision_comparison": {
+    "active_dashboard_version": "v1 (prod)",
+    "visible_one_input_api_run_version": "v1 (prod)",
+    "mission_041b_runtime_revision": "NOT_RETAINED",
+    "exact_run_binding": "UNKNOWN"
+  },
+  "first_supported_divergence": "BETWEEN_ACTIVE_DASHBOARD_DECLARATION_AND_MISSION_041B_RETURNED_RECORD",
+  "cause_assessment": {
+    "A_approved_repair_not_activated": "UNKNOWN",
+    "B_runtime_used_stale_revision": "UNKNOWN",
+    "C_output_configuration_stripped_fields": "NOT_SUPPORTED_BY_ACTIVE_DASHBOARD_CONFIGURATION",
+    "D_field_mappings_existed_but_extractor_did_not_execute_them": "UNKNOWN",
+    "E_target_or_runtime_configuration_mismatch": "UNKNOWN",
+    "F_provider_execution_or_response_shaping_defect": "UNKNOWN",
+    "G_dashboard_documented_another_cause": "NO",
+    "H_unknown": "YES"
+  }
+}

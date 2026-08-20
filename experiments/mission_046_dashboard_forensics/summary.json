@@ -1,0 +1,22 @@
+{
+  "schema_version": "mission-046-summary-v1",
+  "dashboard_inspection": "COMPLETE",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "active_fields": {
+    "title": "String",
+    "price": "Price/Money",
+    "availability": "String"
+  },
+  "active_mappings": "VISIBLE_ACTIVE_PARSER_RETURNS_ALL_THREE_FIELDS",
+  "active_revision": "Version 1 / v1 (prod)",
+  "approved_repair_visible": "NO",
+  "approved_repair_active": "UNKNOWN",
+  "runtime_config_visible": "YES_FOR_ACTIVE_TEMPLATE_ONLY",
+  "mission_041b_execution_visible": "UNKNOWN",
+  "root_cause": "UNKNOWN",
+  "confidence": "LOW",
+  "provider_mutations": 0,
+  "reruns": 0,
+  "historical_evidence": "UNCHANGED",
+  "recommended_next_action": "Obtain a separately authorized, read-only provider execution-detail or output-trace view that binds correlation_id mission041b-rerun-c_mt09pib13nxqz1coi to a dashboard run and exposes the runtime template revision, parser execution trace, and response-shaping record."
+}

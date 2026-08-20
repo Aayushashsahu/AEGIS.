@@ -1,0 +1,99 @@
+{
+  "schema_version": "mission-046-dashboard-snapshot-v1",
+  "mission": "046",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "collector_name": "aegis-mission-033-v1",
+  "inspection_boundary": {
+    "mode": "READ_ONLY_DASHBOARD",
+    "provider_mutations": 0,
+    "reruns": 0,
+    "approvals": 0,
+    "heals": 0,
+    "edits": 0,
+    "saves": 0,
+    "previews": 0,
+    "downloads": 0
+  },
+  "active_collector": {
+    "active": true,
+    "target_route": "/mission-033/target",
+    "input_parameter": "url",
+    "template_label": "New ide-automation template",
+    "interaction": {
+      "navigates_to": "input.url",
+      "emits": "collect(parse())"
+    },
+    "parser": {
+      "title": "product-title selector",
+      "price": "product-price selector with currency-aware numeric parsing",
+      "availability": "product-availability selector",
+      "returns": ["title", "price", "availability"]
+    },
+    "output_schema": {
+      "title": "String",
+      "price": "Price/Money",
+      "availability": "String"
+    }
+  },
+  "revision_and_history": {
+    "visible_version": "Version 1",
+    "production_version": true,
+    "currently_editing": true,
+    "visible_history": [
+      {
+        "event": "Collector was created",
+        "actor": "Aayush Sahu",
+        "timestamp": "2026-08-19 21:20:04"
+      },
+      {
+        "event": "AI generated template",
+        "actor": "AI",
+        "version": "1",
+        "timestamp": "2026-08-19 21:21:23"
+      }
+    ],
+    "approved_repair_event_visible": false,
+    "repair_diff_visible": false,
+    "approval_timestamp_visible": false,
+    "separate_repair_revision_visible": false
+  },
+  "self_healing_panel": {
+    "new_refactor_composer_visible": true,
+    "historical_approved_repair_visible": false,
+    "refactor_submitted": false
+  },
+  "runs": {
+    "completed_runs": 2,
+    "records": 3,
+    "inputs": 3,
+    "average_success_rate": "100.00%",
+    "recent_run": {
+      "run_id": "vj_mt1pakyc14nagbhvo5",
+      "trigger": "API",
+      "template": "v1 (prod)",
+      "inputs": 1,
+      "records": 1,
+      "failed_crawls": 0,
+      "success_rate": "100.00%",
+      "queued_at_local": "2026-08-20 21:24:08"
+    },
+    "earlier_run": {
+      "run_id": "vj_mt09ryhe6v1ed6mqg",
+      "template": "v1 (prod)",
+      "inputs": 2,
+      "records": 2,
+      "failed_crawls": 0
+    },
+    "mission_041b_run_binding": "UNKNOWN",
+    "run_output_details_visible": false
+  },
+  "access_observations": {
+    "dashboard_authenticated": true,
+    "browser_bridge_timeouts": [
+      "initial passive dashboard wait",
+      "changelog close",
+      "run-detail coordinate click"
+    ],
+    "all_timeouts_state_changing": false
+  }
+}

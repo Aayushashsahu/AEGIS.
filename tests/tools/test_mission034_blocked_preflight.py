@@ -42,3 +42,31 @@ def test_blocked_preflight_artifact_hashes_match_manifest() -> None:
     for filename, expected_hash in manifest["artifacts"].items():
         actual_hash = hashlib.sha256((ARTIFACTS / filename).read_bytes()).hexdigest()
         assert actual_hash == expected_hash
+
+
+def test_corrected_authorization_and_preflight_stop_at_transport_gate() -> None:
+    authorization = load_json("authorization_corrected.json")
+    preflight = load_json("preflight_corrected.json")
+    checks = {item["name"]: item for item in preflight["checks"]}
+
+    assert authorization["candidate_id"] == "candidate_m033_a0d9aa5a0d056720"
+    assert authorization["collector_id"] == "c_mt09pib13nxqz1coi"
+    assert authorization["agent_delegation"]
+    assert authorization["operation_budget"]["bright_data_approve"] == 1
+    assert authorization["operation_budget"]["bright_data_collector_run"] == 1
+    assert authorization["operation_budget"]["additional_retries"] == 0
+    assert preflight["status"] == "BLOCKED_TRANSPORT_UNAVAILABLE"
+    assert checks["credential_authentication_probe"]["status"] == "PASS"
+    assert checks["documented_approval_rerun_transport"]["status"] == "FAIL"
+    assert all(value == 0 for value in preflight["provider_operations_executed"].values())
+
+
+def test_corrected_transport_block_has_no_real_provider_output() -> None:
+    ledger = load_json("operation_ledger_corrected.json")
+    summary = load_json("summary_corrected.json")
+
+    assert all(value == 0 for value in ledger["operations"].values())
+    assert summary["approval"] == "NOT_ATTEMPTED"
+    assert summary["rerun"] == "NOT_ATTEMPTED"
+    assert summary["real_provider_output"] == "ABSENT"
+    assert summary["commit"] == "BLOCKED"

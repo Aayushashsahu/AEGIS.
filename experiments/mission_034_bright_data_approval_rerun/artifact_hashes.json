@@ -10,7 +10,11 @@
     "authorization.json": "c8c70ce781184716daf50b0e16e616c7010e80c7fab3c5fba53ac1099897c0b4",
     "preflight.json": "f44070e92103f38ae3b033f0ffb531efa61a924e28c5d3aed50772c509241bbd",
     "operation_ledger.json": "6e69dfe4f34cb194256e08efbe681ed6b0bb32bb84d7e3960bdf9e6e4ca5c37d",
-    "summary.json": "99ffde6a082fa5678fc06c9b93818cd4cedea30fa80218db753cc5722dd8f438"
+    "summary.json": "99ffde6a082fa5678fc06c9b93818cd4cedea30fa80218db753cc5722dd8f438",
+    "authorization_corrected.json": "99312b56b18319f3fe436fe45f7d7114050d34f4afbf10ee3e19e342bf7457d6",
+    "preflight_corrected.json": "49669086d6841238f897ae2d4af44ea3e9f015f869ce01553b7d7e3a5b298f4a",
+    "operation_ledger_corrected.json": "3305ba02511a3d05a0c137d1332f2852f29fb85de5e53481b7b3b202bdef7e84",
+    "summary_corrected.json": "95b82b9864b286a87f0f52057a151066e3c13cf83efda20bc60972dd2033a2e1"
   },
   "absent_by_design": [
     "approval_request.json",

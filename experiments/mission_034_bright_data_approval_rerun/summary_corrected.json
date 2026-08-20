@@ -1,0 +1,17 @@
+{
+  "schema_version": "mission-034-corrected-summary-v1",
+  "candidate_id": "candidate_m033_a0d9aa5a0d056720",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "approval": "NOT_ATTEMPTED",
+  "rerun": "NOT_ATTEMPTED",
+  "verification": "NOT_APPLICABLE",
+  "risk": "NOT_APPLICABLE",
+  "commit": "BLOCKED",
+  "real_provider_output": "ABSENT",
+  "provider_operation_count": 0,
+  "retries": 0,
+  "terminal_state": "BLOCKED_TRANSPORT_UNAVAILABLE",
+  "historical_evidence": "UNCHANGED",
+  "downstream": "NONE",
+  "reason": "No existing documented approval/rerun-capable Bright Data transport is available despite a successful non-mutating credential probe."
+}

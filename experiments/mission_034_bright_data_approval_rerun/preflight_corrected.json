@@ -1,0 +1,85 @@
+{
+  "schema_version": "mission-034-corrected-preflight-v1",
+  "status": "BLOCKED_TRANSPORT_UNAVAILABLE",
+  "authorization_reference": "authorization_corrected.json",
+  "candidate_reference": "../mission_033_live_bright_data_success/candidate_preview.json",
+  "checks": [
+    {
+      "name": "candidate_id_matches",
+      "expected": "candidate_m033_a0d9aa5a0d056720",
+      "observed": "candidate_m033_a0d9aa5a0d056720",
+      "status": "PASS"
+    },
+    {
+      "name": "collector_id_matches",
+      "expected": "c_mt09pib13nxqz1coi",
+      "observed": "c_mt09pib13nxqz1coi",
+      "status": "PASS"
+    },
+    {
+      "name": "historical_candidate_provenance",
+      "expected": "REAL_PROVIDER",
+      "observed": "REAL_PROVIDER",
+      "status": "PASS"
+    },
+    {
+      "name": "historical_candidate_provider_state",
+      "expected": "awaiting_approval",
+      "observed": "awaiting_approval",
+      "status": "PASS"
+    },
+    {
+      "name": "historical_aegis_verification",
+      "expected": "PASS",
+      "observed": "PASS",
+      "status": "PASS"
+    },
+    {
+      "name": "historical_aegis_risk",
+      "expected": "ACCEPT",
+      "observed": "ACCEPT",
+      "status": "PASS"
+    },
+    {
+      "name": "commit_policy",
+      "expected": "automatic commit disabled; automatic rollback disabled",
+      "observed": "disabled by corrected authorization",
+      "status": "PASS"
+    },
+    {
+      "name": "corrected_authorization",
+      "expected": "exact identifiers, recorded UTC time, explicit agent delegation, one approval and one conditional rerun",
+      "observed": "authorization_corrected.json",
+      "status": "PASS"
+    },
+    {
+      "name": "credential_authentication_probe",
+      "expected": "non-mutating documented Scraper Studio endpoint accepts bearer token",
+      "observed": "managed brightDataCredential test passed without logging the token",
+      "status": "PASS"
+    },
+    {
+      "name": "documented_approval_rerun_transport",
+      "expected": "brightdata scraper approve and brightdata scraper run available through existing authenticated transport",
+      "observed": "brightdata CLI binary absent; MCP exposes no mutation-capable approval or rerun tool",
+      "status": "FAIL",
+      "reason": "No existing documented approval/rerun-capable transport is available in this session."
+    },
+    {
+      "name": "operation_budget",
+      "expected": "approve=1; rerun=1 only after approval; retries=0; all prohibited operations=0",
+      "observed": "no mutation attempted",
+      "status": "PASS"
+    }
+  ],
+  "provider_operations_executed": {
+    "bright_data_approve": 0,
+    "bright_data_collector_run": 0,
+    "bright_data_heal": 0,
+    "additional_collector_create": 0,
+    "additional_retries": 0,
+    "production_commit": 0,
+    "rollback": 0
+  },
+  "stop_reason": "The corrected authorization is valid, but the documented mutation-capable Bright Data CLI transport is absent. Per authorization, no provider mutation may be attempted."
+}

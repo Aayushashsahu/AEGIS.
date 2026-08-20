@@ -1,0 +1,18 @@
+{
+  "schema_version": "mission-034-corrected-operation-ledger-v1",
+  "status": "TERMINAL_BLOCKED_TRANSPORT_UNAVAILABLE",
+  "operations": {
+    "bright_data_approve": 0,
+    "bright_data_collector_run": 0,
+    "bright_data_heal": 0,
+    "additional_collector_create": 0,
+    "additional_retries": 0,
+    "benchmark_runs": 0,
+    "nvidia_invocations": 0,
+    "gemini_invocations": 0,
+    "production_commit": 0,
+    "rollback": 0
+  },
+  "credential_probe": "NON_MUTATING_AUTHENTICATED_PASS",
+  "stop_reason": "Documented brightdata approval/rerun transport is absent; no mutation was attempted."
+}

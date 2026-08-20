@@ -342,18 +342,77 @@ def _downstream(root: Path) -> dict[str, Any]:
     }
 
 
+def _mission034(root: Path) -> dict[str, Any]:
+    """Project the append-only Mission 034 corrected preflight read-only."""
+
+    evidence_root = root / "experiments" / "mission_034_bright_data_approval_rerun"
+    required = {
+        "authorization": evidence_root / "authorization_corrected.json",
+        "preflight": evidence_root / "preflight_corrected.json",
+        "ledger": evidence_root / "operation_ledger_corrected.json",
+        "summary": evidence_root / "summary_corrected.json",
+        "hashes": evidence_root / "artifact_hashes.json",
+    }
+    if not all(path.is_file() for path in required.values()):
+        raise RuntimeError("Mission 034 corrected evidence bundle is incomplete; refusing to project partial state.")
+    records = {name: json.loads(path.read_text(encoding="utf-8")) for name, path in required.items()}
+    authorization = records["authorization"]
+    preflight = records["preflight"]
+    ledger = records["ledger"]
+    summary = records["summary"]
+    refs = tuple(f"evidence://mission-034/{path.relative_to(evidence_root)}" for path in required.values())
+    target_url = _mission033(root)["case"]["target_url"]
+    nodes = [
+        _node("TARGET", "CONFIGURED", "REAL_PROVIDER", "Existing AEGIS-owned target; no Mission 034 target mutation occurred.", refs, domain_status="historical_target_reused"),
+        _node("COLLECTOR", "ACTIVE", "REAL_PROVIDER", str(authorization["collector_id"]), refs, provider="Bright Data Scraper Studio", domain_status="historical_collector_reused"),
+        _node("OBSERVATION", "ACTIVE", "REAL_PROVIDER", "Mission 033 candidate and deterministic evidence were rechecked read-only.", refs, domain_status="historical_evidence_rechecked"),
+        _node("DETECTION", "ANOMALY", "REAL_PROVIDER", "Historical schema drift remains the only recorded provider failure.", refs, domain_status="historical_schema_drift"),
+        _node("DIAGNOSIS", "ANOMALY", "REAL_PROVIDER", "Historical deterministic diagnosis remains SCHEMA_DRIFT.", refs, domain_status="historical_schema_drift_diagnosis"),
+        _node("REPAIR", "BLOCKED", "AEGIS_DETERMINISTIC", str(preflight["stop_reason"]), refs, domain_status="approval_rerun_transport_unavailable"),
+        _node("CANDIDATE", "ACTIVE", "REAL_PROVIDER", "The existing awaiting-approval candidate remains unchanged; no approval request was sent.", refs, domain_status="historical_candidate_unapproved"),
+        _node("VERIFICATION", "VERIFIED", "AEGIS_DETERMINISTIC", "Historical candidate verification remains PASS; no post-heal output exists to verify.", refs, domain_status="historical_candidate_verification_pass"),
+        _node("RISK", "VERIFIED", "AEGIS_DETERMINISTIC", "Historical candidate risk remains ACCEPT; no post-heal output risk evaluation exists.", refs, domain_status="historical_candidate_risk_accept"),
+        _node("COMMIT", "BLOCKED", "AEGIS_DETERMINISTIC", "No approval, rerun, or real provider output occurred; automatic commit remains prohibited.", refs, domain_status="no_provider_mutation_commit_blocked"),
+    ]
+    graph = _graph("mission_034_transport_blocked", "REAL_PROVIDER_TRANSPORT_BLOCKED", nodes, "Mission 034 corrected authorization passed evidence and credential-probe gates but stopped before provider mutation because the documented approval/rerun transport is unavailable.", "BLOCKED")
+    events = [
+        {"event_id": "m034-authorization", "event_type": "AUTHORIZATION", "label": "Corrected bounded authorization recorded", "timestamp": authorization["authorized_at"], "provenance": "OWNER_AUTHORIZATION", "status": authorization["status"], "evidence_refs": list(refs)},
+        {"event_id": "m034-preflight", "event_type": "PREFLIGHT", "label": "No-mutation transport preflight", "timestamp": authorization["authorized_at"], "provenance": "AEGIS_DETERMINISTIC", "status": preflight["status"], "evidence_refs": list(refs)},
+        {"event_id": "m034-commit", "event_type": "COMMIT_DECISION", "label": "No provider mutation; commit remains blocked", "timestamp": authorization["authorized_at"], "provenance": "AEGIS_DETERMINISTIC", "status": summary["commit"], "evidence_refs": list(refs)},
+    ]
+    case = {
+        "case_id": "mission_034_transport_blocked",
+        "name": "Mission 034 / Bright Data transport-blocked authorization",
+        "target_url": target_url,
+        "collector_id": authorization["collector_id"],
+        "description": "Corrected bounded authorization and valid credential probe; no documented approval/rerun transport was available, so no provider mutation occurred.",
+        "fields": [{"name": name, "type": "text", "description": "Mission 033 owned-product contract field"} for name in ("title", "price", "availability")],
+        "invariants": ["same_collector_id", "one_approval_maximum", "one_rerun_maximum", "zero_retries", "no_automatic_commit"],
+        "correlation_id": "mission_034_transport_blocked",
+        "created_at": authorization["authorized_at"],
+        "updated_at": authorization["authorized_at"],
+        "lifecycle": {"current_status": summary["terminal_state"], "event_count": len(events), "latest_event_type": "COMMIT_DECISION", "evidence_refs": list(refs)},
+        "actions": [],
+        "action_policy": "Read-only corrected-preflight evidence. The existing real candidate remains unapproved; no provider rerun, output, or commit may be implied.",
+    }
+    replay = {"authorization": authorization, "preflight": preflight, "operations": ledger["operations"], "summary": summary, "output_eligible": False}
+    return {"case": case, "events": events, "graph": graph, "replay": replay}
+
+
 def dispatch(root: Path, request: Mapping[str, Any]) -> Mapping[str, Any]:
     action = str(request.get("action", ""))
     historical = _historical(root)
     controlled = _controlled(root)
     if action == "seed_cases":
-        return {"cases": [historical["case"], _mission033(root)["case"], controlled["case"]]}
+        return {"cases": [historical["case"], _mission033(root)["case"], _mission034(root)["case"], controlled["case"]]}
     if action == "historical":
         return historical
     if action == "controlled":
         return controlled
     if action == "mission033":
         return _mission033(root)
+    if action == "mission034":
+        return _mission034(root)
     if action == "configured":
         config = request.get("case")
         if not isinstance(config, Mapping):

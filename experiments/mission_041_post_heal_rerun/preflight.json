@@ -1,29 +1,21 @@
 {
-  "schema_version": "mission-041-preflight-v1",
+  "schema_version": "mission-041b-preflight-v1",
   "mission_id": "mission_041_post_heal_rerun",
   "collector_id": "c_mt09pib13nxqz1coi",
-  "authorization": {
-    "rerun_budget": 1,
-    "retry_budget": 0,
-    "additional_approval": false,
-    "heal": false,
-    "commit": false,
-    "rollback": false
-  },
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
   "checks": {
-    "mission040_approval_record_valid": "PASS",
-    "approval_collector_match": "PASS",
-    "approval_provider_state_accepted": "PASS",
-    "authenticated_transport_available": "PASS",
+    "mission040_approval_preserved": "PASS",
+    "provider_heal_completed": "PASS",
+    "exact_collector": "PASS",
+    "authenticated_transport_configured": "PASS",
     "rerun_budget_exactly_one": "PASS",
     "retry_budget_zero": "PASS",
-    "historical_evidence_hashes_intact": "PASS",
-    "no_conflicting_provider_operation_pending": "UNKNOWN"
+    "no_active_conflict": "PASS",
+    "historical_risk_evidence_present": "PASS"
   },
-  "result": "BLOCKED_PRECONDITION",
-  "blocking_reason": "Mission 040 recorded RESUME_ACCEPTED only. Its documented HTTP 200 response has no body, and no current completion/progress state was preserved. Mission 041 authorizes only the rerun; it does not authorize an additional provider status request. The required no-conflicting-pending-operation precondition is therefore unproven.",
-  "provider_requests_executed": 0,
-  "rerun_attempted": false,
-  "retries": 0,
+  "result": "PASS",
+  "provider_requests_executed_before_rerun": 0,
+  "rerun_budget": 1,
+  "retry_budget": 0,
   "credentials_exposed": false
 }

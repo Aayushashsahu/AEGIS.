@@ -1,18 +1,27 @@
 {
-  "schema_version": "mission-041-operation-ledger-v1",
+  "schema_version": "mission-041b-operation-ledger-v1",
   "mission_id": "mission_041_post_heal_rerun",
   "collector_id": "c_mt09pib13nxqz1coi",
-  "terminal_state": "BLOCKED_PRECONDITION",
+  "terminal_state": "RERUN_COMPLETED_VERIFICATION_FAILED",
   "provider_operations": {
     "approval": 0,
-    "rerun": 0,
+    "rerun": 1,
     "heal": 0,
     "collector_creation": 0,
     "collector_modification": 0,
     "commit": 0,
     "rollback": 0
   },
+  "provider_requests_executed": 1,
   "retries": 0,
-  "provider_requests_executed": 0,
-  "notes": "No rerun request was made because the no-conflicting-pending-operation precondition was not proven."
+  "rerun_result": {
+    "http_status": 200,
+    "elapsed_ms": 8191,
+    "provider_status": "COMPLETED",
+    "row_count": 1,
+    "response_id": null
+  },
+  "verification": "FAIL",
+  "risk": "REJECT",
+  "commit": "BLOCKED_BY_OWNER_POLICY"
 }

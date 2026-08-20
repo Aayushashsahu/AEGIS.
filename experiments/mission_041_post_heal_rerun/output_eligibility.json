@@ -1,0 +1,14 @@
+{
+  "candidate_id": "candidate_m041b_real_rerun",
+  "commit_decision_id": "commit_decision_b4fe082116644f4992edbc176419159e",
+  "correlation_id": "mission041b-rerun-c_mt09pib13nxqz1coi",
+  "created_at": "2026-08-20T15:54:58.660818+00:00",
+  "eligible": false,
+  "evidence_refs": [
+    "evidence://mission-033/independent-target-snapshot.html",
+    "evidence://mission-033/target-contract.json",
+    "evidence://mission-041/post-heal-output.json",
+    "semantic://deterministic-invariants"
+  ],
+  "reason": "commit gate is BLOCKED"
+}

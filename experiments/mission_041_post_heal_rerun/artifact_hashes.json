@@ -1,19 +1,19 @@
 {
-  "schema_version": "mission-041-artifact-hash-manifest-v1",
+  "schema_version": "mission-041b-artifact-hash-manifest-v1",
   "algorithm": "SHA-256",
-  "terminal_state": "BLOCKED_PRECONDITION",
+  "terminal_state": "RERUN_COMPLETED_VERIFICATION_FAILED",
   "artifacts": {
-    "commit_decision.json": "e82a1d2f25867197f7783cc38cc3449d86a1b10bad16c8b2536a5191735bf3bc",
-    "operation_ledger.json": "6e22cc23e9d342ea90543c1b498b0af3ee487d5adcb8acd1bd1fb127e6237456",
-    "preflight.json": "99d7b0f2387b3b7fe7b46c4f30457e89feb107a7d0da4b181637e1b2ab2750ae",
-    "summary.json": "9f441aff6e769341912848359474a15e6aff2b555e54868cb70f283e37729dcd"
+    "commit_decision.json": "1c897c01ae90a082628cafd1e96aad420a99b0bdac004dc709f7921a0e4f29f8",
+    "operation_ledger.json": "f9f902894b8cc369cf85077e5715053995f3feb702238bba9ab62c5e687d1f02",
+    "output_eligibility.json": "ab4444ea4746d48792f06536012286cd569b49f76b63e6bfe657571a11c8a13c",
+    "post_heal_output.json": "063439c8b0ca9385f4179f5026c1e40631faa64d93e66fd3c7a61d3ffe649f64",
+    "preflight.json": "ff91fb95ba00fb475d30dd0310f800a5bf4270e1855807c133082a0028b88788",
+    "rerun_request.json": "68400087af558500ddfb5e722f288e84d2915329170e81f3423cbe350cd8bcac",
+    "rerun_result.json": "ef5bb613361a7b3c3200670380700ada4be605144c916d920424cc4400f7490c",
+    "risk_decision.json": "23fa2cadd1169b9e686d836f4ea7d5f1d66a2c1896381bb99e0d6d38444ce5d8",
+    "summary.json": "6e3135f98a0e8b8890194999cd897ddbecf8e95403c51a318233423d9bccf909",
+    "verification.json": "7338ddb04b54bcf994d239260d7f8107461582599c7f8fe92a07edccd24abf6c"
   },
-  "intentionally_absent": [
-    "rerun_request.json",
-    "rerun_result.json",
-    "post_heal_output.json",
-    "verification.json",
-    "risk_decision.json"
-  ],
-  "reason": "The required no-conflicting-pending-operation precondition was UNKNOWN, so no provider rerun was attempted and no downstream output, verification, or risk artifact exists."
+  "manifest_exclusion": "artifact_hashes.json is intentionally excluded from self-hashing.",
+  "reason": "The exactly-one rerun completed with HTTP 200 but returned only the input URL. Deterministic verification failed, risk rejected, and owner policy blocked commit."
 }

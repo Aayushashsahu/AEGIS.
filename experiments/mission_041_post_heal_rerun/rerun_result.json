@@ -1,0 +1,18 @@
+{
+  "schema_version": "mission-041b-rerun-result-v1",
+  "provenance": "REAL_PROVIDER",
+  "operation": "synchronous_collector_rerun",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "correlation_id": "mission041b-rerun-c_mt09pib13nxqz1coi",
+  "http_status": 200,
+  "content_type": "application/json",
+  "elapsed_ms": 8191,
+  "provider_status": "COMPLETED",
+  "response_id": null,
+  "row_count": 1,
+  "output_schema": {
+    "input": "dict"
+  },
+  "retry_count": 0,
+  "credentials_exposed": false
+}

@@ -1,0 +1,18 @@
+{
+  "candidate_id": "candidate_m041b_real_rerun",
+  "correlation_id": "mission041b-rerun-c_mt09pib13nxqz1coi",
+  "created_at": "2026-08-20T15:54:58.660741+00:00",
+  "decision": "REJECT",
+  "decision_id": "risk_1e7e3076a4aa4638826359a1e166ae02",
+  "eligible_for_future_commit": false,
+  "evidence_refs": [
+    "evidence://mission-033/independent-target-snapshot.html",
+    "evidence://mission-033/target-contract.json",
+    "evidence://mission-041/post-heal-output.json",
+    "semantic://deterministic-invariants"
+  ],
+  "production_commit_performed": false,
+  "provenance": "BRIGHT_DATA",
+  "reason_code": "DETERMINISTIC_FAILURE",
+  "verification_id": "verification_38d34452cdc34c86977f30b9896dac02"
+}

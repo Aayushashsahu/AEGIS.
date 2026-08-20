@@ -1,0 +1,17 @@
+{
+  "schema_version": "mission-041b-rerun-request-v1",
+  "operation": "synchronous_collector_rerun",
+  "method": "POST",
+  "endpoint": "https://api.brightdata.com/dca/crawl?collector=c_mt09pib13nxqz1coi&timeout=50s",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+  "request_body_metadata": {
+    "input_keys": ["url"],
+    "input_count": 1
+  },
+  "correlation_id": "mission041b-rerun-c_mt09pib13nxqz1coi",
+  "requested_at_utc": "2026-08-20T15:54:00.075887Z",
+  "provider_operation_budget": 1,
+  "retry_budget": 0,
+  "credentials_exposed": false
+}

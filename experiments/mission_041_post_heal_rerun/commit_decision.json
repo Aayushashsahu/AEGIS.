@@ -1,9 +1,29 @@
 {
-  "schema_version": "mission-041-commit-decision-v1",
-  "mission_id": "mission_041_post_heal_rerun",
-  "decision": "BLOCKED",
-  "reason_code": "BLOCKED_PRECONDITION_NO_POST_HEAL_OUTPUT",
-  "owner_policy": "Automatic commit is prohibited.",
-  "provider_commit_executed": false,
-  "repository_commit_executed": false
+  "authorization_reference": "[REDACTED]",
+  "block_reasons": [
+    "RISK_NOT_ACCEPT",
+    "VERIFICATION_NOT_PASS",
+    "CRITICAL_VERIFICATION_FAILURE",
+    "REQUIRED_EVIDENCE_MISSING",
+    "CANDIDATE_NOT_VERIFIED",
+    "KNOWN_GOOD_MISSING",
+    "INVALID_AUTHORIZATION"
+  ],
+  "candidate_id": "candidate_m041b_real_rerun",
+  "correlation_id": "mission041b-rerun-c_mt09pib13nxqz1coi",
+  "created_at": "2026-08-20T15:54:58.660800+00:00",
+  "decision_id": "commit_decision_b4fe082116644f4992edbc176419159e",
+  "eligibility": "BLOCKED",
+  "evidence_refs": [
+    "evidence://mission-033/independent-target-snapshot.html",
+    "evidence://mission-033/target-contract.json",
+    "evidence://mission-041/post-heal-output.json",
+    "semantic://deterministic-invariants"
+  ],
+  "known_good_version_reference": null,
+  "production_commit_performed": false,
+  "provenance": "BRIGHT_DATA",
+  "reason_code": "RISK_NOT_ACCEPT",
+  "risk_decision_id": "risk_1e7e3076a4aa4638826359a1e166ae02",
+  "verification_id": "verification_38d34452cdc34c86977f30b9896dac02"
 }

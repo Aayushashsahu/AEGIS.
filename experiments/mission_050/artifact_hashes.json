@@ -1,0 +1,12 @@
+{
+  "schema_version": "mission-050-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "manifest_scope": "All Mission 050 evidence artifacts present when this manifest was created, excluding artifact_hashes.json itself.",
+  "artifact_count": 4,
+  "artifacts": {
+    "authorization.json": "0828ad90e0293d8b94d16cb359eae37f1edb8a22952ef1d113bab262b4eec83d",
+    "causal_boundary.json": "b835e7b2fd4cba7ab7e0f2327bf584afeec2a8b8413eb41ce67ee6f4ef45caa4",
+    "cause_boundary.md": "e545dd9786ccb056a94dc16a565bd5ce31616d5227a65113d556225937e7c10d",
+    "release_validation.json": "219194a03d217c47f9dbc50d96ea2725d838aa02afe9fc977e20325eb759b5f6"
+  }
+}

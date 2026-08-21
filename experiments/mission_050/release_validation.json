@@ -1,0 +1,39 @@
+{
+  "schema_version": "mission-050-release-validation-v1",
+  "provider_operations": {
+    "provider_requests": 0,
+    "mutations": 0,
+    "approvals": 0,
+    "heals": 0,
+    "reruns": 0,
+    "collector_changes": 0,
+    "commits": 0,
+    "rollbacks": 0,
+    "retries": 0
+  },
+  "canonical_tests": {"command": "PYTHONPATH=src:. pytest -q", "status": "PASS", "passed": 495},
+  "managed_tests": {"command": "pnpm exec vitest run --exclude server/brightDataCredential.test.ts", "status": "PASS", "passed": 19, "excluded": "The known external credential probe remains outside provider-free validation scope."},
+  "managed_typescript": {"command": "pnpm run check", "status": "PASS"},
+  "managed_production_build": {"command": "pnpm run build", "status": "PASS"},
+  "managed_judge_mode_visual_validation": {
+    "route": "/judge",
+    "desktop": "PASS",
+    "mobile": "PASS",
+    "visual_baseline": "PRESERVED"
+  },
+  "historical_integrity": {
+    "command": "python3 .github/scripts/verify_evidence_integrity.py",
+    "status": "PASS",
+    "validated_artifacts": 8,
+    "protected_paths_git_diff": "PASS"
+  },
+  "focused_secret_scan": {"status": "PASS", "credentials_or_authorization_headers_found": false},
+  "terminal_causal_boundary": {
+    "observed_provider_output_condition": "PROVIDER_OUTPUT_INCOMPLETE",
+    "cause": "UNKNOWN",
+    "confidence": "LOW",
+    "aegis_decision": "CORRECT_FAIL_CLOSED",
+    "data_shipped": "NO",
+    "controlled_replay": "TEST_DOUBLE_SEPARATE"
+  }
+}

@@ -286,6 +286,73 @@ def _controlled(root: Path) -> dict[str, Any]:
     return {"case": case, "events": events, "graph": graph, "replay": {"candidate": _to_jsonable(context.candidate), "verification": _to_jsonable(verification), "risk": _to_jsonable(risk), "commit": _to_jsonable(commit), "output_eligible": eligibility.eligible}}
 
 
+def _mission050(root: Path) -> dict[str, Any]:
+    """Project the evidence-bounded real-provider causal boundary read-only.
+
+    This projection intentionally separates the observed unsafe output from any
+    unproven provider-internal explanation, and it never contacts a provider.
+    """
+
+    evidence_path = root / "experiments" / "mission_050" / "causal_boundary.json"
+    if not evidence_path.is_file():
+        raise RuntimeError("Mission 050 causal-boundary evidence is incomplete; refusing to project inferred state.")
+    evidence = json.loads(evidence_path.read_text(encoding="utf-8"))
+    chain = evidence["real_provider_chain"]
+    boundary = evidence["causal_boundary"]
+    records = evidence["evidence_records"]
+    refs = tuple(f"evidence://{record['mission']}/{record['path']}" for record in records)
+    nodes = [
+        _node("TARGET", "CONFIGURED", "REAL_PROVIDER", "Recorded AEGIS-owned target and contract boundary.", refs, domain_status="historical_target_reused"),
+        _node("COLLECTOR", "ACTIVE", "REAL_PROVIDER", str(evidence["collector_id"]), refs, provider="Bright Data Scraper Studio", domain_status="collector_execution_recorded"),
+        _node("OBSERVATION", "ACTIVE", "REAL_PROVIDER", f"HTTP {chain['http_status']} with crawl success; observed structured output contained only input.url.", refs, domain_status="provider_http_success_output_incomplete"),
+        _node("DETECTION", "ANOMALY", "AEGIS_DETERMINISTIC", "Required contract fields title, price, and availability were missing from the provider response.", refs, domain_status="required_fields_missing"),
+        _node("DIAGNOSIS", "ACTIVE", "AEGIS_DETERMINISTIC", f"Provider runtime cause {boundary['cause']}; confidence {boundary['confidence']}. No exact runtime template, revision, projection, or trace is uniquely bound.", refs, domain_status="causal_boundary_unknown_low"),
+        _node("REPAIR", "ACTIVE", "REAL_PROVIDER", "Historical approval and provider self-healing completion are recorded; Mission 050 performs no provider action.", refs, provider="Bright Data Scraper Studio", domain_status="historical_repair_recorded_no_new_action"),
+        _node("CANDIDATE", "UNAVAILABLE", "REAL_PROVIDER", "No uniquely bound corrected runtime output or provider template/revision candidate is available for causal attribution.", refs, domain_status="runtime_candidate_unavailable"),
+        _node("VERIFICATION", "ANOMALY", "AEGIS_DETERMINISTIC", str(chain["verification"]), refs, domain_status="verification_failed_incomplete_output"),
+        _node("RISK", "ANOMALY", "AEGIS_DETERMINISTIC", str(chain["risk"]), refs, domain_status="risk_reject_after_verification_failure"),
+        _node("COMMIT", "BLOCKED", "AEGIS_DETERMINISTIC", f"{chain['commit']}; data shipped={chain['data_shipped']}.", refs, domain_status="commit_blocked_data_not_shipped"),
+    ]
+    graph = _graph(
+        "mission_050_real_provider_causal_boundary",
+        "REAL_PROVIDER_CAUSAL_BOUNDARY",
+        nodes,
+        "AEGIS knows the provider output is unsafe and fails closed. It does not claim an unproven provider-internal cause.",
+        str(chain["risk"]),
+    )
+    events = [
+        {"event_id": f"mission050-{record['mission'].lower()}", "event_type": "PROVENANCE_RECORD", "label": record["label"], "timestamp": "2026-08-21T00:00:00+00:00", "provenance": record["provenance"], "status": record["status"], "evidence_refs": [f"evidence://{record['mission']}/{record['path']}"]}
+        for record in records
+    ]
+    case = {
+        "case_id": "mission_050_real_provider_causal_boundary",
+        "name": "Mission 050 / Real provider causal boundary",
+        "target_url": _mission033(root)["case"]["target_url"],
+        "collector_id": evidence["collector_id"],
+        "description": "Real-provider incomplete-output evidence with an explicit unknown provider-runtime causal boundary; AEGIS fails closed without asserting an unproven cause.",
+        "fields": [{"name": name, "type": "text", "description": "Required provider output contract field"} for name in ("title", "price", "availability")],
+        "invariants": ["required_fields_present", "verification_failure_rejects_risk", "commit_blocked", "data_not_shipped", "no_unproven_cause"],
+        "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+        "created_at": "2026-08-21T04:28:11+00:00",
+        "updated_at": "2026-08-21T04:28:11+00:00",
+        "lifecycle": {"current_status": "REAL_PROVIDER_OUTPUT_REJECTED_CAUSE_UNKNOWN", "event_count": len(events), "latest_event_type": "PROVENANCE_RECORD", "evidence_refs": list(refs)},
+        "actions": [],
+        "action_policy": "Read-only evidence boundary. The output is unsafe and blocked; the provider-internal cause remains UNKNOWN/LOW until exact runtime correlation exists.",
+    }
+    replay = {
+        "real_provider_chain": chain,
+        "cause": boundary["cause"],
+        "confidence": boundary["confidence"],
+        "reason": boundary["reason"],
+        "evidence_records": records,
+        "controlled_replay_boundary": evidence["controlled_replay_boundary"],
+        "provider_operations_this_mission": evidence["provider_operations_this_mission"],
+        "new_provider_requests_this_mission": evidence["new_provider_requests_this_mission"],
+        "output_eligible": False,
+    }
+    return {"case": case, "events": events, "graph": graph, "replay": replay}
+
+
 def _configured(payload: Mapping[str, Any]) -> dict[str, Any]:
     case_id = str(payload["case_id"])
     fields = list(payload.get("fields", []))
@@ -404,7 +471,7 @@ def dispatch(root: Path, request: Mapping[str, Any]) -> Mapping[str, Any]:
     historical = _historical(root)
     controlled = _controlled(root)
     if action == "seed_cases":
-        return {"cases": [historical["case"], _mission033(root)["case"], _mission034(root)["case"], controlled["case"]]}
+        return {"cases": [historical["case"], _mission033(root)["case"], _mission034(root)["case"], _mission050(root)["case"], controlled["case"]]}
     if action == "historical":
         return historical
     if action == "controlled":
@@ -413,6 +480,8 @@ def dispatch(root: Path, request: Mapping[str, Any]) -> Mapping[str, Any]:
         return _mission033(root)
     if action == "mission034":
         return _mission034(root)
+    if action == "mission050":
+        return _mission050(root)
     if action == "configured":
         config = request.get("case")
         if not isinstance(config, Mapping):

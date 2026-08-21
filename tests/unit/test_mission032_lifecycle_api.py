@@ -55,3 +55,26 @@ def test_downstream_projection_blocks_the_controlled_silent_corruption_output() 
     assert payload["risk"]["decision"] == "REJECT"
     assert payload["commit"]["eligibility"] == "BLOCKED"
     assert payload["output"]["eligible"] is False
+
+
+def test_mission050_preserves_unknown_low_cause_and_real_provider_fail_closed_boundary() -> None:
+    payload = dispatch(ROOT, {"action": "mission050"})
+    graph = payload["graph"]
+    replay = payload["replay"]
+    statuses = {node["id"]: node["display_status"] for node in graph["nodes"]}
+
+    assert graph["mode"] == "REAL_PROVIDER_CAUSAL_BOUNDARY"
+    assert graph["provenance"] == "REAL_PROVIDER"
+    assert replay["cause"] == "UNKNOWN"
+    assert replay["confidence"] == "LOW"
+    assert replay["real_provider_chain"]["http_status"] == 200
+    assert replay["real_provider_chain"]["required_fields"] == {"title": "MISSING", "price": "MISSING", "availability": "MISSING"}
+    assert statuses["VERIFICATION"] == "ANOMALY"
+    assert statuses["RISK"] == "ANOMALY"
+    assert statuses["COMMIT"] == "BLOCKED"
+    assert replay["real_provider_chain"]["data_shipped"] == "NO"
+    assert replay["controlled_replay_boundary"]["provenance"] == "TEST_DOUBLE"
+    assert replay["controlled_replay_boundary"]["status"] == "SEPARATE"
+    assert replay["output_eligible"] is False
+    assert replay["provider_operations_this_mission"] == 0
+    assert replay["new_provider_requests_this_mission"] == 0

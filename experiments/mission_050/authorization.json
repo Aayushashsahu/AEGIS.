@@ -1,0 +1,38 @@
+{
+  "schema_version": "mission-050-authorization-v1",
+  "authorization_source": "User-provided Mission 050 brief attached to this task",
+  "purpose": "Make the existing evidence-bounded unknown provider-runtime causal boundary visible in Judge Mode and preserve it in the evidence model.",
+  "provider_operation_budget": {
+    "provider_requests": 0,
+    "provider_mutations": 0,
+    "approval": 0,
+    "heal": 0,
+    "rerun": 0,
+    "collector_create": 0,
+    "collector_modify": 0,
+    "commit": 0,
+    "rollback": 0,
+    "retries": 0
+  },
+  "required_causal_boundary": {
+    "cause": "UNKNOWN",
+    "confidence": "LOW",
+    "observed_provider_output_condition": "PROVIDER_OUTPUT_INCOMPLETE",
+    "prohibited_claims": [
+      "The provider used an unproven revision.",
+      "The provider template caused the field loss.",
+      "AEGIS caused the field loss."
+    ]
+  },
+  "preserved_decision": {
+    "verification": "FAIL",
+    "risk": "REJECT",
+    "commit": "BLOCKED",
+    "data_shipped": "NO"
+  },
+  "provenance_boundary": {
+    "real_provider": "Must remain distinct from controlled replay.",
+    "controlled_replay": "Must remain explicitly TEST_DOUBLE and cannot be merged with real-provider failure evidence."
+  },
+  "stop_condition": "No provider request or mutation is authorized. Complete only local projection, documentation, tests, validation, and reporting."
+}

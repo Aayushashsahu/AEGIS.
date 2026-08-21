@@ -1,0 +1,52 @@
+{
+  "schema_version": "mission-050-causal-boundary-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "real_provider_chain": {
+    "approval": "SUCCESS_IN_MISSION_040",
+    "provider_heal_state": "COMPLETED_IN_MISSION_041A",
+    "post_approval_rerun": "SUCCESS_IN_MISSION_041B",
+    "http_status": 200,
+    "extracted_output": ["input.url"],
+    "required_fields": {
+      "title": "MISSING",
+      "price": "MISSING",
+      "availability": "MISSING"
+    },
+    "verification": "FAIL",
+    "risk": "REJECT",
+    "commit": "BLOCKED",
+    "data_shipped": "NO"
+  },
+  "configuration_observations": {
+    "mission_044_active_schema": ["title", "price", "availability"],
+    "mission_046_dashboard_production_template": ["title", "price", "availability"],
+    "mission_049_readonly_diagnostics": {
+      "requests": 2,
+      "template_reference": "t_mt09r6r1153kpz9zkm.1",
+      "exact_runtime_binding": "UNRESOLVED"
+    }
+  },
+  "causal_boundary": {
+    "cause": "UNKNOWN",
+    "confidence": "LOW",
+    "reason": "The provider execution returned incomplete structured output while the active production template and schema visibly contained the required fields. Available provider evidence does not uniquely bind the observed execution to an exact runtime template, revision, response projection, or trace.",
+    "prohibited_claims": [
+      "Bright Data used revision X.",
+      "The provider template caused the field loss.",
+      "AEGIS caused the field loss."
+    ]
+  },
+  "evidence_records": [
+    {"mission": "041B", "label": "Real post-approval rerun", "provenance": "REAL_PROVIDER", "status": "HTTP_200_INPUT_URL_ONLY", "path": "experiments/mission_041_post_heal_rerun/summary.json"},
+    {"mission": "044", "label": "Active collector schema", "provenance": "REAL_PROVIDER_READ_ONLY", "status": "REQUIRED_FIELDS_ACTIVE", "path": "experiments/mission_044_final_template_snapshot/snapshot.json"},
+    {"mission": "046", "label": "Dashboard production inspection", "provenance": "READ_ONLY_DASHBOARD", "status": "REQUIRED_FIELDS_VISIBLE", "path": "experiments/mission_046_dashboard_forensics/dashboard_snapshot.json"},
+    {"mission": "049", "label": "Provider diagnostics", "provenance": "REAL_PROVIDER_READ_ONLY", "status": "RUNTIME_BINDING_UNRESOLVED", "path": "experiments/mission_049_readonly_provider_diagnostics/summary.json"}
+  ],
+  "controlled_replay_boundary": {
+    "provenance": "TEST_DOUBLE",
+    "status": "SEPARATE",
+    "statement": "The controlled silent-corruption downstream proof remains a TEST_DOUBLE and is not merged with the real-provider incomplete-output evidence."
+  },
+  "provider_operations_this_mission": 0,
+  "new_provider_requests_this_mission": 0
+}

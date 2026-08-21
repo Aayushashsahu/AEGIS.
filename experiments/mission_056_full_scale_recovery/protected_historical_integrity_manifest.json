@@ -1,0 +1,16 @@
+{
+  "schema_version": "mission-056-protected-historical-integrity-manifest-v1",
+  "algorithm": "sha256",
+  "files": {
+    "experiments/mission_033_live_bright_data_success/candidate_preview.json": "a19480c4e0edf8693ac91a056df2605b4f7d6f0d6f9874362cece390f036a723",
+    "experiments/mission_033_live_bright_data_success/approval.json": "4662342b6869023395cbee5f190c4693270f4e9c98edd56934597d3963ac495d",
+    "experiments/mission_041_post_heal_rerun/summary.json": "6e3135f98a0e8b8890194999cd897ddbecf8e95403c51a318233423d9bccf909",
+    "experiments/mission_041_post_heal_rerun/post_heal_output.json": "063439c8b0ca9385f4179f5026c1e40631faa64d93e66fd3c7a61d3ffe649f64",
+    "experiments/mission_048c_evidence_preserving_rerun/summary.json": "1d5927fecd1296963786573589281ddc2c5e08debe4717fedcc6f0c01f39f0c5",
+    "experiments/mission_048c_evidence_preserving_rerun/raw_response.bin": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364",
+    "experiments/mission_053_candidate_only/heal_result.json": "6a2ee97dee2f0a3ac60bfe8cb77e018c73511e11603363c6b0174487100f8ecd",
+    "experiments/mission_055_final_version_binding/reconciliation.json": "3a3ad2c915bfcf6027a00168fffba030c59770a7bfe4d0d491e4b4fd30759fd0"
+  },
+  "provider_operations": 0,
+  "purpose": "Fail closed before and after the fresh Mission 056 candidate-only operation if a protected historical evidence file changes."
+}

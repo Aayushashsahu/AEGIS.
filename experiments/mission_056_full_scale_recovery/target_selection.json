@@ -1,0 +1,28 @@
+{
+  "schema_version": "mission-056-target-selection-v1",
+  "assessment_method": ["provider-free managed target tests", "read-only managed preview baseline inspection", "read-only managed preview drift inspection"],
+  "historical_target_status": {
+    "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+    "result": "UNUSABLE_FOR_FRESH_EXPERIMENT_MANAGED_404",
+    "evidence": "target_reachability_observation.json"
+  },
+  "selected_target": {
+    "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target",
+    "route": "/mission-056/target",
+    "owner": "AEGIS_PROJECT",
+    "public": true,
+    "login_required": false,
+    "client_script_required": false,
+    "baseline_rendered_facts": {"title": "AEGIS Recovery Widget", "price": "$599.00", "availability": "Available"},
+    "baseline_selector_contract": {"title": "[data-aegis-field=title]", "price": "[data-aegis-field=price]", "availability": "[data-aegis-field=availability]"},
+    "drift_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target?variant=drift",
+    "drift_preserved_facts": {"title": "AEGIS Recovery Widget", "price": "$599.00", "availability": "Available"},
+    "drift_intent": "Change only selector and DOM relationships from the declared baseline contract, while retaining the public product facts at the same path.",
+    "target_test_evidence": "server/mission056ControlledTarget.test.ts",
+    "target_test_result": "3 passed"
+  },
+  "provider_operations": 0,
+  "provider_output_claims": "NONE",
+  "selection": "SELECTED_FOR_LOCAL_SIMULATION_ONLY",
+  "reentry_condition_for_real_provider_experiment": "A later immutable experiment record must bind this exact URL and selected version behavior, include a fresh health check, and receive the phase-gated one-heal authority before any provider operation."
+}

@@ -1,0 +1,15 @@
+{
+  "bright_data_mutations": 1,
+  "candidate": "ABSENT",
+  "commit": "BLOCKED",
+  "data_shipped": "NO",
+  "downstream": "BLOCKED",
+  "heal": "FAILED",
+  "historical_integrity": "UNCHANGED",
+  "next_step": "STOP",
+  "provider_status": "error",
+  "retries": 0,
+  "risk": "NOT_APPLICABLE",
+  "schema_version": "mission-056-summary-v1",
+  "verification": "NOT_APPLICABLE"
+}

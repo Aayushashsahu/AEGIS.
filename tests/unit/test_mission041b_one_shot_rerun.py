@@ -194,6 +194,26 @@ def test_timeout_and_invalid_input_fail_closed() -> None:
         rerun_endpoint(COLLECTOR, wait_seconds=10)
 
 
+def test_requested_version_fails_closed_before_any_dca_provider_request() -> None:
+    calls = 0
+
+    def opener(*_args, **_kwargs):
+        nonlocal calls
+        calls += 1
+        raise AssertionError("a versioned request must not use the undocumented DCA selector")
+
+    with pytest.raises(ValueError, match="DCA_CRAWL_VERSION_SELECTOR_NOT_DOCUMENTED"):
+        rerun_collector_once(
+            "token-not-retained",
+            collector_id=COLLECTOR,
+            target_url=TARGET,
+            correlation_id=CORRELATION,
+            requested_version="v1",
+            opener=opener,
+        )
+    assert calls == 0
+
+
 def test_mission048_correlation_namespace_is_accepted_for_the_authorized_successor_rerun() -> None:
     result = rerun_collector_once(
         "token-not-retained",

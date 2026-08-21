@@ -1,0 +1,16 @@
+{
+  "aegis_operation_id": "m056-heal-20260821T153830Z",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "correlation_id": "mission056-heal-c_mt09pib13nxqz1coi-20260821T153830Z",
+  "operation_type": "candidate_only_heal",
+  "provider_revision": null,
+  "provider_run_id": "m056-heal-20260821T153830Z",
+  "raw_response_sha256": "a0bba0d6b4d1c5dcd7271519a6ade77f3135385afe2cf8d211c75f3c0ec9e9b7",
+  "requested_version": null,
+  "schema_version": "operation-correlation-v2",
+  "selected_version": null,
+  "started_at_utc": "2026-08-21T15:46:27.951499Z",
+  "target_url_sha256": "848a0cfe026e215c1daf46b621ee6d80e2368534c07d18f2e9f1c26075fa1f9e",
+  "template_version": null,
+  "version_evidence_source": null
+}

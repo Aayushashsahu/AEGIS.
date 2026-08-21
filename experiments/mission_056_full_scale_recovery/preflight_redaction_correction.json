@@ -1,0 +1,15 @@
+{
+  "schema_version": "mission-056-preflight-redaction-correction-v1",
+  "supersedes": "No prior artifact; this is additive context for preflight.json and target_health_metadata.json.",
+  "issue": "The first evidence serializer redacted the safe metadata key secret_like_content because the key name matched its generic credential-key pattern. It redacted the boolean classification label, not a credential value.",
+  "remediation": "The serializer now preserves the explicitly safe boolean key secret_like_content while retaining all credential-field and credential-value redaction.",
+  "local_raw_scan": {
+    "experiments/mission_056_full_scale_recovery/target_health_baseline_raw.bin": "SECRET_LIKE=NO",
+    "experiments/mission_056_full_scale_recovery/target_health_drift_raw.bin": "SECRET_LIKE=NO"
+  },
+  "target_refetches_for_correction": 0,
+  "bright_data_provider_operations": 0,
+  "bright_data_mutations": 0,
+  "retries": 0,
+  "key_exposed": false
+}

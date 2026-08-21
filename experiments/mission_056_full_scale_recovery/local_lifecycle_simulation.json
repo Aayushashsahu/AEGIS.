@@ -1,0 +1,462 @@
+{
+  "baseline": {
+    "detection": {
+      "affected_fields": [],
+      "detected": false,
+      "detector_provenance": [
+        "schema",
+        "statistical",
+        "semantic"
+      ],
+      "evaluated_at": "2026-08-21T15:35:57.476835+00:00",
+      "evidence_refs": [],
+      "severity": "NONE",
+      "signals": []
+    }
+  },
+  "complete_candidate": {
+    "commit": {
+      "authorization_reference": null,
+      "block_reasons": [
+        "CANDIDATE_NOT_VERIFIED",
+        "KNOWN_GOOD_MISSING",
+        "INVALID_AUTHORIZATION"
+      ],
+      "candidate_id": "candidate_m056_complete",
+      "correlation_id": "mission056-simulation-complete",
+      "created_at": "2026-08-21T15:35:57.477192+00:00",
+      "decision_id": "commit_decision_23abfe37f2294b05947d485e2097575f",
+      "eligibility": "BLOCKED",
+      "evidence_refs": [
+        "contract://mission-056-controlled-product-v1",
+        "evidence://mission-056/simulation/baseline",
+        "evidence://mission-056/simulation/complete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "known_good_version_reference": null,
+      "production_commit_performed": false,
+      "provenance": "TEST_DOUBLE",
+      "reason_code": "CANDIDATE_NOT_VERIFIED",
+      "risk_decision_id": "risk_21a988e4fe024a4888f99869f2c8e2c1",
+      "verification_id": "verification_6d5f3d90078e4805837eba34480d33af"
+    },
+    "downstream": {
+      "candidate_id": "candidate_m056_complete",
+      "commit_decision_id": "commit_decision_23abfe37f2294b05947d485e2097575f",
+      "correlation_id": "mission056-simulation-complete",
+      "created_at": "2026-08-21T15:35:57.477205+00:00",
+      "eligible": false,
+      "evidence_refs": [
+        "contract://mission-056-controlled-product-v1",
+        "evidence://mission-056/simulation/baseline",
+        "evidence://mission-056/simulation/complete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "reason": "commit gate is BLOCKED"
+    },
+    "risk": {
+      "candidate_id": "candidate_m056_complete",
+      "correlation_id": "mission056-simulation-complete",
+      "created_at": "2026-08-21T15:35:57.477155+00:00",
+      "decision": "ACCEPT",
+      "decision_id": "risk_21a988e4fe024a4888f99869f2c8e2c1",
+      "eligible_for_future_commit": true,
+      "evidence_refs": [
+        "contract://mission-056-controlled-product-v1",
+        "evidence://mission-056/simulation/baseline",
+        "evidence://mission-056/simulation/complete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "production_commit_performed": false,
+      "provenance": "TEST_DOUBLE",
+      "reason_code": "SUFFICIENT_EVIDENCE",
+      "verification_id": "verification_6d5f3d90078e4805837eba34480d33af"
+    },
+    "verification": {
+      "candidate_id": "candidate_m056_complete",
+      "checks": [
+        {
+          "affected_fields": [],
+          "candidate_id": "candidate_m056_complete",
+          "category": "CONTRACT_COMPATIBILITY",
+          "channel": "CONTRACT",
+          "check_id": "check_3b426ab0742c425cb87f1883416423fa",
+          "correlation_id": "mission056-simulation-complete",
+          "created_at": "2026-08-21T15:35:57.476997+00:00",
+          "critical": false,
+          "details": {},
+          "evidence_refs": [
+            "contract://mission-056-controlled-product-v1",
+            "evidence://mission-056/simulation/complete/raw"
+          ],
+          "message": "required fields, types, nullability, schema, and configured unaffected fields pass",
+          "provenance": "TEST_DOUBLE",
+          "status": "PASS"
+        },
+        {
+          "affected_fields": [],
+          "candidate_id": "candidate_m056_complete",
+          "category": "HISTORICAL_CONTINUITY",
+          "channel": "HISTORY",
+          "check_id": "check_166fe95d65304a2e994ab227a3792382",
+          "correlation_id": "mission056-simulation-complete",
+          "created_at": "2026-08-21T15:35:57.477038+00:00",
+          "critical": false,
+          "details": {},
+          "evidence_refs": [
+            "evidence://mission-056/simulation/baseline",
+            "evidence://mission-056/simulation/complete/raw"
+          ],
+          "message": "candidate agrees with supplied known-good observation history",
+          "provenance": "TEST_DOUBLE",
+          "status": "PASS"
+        },
+        {
+          "affected_fields": [],
+          "candidate_id": "candidate_m056_complete",
+          "category": "SEMANTIC_INVARIANTS",
+          "channel": "SEMANTIC_INVARIANT",
+          "check_id": "check_00e17b7bd5934788848a0c8e4f7da039",
+          "correlation_id": "mission056-simulation-complete",
+          "created_at": "2026-08-21T15:35:57.477063+00:00",
+          "critical": false,
+          "details": {},
+          "evidence_refs": [
+            "evidence://mission-056/simulation/complete/raw",
+            "semantic://deterministic-invariants"
+          ],
+          "message": "known URL, numeric, relation, and supplied semantic invariants pass",
+          "provenance": "TEST_DOUBLE",
+          "status": "PASS"
+        },
+        {
+          "affected_fields": [],
+          "candidate_id": "candidate_m056_complete",
+          "category": "INDEPENDENT_MATCH",
+          "channel": "INDEPENDENT_EVIDENCE",
+          "check_id": "check_0238893a66834d0997e9c552db730137",
+          "correlation_id": "mission056-simulation-complete",
+          "created_at": "2026-08-21T15:35:57.477090+00:00",
+          "critical": false,
+          "details": {},
+          "evidence_refs": [
+            "evidence://mission-056/simulation/complete/raw",
+            "evidence://mission-056/simulation/target-contract"
+          ],
+          "message": "candidate agrees with independent source controlled local target contract",
+          "provenance": "TEST_DOUBLE",
+          "status": "PASS"
+        }
+      ],
+      "completed_at": "2026-08-21T15:35:57.477108+00:00",
+      "correlation_id": "mission056-simulation-complete",
+      "eligible_for_future_commit": true,
+      "evidence_refs": [
+        "contract://mission-056-controlled-product-v1",
+        "evidence://mission-056/simulation/baseline",
+        "evidence://mission-056/simulation/complete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "failed_checks": [],
+      "overall_status": "PASS",
+      "started_at": "2026-08-21T15:35:57.476942+00:00",
+      "verification_id": "verification_6d5f3d90078e4805837eba34480d33af",
+      "verification_provenance": [
+        "TEST_DOUBLE"
+      ]
+    }
+  },
+  "controlled_drift": {
+    "detection": {
+      "affected_fields": [
+        "availability",
+        "input",
+        "price",
+        "title"
+      ],
+      "detected": true,
+      "detector_provenance": [
+        "schema"
+      ],
+      "evaluated_at": "2026-08-21T15:35:57.476880+00:00",
+      "evidence_refs": [
+        "observation://row/0/field/availability",
+        "observation://row/0/field/input",
+        "observation://row/0/field/price",
+        "observation://row/0/field/title"
+      ],
+      "severity": "L2",
+      "signals": [
+        {
+          "affected_fields": [
+            "title"
+          ],
+          "code": "MISSING_FIELD",
+          "detector": "schema",
+          "evidence_refs": [
+            "observation://row/0/field/title"
+          ],
+          "message": "row 0 is missing required field title",
+          "severity": "L2"
+        },
+        {
+          "affected_fields": [
+            "price"
+          ],
+          "code": "MISSING_FIELD",
+          "detector": "schema",
+          "evidence_refs": [
+            "observation://row/0/field/price"
+          ],
+          "message": "row 0 is missing required field price",
+          "severity": "L2"
+        },
+        {
+          "affected_fields": [
+            "availability"
+          ],
+          "code": "MISSING_FIELD",
+          "detector": "schema",
+          "evidence_refs": [
+            "observation://row/0/field/availability"
+          ],
+          "message": "row 0 is missing required field availability",
+          "severity": "L2"
+        },
+        {
+          "affected_fields": [
+            "input"
+          ],
+          "code": "UNEXPECTED_FIELD",
+          "detector": "schema",
+          "evidence_refs": [
+            "observation://row/0/field/input"
+          ],
+          "message": "row 0 contains unexpected field input",
+          "severity": "L2"
+        }
+      ]
+    },
+    "lineage": {
+      "classification": "DECODED_PROVIDER_OUTPUT_INCOMPLETE",
+      "decoded_provider_fields": [
+        "input"
+      ],
+      "decoded_provider_row_count": 1,
+      "nonrequired_fields_dropped": [],
+      "normalized_aegis_fields": [
+        "input"
+      ],
+      "normalized_aegis_row_count": 1,
+      "required_fields": [
+        "title",
+        "price",
+        "availability"
+      ],
+      "required_fields_dropped_by_normalization": [],
+      "required_fields_empty_string_in_any_normalized_row": [],
+      "required_fields_empty_string_in_any_provider_row": [],
+      "required_fields_missing_after_normalization": [
+        "title",
+        "price",
+        "availability"
+      ],
+      "required_fields_missing_from_provider": [
+        "title",
+        "price",
+        "availability"
+      ],
+      "required_fields_missing_in_any_normalized_row": [
+        "title",
+        "price",
+        "availability"
+      ],
+      "required_fields_missing_in_any_provider_row": [
+        "title",
+        "price",
+        "availability"
+      ],
+      "required_fields_null_in_any_normalized_row": [],
+      "required_fields_null_in_any_provider_row": []
+    }
+  },
+  "incomplete_candidate": {
+    "commit": {
+      "authorization_reference": null,
+      "block_reasons": [
+        "RISK_NOT_ACCEPT",
+        "VERIFICATION_NOT_PASS",
+        "CRITICAL_VERIFICATION_FAILURE",
+        "REQUIRED_EVIDENCE_MISSING",
+        "CANDIDATE_NOT_VERIFIED",
+        "KNOWN_GOOD_MISSING",
+        "INVALID_AUTHORIZATION"
+      ],
+      "candidate_id": "candidate_m056_incomplete",
+      "correlation_id": "mission056-simulation-incomplete",
+      "created_at": "2026-08-21T15:35:57.477408+00:00",
+      "decision_id": "commit_decision_3012268c0c0c441cb7197893293a5f30",
+      "eligibility": "BLOCKED",
+      "evidence_refs": [
+        "evidence://mission-056/simulation/incomplete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "known_good_version_reference": null,
+      "production_commit_performed": false,
+      "provenance": "TEST_DOUBLE",
+      "reason_code": "RISK_NOT_ACCEPT",
+      "risk_decision_id": "risk_b089983e31dd4686ac1b9f688f155038",
+      "verification_id": "verification_b7c46065c6754aefa0a6529c1ce7d209"
+    },
+    "downstream": {
+      "candidate_id": "candidate_m056_incomplete",
+      "commit_decision_id": "commit_decision_3012268c0c0c441cb7197893293a5f30",
+      "correlation_id": "mission056-simulation-incomplete",
+      "created_at": "2026-08-21T15:35:57.477416+00:00",
+      "eligible": false,
+      "evidence_refs": [
+        "evidence://mission-056/simulation/incomplete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "reason": "commit gate is BLOCKED"
+    },
+    "risk": {
+      "candidate_id": "candidate_m056_incomplete",
+      "correlation_id": "mission056-simulation-incomplete",
+      "created_at": "2026-08-21T15:35:57.477381+00:00",
+      "decision": "REJECT",
+      "decision_id": "risk_b089983e31dd4686ac1b9f688f155038",
+      "eligible_for_future_commit": false,
+      "evidence_refs": [
+        "evidence://mission-056/simulation/incomplete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "production_commit_performed": false,
+      "provenance": "TEST_DOUBLE",
+      "reason_code": "DETERMINISTIC_FAILURE",
+      "verification_id": "verification_b7c46065c6754aefa0a6529c1ce7d209"
+    },
+    "verification": {
+      "candidate_id": "candidate_m056_incomplete",
+      "checks": [
+        {
+          "affected_fields": [
+            "availability",
+            "input",
+            "price",
+            "title"
+          ],
+          "candidate_id": "candidate_m056_incomplete",
+          "category": "SCHEMA_COMPATIBILITY",
+          "channel": "CONTRACT",
+          "check_id": "check_fb4654897d6142e8b287b907a253ec94",
+          "correlation_id": "mission056-simulation-incomplete",
+          "created_at": "2026-08-21T15:35:57.477263+00:00",
+          "critical": true,
+          "details": {
+            "actual_schema": [
+              "input"
+            ],
+            "expected_schema": [
+              "availability",
+              "price",
+              "title"
+            ]
+          },
+          "evidence_refs": [
+            "evidence://mission-056/simulation/incomplete/raw"
+          ],
+          "message": "candidate schema ['input'] does not match expected schema ['availability', 'price', 'title']",
+          "provenance": "TEST_DOUBLE",
+          "status": "FAIL"
+        },
+        {
+          "affected_fields": [],
+          "candidate_id": "candidate_m056_incomplete",
+          "category": "ENTITY_MATCH",
+          "channel": "HISTORY",
+          "check_id": "check_a01eca4d68f64131a24bc36a3b90d21c",
+          "correlation_id": "mission056-simulation-incomplete",
+          "created_at": "2026-08-21T15:35:57.477291+00:00",
+          "critical": false,
+          "details": {},
+          "evidence_refs": [
+            "evidence://mission-056/simulation/incomplete/raw"
+          ],
+          "message": "history or candidate rows have no deterministic entity key",
+          "provenance": "TEST_DOUBLE",
+          "status": "UNKNOWN"
+        },
+        {
+          "affected_fields": [
+            "availability",
+            "price",
+            "title"
+          ],
+          "candidate_id": "candidate_m056_incomplete",
+          "category": "SEMANTIC_INVARIANTS",
+          "channel": "SEMANTIC_INVARIANT",
+          "check_id": "check_88add2a31da14ccda6eb7ca8d295235a",
+          "correlation_id": "mission056-simulation-incomplete",
+          "created_at": "2026-08-21T15:35:57.477314+00:00",
+          "critical": true,
+          "details": {},
+          "evidence_refs": [
+            "evidence://mission-056/simulation/incomplete/raw",
+            "semantic://deterministic-invariants"
+          ],
+          "message": "row 0 title does not match deterministic semantic expectation; row 0 price does not match deterministic semantic expectation; row 0 availability does not match deterministic semantic expectation",
+          "provenance": "TEST_DOUBLE",
+          "status": "FAIL"
+        },
+        {
+          "affected_fields": [],
+          "candidate_id": "candidate_m056_incomplete",
+          "category": "ENTITY_CONSISTENCY",
+          "channel": "INDEPENDENT_EVIDENCE",
+          "check_id": "check_ec444e6179314c3f97934bbbcaf9dd51",
+          "correlation_id": "mission056-simulation-incomplete",
+          "created_at": "2026-08-21T15:35:57.477338+00:00",
+          "critical": true,
+          "details": {},
+          "evidence_refs": [
+            "evidence://mission-056/simulation/incomplete/raw",
+            "evidence://mission-056/simulation/target-contract"
+          ],
+          "message": "candidate entities do not match the independent evidence entities",
+          "provenance": "TEST_DOUBLE",
+          "status": "FAIL"
+        }
+      ],
+      "completed_at": "2026-08-21T15:35:57.477354+00:00",
+      "correlation_id": "mission056-simulation-incomplete",
+      "eligible_for_future_commit": false,
+      "evidence_refs": [
+        "evidence://mission-056/simulation/incomplete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "failed_checks": [
+        "check_fb4654897d6142e8b287b907a253ec94",
+        "check_88add2a31da14ccda6eb7ca8d295235a",
+        "check_ec444e6179314c3f97934bbbcaf9dd51"
+      ],
+      "overall_status": "FAIL",
+      "started_at": "2026-08-21T15:35:57.477239+00:00",
+      "verification_id": "verification_b7c46065c6754aefa0a6529c1ce7d209",
+      "verification_provenance": [
+        "TEST_DOUBLE"
+      ]
+    }
+  },
+  "provenance": "TEST_DOUBLE",
+  "provider_operations": 0,
+  "schema_version": "mission-056-provider-free-simulation-v1"
+}

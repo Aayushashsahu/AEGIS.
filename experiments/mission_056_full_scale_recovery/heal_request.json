@@ -1,0 +1,13 @@
+{
+  "approval_authorized": false,
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "command_sha256": "5595748a338885f2f2d34111c6ae1b5bb1655178ea87e6230940e0aa3d1f7017",
+  "key_exposed": false,
+  "prompt_length": 372,
+  "prompt_sha256": "6409fc9bc735ba9ecc1593e095bbb79941c0aa844c0f1ac3c5b1596e25cb06ea",
+  "requested_at_utc": "2026-08-21T15:46:27.951155Z",
+  "rerun_authorized": false,
+  "retry_budget": 0,
+  "schema_version": "mission-056-heal-request-v1",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target?variant=drift"
+}

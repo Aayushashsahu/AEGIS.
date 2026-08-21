@@ -156,6 +156,7 @@ def rerun_collector_once(
     collector_id: str,
     target_url: str,
     correlation_id: str,
+    requested_version: str | None = None,
     wait_seconds: int = DEFAULT_RERUN_WAIT_SECONDS,
     http_timeout_seconds: float = DEFAULT_RERUN_HTTP_TIMEOUT_SECONDS,
     opener: UrlOpener = urlopen,
@@ -168,6 +169,8 @@ def rerun_collector_once(
         raise ValueError("target_url must be an HTTP(S) URL")
     if not correlation_id.startswith(("mission041b-", "mission048-", "mission048c-")):
         raise ValueError("correlation_id must be a bounded Mission 041B, Mission 048, or Mission 048C correlation ID")
+    if requested_version is not None:
+        raise ValueError("DCA_CRAWL_VERSION_SELECTOR_NOT_DOCUMENTED: use the documented CLI run transport for explicit version selection")
     if http_timeout_seconds <= wait_seconds:
         raise ValueError("http_timeout_seconds must exceed wait_seconds")
     endpoint = rerun_endpoint(collector_id, wait_seconds=wait_seconds)

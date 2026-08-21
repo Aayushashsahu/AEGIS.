@@ -1,0 +1,18 @@
+{
+  "schema_version": "mission-056-approval-rerun-gate-v1",
+  "candidate_precondition": "FAIL — the one authorized heal recorded candidate=ABSENT and provider_status=error.",
+  "candidate_preview_artifact": "ABSENT",
+  "verification_precondition": "NOT_APPLICABLE",
+  "risk_precondition": "NOT_APPLICABLE",
+  "separate_approval_authorization": "ABSENT",
+  "frozen_approval_boundary_reconciliation": "UNRESOLVED — see approval_contract_conflict.md; no interpretation or transport broadening was attempted.",
+  "approval": "NOT_ATTEMPTED",
+  "post_heal_rerun": "NOT_ATTEMPTED",
+  "commit": "BLOCKED",
+  "rollback": "NOT_ATTEMPTED",
+  "downstream_delivery": "BLOCKED",
+  "additional_bright_data_provider_operations": 0,
+  "additional_bright_data_mutations": 0,
+  "additional_retries": 0,
+  "reason": "The candidate gate and separate-authorization gate both fail closed. No provider action follows the candidate-only terminal failure."
+}

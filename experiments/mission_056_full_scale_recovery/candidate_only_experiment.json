@@ -1,0 +1,97 @@
+{
+  "schema_version": "mission-056-candidate-only-experiment-v1",
+  "recorded_at_utc": "2026-08-21T15:38:30Z",
+  "status": "READY_FOR_PROVIDER_FREE_PREFLIGHT",
+  "scope": "One candidate-only Bright Data self-healing operation against the selected AEGIS-owned controlled drift target. No approval, rerun, commit, rollback, or downstream delivery is in scope.",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "target": {
+    "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target?variant=drift",
+    "target_variant": "drift",
+    "target_contract_version": "mission-056-controlled-product-v1",
+    "baseline_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target",
+    "required_fields": ["title", "price", "availability"],
+    "expected_semantic_values": {"title": "AEGIS Recovery Widget", "price": {"currency": "USD", "value": 599.0}, "availability": "Available"}
+  },
+  "version_handling": {
+    "current_cli_evidence": "Mission 054 recorded CLI 0.3.5 and a documented scraper run --version <version> selector.",
+    "heal_selector_status": "NOT_DOCUMENTED_FOR_SCRAPER_HEAL",
+    "requested_heal_version": null,
+    "selection_claim": "NONE — the heal operation is not assigned an unverified template revision or provider default.",
+    "post_approval_run_strategy": "OUT_OF_SCOPE; a separately authorized future CLI run must provide --version explicitly where the documented selector is supported."
+  },
+  "repair_prompt": {
+    "text": "The current public page retains the same product facts but its extraction selectors no longer match. Restore exactly title, price, and availability from the current page while preserving the existing output schema. Return title as text, price as USD money with numeric value 599, and availability as Available. Do not approve, activate, commit, or change unrelated fields.",
+    "sha256": "6409fc9bc735ba9ecc1593e095bbb79941c0aa844c0f1ac3c5b1596e25cb06ea",
+    "character_count": 372,
+    "maximum_characters": 1000
+  },
+  "operation_budget": {
+    "documented_bright_data_heal": 1,
+    "bright_data_approval": 0,
+    "bright_data_run_or_rerun": 0,
+    "collector_create_or_modify": 0,
+    "commit": 0,
+    "rollback": 0,
+    "benchmark": 0,
+    "nvidia": 0,
+    "gemini": 0,
+    "retries": 0
+  },
+  "transport": {
+    "command_shape": "npx -p @brightdata/cli@0.3.5 bdata --timing scraper heal <collector> <prompt> --url <target> --timeout 900 --max-retries 0 --json",
+    "cli_package": "@brightdata/cli@0.3.5",
+    "credential_interface": "BRIGHTDATA_API_KEY server-side only",
+    "timeout_seconds": 900,
+    "auto_approve": false,
+    "approval_authorized": false,
+    "rerun_authorized": false
+  },
+  "correlation": {
+    "aegis_operation_id": "m056-heal-20260821T153830Z",
+    "correlation_id": "mission056-heal-c_mt09pib13nxqz1coi-20260821T153830Z",
+    "target_url_sha256": "848a0cfe026e215c1daf46b621ee6d80e2368534c07d18f2e9f1c26075fa1f9e"
+  },
+  "evidence_paths": {
+    "preflight": "experiments/mission_056_full_scale_recovery/preflight.json",
+    "target_health_baseline_raw": "experiments/mission_056_full_scale_recovery/target_health_baseline_raw.bin",
+    "target_health_drift_raw": "experiments/mission_056_full_scale_recovery/target_health_drift_raw.bin",
+    "target_health_metadata": "experiments/mission_056_full_scale_recovery/target_health_metadata.json",
+    "heal_request": "experiments/mission_056_full_scale_recovery/heal_request.json",
+    "heal_raw": "experiments/mission_056_full_scale_recovery/heal_raw.bin",
+    "heal_metadata": "experiments/mission_056_full_scale_recovery/heal_metadata.json",
+    "correlation_record": "experiments/mission_056_full_scale_recovery/correlation_records/m056-heal-20260821T153830Z.json",
+    "candidate_preview": "experiments/mission_056_full_scale_recovery/candidate_preview.json",
+    "normalized_analysis": "experiments/mission_056_full_scale_recovery/normalized_analysis.json",
+    "verification": "experiments/mission_056_full_scale_recovery/verification.json",
+    "risk": "experiments/mission_056_full_scale_recovery/risk_decision.json",
+    "commit": "experiments/mission_056_full_scale_recovery/commit_decision.json",
+    "downstream": "experiments/mission_056_full_scale_recovery/output_eligibility.json",
+    "summary": "experiments/mission_056_full_scale_recovery/summary.json"
+  },
+  "candidate_gate": {
+    "provider_status_required": "awaiting_approval",
+    "preview_result_required": true,
+    "required_field_state": "PRESENT for title, price, and availability in the first preview row",
+    "verification_required_before_future_approval": "PASS using contract, deterministic semantics, and independently captured target-health evidence",
+    "risk_required_before_future_approval": "ACCEPT",
+    "commit": "BLOCKED regardless of outcome under current owner policy",
+    "downstream_delivery": "BLOCKED regardless of outcome under current owner policy"
+  },
+  "preflight_required": [
+    "target baseline and drift health response captured before Bright Data command",
+    "selected target facts match contract",
+    "prompt character count and SHA-256 filled from exact text",
+    "server-side credential configuration present without reading or writing its value",
+    "all experiment evidence paths are fresh",
+    "historical Mission 033/040/041/041B/048C evidence is intact",
+    "canonical and managed provider-free suites pass",
+    "no known conflicting provider operation in available evidence"
+  ],
+  "stop_conditions": [
+    "If any provider-free preflight check fails, do not invoke Bright Data.",
+    "After one Bright Data heal attempt, preserve stdout bytes before parsing and do not retry.",
+    "If the result does not include an awaiting_approval preview, record candidate ABSENT or INCOMPLETE and stop.",
+    "If a complete candidate does not pass deterministic verification and risk, record the decision and stop.",
+    "Even if candidate verification and risk pass, do not approve, rerun, commit, roll back, or ship output without separate explicit authorization."
+  ]
+}

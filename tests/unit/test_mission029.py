@@ -129,6 +129,17 @@ def test_collector_run_retrieves_structured_rows_and_batch_fallback() -> None:
     assert result.handle.provider_operation_ids["response_id"] == "d_demo029"
 
 
+def test_collector_run_records_and_passes_an_explicit_documented_version_selector() -> None:
+    fake = FakeProvider()
+    with BrightDataCliAdapter(runner=fake) as adapter:
+        collector = adapter.create_collector(CollectorRequest(TARGET_URL, DESCRIPTION, provider=ProviderProvenance.BRIGHT_DATA))
+        pending = adapter.run_collector(collector, target_url=TARGET_URL, version="v1")
+    assert pending.requested_version == "v1"
+    assert pending.selected_version is None
+    assert pending.version_evidence_source == "DOCUMENTED_CLI_SELECTOR"
+    assert fake.commands[1][-3:] == ["--version", "v1", "--pretty"]
+
+
 def test_observation_conversion_preserves_bright_data_and_untrusted_state() -> None:
     observation = make_observation()
     assert observation.provider_provenance is ProviderProvenance.BRIGHT_DATA

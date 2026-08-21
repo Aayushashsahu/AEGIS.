@@ -1,0 +1,48 @@
+{
+  "schema_version": "mission-056-readiness-decision-v1",
+  "decision": "GO_FOR_ONE_CANDIDATE_ONLY_HEAL",
+  "decision_scope": "Exactly one documented Bright Data scraper heal operation for collector c_mt09pib13nxqz1coi against the Mission 056 controlled drift target. This decision does not authorize approval, rerun, commit, rollback, downstream delivery, collector creation, benchmark, NVIDIA, Gemini, or retries.",
+  "preflight": {
+    "artifact": "experiments/mission_056_full_scale_recovery/preflight.json",
+    "all_pass": true,
+    "bright_data_provider_operations": 0,
+    "bright_data_mutations": 0,
+    "retries": 0,
+    "target_health": "PASS — direct baseline and drift target responses both returned the same deterministic facts.",
+    "credential_configuration": "PASS — server-side BRIGHTDATA_API_KEY presence only; value not read or persisted.",
+    "historical_integrity": "PASS — all manifest hashes matched.",
+    "known_provider_conflict": "UNKNOWN provider state with NO known conflict in available evidence; preflight policy treats this as bounded-operation eligible, not as proof of absence."
+  },
+  "reproducibility": {
+    "cli_package": "@brightdata/cli@0.3.5",
+    "prompt_sha256": "6409fc9bc735ba9ecc1593e095bbb79941c0aa844c0f1ac3c5b1596e25cb06ea",
+    "prompt_character_count": 372,
+    "target_url_sha256": "848a0cfe026e215c1daf46b621ee6d80e2368534c07d18f2e9f1c26075fa1f9e",
+    "aegis_operation_id": "m056-heal-20260821T153830Z",
+    "correlation_id": "mission056-heal-c_mt09pib13nxqz1coi-20260821T153830Z"
+  },
+  "validation": {
+    "canonical_provider_free_suite": "514 passed",
+    "managed_provider_free_suite": "26 passed",
+    "managed_typescript": "PASS",
+    "managed_production_build": "PASS",
+    "controlled_target_browser_checks": "baseline and drift routes rendered expected facts",
+    "local_lifecycle_simulation": "PASS — TEST_DOUBLE only; complete candidate PASS/ACCEPT but commit/downstream blocked; incomplete candidate FAIL/REJECT/blocked."
+  },
+  "approval_and_rerun_boundary": {
+    "approval_authorized": false,
+    "rerun_authorized": false,
+    "frozen_contract_conflict": "Recorded in approval_contract_conflict.md. No approval transport change or real approval is part of this decision.",
+    "reentry": "A later complete REAL_PROVIDER candidate must pass deterministic verification and risk. A separate explicit owner authorization and boundary reconciliation are then required before any approval or rerun."
+  },
+  "execution_stop_conditions": [
+    "Use the pinned exact command from candidate_only_experiment.json one time only.",
+    "Preserve stdout raw bytes before parsing, with redaction-safe metadata and append-only correlation.",
+    "Do not retry after any terminal provider, transport, timeout, parsing, or candidate failure.",
+    "Do not approve, rerun, commit, roll back, or ship output regardless of candidate outcome."
+  ],
+  "provider_operations_before_decision": 0,
+  "provider_mutations_before_decision": 0,
+  "retries_before_decision": 0,
+  "key_exposed": false
+}

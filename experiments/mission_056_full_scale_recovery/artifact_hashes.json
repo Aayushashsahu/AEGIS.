@@ -1,0 +1,32 @@
+{
+  "schema_version": "mission-056-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "files": {
+    "approval_contract_conflict.md": "4295702c10842399307595a20567beb61406ef462321c3b646021a0c3edc8e66",
+    "approval_rerun_gate.json": "5b1a4adfd22304a62f9eb192160f1ef7e374e626ef7525d41e303d7339c441ae",
+    "authorization.json": "bf06ab5f3e0d05f2d4dd2d9963fb1ce84704a84533523db24bb18407881f1bff",
+    "candidate_only_experiment.json": "40136846bf4acb9b2fd12c56bd3fbc7084c4b23ee2088c74573c40eab0776f36",
+    "correlation_records/m056-heal-20260821T153830Z.json": "9d910f4d016498543d0b78c3a559221f071b9e66782d82d48e4a07b2530e9ac1",
+    "dependency_map.md": "13ac1e2ed32e4faf791bb2284b8cb7007a1f8a947a7df6319c44ab46933e22af",
+    "heal_metadata.json": "665f79c52756ccc11b9ec216fd56ff51516cd4699ad8c737e3fc5cb32f92c070",
+    "heal_raw.bin": "a0bba0d6b4d1c5dcd7271519a6ade77f3135385afe2cf8d211c75f3c0ec9e9b7",
+    "heal_request.json": "8304cd5480541cabcdeb8a0d8a527a1b39bfbd82f7d39434e390d08daabe03a5",
+    "local_lifecycle_simulation.json": "34ee69bea60c87767ff2278a2515bca70b8fc427a46b31abacd7382dee482a4e",
+    "preflight.json": "b0a72a4eeb148081212957fe8dc911eb87673d123e207b01e6166178f3a2a1fd",
+    "preflight_redaction_correction.json": "a9bcdd7a95430443b5bbe17dc94190a56b80e50c347cf3b488d6d6ec44a26677",
+    "protected_historical_integrity_manifest.json": "566b881ec0a29c36a21fd6dee8279102301e7ac97897b4596c9fa95ff147922a",
+    "readiness_decision.json": "7be98b90ddcf543165eca1e053fb0c93a3328a6c4f005801d74e522fb5313083",
+    "summary.json": "51d6afb09978cc9964d34cc77579a82031dcfdfb3db8d88662f3f8a0895311e7",
+    "target_assessment.md": "bcce02db22b31b10188c71b207cae4387e8c0390ea8184b2b4f8a30ac231e5cd",
+    "target_health_baseline_raw.bin": "7b7b626027c2441852da9398ad4cad9dfe98afa9b26fb3c7c20c2b6a39237d24",
+    "target_health_drift_raw.bin": "7a58b72bbe4b95708680840e35c973268216b4bed7059fa6bf03119322fffef2",
+    "target_health_metadata.json": "0add5519ba1518c0618596e81c67f97003713025e17b808fd79b98a2bd71f12b",
+    "target_reachability_observation.json": "2ac1a93bb46cb49d740ccb834034245163145da858622977c2b650ae3f3c8685",
+    "target_selection.json": "1c43d61c58c461fbaf117161e9f7fc8c534d8d71cc4da1dba3f4ca16e21a1012",
+    "terminal_report.md": "3e16f2a32b5948846e5297c18b380d02c9e1e9855ae2a7ce295f6988cd3b0d43"
+  },
+  "raw_response_bytes": {"path": "heal_raw.bin", "byte_count": 766, "sha256": "a0bba0d6b4d1c5dcd7271519a6ade77f3135385afe2cf8d211c75f3c0ec9e9b7"},
+  "provider_operations": 1,
+  "retries": 0,
+  "historical_evidence": "UNCHANGED"
+}

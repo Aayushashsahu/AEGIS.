@@ -1,0 +1,56 @@
+{
+  "facts_match": true,
+  "observed_at_utc": "2026-08-21T15:43:04.392524Z",
+  "provenance": "DIRECT_TARGET_FETCH",
+  "schema_version": "mission-056-direct-target-health-v1",
+  "variants": {
+    "baseline": {
+      "content_type": "text/html",
+      "elapsed_ms": 66,
+      "facts": {
+        "availability": "Available",
+        "price": {
+          "currency": "USD",
+          "value": 599.0
+        },
+        "title": "AEGIS Recovery Widget"
+      },
+      "http_status": 200,
+      "raw_mirror": {
+        "aegis_operation_id": "m056-target-baseline-20260821T153830Z",
+        "byte_count": 877,
+        "correlation_id": "mission056-target-baseline-20260821T153830Z",
+        "path": "/tmp/aegis-mission031/experiments/mission_056_full_scale_recovery/target_health_baseline_raw.bin",
+        "persisted": true,
+        "schema_version": "raw-response-mirror-v1",
+        "secret_like_content": "[REDACTED]",
+        "sha256": "7b7b626027c2441852da9398ad4cad9dfe98afa9b26fb3c7c20c2b6a39237d24"
+      },
+      "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target"
+    },
+    "drift": {
+      "content_type": "text/html",
+      "elapsed_ms": 25,
+      "facts": {
+        "availability": "Available",
+        "price": {
+          "currency": "USD",
+          "value": 599.0
+        },
+        "title": "AEGIS Recovery Widget"
+      },
+      "http_status": 200,
+      "raw_mirror": {
+        "aegis_operation_id": "m056-target-drift-20260821T153830Z",
+        "byte_count": 891,
+        "correlation_id": "mission056-target-drift-20260821T153830Z",
+        "path": "/tmp/aegis-mission031/experiments/mission_056_full_scale_recovery/target_health_drift_raw.bin",
+        "persisted": true,
+        "schema_version": "raw-response-mirror-v1",
+        "secret_like_content": "[REDACTED]",
+        "sha256": "7a58b72bbe4b95708680840e35c973268216b4bed7059fa6bf03119322fffef2"
+      },
+      "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target?variant=drift"
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "all_pass": true,
+  "bright_data_mutations": 0,
+  "bright_data_provider_operations": 0,
+  "checked_at_utc": "2026-08-21T15:43:04.392663Z",
+  "checks": {
+    "approval_and_rerun_remain_prohibited": true,
+    "credential_configured_server_side": true,
+    "exact_collector": true,
+    "experiment_status_ready": true,
+    "fresh_controlled_paths": true,
+    "historical_integrity": true,
+    "local_simulation_present": true,
+    "no_known_conflicting_provider_operation_in_available_evidence": true,
+    "one_heal_zero_retry_budget": true,
+    "prompt_hash_matches": true,
+    "prompt_within_limit": true,
+    "target_hash_matches": true,
+    "target_health_direct_evidence": true,
+    "target_health_pass": true
+  },
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "correlation": {
+    "aegis_operation_id": "m056-heal-20260821T153830Z",
+    "correlation_id": "mission056-heal-c_mt09pib13nxqz1coi-20260821T153830Z",
+    "target_url_sha256": "848a0cfe026e215c1daf46b621ee6d80e2368534c07d18f2e9f1c26075fa1f9e"
+  },
+  "current_provider_operation_state": "UNKNOWN",
+  "key_exposed": false,
+  "known_conflict": "NO_IN_AVAILABLE_EVIDENCE",
+  "protected_actual_hashes": {
+    "experiments/mission_033_live_bright_data_success/approval.json": "4662342b6869023395cbee5f190c4693270f4e9c98edd56934597d3963ac495d",
+    "experiments/mission_033_live_bright_data_success/candidate_preview.json": "a19480c4e0edf8693ac91a056df2605b4f7d6f0d6f9874362cece390f036a723",
+    "experiments/mission_041_post_heal_rerun/post_heal_output.json": "063439c8b0ca9385f4179f5026c1e40631faa64d93e66fd3c7a61d3ffe649f64",
+    "experiments/mission_041_post_heal_rerun/summary.json": "6e3135f98a0e8b8890194999cd897ddbecf8e95403c51a318233423d9bccf909",
+    "experiments/mission_048c_evidence_preserving_rerun/raw_response.bin": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364",
+    "experiments/mission_048c_evidence_preserving_rerun/summary.json": "1d5927fecd1296963786573589281ddc2c5e08debe4717fedcc6f0c01f39f0c5",
+    "experiments/mission_053_candidate_only/heal_result.json": "6a2ee97dee2f0a3ac60bfe8cb77e018c73511e11603363c6b0174487100f8ecd",
+    "experiments/mission_055_final_version_binding/reconciliation.json": "3a3ad2c915bfcf6027a00168fffba030c59770a7bfe4d0d491e4b4fd30759fd0"
+  },
+  "retries": 0,
+  "schema_version": "mission-056-preflight-v1",
+  "target_health": {
+    "facts_match": true,
+    "observed_at_utc": "2026-08-21T15:43:04.392524Z",
+    "provenance": "DIRECT_TARGET_FETCH",
+    "schema_version": "mission-056-direct-target-health-v1",
+    "variants": {
+      "baseline": {
+        "content_type": "text/html",
+        "elapsed_ms": 66,
+        "facts": {
+          "availability": "Available",
+          "price": {
+            "currency": "USD",
+            "value": 599.0
+          },
+          "title": "AEGIS Recovery Widget"
+        },
+        "http_status": 200,
+        "raw_mirror": {
+          "aegis_operation_id": "m056-target-baseline-20260821T153830Z",
+          "byte_count": 877,
+          "correlation_id": "mission056-target-baseline-20260821T153830Z",
+          "path": "/tmp/aegis-mission031/experiments/mission_056_full_scale_recovery/target_health_baseline_raw.bin",
+          "persisted": true,
+          "schema_version": "raw-response-mirror-v1",
+          "secret_like_content": "[REDACTED]",
+          "sha256": "7b7b626027c2441852da9398ad4cad9dfe98afa9b26fb3c7c20c2b6a39237d24"
+        },
+        "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target"
+      },
+      "drift": {
+        "content_type": "text/html",
+        "elapsed_ms": 25,
+        "facts": {
+          "availability": "Available",
+          "price": {
+            "currency": "USD",
+            "value": 599.0
+          },
+          "title": "AEGIS Recovery Widget"
+        },
+        "http_status": 200,
+        "raw_mirror": {
+          "aegis_operation_id": "m056-target-drift-20260821T153830Z",
+          "byte_count": 891,
+          "correlation_id": "mission056-target-drift-20260821T153830Z",
+          "path": "/tmp/aegis-mission031/experiments/mission_056_full_scale_recovery/target_health_drift_raw.bin",
+          "persisted": true,
+          "schema_version": "raw-response-mirror-v1",
+          "secret_like_content": "[REDACTED]",
+          "sha256": "7a58b72bbe4b95708680840e35c973268216b4bed7059fa6bf03119322fffef2"
+        },
+        "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target?variant=drift"
+      }
+    }
+  },
+  "target_health_error_class": null
+}

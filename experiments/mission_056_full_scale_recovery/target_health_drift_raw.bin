@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>AEGIS Controlled Recovery Target</title>
+  </head>
+  <body data-aegis-target="mission-056" data-aegis-variant="drift">
+    <main data-testid="mission056-controlled-target">
+      <p>Public controlled product fixture for extraction reliability evaluation.</p>
+      
+      <section class="listing-card" aria-label="Product facts">
+        <span class="item-name" data-testid="product-title">AEGIS Recovery Widget</span>
+        <span class="amount" data-testid="product-price" data-money-currency="USD" data-money-value="599.00">$599.00</span>
+        <span class="inventory-state" data-testid="product-availability">Available</span>
+      </section>
+    </main>
+  </body>
+</html>

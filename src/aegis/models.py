@@ -63,6 +63,10 @@ class CollectionHandle:
     correlation_id: str = field(default_factory=lambda: f"corr_{uuid4().hex}")
     status: CollectionState = CollectionState.SUBMITTED
     mode: CollectionMode = CollectionMode.REALTIME
+    requested_version: str | None = None
+    selected_version: str | None = None
+    provider_revision: str | None = None
+    version_evidence_source: str | None = None
     requested_at: datetime = field(default_factory=utc_now)
     started_at: datetime | None = None
     completed_at: datetime | None = None

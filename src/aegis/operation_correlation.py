@@ -26,7 +26,12 @@ class OperationCorrelationRecord:
     template_version: str | None
     operation_type: str
     correlation_id: str
-    schema_version: str = "operation-correlation-v1"
+    provider_revision: str | None = None
+    requested_version: str | None = None
+    selected_version: str | None = None
+    version_evidence_source: str | None = None
+    raw_response_sha256: str | None = None
+    schema_version: str = "operation-correlation-v2"
 
     def to_evidence_dict(self) -> dict[str, object]:
         return asdict(self)
@@ -42,6 +47,11 @@ def build_operation_correlation(
     template_version: str | None,
     operation_type: str,
     correlation_id: str,
+    provider_revision: str | None = None,
+    requested_version: str | None = None,
+    selected_version: str | None = None,
+    version_evidence_source: str | None = None,
+    raw_response_sha256: str | None = None,
 ) -> OperationCorrelationRecord:
     """Validate and construct one correlation record without provider access."""
 
@@ -58,6 +68,18 @@ def build_operation_correlation(
         raise ValueError("operation_type is required")
     if not correlation_id.strip():
         raise ValueError("correlation_id is required")
+    for field_name, value in {
+        "template_version": template_version,
+        "provider_revision": provider_revision,
+        "requested_version": requested_version,
+        "selected_version": selected_version,
+    }.items():
+        if value is not None and not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}", value):
+            raise ValueError(f"{field_name} must be a safe opaque identifier when provided")
+    if version_evidence_source is not None and not re.fullmatch(r"[A-Z][A-Z0-9_]{0,63}", version_evidence_source):
+        raise ValueError("version_evidence_source must be an uppercase safe code when provided")
+    if raw_response_sha256 is not None and not re.fullmatch(r"[a-f0-9]{64}", raw_response_sha256):
+        raise ValueError("raw_response_sha256 must be a lowercase SHA-256 digest when provided")
     return OperationCorrelationRecord(
         aegis_operation_id=aegis_operation_id,
         collector_id=collector_id,
@@ -67,6 +89,11 @@ def build_operation_correlation(
         template_version=template_version,
         operation_type=operation_type,
         correlation_id=correlation_id,
+        provider_revision=provider_revision,
+        requested_version=requested_version,
+        selected_version=selected_version,
+        version_evidence_source=version_evidence_source,
+        raw_response_sha256=raw_response_sha256,
     )
 
 

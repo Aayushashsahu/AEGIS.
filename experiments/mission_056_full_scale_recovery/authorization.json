@@ -1,0 +1,13 @@
+{
+  "schema_version": "mission-056-authorization-v1",
+  "mission_name": "August 22 Full-Scale Self-Healing Recovery Mission",
+  "owner_objective": "Make a real Bright Data self-healing loop produce title, price, and availability in post-heal structured output, then let deterministic AEGIS verification and risk decide.",
+  "non_fabrication_policy": ["No fabricated provider output, candidate, verification, post-heal success, or REAL_PROVIDER label.", "No historical Mission 033/041 evidence modification or hash rewriting.", "No undocumented endpoint or hidden retry.", "No silent production mutation."],
+  "initial_engineering_stage": {"provider_operations": 0, "mutations": 0, "retries": 0, "authorized_work": ["codebase forensics", "provider-free transport engineering", "target assessment", "local simulation", "clean-experiment preparation"]},
+  "provider_experiment_policy": "A bounded real provider experiment may be executed only after local simulation passes and a fresh immutable experiment record defines collector, target, explicit version, exact operation budget, prompt hash, correlation ID, raw-first evidence paths, and stop conditions.",
+  "approval_boundary": "A real approval requires separate explicit authorization after a complete candidate is locally verified.",
+  "rerun_boundary": "A real post-heal rerun requires separate explicit authorization after approval and provider completion.",
+  "commit_boundary": "Production commit and downstream shipment remain owner-controlled; neither is authorized by this record.",
+  "absolute_prohibitions": ["benchmark execution", "NVIDIA", "Gemini", "unbounded provider retries"],
+  "final_classifications": ["REAL_SELF_HEAL_LOOP_COMPLETED", "ENGINEERING_COMPLETE_PROVIDER_RUNTIME_FAILURE", "AEGIS_INTEGRATION_BUG_FIXED", "TARGET_REDESIGNED_FOR_RELIABLE_HEAL", "BLOCKED"]
+}

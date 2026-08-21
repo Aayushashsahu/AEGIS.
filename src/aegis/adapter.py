@@ -52,6 +52,7 @@ class AdapterError(RuntimeError):
 
 BRIGHT_DATA_HEAL_PROMPT_LIMIT = 1000
 BRIGHT_DATA_HEAL_PROMPT_POLICY = "mission-030-compact-heal-prompt-v1"
+_VERSION_SELECTOR_RE = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]{0,127}\Z")
 
 
 @dataclass(frozen=True)
@@ -90,6 +91,16 @@ def _safe_target_url(value: object) -> str:
         if key.lower() not in {"api_key", "apikey", "token", "access_token", "authorization", "cookie", "password"}
     ]
     return urlunsplit((parsed.scheme, parsed.netloc, parsed.path, urlencode(safe_query), ""))
+
+
+def _version_selector(value: str | None) -> str | None:
+    """Validate an explicit documented CLI version selector without provider access."""
+
+    if value is None:
+        return None
+    if not _VERSION_SELECTOR_RE.fullmatch(value):
+        raise AdapterError("version selector must be a safe non-empty opaque value")
+    return value
 
 
 def _field_summary(field: object) -> str:
@@ -347,6 +358,7 @@ class BrightDataCliAdapter:
         target_url: str,
         timeout_seconds: float = 900.0,
         mode: CollectionMode = CollectionMode.REALTIME,
+        version: str | None = None,
     ) -> CollectionHandle:
         """Submit a CLI run to a background worker and return immediately."""
 
@@ -354,11 +366,14 @@ class BrightDataCliAdapter:
             raise AdapterError("collector provenance is not BRIGHT_DATA")
         if mode not in {CollectionMode.REALTIME, CollectionMode.BATCH}:
             raise AdapterError("Bright Data runs must start in REALTIME or BATCH mode")
+        requested_version = _version_selector(version)
         requested_at = utc_now()
         handle = CollectionHandle(
             collector_id=collector.collector_id,
             requested_at=requested_at,
             mode=mode,
+            requested_version=requested_version,
+            version_evidence_source="DOCUMENTED_CLI_SELECTOR" if requested_version else None,
             provider_provenance=self.provider,
             evidence_refs=(f"evidence://bright-data/cli/run/{collector.collector_id}",),
         )
@@ -372,8 +387,10 @@ class BrightDataCliAdapter:
             "run",
             collector.collector_id,
             target_url,
-            "--pretty",
         ]
+        if requested_version is not None:
+            command.extend(("--version", requested_version))
+        command.append("--pretty")
         future = self._executor.submit(self._run_with_timeout, command, timeout_seconds=timeout_seconds)
         self._jobs[handle.collection_id] = future
         self._handles[handle.collection_id] = handle

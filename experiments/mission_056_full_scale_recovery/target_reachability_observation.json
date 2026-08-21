@@ -1,0 +1,16 @@
+{
+  "schema_version": "mission-056-target-reachability-observation-v1",
+  "observed_at_utc": "2026-08-21T00:00:00Z",
+  "observation_method": "read-only managed preview navigation",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+  "http_status": "NOT_EXPOSED_BY_BROWSER_BRIDGE",
+  "rendered_result": "MANAGED_APPLICATION_404",
+  "observed_text": ["AEGIS", "404", "Page Not Found", "Sorry, the page you are looking for doesn't exist."],
+  "expected_required_fields_visible": false,
+  "title_visible": false,
+  "price_visible": false,
+  "availability_visible": false,
+  "provider_operations": 0,
+  "frontend_mutations": 0,
+  "interpretation": "The immutable Mission 033 target contract remains historical evidence. Its historical preview origin does not currently present a usable clean target route, so it cannot be selected for a fresh Mission 056 provider experiment without a separately assessed replacement or a restored controlled target endpoint."
+}

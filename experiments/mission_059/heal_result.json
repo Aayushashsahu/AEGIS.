@@ -1,0 +1,38 @@
+{
+  "aegis_correlation_id": "mission059-heal-c_mt09pib13nxqz1coi-20260821T173646835773Z",
+  "aegis_operation_id": "m059-heal-20260821T173646835773Z",
+  "approval": "NOT_AUTHORIZED",
+  "candidate": "ABSENT",
+  "candidate_fields": {
+    "availability": "MISSING",
+    "price": "MISSING",
+    "title": "MISSING"
+  },
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "commit": "NOT_AUTHORIZED",
+  "completed_at_utc": "2026-08-21T17:46:42.534314Z",
+  "elapsed_ms": 419011,
+  "key_exposed": false,
+  "provider_id": "ABSENT",
+  "provider_identifiers": {},
+  "provider_mutations": 1,
+  "provider_status": "error",
+  "raw_response": {
+    "aegis_operation_id": "m059-heal-20260821T173646835773Z",
+    "byte_count": 766,
+    "correlation_id": "mission059-heal-c_mt09pib13nxqz1coi-20260821T173646835773Z",
+    "path": "/tmp/aegis-mission031/experiments/mission_059/heal_raw_response.bin",
+    "persisted": true,
+    "schema_version": "raw-response-mirror-v1",
+    "secret_like_content": false,
+    "sha256": "a0bba0d6b4d1c5dcd7271519a6ade77f3135385afe2cf8d211c75f3c0ec9e9b7"
+  },
+  "rerun": "NOT_AUTHORIZED",
+  "retries": 0,
+  "returncode": 1,
+  "rollback": "NOT_AUTHORIZED",
+  "schema_version": "mission-059-heal-result-v1",
+  "started_at_utc": "2026-08-21T17:39:43.520546Z",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target?variant=drift",
+  "timed_out": false
+}

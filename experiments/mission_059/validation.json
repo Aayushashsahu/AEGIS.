@@ -1,0 +1,21 @@
+{
+  "candidate_provenance": "NOT_APPLICABLE",
+  "correlation_complete": true,
+  "historical_evidence": "UNCHANGED",
+  "key_exposed": false,
+  "protected_actual_hashes": {
+    "experiments/mission_053_candidate_only/heal_result.json": "6a2ee97dee2f0a3ac60bfe8cb77e018c73511e11603363c6b0174487100f8ecd",
+    "experiments/mission_053_candidate_only/raw_provider_response.bin": "dcfa386469ec7a78fb42e5f91779e501edb2b9863a1277212cb585b13d249178",
+    "experiments/mission_056_full_scale_recovery/correlation_records/m056-heal-20260821T153830Z.json": "9d910f4d016498543d0b78c3a559221f071b9e66782d82d48e4a07b2530e9ac1",
+    "experiments/mission_056_full_scale_recovery/heal_metadata.json": "665f79c52756ccc11b9ec216fd56ff51516cd4699ad8c737e3fc5cb32f92c070",
+    "experiments/mission_056_full_scale_recovery/heal_raw.bin": "a0bba0d6b4d1c5dcd7271519a6ade77f3135385afe2cf8d211c75f3c0ec9e9b7"
+  },
+  "provider_id_not_fabricated": true,
+  "provider_mutations": 0,
+  "provider_operations": 0,
+  "raw_bytes_hash_correct": true,
+  "schema_version": "mission-059-validation-v1",
+  "zero_approvals": true,
+  "zero_reruns": true,
+  "zero_retries": true
+}

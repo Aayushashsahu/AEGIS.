@@ -1,0 +1,15 @@
+{
+  "schema_version": "mission-059-preflight-redaction-correction-v1",
+  "source_preflight": "experiments/mission_059/preflight.json",
+  "issue": "The generic metadata-key redactor matched the safe words authorization_context and authorization_one_heal_zero_retry, masking their values in the printed and persisted preflight evidence.",
+  "corrected_safe_interpretation": {
+    "authorization_one_heal_zero_retry": true,
+    "authorization_context": "experiments/mission_059/authorization.json"
+  },
+  "credential_fields": "REMAIN_REDACTED",
+  "provider_operations": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "preflight_all_pass": true,
+  "historical_evidence_modified": false
+}

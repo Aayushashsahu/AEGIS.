@@ -1,0 +1,15 @@
+{
+  "aegis_correlation_id": "mission059-heal-c_mt09pib13nxqz1coi-20260821T173646835773Z",
+  "aegis_operation_id": "m059-heal-20260821T173646835773Z",
+  "authorization_context": "[REDACTED]",
+  "cli_version": "0.3.5",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "created_at_utc": "2026-08-21T17:36:46.835773Z",
+  "mission": "MISSION_059",
+  "operation_type": "candidate_only_heal",
+  "prompt_length": 372,
+  "prompt_sha256": "6409fc9bc735ba9ecc1593e095bbb79941c0aa844c0f1ac3c5b1596e25cb06ea",
+  "provider_identifier_policy": "ACTUAL_ONLY_NO_FALLBACK",
+  "schema_version": "mission-059-correlation-v1",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target?variant=drift"
+}

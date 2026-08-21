@@ -1,0 +1,20 @@
+{
+  "approval": "NOT_AUTHORIZED",
+  "candidate": "ABSENT",
+  "candidate_fields": {
+    "availability": "MISSING",
+    "price": "MISSING",
+    "title": "MISSING"
+  },
+  "heal": "FAILED",
+  "historical_evidence": "UNCHANGED",
+  "mutations": 1,
+  "next_step": "STOP",
+  "provider_id": "ABSENT",
+  "provider_identifiers": {},
+  "provider_status": "error",
+  "raw_response": "PRESERVED",
+  "rerun": "NOT_AUTHORIZED",
+  "retries": 0,
+  "schema_version": "mission-059-summary-v1"
+}

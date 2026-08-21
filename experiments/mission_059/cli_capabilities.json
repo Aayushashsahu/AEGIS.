@@ -1,0 +1,15 @@
+{
+  "schema_version": "mission-059-cli-capabilities-v1",
+  "inspection_mode": "LOCAL_HELP_ONLY",
+  "direct_bdata_binary": "UNAVAILABLE",
+  "local_package_resolution": "npx --offline -p @brightdata/cli@0.3.5",
+  "cli_version": "0.3.5",
+  "heal_timeout_options": ["--timeout <seconds> (default 600)"],
+  "heal_retry_options": ["--max-retries <n>", "--no-retry (equivalent to --max-retries 0)"],
+  "approval_options": ["--auto-save", "--timeout <seconds>", "--json", "--timing"],
+  "run_version_options": ["--version <version>"],
+  "auto_save_available": "YES",
+  "heal_version_selector": "NOT_LISTED",
+  "observed_at_provider_calls": 0,
+  "observed_at_provider_mutations": 0
+}

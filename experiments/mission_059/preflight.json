@@ -1,0 +1,60 @@
+{
+  "all_pass": true,
+  "checked_at_utc": "2026-08-21T17:36:46.893806Z",
+  "checks": {
+    "approval_and_rerun_prohibited": true,
+    "authorization_one_heal_zero_retry": "[REDACTED]",
+    "cli_version_pinned": true,
+    "credential_configured_server_side": true,
+    "exact_collector": true,
+    "fresh_paths": true,
+    "heal_version_not_invented": true,
+    "historical_integrity": true,
+    "no_known_conflicting_provider_operation_in_available_evidence": true,
+    "prompt_hash_matches": true,
+    "prompt_length_matches": true,
+    "target_health_pass": true
+  },
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "correlation": {
+    "aegis_correlation_id": "mission059-heal-c_mt09pib13nxqz1coi-20260821T173646835773Z",
+    "aegis_operation_id": "m059-heal-20260821T173646835773Z",
+    "authorization_context": "[REDACTED]",
+    "cli_version": "0.3.5",
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "created_at_utc": "2026-08-21T17:36:46.835773Z",
+    "mission": "MISSION_059",
+    "operation_type": "candidate_only_heal",
+    "prompt_length": 372,
+    "prompt_sha256": "6409fc9bc735ba9ecc1593e095bbb79941c0aa844c0f1ac3c5b1596e25cb06ea",
+    "provider_identifier_policy": "ACTUAL_ONLY_NO_FALLBACK",
+    "schema_version": "mission-059-correlation-v1",
+    "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target?variant=drift"
+  },
+  "key_exposed": false,
+  "protected_actual_hashes": {
+    "experiments/mission_053_candidate_only/heal_result.json": "6a2ee97dee2f0a3ac60bfe8cb77e018c73511e11603363c6b0174487100f8ecd",
+    "experiments/mission_053_candidate_only/raw_provider_response.bin": "dcfa386469ec7a78fb42e5f91779e501edb2b9863a1277212cb585b13d249178",
+    "experiments/mission_056_full_scale_recovery/correlation_records/m056-heal-20260821T153830Z.json": "9d910f4d016498543d0b78c3a559221f071b9e66782d82d48e4a07b2530e9ac1",
+    "experiments/mission_056_full_scale_recovery/heal_metadata.json": "665f79c52756ccc11b9ec216fd56ff51516cd4699ad8c737e3fc5cb32f92c070",
+    "experiments/mission_056_full_scale_recovery/heal_raw.bin": "a0bba0d6b4d1c5dcd7271519a6ade77f3135385afe2cf8d211c75f3c0ec9e9b7"
+  },
+  "provider_mutations": 0,
+  "provider_operations": 0,
+  "retries": 0,
+  "schema_version": "mission-059-preflight-v1",
+  "target_health": {
+    "content_type": "text/html",
+    "elapsed_ms": 57,
+    "facts": {
+      "availability": "Available",
+      "price": {
+        "currency": "USD",
+        "value": 599.0
+      },
+      "title": "AEGIS Recovery Widget"
+    },
+    "http_status": 200
+  },
+  "target_health_error_class": null
+}

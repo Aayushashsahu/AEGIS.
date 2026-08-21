@@ -1,0 +1,16 @@
+{
+  "schema_version": "mission-059-execution-readiness-v1",
+  "preflight": "PASS",
+  "preflight_path": "experiments/mission_059/preflight.json",
+  "preflight_redaction_correction": "experiments/mission_059/preflight_redaction_correction.json",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "target_health": "PASS — HTTP 200 and required title/price/availability facts matched.",
+  "cli": "PASS — local offline CLI 0.3.5; heal timeout and no-retry options observed; no heal version selector listed.",
+  "operation_budget": {"heal": 1, "retries": 0, "approval": 0, "rerun": 0, "commit": 0, "rollback": 0},
+  "runner_safety": "PASS — focused provider-free tests and compile check passed; static scan found no approval, rerun, commit, or rollback invocation.",
+  "historical_integrity": "PASS",
+  "provider_operations_before_execution": 0,
+  "provider_mutations_before_execution": 0,
+  "authorization": "VALID",
+  "next_action": "Execute exactly one Mission 059 heal, preserve stdout bytes before parsing, then stop."
+}

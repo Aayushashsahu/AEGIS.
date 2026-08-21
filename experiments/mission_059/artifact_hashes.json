@@ -1,0 +1,23 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "authorization.json": "[REDACTED]",
+    "cli_capabilities.json": "960c150e2517c57a03ebc135523898599a3428e42ba02b83974a95e3396dfc86",
+    "correlation.json": "02ae0c8925db7aa5e417cb2315db8860f7cc996b7f19225fadbc5b1f4c1df981",
+    "execution_readiness.json": "30be75b76e0af0708ba3bf84a1567b70a068e210999941b186722079f9531390",
+    "experiment_spec.json": "aa689e0ed3cf44c205b14d86b476c0cea82c7490f93041efdb042768c2b6a4d4",
+    "heal_raw_metadata.json": "23fe60664d7dbcceaac61c15545ad4ef0c0d6727679150a7882da91aebc55687",
+    "heal_raw_response.bin": "a0bba0d6b4d1c5dcd7271519a6ade77f3135385afe2cf8d211c75f3c0ec9e9b7",
+    "heal_request.json": "ce0b1bf40a287f7cc4ddeff1725924e57dc1cc11ebf24684d8db663ac2e98173",
+    "heal_result.json": "b30a549cc4d60d24b97e223329575c95f00e3385e2718007675750356994b253",
+    "preflight.json": "8fcb3b424d5914d05034d4043fc28ebfee02527b9d65e43e7781c7735ded346b",
+    "preflight_redaction_correction.json": "a71fc602dadb4e36dd657ba00786bcb81696ebdaecfc404ddb71b5b6f514ade2",
+    "summary.json": "f81ad4b6b538f01826f87e42535739df4d1b77a80f107f2a76a02cfbe2ce4e28",
+    "validation.json": "3b2ac3b9a7ed851c33b18309bf0cd17297500756765feb0e9044a836ab9b72df"
+  },
+  "historical_evidence": "UNCHANGED",
+  "provider_mutations": 0,
+  "provider_operations": 0,
+  "retries": 0,
+  "schema_version": "mission-059-artifact-hashes-v1"
+}

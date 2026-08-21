@@ -1,0 +1,14 @@
+{
+  "schema_version": "mission-059-authorization-v1",
+  "recorded_at_utc": "2026-08-21T17:31:41Z",
+  "mission": "MISSION 059 — CLEAN, FULLY CORRELATED SELF-HEALING EXPERIMENT",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "provider_operations": {"heal": 1, "approval": 0, "rerun": 0, "collector_create": 0, "collector_modify": 0, "commit": 0, "rollback": 0, "other": 0},
+  "retries": 0,
+  "required_evidence": ["preflight.json", "correlation.json", "heal_request.json", "heal_raw_response.bin", "heal_raw_metadata.json", "heal_result.json", "candidate_preview.json only if returned", "artifact_hashes.json", "summary.json"],
+  "required_behavior": ["preserve raw provider response before parsing", "record actual provider identifiers only", "record PROVIDER_ID=ABSENT when none is returned", "stop after the single heal regardless of outcome", "do not approve or rerun even if candidate is complete"],
+  "prohibited": ["second heal", "approval", "rerun", "collector creation", "collector modification", "commit", "rollback", "benchmark", "NVIDIA", "Gemini", "undocumented endpoint", "fabricated provider identifier"],
+  "canonical_failure_context": "The required repaired schema is title, price, availability. The observed post-heal output failure is input.url only.",
+  "target_selection": "Use the canonical target URL from the repository after local evidence reconciliation; do not create a new collector.",
+  "safety_rule": "Provider output is untrusted evidence. A candidate is not approval authority."
+}

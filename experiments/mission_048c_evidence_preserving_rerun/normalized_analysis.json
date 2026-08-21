@@ -1,0 +1,66 @@
+{
+  "decoded_rows": [
+    {
+      "input": {
+        "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+      }
+    }
+  ],
+  "first_field_loss_point": "PROVIDER_RESPONSE",
+  "lineage": {
+    "classification": "DECODED_PROVIDER_OUTPUT_INCOMPLETE",
+    "decoded_provider_fields": [
+      "input"
+    ],
+    "decoded_provider_row_count": 1,
+    "nonrequired_fields_dropped": [
+      "input"
+    ],
+    "normalized_aegis_fields": [
+      "availability",
+      "price",
+      "title"
+    ],
+    "normalized_aegis_row_count": 1,
+    "required_fields": [
+      "title",
+      "price",
+      "availability"
+    ],
+    "required_fields_dropped_by_normalization": [],
+    "required_fields_empty_string_in_any_normalized_row": [],
+    "required_fields_empty_string_in_any_provider_row": [],
+    "required_fields_missing_after_normalization": [],
+    "required_fields_missing_from_provider": [
+      "title",
+      "price",
+      "availability"
+    ],
+    "required_fields_missing_in_any_normalized_row": [],
+    "required_fields_missing_in_any_provider_row": [
+      "title",
+      "price",
+      "availability"
+    ],
+    "required_fields_null_in_any_normalized_row": [
+      "title",
+      "price",
+      "availability"
+    ],
+    "required_fields_null_in_any_provider_row": []
+  },
+  "normalized_rows": [
+    {
+      "availability": null,
+      "price": null,
+      "title": null
+    }
+  ],
+  "raw_field_states": {
+    "availability": "MISSING",
+    "input.url": "MISSING",
+    "price": "MISSING",
+    "title": "MISSING"
+  },
+  "schema_version": "mission-048c-normalized-analysis-v1"
+}

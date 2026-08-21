@@ -1,0 +1,55 @@
+{
+  "schema_version": "mission-048c-release-validation-v1",
+  "provider_requests_added_during_validation": 0,
+  "provider_mutations_added_during_validation": 0,
+  "retries_added_during_validation": 0,
+  "canonical_tests": {
+    "command": "PYTHONPATH=src:. pytest -q",
+    "status": "PASS",
+    "passed": 490
+  },
+  "managed_provider_free_tests": {
+    "command": "pnpm exec vitest run --exclude server/brightDataCredential.test.ts",
+    "status": "PASS",
+    "passed": 18,
+    "excluded": "The known external credential probe is intentionally excluded because it is outside this provider-free validation scope."
+  },
+  "managed_typescript": {
+    "command": "pnpm run check",
+    "status": "PASS"
+  },
+  "managed_production_build": {
+    "command": "pnpm run build",
+    "status": "PASS"
+  },
+  "managed_route_and_responsive_validation": {
+    "status": "PASS",
+    "desktop_routes_rendered": ["/", "/cases", "/evidence", "/judge", "/silent-corruption", "/benchmark", "/downstream"],
+    "mobile_routes_rendered": ["/", "/judge", "/downstream"],
+    "external_target_note": "The recorded provider target is hosted at a separate external URL. Its same-path lookup under the managed app correctly rendered the managed 404 and is not a managed-route failure."
+  },
+  "canonical_historical_integrity": {
+    "command": "python3 .github/scripts/verify_evidence_integrity.py",
+    "status": "PASS",
+    "validated_artifacts": 8,
+    "protected_historical_paths_git_diff": "PASS"
+  },
+  "raw_response": {
+    "sha256": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364",
+    "sha256_check": "PASS",
+    "provider_response_bytes": 103
+  },
+  "secret_scan": {
+    "scope": "Mission 048C changed source, tests, and textual artifacts",
+    "status": "PASS",
+    "note": "Repository-wide matches outside this scope were pre-existing credential environment-name references or controlled test fixtures and were not newly introduced."
+  },
+  "terminal_decision": {
+    "first_field_loss_point": "PROVIDER_RESPONSE",
+    "root_cause": "PROVIDER_OUTPUT_INCOMPLETE",
+    "verification": "FAIL",
+    "risk": "REJECT",
+    "commit": "BLOCKED",
+    "data_shipped": "NO"
+  }
+}

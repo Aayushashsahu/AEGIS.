@@ -1,0 +1,13 @@
+{
+  "corrected_raw_field_states": {
+    "availability": "MISSING",
+    "input.url": "PRESENT",
+    "price": "MISSING",
+    "title": "MISSING"
+  },
+  "correction": "The original derived analysis treated input.url as a literal top-level key. This append-only correction resolves dotted paths without altering raw evidence, decoded rows, verification, risk, or commit records.",
+  "first_field_loss_point": "PROVIDER_RESPONSE",
+  "schema_version": "mission-048c-normalized-analysis-correction-v1",
+  "source_analysis": "normalized_analysis.json",
+  "source_raw_response_sha256": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364"
+}

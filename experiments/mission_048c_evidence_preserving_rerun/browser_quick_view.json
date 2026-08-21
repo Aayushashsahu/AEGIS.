@@ -1,0 +1,8 @@
+{
+  "schema_version": "mission-048c-browser-quick-view-v1",
+  "attempted": false,
+  "reason": "The one-response rerun returned no provider run or operation identifier. The exact correlated dashboard run cannot be uniquely selected without inferring an ID from similar runs, so no dashboard interaction was attempted.",
+  "captured_response_remains_authoritative": true,
+  "provider_requests_added": 0,
+  "provider_mutations_added": 0
+}

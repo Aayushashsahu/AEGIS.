@@ -1,0 +1,15 @@
+{
+  "record": {
+    "aegis_operation_id": "mission048c-rerun-20260821T042811Z",
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+    "operation_type": "synchronous_collector_rerun",
+    "provider_run_id": null,
+    "schema_version": "operation-correlation-v1",
+    "started_at_utc": "2026-08-21T04:34:15.409331Z",
+    "target_url_sha256": "8b1a09cdd2241db74687c89d2f1b506d3467b5303ac347d6425e2dd3388a83bd",
+    "template_version": null
+  },
+  "record_path": "experiments/mission_048c_evidence_preserving_rerun/correlation_records/mission048c-rerun-20260821T042811Z.json",
+  "schema_version": "mission-048c-correlation-v1"
+}

@@ -1,0 +1,105 @@
+{
+  "candidate_id": "candidate_m048c_real_rerun",
+  "checks": [
+    {
+      "affected_fields": [
+        "title"
+      ],
+      "candidate_id": "candidate_m048c_real_rerun",
+      "category": "NULLABILITY",
+      "channel": "CONTRACT",
+      "check_id": "check_d5500f5fbafa41d0b9c21569c7bb7167",
+      "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+      "created_at": "2026-08-21T04:34:22.789145+00:00",
+      "critical": true,
+      "details": {},
+      "evidence_refs": [
+        "evidence://mission-033/target-contract.json",
+        "evidence://mission-048c/raw-response.bin"
+      ],
+      "message": "row 0 contains null in non-nullable field title",
+      "provenance": "DETERMINISTIC",
+      "status": "FAIL"
+    },
+    {
+      "affected_fields": [],
+      "candidate_id": "candidate_m048c_real_rerun",
+      "category": "ENTITY_MATCH",
+      "channel": "HISTORY",
+      "check_id": "check_07de6a6931b441d19a8e9afe371dce6c",
+      "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+      "created_at": "2026-08-21T04:34:22.789180+00:00",
+      "critical": false,
+      "details": {},
+      "evidence_refs": [
+        "evidence://mission-033/target-contract.json",
+        "evidence://mission-048c/raw-response.bin"
+      ],
+      "message": "history or candidate rows have no deterministic entity key",
+      "provenance": "DETERMINISTIC",
+      "status": "UNKNOWN"
+    },
+    {
+      "affected_fields": [
+        "availability",
+        "price",
+        "title"
+      ],
+      "candidate_id": "candidate_m048c_real_rerun",
+      "category": "SEMANTIC_INVARIANTS",
+      "channel": "SEMANTIC_INVARIANT",
+      "check_id": "check_674ab92a22f249fcb2b319a3f5e88283",
+      "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+      "created_at": "2026-08-21T04:34:22.789212+00:00",
+      "critical": true,
+      "details": {},
+      "evidence_refs": [
+        "evidence://mission-033/target-contract.json",
+        "evidence://mission-048c/raw-response.bin",
+        "semantic://deterministic-invariants"
+      ],
+      "message": "row 0 title does not match deterministic semantic expectation; row 0 price does not match deterministic semantic expectation; row 0 availability does not match deterministic semantic expectation",
+      "provenance": "DETERMINISTIC",
+      "status": "FAIL"
+    },
+    {
+      "affected_fields": [],
+      "candidate_id": "candidate_m048c_real_rerun",
+      "category": "ENTITY_CONSISTENCY",
+      "channel": "INDEPENDENT_EVIDENCE",
+      "check_id": "check_a59ca86a0d834658ba65d66d05056ae1",
+      "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+      "created_at": "2026-08-21T04:34:22.789237+00:00",
+      "critical": true,
+      "details": {},
+      "evidence_refs": [
+        "evidence://mission-033/independent-target-snapshot.html",
+        "evidence://mission-033/target-contract.json",
+        "evidence://mission-048c/raw-response.bin"
+      ],
+      "message": "candidate entities do not match the independent evidence entities",
+      "provenance": "DETERMINISTIC",
+      "status": "FAIL"
+    }
+  ],
+  "completed_at": "2026-08-21T04:34:22.789263+00:00",
+  "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+  "eligible_for_future_commit": false,
+  "evidence_refs": [
+    "evidence://mission-033/independent-target-snapshot.html",
+    "evidence://mission-033/target-contract.json",
+    "evidence://mission-048c/raw-response.bin",
+    "semantic://deterministic-invariants"
+  ],
+  "failed_checks": [
+    "check_d5500f5fbafa41d0b9c21569c7bb7167",
+    "check_674ab92a22f249fcb2b319a3f5e88283",
+    "check_a59ca86a0d834658ba65d66d05056ae1"
+  ],
+  "overall_status": "FAIL",
+  "started_at": "2026-08-21T04:34:22.789075+00:00",
+  "verification_id": "verification_6bf96d90a583472799d4c00a7f39266b",
+  "verification_provenance": [
+    "DETERMINISTIC"
+  ]
+}

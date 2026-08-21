@@ -1,0 +1,45 @@
+{
+  "commit": {
+    "authorization_reference": null,
+    "block_reasons": [
+      "RISK_NOT_ACCEPT",
+      "VERIFICATION_NOT_PASS",
+      "CRITICAL_VERIFICATION_FAILURE",
+      "REQUIRED_EVIDENCE_MISSING",
+      "CANDIDATE_NOT_VERIFIED",
+      "KNOWN_GOOD_MISSING",
+      "INVALID_AUTHORIZATION"
+    ],
+    "candidate_id": "candidate_m048c_real_rerun",
+    "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+    "created_at": "2026-08-21T04:34:22.789390+00:00",
+    "decision_id": "commit_decision_ecafafc1e6ba4fe684da419882d07e1a",
+    "eligibility": "BLOCKED",
+    "evidence_refs": [
+      "evidence://mission-033/independent-target-snapshot.html",
+      "evidence://mission-033/target-contract.json",
+      "evidence://mission-048c/raw-response.bin",
+      "semantic://deterministic-invariants"
+    ],
+    "known_good_version_reference": null,
+    "production_commit_performed": false,
+    "provenance": "BRIGHT_DATA",
+    "reason_code": "RISK_NOT_ACCEPT",
+    "risk_decision_id": "risk_183ae680cca3451c93b4e0fb541d22ab",
+    "verification_id": "verification_6bf96d90a583472799d4c00a7f39266b"
+  },
+  "eligibility": {
+    "candidate_id": "candidate_m048c_real_rerun",
+    "commit_decision_id": "commit_decision_ecafafc1e6ba4fe684da419882d07e1a",
+    "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+    "created_at": "2026-08-21T04:34:22.789414+00:00",
+    "eligible": false,
+    "evidence_refs": [
+      "evidence://mission-033/independent-target-snapshot.html",
+      "evidence://mission-033/target-contract.json",
+      "evidence://mission-048c/raw-response.bin",
+      "semantic://deterministic-invariants"
+    ],
+    "reason": "commit gate is BLOCKED"
+  }
+}

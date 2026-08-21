@@ -1,0 +1,13 @@
+{
+  "schema_version": "mission-048c-comparison-correction-v1",
+  "source_comparison": "comparison.json",
+  "source_raw_response_sha256": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364",
+  "correction": "The original comparison classified input.url as a literal top-level field. This append-only correction evaluates the nested input.url path and does not change the raw response, decoded rows, normalized rows, verification, risk, or commit evidence.",
+  "raw_field_states": {
+    "input.url": "PRESENT",
+    "title": "MISSING",
+    "price": "MISSING",
+    "availability": "MISSING"
+  },
+  "first_field_loss_point": "PROVIDER_RESPONSE"
+}

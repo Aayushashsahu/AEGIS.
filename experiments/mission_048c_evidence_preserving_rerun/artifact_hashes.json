@@ -1,0 +1,29 @@
+{
+  "schema_version": "mission-048c-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "manifest_scope": "All Mission 048C artifacts present when this manifest was created, excluding artifact_hashes.json itself.",
+  "artifact_count": 21,
+  "artifacts": {
+    "authorization.json": "429ec549184b67dedbd717aafa49b32bb369143a59fca48346be4eec2856e0a4",
+    "browser_quick_view.json": "9654ff3622d1fbecdcef76a9bba820c19f68024cc118276755ab756cf1746ce3",
+    "commit_decision.json": "9348993b3b62d0bc852377c5bb1ffbcb136e1b2316e3c7baad83e3987c2b73de",
+    "comparison.json": "978f2157429469782f5b2e085f1f5846fb7243e55c2347471fa912a50c84f049",
+    "comparison_correction.json": "4ae01a531e28cd8141928e2108f63fc585804acd5bdb5ab6c8829bd649273097",
+    "correlation.json": "f83f4ba5382f076588cbf05a2ba1ac46ea71482b3d39e9aa4b304ae3bea395f6",
+    "correlation_records/mission048c-rerun-20260821T042811Z.json": "8a18263abe293e727de0fe2f4b18c4aa0b3b80b32c7de3d5657b224929abcff4",
+    "normalized_analysis.json": "16a1a88395d93e805d9e9e7598205c94253c5a6da93ccbd4cc7322928c913fcf",
+    "normalized_analysis_correction.json": "c10b7ee9e04747cb0e496f8a2120e8f694b8d6b8780105bd78db99ae7899a7bb",
+    "preflight.json": "5d45107b64f3ccebbb6eafcdf90ebddf9116b14a0fc3c0ea39affb3553964c71",
+    "preflight_revalidation.json": "8ed04f1f8fa7a61ad9283059fbf9b67ea0bab6ff48859bb6c39694f0b767e4a8",
+    "preflight_revalidation_2.json": "43c16165ba8657b67f1e24a585344461c4c629948954c10ea812184d584da71a",
+    "preflight_revalidation_3.json": "43c16165ba8657b67f1e24a585344461c4c629948954c10ea812184d584da71a",
+    "raw_response.bin": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364",
+    "raw_response_hash.json": "2b97678324b7effe7bfce2e4e7e861878a186f7b0b08689073e7744b02565006",
+    "raw_response_metadata.json": "87c9f4340eba87141fa25969393f706649b0768a37d54398a3071459150d04a5",
+    "release_validation.json": "21de69b43c9b43fa5828d3d1526a431aec72fa1a9eaf56f96e7c9c121562a9a4",
+    "risk_decision.json": "26896367ccb6ec5eab578a7431cf07fd94e6c7d54c28a5aab89723aa432e95da",
+    "run_request.json": "524416b26f5c28b3e7248b95badc530f1880e7cde525143baa121fb8e3e537a1",
+    "summary.json": "1d5927fecd1296963786573589281ddc2c5e08debe4717fedcc6f0c01f39f0c5",
+    "verification.json": "170a59b113b97c170aec0166d24c85a300396425ba419bac10e00109b0d6c331"
+  }
+}

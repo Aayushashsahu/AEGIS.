@@ -206,6 +206,18 @@ def test_mission048_correlation_namespace_is_accepted_for_the_authorized_success
     assert result.success is True
 
 
+def test_mission048c_correlation_namespace_is_accepted_for_the_evidence_preserving_rerun() -> None:
+    result = rerun_collector_once(
+        "token-not-retained",
+        collector_id=COLLECTOR,
+        target_url=TARGET,
+        correlation_id="mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+        opener=lambda _request, *, timeout: FakeResponse(200, b'[{"input":{"url":"https://example.test"}}]'),
+    )
+
+    assert result.success is True
+
+
 def test_http_error_body_is_retained_when_the_transport_exposes_one(tmp_path) -> None:
     body = b'{"error":"scope"}'
 

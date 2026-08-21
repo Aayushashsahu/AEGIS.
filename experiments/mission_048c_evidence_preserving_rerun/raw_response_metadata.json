@@ -1,0 +1,30 @@
+{
+  "attempted": true,
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "content_type": "application/json",
+  "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+  "elapsed_ms": 7377,
+  "endpoint": "https://api.brightdata.com/dca/crawl?collector=c_mt09pib13nxqz1coi&timeout=50s",
+  "error_class": null,
+  "http_status": 200,
+  "http_timeout_seconds": 55.0,
+  "key_exposed": false,
+  "operation": "synchronous_collector_rerun",
+  "output_schema": {
+    "input": "dict"
+  },
+  "provider_status": "COMPLETED",
+  "raw_response_evidence": {
+    "bytes": 103,
+    "path": "/tmp/aegis-mission031/experiments/mission_048c_evidence_preserving_rerun/raw_response.bin",
+    "sha256": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364"
+  },
+  "raw_response_sha256": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364",
+  "requested_at_utc": "2026-08-21T04:34:15.409331Z",
+  "response_id": null,
+  "retry_count": 0,
+  "row_count": 1,
+  "schema_version": "mission-048c-raw-response-metadata-v1",
+  "success": true,
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+}

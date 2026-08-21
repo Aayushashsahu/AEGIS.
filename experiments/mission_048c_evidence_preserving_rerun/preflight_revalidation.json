@@ -1,0 +1,43 @@
+{
+  "all_pass": false,
+  "checks": {
+    "amended_policy_allows": true,
+    "authenticated_transport_configured": true,
+    "controlled_correlation_path": true,
+    "controlled_raw_path": true,
+    "fresh_correlation_directory": true,
+    "fresh_preflight_path": false,
+    "fresh_raw_response_path": true,
+    "fresh_run_request_path": true,
+    "stop_after_provider_operation": true
+  },
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "conflict_absence_proven": false,
+  "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+  "current_operation_state": "UNKNOWN",
+  "key_exposed": false,
+  "known_conflict": "NO",
+  "operation_id": "mission048c-rerun-20260821T042811Z",
+  "policy_checks": {
+    "correlation_id_generated": true,
+    "current_operation_state_valid": true,
+    "exact_collector": true,
+    "historical_evidence_intact": true,
+    "no_known_conflict": true,
+    "one_rerun_budget": true,
+    "response_capture_armed": true,
+    "zero_approval_budget": true,
+    "zero_commit_budget": true,
+    "zero_heal_budget": true,
+    "zero_retry_budget": true,
+    "zero_rollback_budget": true
+  },
+  "preflight_decision": "ALLOW_SINGLE_BOUNDED_RERUN",
+  "preflight_policy_version": "mission-048b-known-conflict-v1",
+  "preflight_reason": "Provider does not expose documented collector-scoped current-operation listing; no known conflicting operation exists in available documented evidence.",
+  "provider_operations_attempted": 0,
+  "rerun": "NOT_ATTEMPTED",
+  "retries": 0,
+  "schema_version": "mission-048c-preflight-v1",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+}

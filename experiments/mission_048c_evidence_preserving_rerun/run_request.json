@@ -1,0 +1,11 @@
+{
+  "authorized_provider_operations": 1,
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+  "key_exposed": false,
+  "operation_id": "mission048c-rerun-20260821T042811Z",
+  "requested_at_utc": "2026-08-21T04:34:15.409331Z",
+  "retry_budget": 0,
+  "schema_version": "mission-048c-run-request-v1",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+}

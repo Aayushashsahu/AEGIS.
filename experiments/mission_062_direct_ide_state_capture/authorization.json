@@ -1,0 +1,43 @@
+{
+  "mission": "062",
+  "title": "DIRECT SCRAPER STUDIO IDE STATE CAPTURE",
+  "recorded_at_utc": "2026-08-22T00:00:00Z",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "dashboard_name_cross_check": "aegis-mission-033-v1",
+  "mode": "READ_ONLY_BROWSER_INSPECTION",
+  "allowed": [
+    "login",
+    "refresh",
+    "navigate",
+    "open Scraper Studio",
+    "open collector",
+    "inspect Code and Parser code",
+    "inspect Output schema",
+    "inspect existing Runs",
+    "inspect read-only information in menus",
+    "inspect Self-Healing panel",
+    "inspect version, draft, and production labels",
+    "capture redacted screenshots",
+    "offline comparison"
+  ],
+  "prohibited": [
+    "Start",
+    "Run",
+    "Heal",
+    "Approve",
+    "Save",
+    "Publish",
+    "Save to development",
+    "Save to production",
+    "edit code",
+    "edit schema",
+    "modify collector",
+    "modify target",
+    "create collector",
+    "delete collector"
+  ],
+  "provider_calls_budget": 0,
+  "provider_mutations_budget": 0,
+  "retry_budget": 0,
+  "stop_condition": "Stop after the authorized read-only visual inspection and offline evidence classification."
+}

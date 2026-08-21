@@ -1,0 +1,54 @@
+{
+  "schema_version": "mission-062-direct-visual-classification-v1",
+  "collector": {
+    "id": "c_mt09pib13nxqz1coi",
+    "dashboard_name": "aegis-mission-033-v1",
+    "identity_evidence": "Rendered Bright Data dashboard markup and canonical Code/Runs routes."
+  },
+  "editor_state": "DEVELOPMENT",
+  "editor_state_evidence": "The visible Code IDE contains a `Save to development` control.",
+  "development_mode": "YES",
+  "development_draft": "UNKNOWN",
+  "development_version": "NOT_VISIBLE",
+  "active_version": "UNKNOWN",
+  "editor_template_label": "New ide-automation template",
+  "editor_code": {
+    "interaction_code_visible": "YES",
+    "parser_code_visible": "YES",
+    "parser_required_fields_returned": ["title", "price", "availability"],
+    "output_schema_visible": "YES",
+    "output_schema": {
+      "title": "String",
+      "price": "Price/Money",
+      "availability": "String"
+    }
+  },
+  "production_version": "v1 (prod)",
+  "production_version_evidence": "Every direct visible completed-run row shows template `v1 (prod)`.",
+  "editor_equals_production_run_template": "UNKNOWN",
+  "self_heal_available": "YES",
+  "self_heal_evidence": "Visible `Self-Healing` control opens a `Refactor collector` panel with an empty request field and a `Refactor code` action that remained untouched.",
+  "self_heal_requires_development": "UNKNOWN",
+  "preview_or_diff_stage_visible": "NOT_VISIBLE",
+  "save_to_development": "YES",
+  "save_to_production": "UNKNOWN",
+  "save_to_production_visible": "NOT_VISIBLE",
+  "runs": {
+    "recent_runs_count": 3,
+    "visible_template": "v1 (prod)",
+    "run_ids": [
+      "vj_mt2gg96xngb935284",
+      "vj_mt1pakyc14nagbhvo5",
+      "vj_mt09ryhe6v1ed6mqg"
+    ],
+    "mission_041b_version": "UNKNOWN",
+    "mission_041b_binding_reason": "The visible table lacks a correlation ID, output body, response ID, and an explicit link from any row to Mission 041B."
+  },
+  "api_flow_equivalence": "UNKNOWN",
+  "api_flow_equivalence_reason": "The UI visibly separates a development-save editor surface from production-template runs, but no visible UI mapping connects AEGIS API approval/resume to a development-draft accept, preview/diff, or Save to Production step.",
+  "root_conclusion": "The directly viewed editor is a development-save surface and the directly viewed completed runs use v1 (prod). AEGIS must not claim the current editor parser is the runtime production parser, the current draft is saved, or API approval→rerun is equivalent to the documented development→preview/diff→production lifecycle without additional binding evidence.",
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "redaction": "No credential, Authorization header, or private account setting was retained in this artifact. Browser screenshots were inspected only through the authenticated browser surface; evidence text preserves only collector lifecycle metadata permitted by the authorization."
+}

@@ -1,0 +1,36 @@
+{
+  "mission": "063",
+  "title": "READ-ONLY DEVELOPMENT TO PRODUCTION BOUNDARY TRACE",
+  "recorded_at_utc": "2026-08-22T00:00:00Z",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "dashboard_name": "aegis-mission-033-v1",
+  "mode": "READ_ONLY_BROWSER_INSPECTION",
+  "allowed": [
+    "inspect Code",
+    "inspect Parser code",
+    "inspect Output schema",
+    "inspect Self-Healing panel",
+    "inspect preview/diff UI",
+    "inspect version/history UI",
+    "inspect production/version selectors",
+    "inspect existing Runs details",
+    "inspect read-only metadata"
+  ],
+  "prohibited": [
+    "Heal",
+    "Run",
+    "Approve",
+    "Save to Development",
+    "Save to Production",
+    "Publish",
+    "Start",
+    "edit code",
+    "edit schema",
+    "modify collector",
+    "create collector"
+  ],
+  "provider_calls_budget": 0,
+  "provider_mutations_budget": 0,
+  "retry_budget": 0,
+  "stop_condition": "Stop after the authorized read-only evidence inspection and offline workflow classification."
+}

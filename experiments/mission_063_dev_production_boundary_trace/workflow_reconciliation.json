@@ -1,0 +1,51 @@
+{
+  "schema_version": "mission-063-workflow-reconciliation-v1",
+  "directly_observed_ui_state": {
+    "development_editor": "YES",
+    "development_editor_evidence": "Visible Code IDE control: Save to development.",
+    "self_healing_entry": "YES",
+    "self_healing_visible_wording": [
+      "Self-Healing",
+      "Refactor collector",
+      "Edit collector's code using AI for changing output fields or fixing a broken collector",
+      "Refactor code"
+    ],
+    "visible_production_run_template": "v1 (prod)",
+    "production_version_id": "NOT_VISIBLE",
+    "production_revision": "NOT_VISIBLE",
+    "production_template_id": "NOT_VISIBLE",
+    "development_draft": "UNKNOWN",
+    "development_version": "NOT_VISIBLE",
+    "development_revision": "NOT_VISIBLE",
+    "development_template_id": "NOT_VISIBLE",
+    "preview_diff_boundary": "UNKNOWN",
+    "save_to_production": "UNKNOWN",
+    "version_history": "NOT_VISIBLE"
+  },
+  "ui_flow": [
+    "directly observed: development-save editor",
+    "directly observed: Self-Healing/Refactor collector entry point",
+    "not visible: accepted change/diff",
+    "not visible: preview",
+    "not visible: Save to Production",
+    "directly observed: completed runs labelled v1 (prod)"
+  ],
+  "aegis_api_flow": [
+    "heal request",
+    "awaiting approval",
+    "provider completion",
+    "API approval/resume",
+    "rerun"
+  ],
+  "flow_equivalence": "UNKNOWN",
+  "workflow_gap": "UNKNOWN",
+  "workflow_gap_reason": "The direct evidence proves a development-save editor surface and distinct v1 (prod) completed-run label, but no direct visible UI state established the required accepted-diff, preview, or Save to Production transition, and no provider documentation or dashboard evidence maps API approval/resume to that production-persistence transition.",
+  "mission_041b_version": "UNKNOWN",
+  "mission_041b_reason": "No visible run metadata or immutable Mission 041B artifact provides a matching run/correlation/response ID capable of uniquely binding a direct v1 (prod) row to Mission 041B.",
+  "confidence": "MEDIUM",
+  "confidence_reason": "The distinct development-save and production-run surfaces are directly visible; the exact boundary transition and API mapping remain absent.",
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "inference_policy": "Absence of a visible control, history entry, or mapping is reported as UNKNOWN or NOT_VISIBLE and is never treated as proof of a provider-side state."
+}

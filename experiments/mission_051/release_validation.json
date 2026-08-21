@@ -1,0 +1,27 @@
+{
+  "schema_version": "mission-051-release-validation-v1",
+  "provider_operations": {"provider_requests": 0, "mutations": 0, "approvals": 0, "heals": 0, "reruns": 0, "collector_changes": 0, "commits": 0, "rollbacks": 0, "benchmarks": 0, "nvidia": 0, "gemini": 0, "retries": 0},
+  "discovery_paths": {
+    "home_direct": {"path": "/ → /cases/mission_050_real_provider_causal_boundary", "clicks": 1, "status": "PASS"},
+    "cases_featured": {"path": "/ → /cases → /cases/mission_050_real_provider_causal_boundary", "clicks": 2, "status": "PASS"}
+  },
+  "case_detail": {
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "provider_status": "HTTP 200 / successful crawl",
+    "observed_output": "input.url",
+    "required_fields": ["title", "price", "availability"],
+    "verification": "FAIL",
+    "risk": "REJECT",
+    "commit": "BLOCKED",
+    "data_shipped": "NO",
+    "provider_cause": "UNKNOWN",
+    "confidence": "LOW",
+    "controlled_downstream": "TEST_DOUBLE_SEPARATE"
+  },
+  "browser_validation": {"cases_featured_card": "PASS", "direct_case_deep_link": "PASS", "desktop": "PASS", "mobile_detail": "PASS", "keyboard_focus_regression": "PASS", "broken_links": "NONE_OBSERVED"},
+  "validation": {"canonical_tests": {"status": "PASS", "passed": 495}, "managed_tests": {"status": "PASS", "passed": 21}, "typescript": "PASS", "production_build": "PASS"},
+  "historical_integrity": {"command": "python3 .github/scripts/verify_evidence_integrity.py", "status": "PASS", "validated_artifacts": 8, "protected_paths_git_diff": "PASS"},
+  "focused_secret_scan": {"status": "PASS", "credentials_or_authorization_headers_found": false},
+  "demo_classification": "READY_FOR_DEMO",
+  "classification_note": "Navigation and evidence presentation are ready for the judge-facing demo. This classification does not claim submission readiness or a proven provider-internal cause."
+}

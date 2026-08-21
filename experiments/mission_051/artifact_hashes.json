@@ -1,0 +1,10 @@
+{
+  "schema_version": "mission-051-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "manifest_scope": "All Mission 051 evidence artifacts present when this manifest was created, excluding artifact_hashes.json itself.",
+  "artifact_count": 2,
+  "artifacts": {
+    "authorization.json": "961740917dae80359ca65abde076a78ec327bfd8da0c263f0972eb5124875a5d",
+    "release_validation.json": "ddec42d1f000a798449addef9af6b3aa5b65c110f1350dc2e9cd26cefe4c1c61"
+  }
+}

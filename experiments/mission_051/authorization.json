@@ -1,0 +1,28 @@
+{
+  "schema_version": "mission-051-authorization-v1",
+  "authorization_source": "User-provided Mission 051 brief attached to this task",
+  "purpose": "Expose the existing Mission 050 real-provider output-failure case through existing product navigation and case detail for hackathon-judge discovery.",
+  "provider_operation_budget": {
+    "provider_requests": 0,
+    "provider_mutations": 0,
+    "approval": 0,
+    "heal": 0,
+    "rerun": 0,
+    "collector_create": 0,
+    "collector_modify": 0,
+    "commit": 0,
+    "rollback": 0,
+    "benchmark": 0,
+    "nvidia": 0,
+    "gemini": 0,
+    "retries": 0
+  },
+  "navigation_acceptance": {
+    "landing_to_case_maximum_clicks": 2,
+    "case_label": "REAL PROVIDER OUTPUT FAILURE",
+    "required_disclosure": "Bright Data crawl returned HTTP 200, but required extraction fields were missing. AEGIS rejected the output and prevented shipment.",
+    "provenance_boundary": "REAL_PROVIDER must remain distinct from TEST_DOUBLE and replay evidence.",
+    "unsupported_claims": ["A provider-side cause is known.", "The TEST_DOUBLE downstream proof is real-provider output.", "Navigation alone makes the product submission-ready."]
+  },
+  "stop_condition": "No provider-side operation is authorised. This mission changes local navigation, read-only projections, documentation, tests, and release records only."
+}

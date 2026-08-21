@@ -1,0 +1,16 @@
+{
+  "schema_version": "mission-048a-summary-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "current_operation_lookup": "NOT_DOCUMENTED",
+  "conflicting_operation": "UNKNOWN",
+  "operation_id": null,
+  "operation_status": null,
+  "provider_requests_this_mission": 0,
+  "mutations_this_mission": 0,
+  "retries": 0,
+  "key_exposed": false,
+  "historical_evidence": "UNCHANGED",
+  "next_authorization_required": true,
+  "rerun_authorized_by_this_mission": false,
+  "reason": "No documented collector-scoped read-only operation listing or conflict-status interface exists for an unknown current run."
+}

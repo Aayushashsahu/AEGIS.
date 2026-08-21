@@ -1,0 +1,13 @@
+{
+  "schema_version": "mission-048a-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "artifacts": {
+    "authorization.json": "aeda3822ebb4bc6256757ba5ac6d1e225b5e33ee7fde5782496fb832f17bc9ef",
+    "capability_assessment.md": "38fdf098ff6fe5f0088a00f6f89672d9080164e5b68bf2b6de117464ecd62c1c",
+    "summary.json": "b403bfe88608dfbba42f088dc67ae302958b8fdfe7ee2ed2e80f6b629550f2a4"
+  },
+  "provider_requests_this_mission": 0,
+  "mutations_this_mission": 0,
+  "retries": 0,
+  "historical_integrity": "UNCHANGED"
+}

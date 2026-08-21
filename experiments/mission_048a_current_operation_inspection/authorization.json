@@ -1,0 +1,31 @@
+{
+  "schema_version": "mission-048a-authorization-v1",
+  "authorized_at_utc": "2026-08-21T03:04:56Z",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "purpose": "Determine whether a documented provider-side current operation conflicts with the already-authorized Mission 048 rerun.",
+  "operation_budget": {
+    "read_only_current_operation_lookup": 1,
+    "mutations": 0,
+    "retries": 0,
+    "rerun": 0,
+    "approval": 0,
+    "heal": 0,
+    "collector_change": 0,
+    "commit": 0,
+    "rollback": 0,
+    "benchmark": 0,
+    "nvidia": 0,
+    "gemini": 0
+  },
+  "allowed_metadata": [
+    "collector_id",
+    "operation_id",
+    "operation_type",
+    "status",
+    "created_timestamp",
+    "updated_timestamp",
+    "provider_job_state",
+    "documented_conflict_indicator"
+  ],
+  "stop_condition": "Stop immediately after the one documented read-only inspection or documentation-only unavailable result. Do not rerun under this authority."
+}

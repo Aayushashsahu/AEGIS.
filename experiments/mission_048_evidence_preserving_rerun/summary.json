@@ -1,0 +1,29 @@
+{
+  "schema_version": "mission-048-summary-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "rerun": "NOT_ATTEMPTED",
+  "blocked_reason": "BLOCKED_NO_CURRENT_CONFLICT_PROOF",
+  "preflight": {
+    "initial_record": "preflight.json",
+    "corrected_local_path_revalidation": "preflight_revalidation.json",
+    "all_pass": false,
+    "failed_check": "no_conflicting_operation_currently_verified",
+    "historical_evidence_paths_present_after_revalidation": true
+  },
+  "provider_operation_count": 0,
+  "retries": 0,
+  "raw_response": "NOT_AVAILABLE",
+  "raw_response_hash": null,
+  "provider_run_id": null,
+  "correlation_id": "mission048-rerun-c_mt09pib13nxqz1coi",
+  "field_analysis": "NOT_APPLICABLE_NO_PROVIDER_RESPONSE",
+  "verification": "NOT_APPLICABLE",
+  "risk": "NOT_APPLICABLE",
+  "commit": "BLOCKED",
+  "historical_evidence": "UNCHANGED",
+  "provider_free_tests": {
+    "canonical_passed": 477,
+    "managed_not_rerun_after_no_managed_code_change": 18
+  },
+  "next_required_authorization": "A separately scoped read-only current-operation inspection, or amended owner authority that permits a one-rerun preflight without independently proving current conflict absence."
+}

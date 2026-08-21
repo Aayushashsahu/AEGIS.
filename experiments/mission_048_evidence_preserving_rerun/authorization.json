@@ -1,0 +1,48 @@
+{
+  "schema_version": "mission-048-authorization-v1",
+  "authorized_at_utc": "2026-08-21T02:52:32Z",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "purpose": "One evidence-preserving diagnostic rerun of the current approved and active collector state.",
+  "operation_budget": {
+    "documented_collector_rerun": 1,
+    "raw_response_capture": 1,
+    "retries": 0,
+    "approval": 0,
+    "heal": 0,
+    "collector_create_modify_publish": 0,
+    "commit": 0,
+    "rollback": 0,
+    "benchmark": 0,
+    "nvidia": 0,
+    "gemini": 0
+  },
+  "required_preconditions": [
+    "authenticated transport configured",
+    "exact collector identity",
+    "no conflicting provider operation evidenced",
+    "one-rerun and zero-retry budgets",
+    "protected historical evidence integrity",
+    "active response-byte capture and hash",
+    "new controlled raw-response and append-only correlation paths"
+  ],
+  "execution_contract": {
+    "operation": "one documented synchronous collector rerun",
+    "raw_response_path": "experiments/mission_048_evidence_preserving_rerun/raw_response.bin",
+    "correlation_record_dir": "experiments/mission_048_evidence_preserving_rerun/correlation_records",
+    "aegis_operation_id": "mission048-rerun-20260821T025232Z",
+    "commit_default": "BLOCKED",
+    "stop_after_provider_operation": true
+  },
+  "prohibited": [
+    "second_provider_request",
+    "approval",
+    "heal",
+    "additional_rerun",
+    "collector_change",
+    "commit",
+    "rollback",
+    "benchmark",
+    "nvidia",
+    "gemini"
+  ]
+}

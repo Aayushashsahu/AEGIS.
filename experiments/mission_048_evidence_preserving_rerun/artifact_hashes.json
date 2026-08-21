@@ -1,0 +1,29 @@
+{
+  "schema_version": "mission-048-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "artifacts": {
+    "authorization.json": "915b30971d2baf3f3129e2dabd5a67654e8b8c31adc452e16dad8265028225b7",
+    "preflight.json": "b71349069f12a6addc3fa03da5e24cb22a0964a09ae5954ef7dc3ef3d1dd2b58",
+    "preflight_revalidation.json": "00ad2b9001597dd8b6525a9fdb821b8cb5c6fd4f59bc25b54fdb88b7223b493d",
+    "summary.json": "abb3127d886b5fa650634c6ab8290a815a13a79d548c863378937bf70506cb77"
+  },
+  "absent_by_fail_closed_design": [
+    "run_request.json",
+    "raw_response.bin",
+    "raw_response_metadata.json",
+    "raw_response_hash.json",
+    "correlation.json",
+    "normalized_analysis.json",
+    "verification_comparison.json"
+  ],
+  "provider_operations": {
+    "reruns": 0,
+    "retries": 0,
+    "additional_requests": 0
+  },
+  "historical_integrity": {
+    "canonical_immutable_evidence_gate": "PASS",
+    "protected_paths_git_diff_exit": 0,
+    "result": "UNCHANGED"
+  }
+}

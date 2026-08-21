@@ -166,8 +166,8 @@ def rerun_collector_once(
         raise ValueError("a non-empty API token is required by the caller")
     if not target_url.startswith(("https://", "http://")):
         raise ValueError("target_url must be an HTTP(S) URL")
-    if not correlation_id.startswith("mission041b-"):
-        raise ValueError("correlation_id must be a Mission 041B correlation ID")
+    if not correlation_id.startswith(("mission041b-", "mission048-")):
+        raise ValueError("correlation_id must be a bounded Mission 041B or Mission 048 correlation ID")
     if http_timeout_seconds <= wait_seconds:
         raise ValueError("http_timeout_seconds must exceed wait_seconds")
     endpoint = rerun_endpoint(collector_id, wait_seconds=wait_seconds)

@@ -1,0 +1,25 @@
+{
+  "all_pass": false,
+  "checks": {
+    "authenticated_transport_configured": true,
+    "authorized_operation_id": true,
+    "controlled_correlation_path": true,
+    "controlled_raw_response_path": true,
+    "exact_collector": true,
+    "fresh_correlation_directory": true,
+    "fresh_raw_response_path": true,
+    "historical_evidence_paths_present": true,
+    "no_conflicting_operation_currently_verified": false,
+    "one_rerun_budget": true,
+    "response_capture_capable": true,
+    "zero_retry_budget": true
+  },
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "correlation_id": "mission048-rerun-c_mt09pib13nxqz1coi",
+  "key_exposed": false,
+  "operation_id": "mission048-rerun-20260821T025232Z",
+  "provider_operations_attempted": 0,
+  "retries": 0,
+  "schema_version": "mission-048-preflight-v1",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+}

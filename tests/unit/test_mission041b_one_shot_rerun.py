@@ -194,6 +194,18 @@ def test_timeout_and_invalid_input_fail_closed() -> None:
         rerun_endpoint(COLLECTOR, wait_seconds=10)
 
 
+def test_mission048_correlation_namespace_is_accepted_for_the_authorized_successor_rerun() -> None:
+    result = rerun_collector_once(
+        "token-not-retained",
+        collector_id=COLLECTOR,
+        target_url=TARGET,
+        correlation_id="mission048-rerun-c_mt09pib13nxqz1coi",
+        opener=lambda _request, *, timeout: FakeResponse(200, b'[{"input":{"url":"https://example.test"}}]'),
+    )
+
+    assert result.success is True
+
+
 def test_http_error_body_is_retained_when_the_transport_exposes_one(tmp_path) -> None:
     body = b'{"error":"scope"}'
 

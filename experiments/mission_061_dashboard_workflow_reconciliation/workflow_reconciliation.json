@@ -1,0 +1,34 @@
+{
+  "schema_version": "mission-061-workflow-reconciliation-v1",
+  "documented_ui_flow": [
+    "development scraper",
+    "Self-Healing applies diff to development draft",
+    "accept diff",
+    "preview",
+    "inspect preview output",
+    "Save to Production"
+  ],
+  "current_aegis_flow": [
+    "heal",
+    "provider completion or terminal error",
+    "API resume/approval boundary when a candidate exists",
+    "post-heal production rerun"
+  ],
+  "self_heal_requires_development": "YES",
+  "flow_equivalence": "UNKNOWN",
+  "missing_state_for_equivalence": [
+    "dashboard-confirmed development mode for c_mt09pib13nxqz1coi",
+    "dashboard-confirmed active development draft and development version",
+    "dashboard-confirmed editor source state",
+    "dashboard-confirmed production template/version binding",
+    "dashboard-visible Self-Healing diff/preview/publish state",
+    "documented provider mapping between API resume/approval and UI accept-diff or Save to Production"
+  ],
+  "most_likely_workflow_mismatch": "Plausible but unproven: the AEGIS API approval/resume transport may not represent the documented development-draft accept → preview → Save to Production lifecycle.",
+  "root_cause_hypothesis": "The repeated pre-candidate code_fixer failure may occur in a workflow or provider-service state outside the observed production collector version. The dashboard’s generic configuration, internal error, and dataset_id=undefined prevent a collector-specific conclusion.",
+  "confidence": "LOW",
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "evidence_policy": "No production/development mapping, failure cause, or collector state is inferred from historical context, route identity, or a generic/error UI surface."
+}

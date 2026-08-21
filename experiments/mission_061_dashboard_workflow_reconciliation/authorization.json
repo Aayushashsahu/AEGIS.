@@ -1,0 +1,41 @@
+{
+  "schema_version": "mission-061-read-only-dashboard-authorization-v1",
+  "authorized_at_utc": "2026-08-21T18:50:20Z",
+  "operator": "Aayush Sahu",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "likely_dashboard_name": "aegis-mission-033-v1",
+  "mission_type": "READ_ONLY_DASHBOARD_INSPECTION",
+  "allowed": [
+    "login",
+    "refresh",
+    "navigation",
+    "open_scraper_studio",
+    "open_collector_details",
+    "open_code",
+    "open_runs",
+    "open_version_history",
+    "read_visible_development_production_indicators",
+    "read_self_healing_panel",
+    "read_save_controls",
+    "capture_screenshots_and_notes",
+    "offline_comparison"
+  ],
+  "prohibited": [
+    "start",
+    "run",
+    "heal",
+    "approve",
+    "save",
+    "publish",
+    "update_schema",
+    "edit_code",
+    "modify_target",
+    "modify_collector",
+    "commit",
+    "rollback"
+  ],
+  "provider_operation_budget": 0,
+  "provider_mutation_budget": 0,
+  "retry_budget": 0,
+  "expected_output": "DIRECT_VISUAL_EVIDENCE_OR_UNKNOWN"
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "mission-061-direct-visual-classification-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "collector_id_verified_from_dashboard_content": "NO",
+  "route_identity_only": "YES",
+  "development_mode": "UNKNOWN",
+  "development_draft": "UNKNOWN",
+  "development_version": "UNKNOWN",
+  "editor_code_state": "UNKNOWN",
+  "production_version": "UNKNOWN",
+  "production_template": "UNKNOWN",
+  "dashboard_distinguishes_development_production": "UNKNOWN",
+  "save_to_development": "UNKNOWN",
+  "save_to_production": "UNKNOWN",
+  "self_healing_panel_visible": "NO",
+  "self_healing_ui_workflow_visible": "NO",
+  "observed_dashboard_state": {
+    "rendered_route": "https://brightdata.com/cp/scrapers/c_mt09pib13nxqz1coi",
+    "generic_configuration_text": ["No inputs added yet", "Manual setup"],
+    "overview_error": "Internal server error! We're already working on it.",
+    "generated_code_symptom": "dataset_id=undefined"
+  },
+  "historical_context_not_direct_visual_evidence": {
+    "production_version_label": "v1 (prod)",
+    "save_label": "Save to development"
+  },
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "inference_policy": "No development, production, template, save-boundary, or code-version state is inferred from the generic/error dashboard surface."
+}

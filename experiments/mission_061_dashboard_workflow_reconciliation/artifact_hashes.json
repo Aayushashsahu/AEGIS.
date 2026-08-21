@@ -1,0 +1,13 @@
+{
+  "schema_version": "mission-061-artifact-hashes-v1",
+  "artifacts": {
+    "authorization.json": "4fa219098bce23278d11136d9e84b7462f5a5d9bb2dde67d58846906b0ac421d",
+    "dashboard_observations.md": "f991785dc012f6462d18342d59a1ecc0ee0ba7ef02bb63a9d1488026e14dcbc5",
+    "direct_visual_classification.json": "0fa9488cf21e417ab8937ee08050447ff833b474d16b707a0413a2490993f882",
+    "workflow_reconciliation.json": "00fbc4357c5765f6bc2440d62ae5febcdeff186fe39bbc7914ac177b6b6f63d9"
+  },
+  "self_hash_excluded": true,
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0
+}

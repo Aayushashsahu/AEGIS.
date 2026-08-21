@@ -1,0 +1,33 @@
+{
+  "mission": "064",
+  "title": "FRESH VERSION-EXPLICIT SCRAPER STUDIO RECONCILIATION",
+  "recorded_at_utc": "2026-08-22T00:00:00Z",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "mode": "READ_ONLY_PROVIDER_FREE_PREPARATION",
+  "provider_calls_budget": 0,
+  "provider_mutations_budget": 0,
+  "retry_budget": 0,
+  "prohibited": [
+    "heal",
+    "approve",
+    "run",
+    "rerun",
+    "save",
+    "publish",
+    "create collector",
+    "modify collector",
+    "commit provider state",
+    "rollback"
+  ],
+  "authorized": [
+    "inspect installed CLI help only",
+    "inspect official documentation",
+    "inspect existing adapter and tests",
+    "inspect retained dashboard evidence",
+    "design future version-explicit experiment",
+    "add provider-free regression tests",
+    "commit local provider-free evidence only"
+  ],
+  "mission_041b_reconstruction": "ABANDONED_AS_UNDER_INSTRUMENTED",
+  "stop_condition": "Stop after provider-free preparation, regression validation, immutable evidence preservation, and reporting."
+}

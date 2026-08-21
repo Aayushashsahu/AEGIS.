@@ -1,0 +1,15 @@
+{
+  "schema_version": "mission-064-artifact-hashes-v1",
+  "artifacts": {
+    "authorization.json": "b264673778f34e41e082ee2e2be8250b374a24ee356764e263dcc5a0fd41c5af",
+    "official_findings.md": "51a2841e8e8cb98118cd43053168022dabd93dadbee24944ac9ccb29e79b16b2",
+    "future_version_bound_experiment.json": "2ee1196adcabe8af3aca503066beb18ebbcf3802541cb72cc78e92a1efa4e521",
+    "lifecycle_mapping.md": "f2a3dfe1dba75e36a32a4a9c9d0b198d821f80cc63c6d5b44e85837af366c093",
+    "src/aegis/provider_operation_safety.py": "2f461964ef0f34ef58dac0516615678f2a597e5444fda59af04efd23c1aa9db5",
+    "tests/unit/test_provider_operation_safety.py": "71e34cc35b5808b0c201c5863cb69986decfe69c48972cbd98a81f2854987ddb"
+  },
+  "self_hash_excluded": true,
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0
+}

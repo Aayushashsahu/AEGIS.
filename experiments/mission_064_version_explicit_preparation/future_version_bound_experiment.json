@@ -1,0 +1,80 @@
+{
+  "schema_version": "mission-064-future-version-bound-experiment-v1",
+  "status": "PREPARED_NOT_AUTHORIZED_NOT_EXECUTED",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "run_cli_shape": [
+    "bdata",
+    "scraper",
+    "run",
+    "<collector_id>",
+    "<target_url>",
+    "--version",
+    "<explicit_version>",
+    "--json"
+  ],
+  "cli_syntax_evidence": {
+    "version": "0.3.5",
+    "run_flag": "--version <version>",
+    "run_flag_description": "Scraper version (e.g. dev)",
+    "approve_flag": "--auto-save",
+    "approve_flag_description": "Save the approved template automatically once the job completes successfully (sent as auto_save to the resume call)."
+  },
+  "api_shape": "NOT_CLAIMED: Mission 064 verified CLI syntax only; no undocumented API version parameter is invented.",
+  "future_preflight_requirements": {
+    "owner_authorization": "EXACT_ONE_VERSION_BOUND_RUN",
+    "collector_id": "EXACT_c_mt09pib13nxqz1coi",
+    "target_url": "EXACT_APPROVED_HTTP_OR_HTTPS_URL",
+    "explicit_version": "DIRECTLY_OBSERVED_VERSION_VALUE_REQUIRED",
+    "aegis_correlation_id": "UNIQUE_NONEMPTY_VALUE_REQUIRED",
+    "prompt_sha256": "LOWERCASE_64_HEX_REQUIRED",
+    "operation_type": "VERSION_BOUND_RUN",
+    "max_provider_operations": 1,
+    "retry_budget": 0,
+    "timeout_seconds": "POSITIVE_OWNER_APPROVED_VALUE_REQUIRED",
+    "current_cli_help": "VERSION_PINNED_HELP_MUST_STILL_LIST_--version",
+    "provider_state": "NO_KNOWN_CONFLICT_IN_AVAILABLE_EVIDENCE"
+  },
+  "mandatory_evidence_before_and_after_run": {
+    "before": [
+      "AEGIS_CORRELATION_ID",
+      "collector_id",
+      "target_url",
+      "target_url_sha256",
+      "explicit_version",
+      "timestamp_utc",
+      "operation_type",
+      "prompt_sha256",
+      "authorization_reference",
+      "CLI_version_and_help_hash"
+    ],
+    "after": [
+      "raw_stdout_bytes",
+      "raw_stderr_bytes",
+      "raw_response_bytes",
+      "raw_response_sha256",
+      "provider_operation_id_or_NOT_RETURNED_BY_PROVIDER",
+      "provider_run_id_or_NOT_RETURNED_BY_PROVIDER",
+      "provider_response_id_or_NOT_RETURNED_BY_PROVIDER",
+      "provider_status",
+      "elapsed_time_ms",
+      "parsed_output_separate_from_raw"
+    ],
+    "provenance_rule": "No AEGIS-local, fallback, candidate, correlation, or filesystem identifier may be represented as a provider identifier."
+  },
+  "production_version_proof_rule": {
+    "claim": "This run executed production version X.",
+    "required_evidence": [
+      "the approved command contains --version X",
+      "the run raw response or provider metadata independently echoes X or binds the provider run/response identifier to X",
+      "the provider run/response identifier is directly provider-returned",
+      "the raw response hash and correlation record are preserved"
+    ],
+    "failure_closed_outcome": "VERSION_EXECUTION_UNPROVEN"
+  },
+  "current_collector_production_version_identifiable_without_mutation_request": "NO",
+  "current_collector_reason": "Only the label v1 (prod) is directly retained; no version ID, version selector value, revision, template ID, or provider binding is available.",
+  "mission_041b_reconstruction": "ABANDONED_AS_UNDER_INSTRUMENTED",
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0
+}

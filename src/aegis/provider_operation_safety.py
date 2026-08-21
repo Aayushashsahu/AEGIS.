@@ -11,6 +11,7 @@ from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 from enum import Enum
 from typing import Mapping
+from urllib.parse import urlparse
 
 from .immutability import freeze_mapping
 
@@ -23,6 +24,95 @@ class OperationAccess(str, Enum):
 class ProviderIdentifierState(str, Enum):
     PRESENT = "PRESENT"
     NOT_RETURNED_BY_PROVIDER = "NOT_RETURNED_BY_PROVIDER"
+
+
+@dataclass(frozen=True)
+class FutureVersionBoundRun:
+    """Provider-free contract for one future, explicitly versioned production run.
+
+    The type is evidence preparation only.  It never invokes a CLI, reads a
+    credential, or contacts a provider.
+    """
+
+    mission: str
+    collector_id: str
+    target_url: str
+    explicit_version: str
+    correlation_id: str
+    prompt_sha256: str
+    authorization_reference: str
+    max_operations: int
+    retry_budget: int
+    timeout_seconds: float
+
+    def __post_init__(self) -> None:
+        parsed = urlparse(self.target_url)
+        if not self.mission.strip() or not self.collector_id.startswith("c_"):
+            raise ValueError("mission and collector_id are required")
+        if parsed.scheme not in {"http", "https"} or not parsed.netloc:
+            raise ValueError("target_url must be an absolute HTTP(S) URL")
+        if not self.explicit_version.strip() or not self.correlation_id.strip():
+            raise ValueError("explicit_version and correlation_id are required")
+        if len(self.prompt_sha256) != 64 or any(char not in "0123456789abcdef" for char in self.prompt_sha256):
+            raise ValueError("prompt_sha256 must be a lowercase SHA-256 digest")
+        if not self.authorization_reference.strip():
+            raise ValueError("authorization_reference is required")
+        if self.max_operations != 1 or self.retry_budget != 0:
+            raise ValueError("version-bound runs require exactly one operation and zero retries")
+        if self.timeout_seconds <= 0:
+            raise ValueError("timeout_seconds must be positive")
+
+    def prepared_cli_arguments(self) -> tuple[str, ...]:
+        """Return unexecuted CLI arguments for a future preflight-approved run."""
+
+        return (
+            "bdata",
+            "scraper",
+            "run",
+            self.collector_id,
+            self.target_url,
+            "--version",
+            self.explicit_version,
+            "--json",
+        )
+
+    def required_evidence(self) -> Mapping[str, str]:
+        """Return the mandatory correlation and raw-first evidence fields."""
+
+        return freeze_mapping({
+            "AEGIS_CORRELATION_ID": self.correlation_id,
+            "collector_id": self.collector_id,
+            "target_url_sha256": hashlib.sha256(self.target_url.encode("utf-8")).hexdigest(),
+            "explicit_version": self.explicit_version,
+            "prompt_sha256": self.prompt_sha256,
+            "operation_type": "VERSION_BOUND_RUN",
+            "authorization_reference": self.authorization_reference,
+            "provider_operation_id": "CAPTURE_OR_NOT_RETURNED_BY_PROVIDER",
+            "provider_run_id": "CAPTURE_OR_NOT_RETURNED_BY_PROVIDER",
+            "provider_response_id": "CAPTURE_OR_NOT_RETURNED_BY_PROVIDER",
+            "raw_response": "CAPTURE_RAW_FIRST",
+            "raw_response_sha256": "CAPTURE_AFTER_RAW_RESPONSE",
+        })
+
+
+def preserve_provider_identifier_provenance(
+    provider_identifiers: Mapping[str, str] | None,
+    *,
+    local_identifiers: tuple[str, ...] = (),
+) -> tuple[ProviderIdentifierState, Mapping[str, str]]:
+    """Preserve only provider-returned IDs and reject any local fallback value."""
+
+    local_values = {value for value in local_identifiers if value.strip()}
+    identifiers = {
+        key: value
+        for key, value in (provider_identifiers or {}).items()
+        if isinstance(key, str) and key.startswith("provider_") and isinstance(value, str) and value.strip()
+    }
+    if any(value in local_values for value in identifiers.values()):
+        raise ValueError("local identifiers cannot be presented as provider identifiers")
+    if not identifiers:
+        return ProviderIdentifierState.NOT_RETURNED_BY_PROVIDER, freeze_mapping({})
+    return ProviderIdentifierState.PRESENT, freeze_mapping(identifiers)
 
 
 @dataclass(frozen=True)

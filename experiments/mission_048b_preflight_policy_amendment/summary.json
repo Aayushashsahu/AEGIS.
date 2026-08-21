@@ -1,0 +1,19 @@
+{
+  "schema_version": "mission-048b-summary-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "previous_policy": "NO_CONFLICTING_PROVIDER_OPERATION MUST BE PROVEN",
+  "new_policy": "NO KNOWN CONFLICTING OPERATION MAY EXIST IN THE DOCUMENTED, ACCOUNT-VISIBLE EVIDENCE AVAILABLE TO AEGIS.",
+  "documented_provider_limitation": "No documented collector-scoped read-only current-operation listing exists for an unknown current run.",
+  "current_operation_state": "UNKNOWN",
+  "known_conflict": "NO",
+  "conflict_absence_proven": false,
+  "preflight_decision_when_all_other_conditions_pass": "ALLOW_SINGLE_BOUNDED_RERUN",
+  "single_rerun_authorization": "PRESERVED",
+  "rerun_executed_in_this_mission": false,
+  "real_provider_calls": 0,
+  "real_provider_mutations": 0,
+  "retries": 0,
+  "historical_evidence": "UNCHANGED",
+  "commit": "PENDING_BRANCH_COMMIT",
+  "next_authorization_required": "Execute the separately authorized single evidence-preserving rerun only after every bounded precondition passes."
+}

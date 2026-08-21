@@ -1,0 +1,35 @@
+{
+  "schema_version": "mission-048b-authorization-v1",
+  "authorized_at_utc": "2026-08-21T03:55:54Z",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "scope": "Provider-free amendment of the future one-rerun preflight policy only.",
+  "mission_048a_evidence_reference": "aa3e70e",
+  "operation_budget": {
+    "provider_requests": 0,
+    "provider_mutations": 0,
+    "retries": 0,
+    "rerun": 0,
+    "approval": 0,
+    "heal": 0,
+    "collector_change": 0,
+    "commit": 0,
+    "rollback": 0,
+    "benchmark": 0,
+    "nvidia": 0,
+    "gemini": 0
+  },
+  "preserved_future_authorization": {
+    "documented_collector_rerun": 1,
+    "retry_budget": 0,
+    "commit": "BLOCKED",
+    "rollback": "BLOCKED"
+  },
+  "semantic_invariants": {
+    "current_operation_state_values": ["KNOWN_CLEAR", "KNOWN_CONFLICT", "UNKNOWN"],
+    "known_conflict_values": ["YES", "NO"],
+    "unknown_is_not_clear": true,
+    "unknown_is_not_conflict": true,
+    "conflict_absence_proven_may_be_false_when_policy_allows": true
+  },
+  "stop_condition": "Do not execute a provider rerun. This mission changes only the provider-free preflight policy and evidence."
+}

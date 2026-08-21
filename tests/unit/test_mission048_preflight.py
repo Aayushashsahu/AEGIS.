@@ -12,7 +12,7 @@ def _load_module():
     return module
 
 
-def test_preflight_fails_closed_when_current_conflict_is_not_independently_verified(tmp_path, monkeypatch) -> None:
+def test_preflight_allows_unknown_operation_state_without_known_conflict_under_amended_policy(tmp_path, monkeypatch) -> None:
     module = _load_module()
     root = tmp_path / "canonical"
     mission_dir = root / "experiments" / "mission_048_evidence_preserving_rerun"
@@ -23,7 +23,14 @@ def test_preflight_fails_closed_when_current_conflict_is_not_independently_verif
     monkeypatch.setattr(module, "ROOT", root)
     authorization_path.write_text(json.dumps({
         "collector_id": "c_mt09pib13nxqz1coi",
-        "operation_budget": {"documented_collector_rerun": 1, "retries": 0},
+            "operation_budget": {
+                "documented_collector_rerun": 1,
+                "retries": 0,
+                "approval": 0,
+                "heal": 0,
+                "commit": 0,
+                "rollback": 0,
+            },
         "execution_contract": {
             "raw_response_path": str(raw_path.relative_to(root)),
             "correlation_record_dir": str(correlation_dir.relative_to(root)),
@@ -39,7 +46,11 @@ def test_preflight_fails_closed_when_current_conflict_is_not_independently_verif
 
     report = module.preflight()
 
-    assert report["all_pass"] is False
-    assert report["checks"]["no_conflicting_operation_currently_verified"] is False
+    assert report["all_pass"] is True
+    assert report["checks"]["bounded_policy_allows_rerun"] is True
+    assert report["current_operation_state"] == "UNKNOWN"
+    assert report["known_conflict"] == "NO"
+    assert report["conflict_absence_proven"] is False
+    assert report["preflight_decision"] == "ALLOW_SINGLE_BOUNDED_RERUN"
     assert report["checks"]["response_capture_capable"] is True
     assert report["provider_operations_attempted"] == 0

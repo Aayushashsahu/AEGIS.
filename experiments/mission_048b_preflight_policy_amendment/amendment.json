@@ -1,0 +1,36 @@
+{
+  "schema_version": "mission-048b-amendment-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "previous_policy": "NO_CONFLICTING_PROVIDER_OPERATION MUST BE PROVEN",
+  "new_policy": "NO KNOWN CONFLICTING OPERATION MAY EXIST IN THE DOCUMENTED, ACCOUNT-VISIBLE EVIDENCE AVAILABLE TO AEGIS.",
+  "reason_for_change": "Mission 048A established that the provider does not document a collector-scoped read-only current-operation listing for an unknown existing run, making a proof-of-absence requirement impossible to satisfy without undocumented behavior.",
+  "mission_048a_evidence_reference": {
+    "commit": "aa3e70e",
+    "current_operation_lookup": "NOT_DOCUMENTED",
+    "conflicting_operation": "UNKNOWN"
+  },
+  "documented_provider_limitation": "Known-snapshot retrieval and Self-Healing progress do not provide a collector-wide read-only listing of unknown active batch or real-time operations.",
+  "current_collector_evidence_interpretation": {
+    "current_operation_state": "UNKNOWN",
+    "known_conflict": "NO",
+    "conflict_absence_proven": false,
+    "semantics": "UNKNOWN is neither known clear nor known conflict. It may permit the bounded policy only because documented available evidence contains no known conflict."
+  },
+  "preserved_future_rerun_budget": {
+    "documented_collector_rerun": 1,
+    "retries": 0,
+    "approval": 0,
+    "heal": 0,
+    "commit": 0,
+    "rollback": 0,
+    "raw_response_capture_required": true,
+    "correlation_id_required": true
+  },
+  "policy_result_when_all_other_preconditions_pass": {
+    "preflight_decision": "ALLOW_SINGLE_BOUNDED_RERUN",
+    "does_not_authorize_execution_in_mission_048b": true
+  },
+  "provider_operations_this_mission": 0,
+  "provider_mutations_this_mission": 0,
+  "retries_this_mission": 0
+}

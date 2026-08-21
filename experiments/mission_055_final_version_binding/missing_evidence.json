@@ -1,0 +1,11 @@
+{
+  "schema_version": "mission-055-missing-evidence-v1",
+  "required_to_resolve_version_identity": [
+    "A read-only detail record for the exact Mission 041B execution containing a provider run ID or response ID and its template version/revision.",
+    "A correlation-compatible timestamp or provider operation metadata linking mission041b-rerun-c_mt09pib13nxqz1coi to that execution record.",
+    "A captured current development parser source and an exact production parser/revision source for field-level comparison."
+  ],
+  "not_sufficient": ["A separate v1 (prod) row with one input and one record.", "Visible editor code without an exact run/template binding.", "HTTP 200 alone.", "The absence of a --version selector alone."],
+  "provider_operations_required_by_this_mission": 0,
+  "state_changes_required_by_this_mission": 0
+}

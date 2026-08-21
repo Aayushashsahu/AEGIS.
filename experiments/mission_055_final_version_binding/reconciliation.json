@@ -1,0 +1,36 @@
+{
+  "schema_version": "mission-055-final-version-binding-v1",
+  "MISSION_041B_VERSION": "UNKNOWN",
+  "PRODUCTION_PARSER_IDENTITY": "UNKNOWN",
+  "DEVELOPMENT_CONTAINS_REQUIRED_FIELDS": "UNKNOWN_CURRENT; Mission 046 historically observed a Version 1 production editor parser returning title, price, availability, but Mission 055 did not obtain a current development source snapshot.",
+  "PRODUCTION_CONTAINS_REQUIRED_FIELDS": "UNKNOWN_FOR_EXACT_MISSION_041B_RUN; Mission 041B response contained only input.url, while a separate Mission 046 dashboard run/source observation is not bound to Mission 041B.",
+  "DEVELOPMENT_PRODUCTION_MATCH": "UNKNOWN",
+  "ROOT_CAUSE": "UNKNOWN",
+  "CONFIDENCE": "LOW",
+  "PROVIDER_OPERATIONS": 0,
+  "historical_inventory": {
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "correlation_id": "mission041b-rerun-c_mt09pib13nxqz1coi",
+    "target": "canonical Mission 033 target URL",
+    "transport": "POST /dca/crawl synchronous_collector_rerun",
+    "command_shape": "HTTP POST body contained url only; no CLI arguments",
+    "version_selector": "ABSENT",
+    "provider_run_id": null,
+    "provider_response_id": null,
+    "http_status": 200,
+    "input_count": 1,
+    "record_count": 1,
+    "raw_response_retained": false,
+    "binding_result": "NO_EXACT_DASHBOARD_RUN_BINDING"
+  },
+  "comparison": {
+    "historical_Mission_046_observation": "Version 1 / v1 (prod), visible title/price/availability parser and matching output schema; one visible run v1 (prod).",
+    "why_not_bound": ["Mission 046 explicitly recorded Mission 041B run binding as UNKNOWN.", "Mission 041B recorded no provider run or response ID.", "The synchronous request had no template/version parameter.", "Input count and record count are insufficient under the Mission 055 binding rule.", "Mission 055 dashboard routes returned loading only and no current run/version detail."]
+  },
+  "documentation": {
+    "run_version_selector": "Current CLI 0.3.5 local help exposes scraper run --version <version>; it was not used in Mission 041B.",
+    "approve_auto_save": "Current CLI 0.3.5 local help exposes scraper approve --auto-save; no evidence says it was used in Mission 040 or 041.",
+    "development_production": "Official Scraper Studio documentation states IDE edits auto-save as a development draft and Save to production publishes the draft for an existing production scraper."
+  },
+  "REQUIRED_NEXT_ACTION": "Obtain, under separate authorization, an authenticated read-only execution-detail or run-detail record that exposes the exact run's provider ID, timestamp, template version/revision, and correlation-compatible metadata. Only then compare the exact runtime production parser with a captured development parser source. No mutation is required for that evidence step."
+}

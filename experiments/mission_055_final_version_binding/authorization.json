@@ -1,0 +1,12 @@
+{
+  "schema_version": "mission-055-authorization-v1",
+  "authorization_source": "AEGIS — FINAL VERSION-BINDING INVESTIGATION brief attached by the owner",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "allowed_activities": ["dashboard_read_only_inspection", "existing_Mission_041B_artifact_inspection", "existing_provider_metadata_inspection", "current_CLI_help_documentation", "current_read_only_collector_version_metadata", "offline_correlation"],
+  "provider_operation_budget": {"run": 0, "rerun": 0, "heal": 0, "approve": 0, "create": 0, "modify": 0, "save": 0, "publish": 0, "commit": 0, "rollback": 0, "retries": 0},
+  "forbidden_dashboard_controls": ["Run", "Start", "Heal", "Approve", "Save", "Publish"],
+  "binding_rule": "Do not identify the Mission 041B version from only one input and one record. An exact binding requires compatible collector, timestamp or provider run/operation metadata, and an explicit run-template or version marker.",
+  "fail_closed_rule": "If the exact Mission 041B run cannot be identified or its template identity cannot be directly observed, report UNKNOWN and do not infer development-production equivalence.",
+  "provider_operations_executed": 0,
+  "retries_executed": 0
+}

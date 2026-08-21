@@ -1,0 +1,14 @@
+{
+  "schema_version": "mission-055-dashboard-readonly-attempt-v1",
+  "urls": ["https://brightdata.com/cp/scrapers/c_mt09pib13nxqz1coi", "https://brightdata.com/cp/scrapers"],
+  "observed_state": "LOADING_ONLY",
+  "collector_id_observed": false,
+  "code_parser_observed": false,
+  "runs_observed": false,
+  "version_history_observed": false,
+  "exact_mission_041b_run_observed": false,
+  "dashboard_controls_clicked": 0,
+  "provider_operations": 0,
+  "retries": 0,
+  "conclusion": "No current dashboard metadata can be used for Mission 041B version binding. This attempt does not alter the separate historical Mission 046 dashboard evidence."
+}

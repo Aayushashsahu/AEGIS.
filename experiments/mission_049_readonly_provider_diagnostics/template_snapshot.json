@@ -1,0 +1,13 @@
+{
+  "schema_version": "mission-049-job-template-reference-v1",
+  "provenance": "REAL_PROVIDER_READ_ONLY",
+  "source_artifact": "job_metadata_response.json",
+  "job_id": "vj_mt1pakyc14nagbhvo5",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "template_reference": "t_mt09r6r1153kpz9zkm.1",
+  "revision_detail": "NOT_EXPOSED_BY_DOCUMENTED_JOB_METADATA",
+  "selector_mapping": "NOT_EXPOSED_BY_DOCUMENTED_JOB_METADATA",
+  "raw_or_parser_source": "NOT_EXPOSED_BY_DOCUMENTED_JOB_METADATA",
+  "mission_048c_correlation": "UNRESOLVED",
+  "correlation_limitation": "Mission 048C synchronous HTTP 200 returned no provider run, job, response, template, or revision identifier. The documented job list does not expose a correlation field, and timestamp proximity alone is insufficient."
+}

@@ -1,0 +1,18 @@
+{
+  "schema_version": "mission-049-output-configuration-comparison-v1",
+  "provenance": "HISTORICAL_REAL_PROVIDER_READ_ONLY",
+  "source_artifact": "experiments/mission_044_final_template_snapshot/snapshot.json",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "active": true,
+  "delivery_type": "webhook",
+  "active_schema_fields": {
+    "title": {"active": true, "type": "text"},
+    "price": {"active": true, "type": "price"},
+    "availability": {"active": true, "type": "text"},
+    "input": {"active": true, "type": "input"},
+    "error": {"active": true, "type": "error"},
+    "warning": {"active": true, "type": "warning"}
+  },
+  "not_exposed": ["template_id", "revision_id", "field_mapping", "selector_mapping", "target_binding"],
+  "interpretation_boundary": "The documented collector-list output schema establishes declared active fields. It does not prove the exact runtime configuration or output projection of the uncorrelated Mission 048C synchronous response."
+}

@@ -1,0 +1,7 @@
+{
+  "correlation_rule": "A returned job is not attributed to Mission 048C without an explicit provider identifier; timestamp proximity alone is insufficient.",
+  "correlation_status": "UNRESOLVED_PENDING_READONLY_RESPONSE",
+  "exact_sync_response_id": null,
+  "mission_048c_correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+  "mission_048c_raw_response_sha256": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364"
+}

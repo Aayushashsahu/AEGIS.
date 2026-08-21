@@ -1,0 +1,58 @@
+{
+  "schema_version": "mission-049-documentation-review-v1",
+  "reviewed_sources": [
+    "https://docs.brightdata.com/api-reference/scraper-studio-api/list-scrapers",
+    "https://docs.brightdata.com/api-reference/scraper-studio-api/list-jobs",
+    "https://docs.brightdata.com/api-reference/scraper-studio-api/job-data",
+    "https://docs.brightdata.com/api-reference/scraper-studio-api/initiate-a-realtime-job/sync-realtime-job",
+    "https://docs.brightdata.com/api-reference/scraper-studio-api/initiate-a-realtime-job/async-realtime-job",
+    "https://docs.brightdata.com/api-reference/scraper-studio-api/Receive_data_from_real_time_work_scraper",
+    "https://docs.brightdata.com/datasets/scraper-studio/scraper-studio-ide-interface",
+    "https://docs.brightdata.com/datasets/scraper-studio/initiate-collection-and-delivery-options"
+  ],
+  "documented_readonly_interfaces": {
+    "collector_configuration_snapshot": {
+      "method": "GET",
+      "path": "/dca/collectors_list",
+      "available_fields": ["id", "name", "active", "last_run", "deliver", "output_schema"],
+      "historical_result": "Mission 044 already captured the canonical collector's declared output schema with title, price, and availability."
+    },
+    "job_list": {
+      "method": "GET",
+      "path": "/dca/collector/jobs",
+      "required_parameters": ["from_date", "to_date"],
+      "optional_collector_filter": true,
+      "available_fields": ["id", "status", "queued", "started", "finished", "inputs", "page_loads", "total_pages", "failed_pages", "data_lines", "expired"],
+      "mission_049_decision": "One bounded read-only list operation is justified for the Mission 048C UTC date."
+    },
+    "job_metadata": {
+      "method": "GET",
+      "path": "/dca/log/{job_id}",
+      "requires": "A known batch collection ID returned by POST /dca/trigger.",
+      "potentially_available_field": "template",
+      "mission_049_gate": "Not callable unless a job can be correlated without inference. Mission 048C synchronous HTTP 200 returned no provider run or response identifier."
+    },
+    "realtime_result": {
+      "method": "GET",
+      "path": "/dca/get_result",
+      "requires": "A response_id from an asynchronous real-time or timed-out synchronous request.",
+      "mission_049_gate": "Not callable because Mission 048C completed synchronously and returned no response_id."
+    }
+  },
+  "execution_path_facts": {
+    "sync_realtime": "POST /dca/crawl runs a single input and returns collected JSON directly on HTTP 200; it exposes an optional version=dev selector but no documented active production revision identifier in the response.",
+    "ide_preview": "The IDE documents Raw output before schema formatting and Formatted output after output-schema processing; preview is a debugging mode and is not itself proof of the production API runtime configuration.",
+    "production": "The documentation says saving to production makes a scraper available for API, manual, and scheduled initiation. The reviewed read-only API documentation does not expose a programmatic template-source, selector-mapping, or active production revision-detail snapshot."
+  },
+  "limitations": [
+    "No reviewed documented interface maps a synchronous HTTP 200 crawl response to a provider job or template identifier.",
+    "No reviewed documented interface exposes selector mappings, parser source, or a runtime execution trace through the API.",
+    "A collector output schema confirms declared fields but does not prove the exact runtime template or output projection used for an uncorrelated API execution."
+  ],
+  "safety": {
+    "mutations": 0,
+    "reruns": 0,
+    "retries": 0,
+    "credentials_persisted": false
+  }
+}

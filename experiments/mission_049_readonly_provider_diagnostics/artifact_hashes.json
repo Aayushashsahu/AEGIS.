@@ -1,0 +1,22 @@
+{
+  "schema_version": "mission-049-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "manifest_scope": "All Mission 049 artifacts present when this manifest was created, excluding artifact_hashes.json itself.",
+  "artifact_count": 14,
+  "artifacts": {
+    "authorization.json": "08b72799aebbdf2b631ebef1a2d919dcbbe4bb7acae15c9b0e6e6b5e3fe46320",
+    "comparison.json": "6cf0b640b3e03afb599caae5e54156f5f8f3dbf776af31309396f9cc7af46470",
+    "correlation.json": "bf1ba58f03b49e738e2aba851fa3fbdaa74e85af65e8919ffc582333cbeee4be",
+    "correlation_assessment.json": "f2ea64e8272da45d939969aa61097ea5f0be41a374bde0540674962ac8deda84",
+    "diagnostic_request_metadata.json": "08abfdcb190d68f39801d0e55618c14a0a1180a4743861ed1cf1b8ec14334208",
+    "diagnostic_response.json": "c08a0c4b269589caaa6442d92707a5542fba13342fa266856ae7162f06a2093a",
+    "documentation_review.json": "799891bc865fbf423e32c71722b0425ec9d4cd2b911130e7ca91e377c6642c7a",
+    "execution_configuration.json": "1349731c866ab27ae3a9176a0be6630142a9d021275d56f67235eaccdbdead48",
+    "job_metadata_request_metadata.json": "6b7493378d2beb7ae05d3cb4531ae41f0aa660cb01f0d28d345ef6b60a8c9ce9",
+    "job_metadata_response.json": "ed804c754248eeaedf32f013e85b7b046e05f92f620efe4d1210badd711175f6",
+    "output_configuration.json": "e1a356fca169e4f14763ffde77872a680619e3b9a33127d1083115cc8e1af295",
+    "release_validation.json": "748acafeb154ac403ca65f6a80dffac4eb5bf7f1beb63c7fef5bbec6c33568b4",
+    "summary.json": "986b871e88b6f4bdf2441cb7c3ddbf09510b7c43dc8b2d282e1bb299ec3f0509",
+    "template_snapshot.json": "4f9d7c9b93bcb8fb46d7e4987c427c55433a2570130511a9eff059dfa00d2090"
+  }
+}

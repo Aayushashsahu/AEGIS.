@@ -1,0 +1,14 @@
+{
+  "schema_version": "mission-049-correlation-assessment-v1",
+  "mission_048c_correlation_id": "mission048c-rerun-c_mt09pib13nxqz1coi-20260821T042811Z",
+  "mission_048c_raw_response_sha256": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364",
+  "mission_048c_provider_run_id": null,
+  "mission_048c_provider_response_id": null,
+  "listed_job_id": "vj_mt1pakyc14nagbhvo5",
+  "listed_job_collector_match": "YES",
+  "listed_job_template_reference": "t_mt09r6r1153kpz9zkm.1",
+  "correlation_status": "UNRESOLVED",
+  "reason": "The raw synchronous response and its safe metadata contain no job, response, template, or revision identifier. The jobs-list and job-metadata APIs do not return an explicit link to that raw response. Time proximity is not accepted as an identifier.",
+  "follow_on_job_metadata_request": "COMPLETED_ONCE",
+  "additional_provider_requests_authorized_or_required": false
+}

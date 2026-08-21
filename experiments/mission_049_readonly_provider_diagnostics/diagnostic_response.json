@@ -1,0 +1,31 @@
+{
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "content_type": "application/json",
+  "elapsed_ms": 2176,
+  "endpoint": "https://api.brightdata.com/dca/collector/jobs?collector=c_mt09pib13nxqz1coi&from_date=2026-08-21&to_date=2026-08-21&offset=0&limit=50&sort_asc=-1",
+  "error_class": null,
+  "from_date": "2026-08-21",
+  "http_status": 200,
+  "jobs": [
+    {
+      "data_lines": 1,
+      "expired": null,
+      "failed_pages": 0,
+      "finished": "2026-08-21T04:34:30.042Z",
+      "id": "vj_mt1pakyc14nagbhvo5",
+      "inputs": 1,
+      "page_loads": 1,
+      "queued": "2026-08-20T15:54:08.148Z",
+      "started": null,
+      "status": null,
+      "total_pages": null
+    }
+  ],
+  "key_exposed": false,
+  "operation": "collector_jobs_list",
+  "retry_count": 0,
+  "success": true,
+  "timeout_seconds": 10.0,
+  "to_date": "2026-08-21",
+  "total": 1
+}

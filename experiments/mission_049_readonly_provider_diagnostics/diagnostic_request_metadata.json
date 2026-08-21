@@ -1,0 +1,9 @@
+{
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "endpoint": "https://api.brightdata.com/dca/collector/jobs?collector=c_mt09pib13nxqz1coi&from_date=2026-08-21&to_date=2026-08-21&offset=0&limit=50&sort_asc=-1",
+  "from_date": "2026-08-21",
+  "key_exposed": false,
+  "operation": "collector_jobs_list",
+  "retry_count": 0,
+  "to_date": "2026-08-21"
+}

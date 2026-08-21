@@ -1,0 +1,22 @@
+{
+  "schema_version": "mission-049-summary-v1",
+  "mission": "049",
+  "collector": "c_mt09pib13nxqz1coi",
+  "documented_diagnostic_path": "GET /dca/collector/jobs?collector=c_mt09pib13nxqz1coi&from_date=2026-08-21&to_date=2026-08-21 followed once by GET /dca/log/vj_mt1pakyc14nagbhvo5. Both operations are documented read-only GET diagnostics.",
+  "requests": 2,
+  "mutations": 0,
+  "reruns": 0,
+  "retries": 0,
+  "template": "t_mt09r6r1153kpz9zkm.1 observed for listed job vj_mt1pakyc14nagbhvo5; exact Mission 048C correlation remains unresolved.",
+  "revision": "NOT_EXPOSED_BY_DOCUMENTED_JOB_METADATA",
+  "output_configuration": "Declared active schema includes title, price, availability, input, error, and warning; exact Mission 048C runtime binding is not exposed.",
+  "execution_configuration": "Mission 048C used documented synchronous POST /dca/crawl. Reviewed documentation exposes optional version=dev, but no exact active-production revision or response-shaping record for the captured HTTP 200 response.",
+  "execution_path": "Dashboard preview supports raw/formatted debugging output; production API runs are documented separately. The exact path-to-run binding is NOT_EXPOSED.",
+  "mismatch": "UNKNOWN",
+  "root_cause": "UNKNOWN",
+  "observed_failure": "PROVIDER_OUTPUT_INCOMPLETE",
+  "confidence": "LOW",
+  "mission_048c_raw_response": "CONFIRMED",
+  "historical_evidence": "UNCHANGED",
+  "next_step": "STOP. No additional provider action is authorized or required. A future cause-level diagnosis would require a separately authorized documented interface that emits an exact synchronous-run identifier and runtime template, revision, projection, or trace record."
+}

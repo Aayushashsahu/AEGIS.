@@ -1,0 +1,8 @@
+{
+  "endpoint": "https://api.brightdata.com/dca/log/vj_mt1pakyc14nagbhvo5",
+  "job_id": "vj_mt1pakyc14nagbhvo5",
+  "key_exposed": false,
+  "listed_collector_context": "c_mt09pib13nxqz1coi",
+  "operation": "job_metadata",
+  "retry_count": 0
+}

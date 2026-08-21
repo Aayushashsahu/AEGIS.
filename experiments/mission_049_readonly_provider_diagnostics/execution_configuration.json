@@ -1,0 +1,25 @@
+{
+  "schema_version": "mission-049-documented-execution-configuration-v1",
+  "mission_048c_execution": {
+    "documented_endpoint": "POST /dca/crawl",
+    "mode": "synchronous real-time",
+    "input_shape": "single object",
+    "completion": "HTTP 200 direct JSON response",
+    "response_identifier": null,
+    "optional_documented_selector": "version=dev selects the development version",
+    "active_production_revision_identifier": "NOT_EXPOSED_BY_REVIEWED_SYNC_API_DOCUMENTATION"
+  },
+  "dashboard_preview": {
+    "documented_modes": ["Raw output before schema formatting", "Formatted output after schema formatting"],
+    "runtime_binding_to_mission_048c": "NOT_EXPOSED"
+  },
+  "production": {
+    "documented_fact": "Saving a scraper to production makes it available to API, manual, and scheduled initiation.",
+    "runtime_binding_to_mission_048c": "NOT_EXPOSED"
+  },
+  "sources": [
+    "https://docs.brightdata.com/api-reference/scraper-studio-api/initiate-a-realtime-job/sync-realtime-job",
+    "https://docs.brightdata.com/datasets/scraper-studio/scraper-studio-ide-interface",
+    "https://docs.brightdata.com/datasets/scraper-studio/initiate-collection-and-delivery-options"
+  ]
+}

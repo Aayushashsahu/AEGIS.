@@ -1,0 +1,47 @@
+{
+  "schema_version": "mission-049-release-validation-v1",
+  "provider_operations": {
+    "documented_readonly_get_requests": 2,
+    "jobs_list": 1,
+    "job_metadata": 1,
+    "mutations": 0,
+    "reruns": 0,
+    "retries": 0,
+    "approvals": 0,
+    "heals": 0,
+    "collector_changes": 0,
+    "commits": 0,
+    "rollbacks": 0
+  },
+  "canonical_tests": {
+    "command": "PYTHONPATH=src:. pytest -q",
+    "status": "PASS",
+    "passed": 494
+  },
+  "managed_provider_free_tests": {
+    "command": "pnpm exec vitest run --exclude server/brightDataCredential.test.ts",
+    "status": "PASS",
+    "passed": 18,
+    "excluded": "The known external credential probe remains outside provider-free validation scope."
+  },
+  "managed_typescript": {"command": "pnpm run check", "status": "PASS"},
+  "managed_production_build": {"command": "pnpm run build", "status": "PASS"},
+  "historical_integrity": {
+    "command": "python3 .github/scripts/verify_evidence_integrity.py",
+    "status": "PASS",
+    "validated_artifacts": 8,
+    "protected_paths_git_diff": "PASS"
+  },
+  "artifact_manifest": {"status": "PENDING_FINAL_REHASH"},
+  "focused_secret_scan": {
+    "scope": "Mission 049 changed source, tests, and text artifacts",
+    "status": "PASS",
+    "note": "No credential, authorization header, cookie, or token material was found."
+  },
+  "terminal_finding": {
+    "observed_provider_output_condition": "PROVIDER_OUTPUT_INCOMPLETE",
+    "detailed_root_cause": "UNKNOWN",
+    "confidence": "LOW",
+    "reason": "No documented read-only interface in the reviewed sources establishes an exact runtime-template, revision, response-projection, or trace binding for the Mission 048C synchronous response."
+  }
+}

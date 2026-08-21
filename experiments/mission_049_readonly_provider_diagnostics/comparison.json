@@ -1,0 +1,51 @@
+{
+  "schema_version": "mission-049-comparison-v1",
+  "evidence_priority_applied": [
+    "Mission 048C preserved raw provider response",
+    "Official documented provider diagnostics",
+    "Read-only provider configuration snapshots",
+    "Dashboard read-only evidence",
+    "AEGIS-local interpretation"
+  ],
+  "a_dashboard_visible_active_template": {
+    "source": "experiments/mission_046_dashboard_forensics/dashboard_snapshot.json",
+    "collector": "c_mt09pib13nxqz1coi",
+    "visible_version": "Version 1 / v1 (prod)",
+    "parser_returns": ["title", "price", "availability"],
+    "output_schema": ["title", "price", "availability"],
+    "exact_runtime_binding": "NOT_EXPOSED"
+  },
+  "b_documented_api_execution_configuration": {
+    "sync_realtime": "POST /dca/crawl with an optional version=dev selector",
+    "reviewed_readonly_configuration_surface": "GET /dca/collectors_list exposes active status, delivery configuration, last run, and output schema; it does not expose template, revision, selector mapping, or runtime trace.",
+    "job_metadata_surface": "GET /dca/log/{job_id} exposes a template reference only for a known job ID.",
+    "exact_runtime_binding": "NOT_EXPOSED"
+  },
+  "c_mission_048c_raw_response": {
+    "sha256": "17e53a8b320b57db29f9c7538663e786b3b741a08f2ef7033c39d31d58d12364",
+    "http_status": 200,
+    "fields": ["input.url"],
+    "missing_required_fields": ["title", "price", "availability"],
+    "first_field_loss_point": "PROVIDER_RESPONSE"
+  },
+  "classification": {
+    "configuration_mismatch": "UNKNOWN",
+    "template_mismatch": "UNKNOWN",
+    "revision_mismatch": "UNKNOWN",
+    "output_projection_mismatch": "UNKNOWN",
+    "execution_path_mismatch": "UNKNOWN",
+    "provider_runtime_failure": "UNKNOWN",
+    "observed_provider_output_condition": "PROVIDER_OUTPUT_INCOMPLETE",
+    "detailed_causal_root_cause": "UNKNOWN",
+    "confidence": "LOW"
+  },
+  "why_no_causal_classification_is_made": [
+    "The documented jobs-list and job-metadata APIs yielded a collector-matching job and template reference, but neither provider response exposes an exact identifier linking that job to the Mission 048C synchronous raw response.",
+    "The reviewed documented APIs do not provide a programmatic active template source, revision-detail, selector mapping, response-shaping configuration, or execution trace for the exact synchronous HTTP 200 response.",
+    "The raw response is authoritative for what the provider returned; the dashboard and declared schema cannot override it."
+  ],
+  "provider_mutations": 0,
+  "reruns": 0,
+  "retries": 0,
+  "historical_evidence": "UNCHANGED"
+}

@@ -1,0 +1,49 @@
+{
+  "schema_version": "mission-049-authorization-v1",
+  "authorization_source": "User-provided Mission 049 brief attached to this task",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "purpose": "Determine, only through documented read-only diagnostics, whether collector template, revision, output configuration, or execution-path evidence explains why Mission 048C returned input.url only.",
+  "evidence_priority": [
+    "Mission 048C preserved raw provider response",
+    "Official documented provider diagnostics",
+    "Read-only provider configuration snapshots",
+    "Dashboard read-only evidence",
+    "AEGIS-local interpretation"
+  ],
+  "operation_budget": {
+    "documented_readonly_diagnostics": "Only individually justified documented operations; no inferred or undocumented endpoint is permitted.",
+    "real_mutation": 0,
+    "approval": 0,
+    "heal": 0,
+    "rerun": 0,
+    "collector_modify": 0,
+    "collector_create": 0,
+    "commit": 0,
+    "rollback": 0,
+    "retry": 0,
+    "benchmark": 0,
+    "nvidia": 0,
+    "gemini": 0
+  },
+  "required_comparison": {
+    "dashboard_visible_template": "A",
+    "documented_api_execution_configuration": "B",
+    "mission_048c_raw_provider_response": "C"
+  },
+  "forbidden": [
+    "collector_rerun",
+    "approval",
+    "heal",
+    "collector_create",
+    "collector_modify",
+    "commit",
+    "rollback",
+    "benchmark",
+    "nvidia",
+    "gemini",
+    "retry",
+    "undocumented_provider_request",
+    "credential_or_authorization_header_persistence"
+  ],
+  "stop_condition": "If documented read-only diagnostics do not expose an evidence-supported cause, stop without another provider request and report ROOT_CAUSE=UNKNOWN."
+}

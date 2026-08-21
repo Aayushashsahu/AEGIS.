@@ -1,0 +1,12 @@
+{
+  "schema_version": "bright-data-support-artifact-hashes-v1",
+  "actual_support_response": "ABSENT",
+  "artifacts": {
+    "support_request.json": "1ebb08e775d7c1dffdcd09e24844487ba099b533098f346041f4d2774d6bce28",
+    "support_response.schema.json": "07d325a23065b4c41c08aa1c6f67da6d4feb8164c78eb9673af79f0f81f51e18",
+    "support_analysis.json": "0f2ff55f7515d7b8ab5524a6f715ffb3dec5f37242982758bf48ecff4ecbdfb0"
+  },
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0
+}

@@ -1,0 +1,116 @@
+{
+  "failure_path": {
+    "canonical_commit_gate": {
+      "authorization_reference": null,
+      "block_reasons": [
+        "RISK_NOT_ACCEPT",
+        "VERIFICATION_NOT_PASS",
+        "CRITICAL_VERIFICATION_FAILURE",
+        "REQUIRED_EVIDENCE_MISSING",
+        "CANDIDATE_NOT_VERIFIED",
+        "KNOWN_GOOD_MISSING",
+        "INVALID_AUTHORIZATION"
+      ],
+      "candidate_id": "candidate_m056_incomplete",
+      "correlation_id": "mission056-simulation-incomplete",
+      "created_at": "2026-08-21T18:43:30.711591+00:00",
+      "decision_id": "commit_decision_94addb8abe864c39afdf3337c68140f3",
+      "eligibility": "BLOCKED",
+      "evidence_refs": [
+        "evidence://mission-056/simulation/incomplete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "known_good_version_reference": null,
+      "production_commit_performed": false,
+      "provenance": "TEST_DOUBLE",
+      "reason_code": "RISK_NOT_ACCEPT",
+      "risk_decision_id": "risk_a6a74c0c5b23469886356081197ef1b8",
+      "verification_id": "verification_83c3047df83f497c922a7fa73081510e"
+    },
+    "data_shipped": "NO",
+    "label": "TEST_DOUBLE / CONTROLLED_REPLAY",
+    "real_provider_claim": false,
+    "required_field_states": {
+      "availability": "MISSING",
+      "price": "MISSING",
+      "title": "MISSING"
+    },
+    "rerun_output": [
+      {
+        "input": {
+          "url": "https://managed-aegis.example/mission-056/target"
+        }
+      }
+    ],
+    "timeline": [
+      "rerun output fixture",
+      "required fields missing",
+      "AEGIS verification FAIL fixture",
+      "risk REJECT fixture",
+      "commit BLOCKED fixture",
+      "data shipped NO"
+    ]
+  },
+  "provenance": "TEST_DOUBLE",
+  "provider_operations": 0,
+  "schema_version": "mission-060-future-loop-simulation-v1",
+  "success_path": {
+    "canonical_commit_gate": {
+      "authorization_reference": null,
+      "block_reasons": [
+        "CANDIDATE_NOT_VERIFIED",
+        "KNOWN_GOOD_MISSING",
+        "INVALID_AUTHORIZATION"
+      ],
+      "candidate_id": "candidate_m056_complete",
+      "correlation_id": "mission056-simulation-complete",
+      "created_at": "2026-08-21T18:43:30.711359+00:00",
+      "decision_id": "commit_decision_498f911468a74412a4c7d966becbac3d",
+      "eligibility": "BLOCKED",
+      "evidence_refs": [
+        "contract://mission-056-controlled-product-v1",
+        "evidence://mission-056/simulation/baseline",
+        "evidence://mission-056/simulation/complete/raw",
+        "evidence://mission-056/simulation/target-contract",
+        "semantic://deterministic-invariants"
+      ],
+      "known_good_version_reference": null,
+      "production_commit_performed": false,
+      "provenance": "TEST_DOUBLE",
+      "reason_code": "CANDIDATE_NOT_VERIFIED",
+      "risk_decision_id": "risk_fee3f86ebb8e4c5792b4a76761c23ffa",
+      "verification_id": "verification_b7151923b2b447c7b65b2314ed442cac"
+    },
+    "data_shipped": "YES_IN_FIXTURE_ONLY",
+    "label": "TEST_DOUBLE / CONTROLLED_REPLAY",
+    "real_provider_claim": false,
+    "required_field_states": {
+      "availability": "PRESENT",
+      "price": "PRESENT",
+      "title": "PRESENT"
+    },
+    "rerun_output": [
+      {
+        "availability": "Available",
+        "input": {
+          "url": "https://managed-aegis.example/mission-056/target"
+        },
+        "price": {
+          "currency": "USD",
+          "value": 599.0
+        },
+        "title": "AEGIS Recovery Widget"
+      }
+    ],
+    "timeline": [
+      "candidate preview fixture",
+      "AEGIS verification PASS fixture",
+      "owner approval-result fixture",
+      "provider completion fixture",
+      "rerun output fixture",
+      "risk ACCEPT fixture",
+      "downstream eligibility owner-controlled"
+    ]
+  }
+}

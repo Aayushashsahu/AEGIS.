@@ -1,0 +1,11 @@
+{
+  "schema_version": "bright-data-support-analysis-v1",
+  "status": "DIAGNOSIS_PENDING",
+  "actual_support_response": "ABSENT",
+  "normalizer": "src/aegis/support_evidence.py",
+  "classification": "UNKNOWN",
+  "next_action": "PROVIDER_SUPPORT_REQUIRED",
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0
+}

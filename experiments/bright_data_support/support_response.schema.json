@@ -1,0 +1,24 @@
+{
+  "schema_version": "bright-data-support-response-schema-v1",
+  "actual_response_status": "ABSENT_UNTIL_REAL_RESPONSE_ARRIVES",
+  "required_or_optional_fields": {
+    "support_case_id": "string|null",
+    "message_id": "string|null",
+    "received_at": "UTC timestamp|null",
+    "sender": "string",
+    "subject": "string",
+    "diagnosis": "untrusted string|null",
+    "error_code": "string|null",
+    "provider_job_id": "string|null",
+    "provider_operation_id": "string|null",
+    "documented_remedy": "untrusted string|null",
+    "account_action": "untrusted string|null",
+    "collector_action": "untrusted string|null",
+    "retry_recommendation": "untrusted string|null",
+    "support_recommended_command": "untrusted string|null",
+    "confidence": "HIGH|MEDIUM|LOW|UNKNOWN",
+    "raw_message_hash": "sha256",
+    "attachments": "array of safe metadata only"
+  },
+  "secret_policy": "Never store credentials, authorization headers, cookies, private keys, or raw secrets."
+}

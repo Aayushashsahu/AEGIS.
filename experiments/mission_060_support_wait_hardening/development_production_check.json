@@ -1,0 +1,34 @@
+{
+  "schema_version": "mission-060-development-production-check-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "official_workflow": {
+    "self_heal_requires_development": "YES",
+    "sequence": ["Self-Healing diff", "accept to draft", "preview", "inspect", "Save to Production"],
+    "source": "https://docs.brightdata.com/datasets/scraper-studio/self-healing-tool"
+  },
+  "user_provided_historical_observations": {
+    "editor_action": "Save to development",
+    "production_run_label": "v1 (prod)"
+  },
+  "read_only_dashboard_observation": {
+    "editor_route": "loading only",
+    "list_route": "loading only",
+    "controls_clicked": [],
+    "provider_api_calls": 0,
+    "provider_mutations": 0
+  },
+  "classification": {
+    "development_mode": "UNKNOWN",
+    "development_draft": "UNKNOWN",
+    "production_version": "v1 (prod) — historical user-provided dashboard observation; not newly rendered in Mission 060",
+    "development_version": "UNKNOWN",
+    "editor_code_state": "UNKNOWN",
+    "save_to_production_available": "YES — documented UI capability; current dashboard visibility UNKNOWN",
+    "self_heal_requires_development": "YES",
+    "current_aegis_flow_matches_official_ui_flow": "UNKNOWN",
+    "most_likely_workflow_mismatch": "AEGIS’s documented CLI/API approval path (preview → approve → rerun) has not been proven equivalent to the IDE’s development-draft acceptance, preview, and explicit Save to Production lifecycle. The exact active editor/draft/version binding remains unavailable because the read-only dashboard did not render."
+  },
+  "provider_calls": 0,
+  "mutations": 0,
+  "retries": 0
+}

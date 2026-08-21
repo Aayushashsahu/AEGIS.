@@ -1,0 +1,13 @@
+{
+  "schema_version": "bright-data-support-request-v1",
+  "support_case_id": null,
+  "message_id": "NOT_RETAINED_BY_CLIENT",
+  "sent_status": "SENT",
+  "recipient": "support@brightdata.com",
+  "subject": "Scrape-Verse — Scraper Studio Self-Healing code_fixer repeatedly failing",
+  "purpose": "Diagnostic request only; no collector modification requested.",
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "secrets_stored": false
+}

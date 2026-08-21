@@ -23,6 +23,18 @@ PROVIDER_IDENTIFIER_FIELDS = (
 REQUIRED_FIELDS = ("title", "price", "availability")
 
 
+def extraction_contract_status(payload: Any, *, http_status: int | None) -> dict[str, object]:
+    """Keep transport success separate from required-field contract status."""
+
+    _, _, field_states = candidate_status({"preview_result": payload} if isinstance(payload, list) else payload)
+    all_present = all(state == "PRESENT" for state in field_states.values())
+    return {
+        "provider_transport": "SUCCESS" if http_status == 200 else "FAIL",
+        "extraction_contract": "PASS" if http_status == 200 and all_present else "FAIL",
+        "required_field_states": field_states,
+    }
+
+
 def extract_provider_identifiers(payload: Any) -> dict[str, str]:
     """Return only non-empty identifier strings actually present in payload."""
     if not isinstance(payload, Mapping):

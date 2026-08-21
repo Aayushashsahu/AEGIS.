@@ -1,0 +1,36 @@
+{
+  "schema_version": "mission-060-authorization-v1",
+  "mission": "MISSION_060_SUPPORT_WAIT_HARDENING",
+  "authorized_at_utc": "2026-08-21T18:00:00Z",
+  "operator": "AEGIS execution agent acting on the owner-approved task",
+  "provider_lane": "FROZEN_PENDING_SUPPORT_RESPONSE",
+  "allowed_work": [
+    "read-only Bright Data dashboard inspection",
+    "official documentation review",
+    "provider-free support-response schema and normalizer",
+    "provider-free transport/correlation/authorization/output-contract hardening",
+    "provider-free future-loop simulations",
+    "non-visual evidence-backed Judge Mode readiness integration"
+  ],
+  "prohibited_provider_actions": [
+    "collector run",
+    "heal",
+    "approve",
+    "rerun",
+    "collector create",
+    "collector modify",
+    "save",
+    "publish",
+    "update schema",
+    "commit",
+    "rollback",
+    "benchmark",
+    "NVIDIA",
+    "Gemini"
+  ],
+  "provider_calls": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "actual_support_response": "ABSENT — no response may be fabricated.",
+  "historical_evidence_policy": "IMMUTABLE"
+}

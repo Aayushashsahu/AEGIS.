@@ -1,0 +1,37 @@
+{
+  "schema_version": "mission-058-identifier-reconciliation-v1",
+  "method": "Read-only inspection of preserved raw responses, terminal metadata, correlation records, and the Mission 056 runner fallback implementation.",
+  "mission_053": {
+    "provider_job_id": null,
+    "provider_operation_id": null,
+    "provider_run_id": null,
+    "correlation_id": null,
+    "request_id": null,
+    "collection_id": null,
+    "response_id": null,
+    "raw_payload_identifier_keys": [],
+    "conclusion": "NO_ACTUAL_OBSERVED_PROVIDER_IDENTIFIER"
+  },
+  "mission_056": {
+    "provider_job_id": null,
+    "provider_request_id": null,
+    "provider_collection_id": null,
+    "provider_response_id": null,
+    "raw_payload_identifier_keys": [],
+    "aegis_operation_id": "m056-heal-20260821T153830Z",
+    "aegis_correlation_id": "mission056-heal-c_mt09pib13nxqz1coi-20260821T153830Z",
+    "metadata_provider_operation_id": "m056-heal-20260821T153830Z",
+    "correlation_provider_run_id": "m056-heal-20260821T153830Z",
+    "fallback_mechanism": "scripts/mission056_candidate_only_heal.py::_operation_id(payload, fallback) searches provider keys, then returns the supplied fallback. Its caller supplied the AEGIS operation ID as that fallback.",
+    "conclusion": "The retained provider_operation_id and provider_run_id are AEGIS-local fallback values, not observed Bright Data job/operation identifiers. They cannot be used as a provider-diagnostic key."
+  },
+  "provider_job_id": "NOT_AVAILABLE",
+  "identifier_gate": "FAIL",
+  "documentation_research_gate": "NOT_ENTERED — Mission 058 requires an actual observed provider job/operation identifier before researching or invoking an identifier-keyed diagnostic.",
+  "diagnostic_request": "NOT_ATTEMPTED",
+  "real_provider_calls_this_mission": 0,
+  "mutations": 0,
+  "retries": 0,
+  "historical_evidence_modified": false,
+  "secrets_exposed": false
+}

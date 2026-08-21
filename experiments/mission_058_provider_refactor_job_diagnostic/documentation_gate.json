@@ -1,0 +1,12 @@
+{
+  "schema_version": "mission-058-documentation-gate-v1",
+  "identifier_gate": "FAIL",
+  "provider_job_id": "NOT_AVAILABLE",
+  "documented_diagnostic_research": "NOT_ENTERED",
+  "reason": "Mission 058 explicitly requires a documented read-only diagnostic to be keyed by an existing observed provider job/operation identifier. Preserved Mission 053 and 056 raw evidence contains no such identifier. The Mission 056 apparent provider-operation field is an AEGIS-local fallback and cannot be substituted.",
+  "provider_request": "NOT_ATTEMPTED",
+  "real_provider_calls_this_mission": 0,
+  "mutations": 0,
+  "retries": 0,
+  "stop_condition": "SATISFIED"
+}

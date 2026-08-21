@@ -1,0 +1,13 @@
+{
+  "schema_version": "mission-058-authorization-v1",
+  "recorded_at_utc": "2026-08-21T17:21:44Z",
+  "mission": "MISSION 058 — READ-ONLY PROVIDER REFRACTOR JOB DIAGNOSTIC",
+  "scope": "Reconcile preserved Mission 053 and Mission 056 identifier evidence. Research a documented read-only status/detail operation only for an actual observed provider job/operation identifier. Execute exactly one read-only request only if both gates pass.",
+  "provider_calls": {"authorized_maximum": 1, "executed": 0, "condition": "An exact observed provider-generated job/operation identifier and a documented read-only identifier-keyed interface must both exist."},
+  "provider_mutations": {"authorized": 0, "executed": 0},
+  "retries": {"authorized": 0, "executed": 0},
+  "prohibited": ["new provider job", "heal", "rerun", "approval", "collector create", "collector modify", "commit", "rollback", "benchmark", "NVIDIA", "Gemini", "undocumented endpoint", "internal URL inference"],
+  "identifier_fields_to_reconcile": ["provider_job_id", "provider_operation_id", "aegis_operation_id", "correlation_id", "request_id", "collection_id", "response_id", "provider_run_id"],
+  "required_terminal_fields": ["PROVIDER_JOB_ID", "DIAGNOSTIC_LOOKUP", "PROVIDER_STATUS", "ERROR_CODE", "ERROR_STAGE", "COMMON_WITH_MISSION_053", "ROOT_CAUSE", "CONFIDENCE", "REAL_PROVIDER_CALLS_THIS_MISSION", "MUTATIONS", "RETRIES", "NEXT_ACTION"],
+  "safety_rule": "Do not guess. AEGIS-local IDs cannot satisfy the provider-identifier gate. Stop before documentation research or a provider request if no actual observed provider identifier exists."
+}

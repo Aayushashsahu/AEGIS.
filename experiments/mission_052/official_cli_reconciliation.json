@@ -1,0 +1,59 @@
+{
+  "schema_version": "mission-052-official-cli-reconciliation-v1",
+  "inspection_mode": "DOCUMENTATION_AND_LOCAL_HELP_ONLY",
+  "local_cli": {
+    "command_attempts": ["bdata --version", "bdata scraper approve --help", "bdata scraper heal --help", "bdata scraper run --help"],
+    "result": "NOT_AVAILABLE",
+    "safe_error": "bdata: command not found",
+    "cli_version": "UNKNOWN",
+    "consequence": "No installed CLI flags can be represented as locally verified in this environment."
+  },
+  "official_sources": [
+    {
+      "url": "https://docs.brightdata.com/cli/commands",
+      "title": "Bright Data CLI command reference",
+      "observed_at": "2026-08-21",
+      "findings": {
+        "run": "scraper run supports output, json, and pretty flags in the documented reference; no --version/template selector is documented there.",
+        "heal": "scraper heal stops at awaiting_approval by default and documents --auto-approve, timeout, retry controls, output, json, and pretty flags.",
+        "approve": "scraper approve commits an awaiting-approval heal and documents reject, url, timeout, output, json, and pretty flags.",
+        "auto_save": "NOT_DOCUMENTED; current official reference documents --auto-approve on heal, not --auto-save."
+      }
+    },
+    {
+      "url": "https://docs.brightdata.com/datasets/scraper-studio/build-with-the-cli",
+      "title": "Build a scraper with the Bright Data CLI",
+      "observed_at": "2026-08-21",
+      "findings": {
+        "installation": "The official workflow documents npx -p @brightdata/cli bdata for on-demand use when no global command is installed.",
+        "workflow": "The documented manual self-healing loop is run, inspect, heal, approve, and re-run.",
+        "approval_persistence": "Approval commits the fix to the existing scraper; the stable collector ID remains unchanged.",
+        "post_approval_proof": "The documented proof is a re-run whose previously broken fields are populated, not HTTP status alone.",
+        "version_selection": "No scraper run version or template selector is documented in the extracted command reference."
+      }
+    },
+    {
+      "url": "https://docs.brightdata.com/datasets/scraper-studio/self-healing-tool",
+      "title": "Fix scrapers with the Self-Healing tool",
+      "observed_at": "2026-08-21",
+      "findings": {
+        "ide_workflow": "Accept saves to a development draft; Save to Production is a separate documented IDE action.",
+        "schema": "When fields change, the IDE prompts to update output schema before saving to production.",
+        "runtime_cause": "The documentation does not provide an exact-run runtime template, revision, response projection, or trace correlation mechanism for Mission 048C."
+      }
+    }
+  ],
+  "reconciliation": {
+    "auto_save_available": "NO_DOCUMENTED_EVIDENCE",
+    "auto_approve_available_in_current_official_docs": "YES_DOCUMENTED_BUT_PROHIBITED_BY_AEGIS_POLICY",
+    "production_development_distinction": "YES_IN_IDE_DOCUMENTATION",
+    "cli_explicit_version_or_template_selection": "NOT_DOCUMENTED",
+    "current_production_template": "v1 (prod), as preserved in Mission 046 dashboard evidence",
+    "historical_post_heal_output": "input.url only; title, price, availability missing",
+    "persistence_runtime_hypothesis": "UNRESOLVED",
+    "root_cause": "UNKNOWN",
+    "confidence": "LOW"
+  },
+  "provider_operations": 0,
+  "retries": 0
+}

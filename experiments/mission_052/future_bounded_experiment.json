@@ -1,0 +1,44 @@
+{
+  "schema_version": "mission-052-future-bounded-experiment-v1",
+  "status": "PREPARED_NOT_AUTHORIZED_NOT_EXECUTED",
+  "collector": "c_mt09pib13nxqz1coi",
+  "target": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+  "current_production_template": "v1 (prod), from preserved Mission 046 dashboard evidence",
+  "evidence_problem": {
+    "historical_post_heal_rerun": "HTTP 200 with input.url only",
+    "required_fields": ["title", "price", "availability"],
+    "observed_gate_outcome": {"verification": "FAIL", "risk": "REJECT", "commit": "BLOCKED", "data_shipped": "NO"}
+  },
+  "hypothesis": {
+    "statement": "A new explicitly field-oriented self-healing proposal may produce a candidate preview that restores the declared structured fields, but production persistence and exact runtime output remain unproven until separately authorized approval and a raw-response-preserving rerun.",
+    "cause_candidates": ["approved template not persisted", "development and production template divergence", "stale production runtime", "schema/parser runtime divergence", "provider runtime inconsistency", "unknown"],
+    "cause_status": "UNKNOWN",
+    "confidence": "LOW"
+  },
+  "minimum_next_provider_experiment": {
+    "operation": "ONE documented self-heal request only",
+    "purpose": "Obtain one new candidate preview for deterministic field-completeness review.",
+    "operation_budget": {"heal": 1, "approval": 0, "rerun": 0, "retries": 0, "all_other_provider_operations": 0},
+    "auto_approve": false,
+    "auto_save": false,
+    "auto_save_reason": "No installed CLI was available to verify a flag, and current official CLI documentation did not document --auto-save.",
+    "expected_candidate_state": "awaiting_approval",
+    "expected_preview_fields": ["title", "price", "availability"],
+    "candidate_gate": "If any required preview field is absent, null, empty, or malformed, preserve evidence and stop. If all fields are visibly present, preserve the candidate and stop for separate owner authorization.",
+    "stop_conditions": ["authentication failure", "collector mismatch", "ambiguous provider state", "non-awaiting candidate state", "incomplete preview", "any unexpected operation", "timeout", "provider error"],
+    "required_future_authorization": "Exact owner authorization naming this collector, this target, one heal, zero retries, no auto-approve, and no approval/rerun."
+  },
+  "separately_authorized_later_phase": {
+    "preconditions": ["candidate preview contains title, price, and availability", "candidate/collector/target correlation is retained", "owner separately authorizes exact approval and exactly one rerun", "raw-response capture path is armed", "retry budget remains zero"],
+    "operation_budget": {"approval": 1, "rerun": 1, "retries": 0, "all_other_provider_operations": 0},
+    "post_rerun_acceptance": "Raw provider bytes must contain title, price, and availability before normalization; canonical verification must PASS and risk must ACCEPT. Commit and data shipping remain separately blocked unless separately authorized.",
+    "failure_handling": "If output is again input.url only or any required field is missing, preserve raw evidence and fail closed: verification FAIL, risk REJECT, commit BLOCKED, data shipped NO."
+  },
+  "documented_workflow_sources": [
+    "https://docs.brightdata.com/cli/commands",
+    "https://docs.brightdata.com/datasets/scraper-studio/build-with-the-cli",
+    "https://docs.brightdata.com/datasets/scraper-studio/self-healing-tool"
+  ],
+  "provider_operations_executed": 0,
+  "retries_executed": 0
+}

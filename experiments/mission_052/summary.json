@@ -1,0 +1,28 @@
+{
+  "schema_version": "mission-052-summary-v1",
+  "CLI_VERSION": "UNKNOWN_LOCAL_BDATA_NOT_INSTALLED",
+  "AUTO_SAVE_AVAILABLE": "NO_DOCUMENTED_EVIDENCE",
+  "CURRENT_PRODUCTION_TEMPLATE": "v1 (prod), preserved Mission 046 dashboard evidence",
+  "HEAL_ATTEMPT": "NOT_ATTEMPTED",
+  "CANDIDATE_PREVIEW_FIELDS": "NOT_APPLICABLE_NO_NEW_CANDIDATE",
+  "APPROVAL": "NOT_ATTEMPTED",
+  "POST_HEAL_RERUN": "NOT_ATTEMPTED",
+  "REAL_PROVIDER_OUTPUT_FIELDS": ["input.url"],
+  "REAL_PROVIDER_OUTPUT_CONTEXT": "Historical Mission 048C raw response; no new provider output was collected.",
+  "POST_HEAL_VERIFICATION": "NOT_APPLICABLE_NO_NEW_RERUN",
+  "HISTORICAL_POST_HEAL_VERIFICATION": "FAIL",
+  "RISK": "NOT_APPLICABLE_NO_NEW_RERUN",
+  "HISTORICAL_RISK": "REJECT",
+  "DATA_SHIPPED": "NO",
+  "PROVIDER_MUTATIONS": 0,
+  "PROVIDER_REQUESTS": 0,
+  "RETRIES": 0,
+  "HISTORICAL_EVIDENCE": "UNCHANGED",
+  "PROVIDER_FREE_MODEL": {
+    "expected_fields": {"verification": "PASS", "risk": "ACCEPT", "commit": "BLOCKED", "data_shipped": "NO"},
+    "input_url_only": {"verification": "FAIL", "risk": "REJECT", "commit": "BLOCKED", "data_shipped": "NO"},
+    "provenance": "TEST_DOUBLE"
+  },
+  "CONCLUSION": "REAL_SELF_HEAL_LOOP_NOT_COMPLETED",
+  "NEXT_STEP": "The prepared candidate-only one-heal experiment requires separate exact owner authorization. Approval and rerun remain separately unauthorized even if a future preview is complete."
+}

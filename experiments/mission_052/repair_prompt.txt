@@ -1,0 +1,1 @@
+The scraper returns only input.url after a prior approved repair. Keep the existing target and output schema. The structured result must return non-null title, price with numeric value and currency, and availability for the target URL. Repair the runtime extraction and output mapping so all three fields appear in the actual structured result, not only in a preview.

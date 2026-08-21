@@ -1,0 +1,12 @@
+{
+  "schema_version": "mission-052-release-validation-v1",
+  "provider_operations": {"requests": 0, "mutations": 0, "heals": 0, "approvals": 0, "reruns": 0, "retries": 0, "commits": 0, "rollbacks": 0, "benchmarks": 0, "nvidia": 0, "gemini": 0},
+  "cli_inspection": {"direct_bdata_binary": "NOT_AVAILABLE", "version": "UNKNOWN", "help": "NOT_AVAILABLE", "official_documentation_reconciled": "PASS"},
+  "official_cli_findings": {"auto_save": "NOT_DOCUMENTED", "auto_approve": "DOCUMENTED_ON_HEAL_BUT_PROHIBITED", "run_version_selector": "NOT_DOCUMENTED", "approval_persistence": "DOCUMENTED_AS_EXISTING_SCRAPER_COMMIT"},
+  "provider_free_tests": {"status": "PASS", "scenarios": ["expected_fields_pass_accept_commit_blocked", "input_url_only_fail_reject_commit_blocked"]},
+  "validation": {"canonical_tests": {"status": "PASS", "passed": 497}, "managed_tests": {"status": "PASS", "passed": 21}, "typescript": "PASS", "production_build": "PASS"},
+  "historical_integrity": {"command": "python3 .github/scripts/verify_evidence_integrity.py", "status": "PASS", "validated_artifacts": 8, "protected_paths_git_diff": "PASS"},
+  "focused_secret_scan": {"status": "PASS", "credentials_or_authorization_headers_found": false},
+  "future_experiment": "PREPARED_NOT_AUTHORIZED_NOT_EXECUTED",
+  "conclusion": "REAL_SELF_HEAL_LOOP_NOT_COMPLETED"
+}

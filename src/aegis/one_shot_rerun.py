@@ -81,6 +81,16 @@ class OneShotRerunResult:
 UrlOpener = Callable[..., Any]
 
 
+def _http_error_body(error: HTTPError) -> bytes | None:
+    """Read an available error body once without turning capture failure into success."""
+
+    try:
+        body = error.read()
+    except (AttributeError, OSError, ValueError):
+        return None
+    return body if isinstance(body, bytes) else None
+
+
 def rerun_endpoint(collector_id: str, *, wait_seconds: int = DEFAULT_RERUN_WAIT_SECONDS) -> str:
     if not collector_id.startswith("c_"):
         raise ValueError("collector_id must be a collector ID")
@@ -219,11 +229,13 @@ def rerun_collector_once(
                 raw_response_bytes=raw,
         )
     except HTTPError as error:
+        raw = _http_error_body(error)
         return _result(
             started=started, endpoint=endpoint, collector_id=collector_id, target_url=target_url,
             correlation_id=correlation_id, http_timeout_seconds=http_timeout_seconds, attempted=True,
             success=False, error_class="HTTP_403_SCOPE" if error.code == 403 else f"HTTP_{error.code}",
             http_status=error.code, content_type=error.headers.get_content_type() if error.headers else None,
+            raw_response_bytes=raw,
         )
     except (TimeoutError, socket.timeout):
         return _result(

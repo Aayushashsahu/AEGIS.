@@ -1,0 +1,21 @@
+flowchart LR
+    A["Provider response bytes<br/>historical Mission 041B not retained"] --> B["one_shot_rerun.py<br/>json.loads(raw)"]
+    B --> C["tuple(dict(row) for row in payload)<br/>preserves every top-level decoded field"]
+    C --> D["OneShotRerunResult.rows<br/>full decoded row mappings"]
+    D --> E["to_evidence_dict<br/>rows retained verbatim"]
+    E --> F["post_heal_output.json<br/>historical first persisted rows"]
+    F --> G["mission041b_verify_rerun.py"]
+    G --> H["_canonical_row<br/>intentional verification projection:<br/>title, price.currency/value, availability"]
+    H --> I["verify_candidate<br/>validates; does not delete"]
+    I --> J["RiskGovernor<br/>REJECT"]
+    J --> K["CommitGate<br/>BLOCKED"]
+
+    L["Mission 033 baseline projector<br/>_rows allowlists title / price / availability"] -. separate historical baseline path .-> H
+    M["Managed lifecycle/UI<br/>does not read Mission 041B row artifact"] -. downstream display boundary .-> K
+
+    classDef unknown fill:#fff5f5,stroke:#9b1c1c,color:#111;
+    classDef preserve fill:#edf7ff,stroke:#155e75,color:#111;
+    classDef projection fill:#fff7ed,stroke:#9a3412,color:#111;
+    class A unknown;
+    class B,C,D,E,F preserve;
+    class G,H,I,J,K,L,M projection;

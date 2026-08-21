@@ -38,6 +38,9 @@ class FakeResponse:
     def read(self) -> bytes:
         return self.body
 
+    def close(self) -> None:
+        return None
+
 
 def test_sync_rerun_uses_exactly_one_documented_post_and_preserves_real_rows(tmp_path) -> None:
     calls = []
@@ -78,6 +81,47 @@ def test_sync_rerun_uses_exactly_one_documented_post_and_preserves_real_rows(tmp
     assert timeout == 55
 
 
+def test_complete_provider_row_never_becomes_input_only_inside_transport() -> None:
+    payload = [{
+        "input": {"url": TARGET},
+        "title": "Widget",
+        "price": {"currency": "USD", "value": 599, "source": "provider"},
+        "availability": "Available",
+        "source": "provider",
+        "timestamp": "2026-08-20T00:00:00Z",
+    }]
+    body = json.dumps(payload, separators=(",", ":")).encode("utf-8")
+
+    result = rerun_collector_once(
+        "token-not-retained",
+        collector_id=COLLECTOR,
+        target_url=TARGET,
+        correlation_id=CORRELATION,
+        opener=lambda _request, *, timeout: FakeResponse(200, body),
+    )
+
+    assert result.success is True
+    assert result.rows == tuple(payload)
+    assert result.to_evidence_dict()["rows"] == payload
+    assert set(result.rows[0]) == {"input", "title", "price", "availability", "source", "timestamp"}
+    assert result.rows[0]["price"]["source"] == "provider"
+
+
+def test_raw_provider_bytes_never_leak_into_safe_metadata_or_standard_evidence() -> None:
+    body = b'[{"title":"Widget","provider_note":"sensitive-payload-must-remain-raw-only"}]'
+    result = rerun_collector_once(
+        "token-not-retained",
+        collector_id=COLLECTOR,
+        target_url=TARGET,
+        correlation_id=CORRELATION,
+        opener=lambda _request, *, timeout: FakeResponse(200, body),
+    )
+
+    assert body.decode("utf-8") not in repr(result.to_safe_metadata())
+    assert "raw_response_bytes" not in result.to_evidence_dict()
+    assert "token-not-retained" not in repr(result.to_evidence_dict())
+
+
 def test_accepted_async_response_does_not_poll_or_claim_output() -> None:
     calls = 0
 
@@ -94,6 +138,27 @@ def test_accepted_async_response_does_not_poll_or_claim_output() -> None:
     assert result.rows == ()
     assert result.retry_count == 0
     assert calls == 1
+
+
+@pytest.mark.parametrize(("body", "content_type"), [
+    (b"title,price,availability\nWidget,599,Available\n", "text/csv"),
+    (b'{"title":"Widget"}\n{"title":"Widget 2"}\n', "application/x-ndjson"),
+])
+def test_non_json_provider_body_is_fail_closed_but_preserved_once(tmp_path, body: bytes, content_type: str) -> None:
+    result = rerun_collector_once(
+        "token-not-retained",
+        collector_id=COLLECTOR,
+        target_url=TARGET,
+        correlation_id=CORRELATION,
+        opener=lambda _request, *, timeout: FakeResponse(200, body, content_type),
+    )
+
+    assert result.success is False
+    assert result.error_class == "MALFORMED_PROVIDER_RESPONSE"
+    assert result.raw_response_sha256 == sha256(body).hexdigest()
+    raw_path = tmp_path / f"{content_type.split('/')[-1]}.raw"
+    assert result.preserve_raw_response(raw_path)["sha256"] == sha256(body).hexdigest()
+    assert raw_path.read_bytes() == body
 
 
 @pytest.mark.parametrize(("status", "error_class"), [(401, "HTTP_401"), (403, "HTTP_403_SCOPE"), (404, "HTTP_404")])
@@ -127,3 +192,16 @@ def test_timeout_and_invalid_input_fail_closed() -> None:
         rerun_collector_once("token-not-retained", collector_id=COLLECTOR, target_url="bad", correlation_id=CORRELATION, opener=lambda *_args, **_kwargs: None)
     with pytest.raises(ValueError, match="between 25 and 50"):
         rerun_endpoint(COLLECTOR, wait_seconds=10)
+
+
+def test_http_error_body_is_retained_when_the_transport_exposes_one(tmp_path) -> None:
+    body = b'{"error":"scope"}'
+
+    def opener(request, *, timeout):
+        raise HTTPError(request.full_url, 403, "failure", hdrs=FakeHeaders({"Content-Type": "application/json"}), fp=FakeResponse(403, body))
+
+    result = rerun_collector_once("token-not-retained", collector_id=COLLECTOR, target_url=TARGET, correlation_id=CORRELATION, opener=opener)
+
+    assert result.error_class == "HTTP_403_SCOPE"
+    assert result.raw_response_sha256 == sha256(body).hexdigest()
+    assert result.preserve_raw_response(tmp_path / "http-error.json")["bytes"] == len(body)

@@ -1,0 +1,42 @@
+{
+  "schema_version": "continuation-forensics-authorization-v1",
+  "scope": "Exhaust safe read-only provider/dashboard, provider-free code, documentation, security, correlation, and release-engineering avenues for Mission 041B field-loss investigation.",
+  "canonical_collector_id": "c_mt09pib13nxqz1coi",
+  "uniquely_correlated_provider_run_id": "vj_mt1pakyc14nagbhvo5",
+  "provider_budget": {
+    "read_only_dashboard_inspection": "ALLOWED",
+    "provider_api_requests": 0,
+    "mutations": 0,
+    "approval": 0,
+    "heal": 0,
+    "rerun": 0,
+    "collector_create_modify_publish": 0,
+    "commit": 0,
+    "rollback": 0,
+    "retries": 0
+  },
+  "prohibited": [
+    "nvidia_execution",
+    "gemini_execution",
+    "benchmark_execution",
+    "credential_exposure",
+    "historical_evidence_mutation",
+    "fabricated_real_provider_output"
+  ],
+  "preserved_historical_evidence": [
+    "experiments/mission_028",
+    "experiments/mission_029",
+    "experiments/mission_030",
+    "experiments/mission_033_live_bright_data_success",
+    "experiments/mission_040",
+    "experiments/mission_041_post_heal_rerun",
+    "experiments/mission_044_final_template_snapshot",
+    "experiments/mission_046_dashboard_forensics"
+  ],
+  "acceptance": [
+    "Do not infer a provider result without retained evidence.",
+    "Use only exact run correlation; never substitute a similar run.",
+    "Separate raw provider response, decoded provider response, normalized AEGIS output, contract validation, risk decision, commit eligibility, and shipped output.",
+    "Prepare but do not execute a future one-rerun authorization package."
+  ]
+}

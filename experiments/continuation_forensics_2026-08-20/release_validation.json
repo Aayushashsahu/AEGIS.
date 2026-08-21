@@ -1,0 +1,33 @@
+{
+  "schema_version": "continuation-forensics-release-validation-v1",
+  "provider_operations": {
+    "requests": 0,
+    "mutations": 0,
+    "retries": 0,
+    "nvidia": 0,
+    "gemini": 0,
+    "benchmarks": 0
+  },
+  "canonical": {
+    "command": "PYTHONPATH=src:. pytest -q",
+    "passed": 475,
+    "duration_seconds": 19.55,
+    "immutable_evidence_gate": "PASS",
+    "diff_check": "PASS"
+  },
+  "managed": {
+    "provider_free_vitest_passed": 18,
+    "excluded_external_credential_probe_tests": 1,
+    "typescript": "PASS",
+    "production_build": "PASS",
+    "routes_reviewed": ["/", "/healthz", "/downstream", "/benchmark"],
+    "route_review": "PASS"
+  },
+  "security": {
+    "credential_exposure": "NOT_FOUND",
+    "raw_response_standard_evidence_leak": "NOT_FOUND",
+    "provenance_mislabeling": "NOT_FOUND"
+  },
+  "historical_evidence": "UNCHANGED",
+  "release_readiness": "CONDITIONAL_MANAGED_BYTECODE_HYGIENE_SEPARATE_BRANCH_REQUIRED"
+}

@@ -1,0 +1,28 @@
+{
+  "schema_version": "continuation-forensics-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "artifacts": {
+    "authorization.json": "8f2e6e2ef7220d7490e7b3148f4ff0c2598e1b78ba0fab4d0d059d55f65ec478",
+    "documented_capability_matrix.md": "f4a2b48ba0be28616459850b39a8d5c3480ff9b775e807b9ab96db246701f508",
+    "field_loss_call_graph.mmd": "1cce21132e7ad9c221bd311e055712984f4b94c926e117982e742dde668129c8",
+    "field_loss_call_graph.png": "c97cd2682828b8fa1d243246e3ecddb0cef470f22dd6a9003ec0014bd67afc82",
+    "future_bounded_rerun_authorization.md": "69b3dd6fa7555dd80e21c197b74521dbed0d8e94308daa201424d7bf06273b4b",
+    "provider_timeline.md": "1dab6ec53612d2705ac0311293d5de15b8c14e6128d2afedd8576ab4ebca1f8a",
+    "release_hygiene_review.md": "11cdb0e2bec50340fe33b1f6270b393b843abe783b25017378de09369523826e",
+    "release_validation.json": "00c0c751f1d698eb9165c8e96b2a2310c429d0d735389b399e5d8b474908178a",
+    "review_passes.md": "cdcf6d30893497ec18be380f8acbc08d28188a014bf0ad22d746fb7aa7bac190",
+    "security_and_provenance_audit.md": "c2cef13b9baea67e8e61b7123eea495549f1a2beabdfab4c864a7be6aecb1573",
+    "static_field_loss_analysis.md": "5ff7c7e7c5144affd67729c66b89d2f11c37e052d24c224023bcc904d498a275"
+  },
+  "historical_integrity": {
+    "canonical_immutable_evidence_gate": "PASS",
+    "canonical_protected_paths_git_diff_exit": 0,
+    "managed_protected_records_git_diff_exit": 0,
+    "result": "UNCHANGED"
+  },
+  "provider_operations": {
+    "requests": 0,
+    "mutations": 0,
+    "retries": 0
+  }
+}

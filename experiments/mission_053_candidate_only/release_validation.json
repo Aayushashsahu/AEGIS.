@@ -1,0 +1,25 @@
+{
+  "schema_version": "mission-053-release-validation-v1",
+  "provider_execution": {
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "heal_requests": 1,
+    "provider_mutations": 1,
+    "retries": 0,
+    "approval": "NOT_AUTHORIZED_NOT_EXECUTED",
+    "rerun": "NOT_AUTHORIZED_NOT_EXECUTED",
+    "commit": "NOT_AUTHORIZED_NOT_EXECUTED",
+    "rollback": "NOT_AUTHORIZED_NOT_EXECUTED",
+    "status": "error",
+    "http_status": "NOT_EXPOSED_BY_CLI",
+    "latency_ms": 450143,
+    "provider_operation_id": null,
+    "candidate": "ABSENT",
+    "candidate_preview_artifact": "ABSENT_BY_PROVIDER_FAILURE",
+    "raw_response": {"preserved": true, "path": "raw_provider_response.bin", "sha256": "dcfa386469ec7a78fb42e5f91779e501edb2b9863a1277212cb585b13d249178", "bytes": 931}
+  },
+  "safety": {"data_shipped": "NO", "historical_evidence": {"status": "PASS", "validated_artifacts": 8, "protected_paths_git_diff": "PASS"}, "focused_secret_scan": {"status": "PASS", "credentials_or_authorization_headers_found": false}, "candidate_preview_absent": true, "second_heal_prevented_by_fresh_path_guard": true},
+  "validation": {"canonical_tests": {"status": "PASS", "passed": 502}, "managed_tests": {"status": "PASS", "passed": 21}, "typescript": "PASS", "production_build": "PASS"},
+  "terminal_classification": "HEAL_CANDIDATE_ABSENT_PROVIDER_ERROR",
+  "provider_failure_interpretation": "The provider reported status error after self-healing stages. The response does not support attributing the failure to an LLM or asserting a candidate was generated.",
+  "next_step": "STOP. No second heal, approval, rerun, commit, rollback, or other provider operation is authorized."
+}

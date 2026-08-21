@@ -1,0 +1,14 @@
+{
+  "approval_authorized": false,
+  "auto_approval_used": false,
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "command_sha256": "bd8b42bb67930f535e1657b51aa0d9657450e147cd80fd5932709eddac1de2d3",
+  "key_exposed": false,
+  "prompt_length": 368,
+  "prompt_sha256": "297e7a6ab3f4160552c3f3403c6aa2aaff5791c63e24b21046b77cc1c065d1af",
+  "requested_at_utc": "2026-08-21T13:06:35.788645Z",
+  "rerun_authorized": false,
+  "retry_budget": 0,
+  "schema_version": "mission-053-heal-request-v1",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+}

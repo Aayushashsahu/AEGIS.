@@ -1,0 +1,27 @@
+{
+  "schema_version": "mission-053-authorization-v1",
+  "authorization_source": "User-provided MISSION 053 ONE BOUNDED REAL BRIGHT DATA HEAL — CANDIDATE ONLY brief attached to this task",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "target_source": "Canonical Mission 033 persisted target URL only",
+  "prompt_source": "experiments/mission_052/repair_prompt.txt",
+  "prompt_expected_characters": 368,
+  "authorized_provider_operations": {"heal": 1},
+  "prohibited_provider_operations": {"approval": 0, "rerun": 0, "second_heal": 0, "collector_create": 0, "collector_modify": 0, "commit": 0, "rollback": 0, "benchmark": 0, "nvidia": 0, "gemini": 0},
+  "retry_budget": 0,
+  "required_preconditions": [
+    "Exact collector and exact canonical target match.",
+    "Authenticated Bright Data transport is available.",
+    "Mission 052 prompt artifact is present and exactly 368 characters or matches the recorded prepared artifact.",
+    "Mission 033/040/041/041B evidence remains intact.",
+    "This mission budget allows exactly one heal and no retry."
+  ],
+  "stop_conditions": [
+    "Any precondition failure before the provider call.",
+    "Any provider error, timeout, malformed response, or empty preview after the single call.",
+    "Any candidate preview missing title, price, or availability.",
+    "Always after preserving the one candidate response; approval and rerun are not authorized."
+  ],
+  "commit_and_shipping": "BLOCKED_UNAUTHORIZED",
+  "provider_operations_executed": 0,
+  "retries_executed": 0
+}

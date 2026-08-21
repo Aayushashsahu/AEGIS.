@@ -1,0 +1,15 @@
+{
+  "schema_version": "mission-053-artifact-hashes-v1",
+  "algorithm": "sha256",
+  "manifest_scope": "All Mission 053 artifacts present at manifest creation, excluding artifact_hashes.json itself. candidate_preview.json is correctly absent because the single provider heal returned status error without a preview.",
+  "artifact_count": 7,
+  "artifacts": {
+    "authorization.json": "2be57ab79b986aee3f83839590419d184723833fa5e18f57bdea738c040b5e11",
+    "heal_request.json": "5a789a6866523f712567dd5421f448723fb47b5390f471f7cf205356799bd9e1",
+    "heal_result.json": "6a2ee97dee2f0a3ac60bfe8cb77e018c73511e11603363c6b0174487100f8ecd",
+    "preflight.json": "7056cd3e1303fa3eea1b9780d54036f5809638f6f7ff56aaaf1b725247d520a3",
+    "raw_provider_response.bin": "dcfa386469ec7a78fb42e5f91779e501edb2b9863a1277212cb585b13d249178",
+    "release_validation.json": "efc722554b7f9fa8f84dacb1ab2d3e024210c53f55db14c4ca822ae5e192c576",
+    "summary.json": "8a537f1deac4f0b219c095db4a0c6d2b3bc356492421046d0dd69ba64ace64e0"
+  }
+}

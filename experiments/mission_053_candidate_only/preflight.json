@@ -1,0 +1,27 @@
+{
+  "all_pass": true,
+  "checked_at_utc": "2026-08-21T13:06:35.788279Z",
+  "checks": {
+    "approval_and_rerun_prohibited": true,
+    "authenticated_transport_configured": true,
+    "authorized_one_heal_budget": true,
+    "exact_canonical_target": true,
+    "exact_collector": true,
+    "fresh_controlled_paths": true,
+    "historical_evidence_intact": true,
+    "prompt_length": true,
+    "prompt_matches_prepared_artifact": true,
+    "prompt_present": true,
+    "raw_capture_armed": true,
+    "zero_retry_budget": true
+  },
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "key_exposed": false,
+  "prompt_length": 368,
+  "prompt_sha256": "297e7a6ab3f4160552c3f3403c6aa2aaff5791c63e24b21046b77cc1c065d1af",
+  "provider_mutations_attempted": 0,
+  "provider_requests_attempted": 0,
+  "retries": 0,
+  "schema_version": "mission-053-preflight-v1",
+  "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+}

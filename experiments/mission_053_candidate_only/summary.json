@@ -1,0 +1,14 @@
+{
+  "approval": "NOT_AUTHORIZED",
+  "candidate": "ABSENT",
+  "candidate_fields": [],
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "data_shipped": "NO",
+  "heal": "FAILED",
+  "next_step": "STOP_AFTER_CANDIDATE_ONLY",
+  "provider_mutations": 1,
+  "provider_status": "error",
+  "rerun": "NOT_AUTHORIZED",
+  "retries": 0,
+  "schema_version": "mission-053-summary-v1"
+}

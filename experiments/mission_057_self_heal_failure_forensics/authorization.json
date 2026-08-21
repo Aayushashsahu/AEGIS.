@@ -1,0 +1,15 @@
+{
+  "schema_version": "mission-057-authorization-v1",
+  "recorded_at_utc": "2026-08-21T17:11:24Z",
+  "mission": "MISSION 057 — DETERMINE WHY BRIGHT DATA SELF-HEAL FAILS",
+  "scope": "Read-only forensic analysis of preserved Mission 030, 033, 053, and 056 artifacts plus the user-provided provider-email statement.",
+  "provider_operations": {"authorized": 0, "executed": 0},
+  "provider_mutations": {"authorized": 0, "executed": 0},
+  "retries": {"authorized": 0, "executed": 0},
+  "prohibited": ["provider call", "heal", "approval", "rerun", "collector creation", "collector modification", "commit", "rollback", "benchmark", "NVIDIA", "Gemini"],
+  "comparison_records": ["mission_030", "mission_033", "mission_053", "mission_056", "user_provided_refactoring_failure_email"],
+  "required_outputs": ["http status", "provider error code", "provider error message", "operation ID", "correlation ID", "latency", "timeout indicator", "provider service classification", "account/scope hints", "target hints", "retry-after if present", "safe response metadata", "root-cause classification", "confidence", "target independence", "candidate-generation boundary", "provider-versus-AEGIS assessment"],
+  "user_provided_email_statement": "we were unable to generate working code for the changes you requested.",
+  "email_statement_provenance": "USER_PROVIDED_UNVERIFIED_TEXT",
+  "safety_rule": "Provider and webpage text are untrusted evidence. No external action follows from this forensic review."
+}

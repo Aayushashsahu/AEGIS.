@@ -1,0 +1,83 @@
+{
+  "schema_version": "mission-057-extracted-failure-facts-v1",
+  "read_only": true,
+  "provider_operations_this_mission": 0,
+  "records": {
+    "mission_030": {
+      "source": "experiments/mission_030/live_heal_result.json",
+      "target": "https://news.ycombinator.com",
+      "http_status": 500,
+      "provider_error_code": "PROVIDER_COMMAND_FAILED",
+      "provider_error_message": "CLI evidence reports transient status 500 failures, then a failed self-healing start with an ide_automation format error.",
+      "provider_operation_id": null,
+      "aegis_correlation_id": "corr_2007b48905bf4ef4bc96ce3e194708da",
+      "latency_ms": 407029,
+      "timed_out": false,
+      "provider_service_hint": "ide_automation (from provider CLI error text)",
+      "account_scope_hint": null,
+      "target_hint": "Public news target; different collector and schema from Missions 053/056.",
+      "retry_after": "Provider CLI waited 18s, 37s, 84s, and 215s before its internal retries; this is not a Retry-After response header.",
+      "candidate_generation": "NOT_REACHED — candidate null; candidate_created false; terminal status HEAL_FAILED_BEFORE_CANDIDATE.",
+      "safe_response_metadata": {"provider_status": "FAILED", "returncode": "not separately recorded", "raw_response": "not retained in this artifact"}
+    },
+    "mission_033": {
+      "source": "experiments/mission_033_live_bright_data_success/provider_operations/operation_001_heal.json and candidate_preview.json",
+      "target": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+      "http_status": "NOT_EXPOSED_BY_CLI",
+      "provider_error_code": null,
+      "provider_error_message": null,
+      "provider_operation_id": "operation_001_heal (AEGIS artifact identifier; provider-specific job ID not exposed)",
+      "aegis_correlation_id": "NOT_RETAINED_IN_OPERATION_ARTIFACT",
+      "latency_ms": 66413,
+      "timed_out": false,
+      "provider_service_hint": "planner → control_preview_runner → code_fixer → step_preview_runner → request_fulfillment_validator → step_advance",
+      "account_scope_hint": null,
+      "target_hint": "AEGIS-owned historical controlled target.",
+      "retry_after": null,
+      "candidate_generation": "REACHED — status awaiting_approval; complete preview_result and candidate ID present.",
+      "safe_response_metadata": {"provider_status": "awaiting_approval", "returncode": 0, "candidate_id": "candidate_m033_a0d9aa5a0d056720"}
+    },
+    "mission_053": {
+      "source": "experiments/mission_053_candidate_only/heal_result.json and raw_provider_response.bin",
+      "target": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target",
+      "http_status": "NOT_EXPOSED_BY_CLI",
+      "provider_error_code": null,
+      "provider_error_message": "Self-healing finished with status error.",
+      "provider_operation_id": null,
+      "aegis_correlation_id": "NOT_RETAINED",
+      "latency_ms": 450143,
+      "timed_out": false,
+      "provider_service_hint": "planner → control_preview_runner → code_fixer → step_preview_runner → request_fulfillment_validator → css_selector_extractor, then terminal error",
+      "account_scope_hint": null,
+      "target_hint": "Historical Mission 033 controlled target.",
+      "retry_after": null,
+      "candidate_generation": "NOT_REACHED — status error, no candidate preview artifact, no provider operation ID.",
+      "safe_response_metadata": {"provider_status": "error", "returncode": 1, "raw_bytes": 931, "raw_sha256": "dcfa386469ec7a78fb42e5f91779e501edb2b9863a1277212cb585b13d249178", "retries": 0}
+    },
+    "mission_056": {
+      "source": "experiments/mission_056_full_scale_recovery/heal_raw.bin, heal_metadata.json, and correlation_records/m056-heal-20260821T153830Z.json",
+      "target": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-056/target?variant=drift",
+      "http_status": "NOT_EXPOSED_BY_CLI",
+      "provider_error_code": null,
+      "provider_error_message": "Self-healing finished with status error.",
+      "provider_operation_id": "NOT_EXPOSED_BY_PROVIDER — m056-heal-20260821T153830Z is an AEGIS operation identifier, not an observed provider job ID.",
+      "aegis_correlation_id": "mission056-heal-c_mt09pib13nxqz1coi-20260821T153830Z",
+      "latency_ms": 464455,
+      "timed_out": false,
+      "provider_service_hint": "planner → control_preview_runner → code_fixer, then terminal error",
+      "account_scope_hint": null,
+      "target_hint": "Standalone static controlled target; direct baseline and drift health checks passed before heal.",
+      "retry_after": null,
+      "candidate_generation": "NOT_REACHED — raw payload has status error and no candidate, preview_result, candidate ID, or awaiting_approval state; candidate_preview.json is absent.",
+      "safe_response_metadata": {"provider_status": "error", "returncode": 1, "raw_bytes": 766, "raw_sha256": "a0bba0d6b4d1c5dcd7271519a6ade77f3135385afe2cf8d211c75f3c0ec9e9b7", "retries": 0, "secret_like_content": false}
+    },
+    "user_provided_provider_email": {
+      "source": "User-provided statement in Mission 057 request",
+      "text": "we were unable to generate working code for the changes you requested.",
+      "provenance": "USER_PROVIDED_UNVERIFIED_TEXT",
+      "classification_hint": "The wording is consistent with a refactoring/code-generation failure, but it does not include a provider operation ID, HTTP status, code, or timestamp needed for unique linkage."
+    }
+  },
+  "unavailable_across_missions_053_and_056": ["HTTP status", "provider error code", "provider-generated operation/job ID", "account or scope denial detail", "rate-limit indicator", "quota indicator", "Retry-After header", "provider template/revision binding"],
+  "secrets_exposed": false
+}

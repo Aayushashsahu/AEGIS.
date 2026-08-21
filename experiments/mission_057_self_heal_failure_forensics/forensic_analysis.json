@@ -1,0 +1,42 @@
+{
+  "schema_version": "mission-057-forensic-analysis-v1",
+  "method": "Read-only comparison of preserved artifacts; no provider call, mutation, retry, or email-system access.",
+  "root_cause": "PROVIDER_REFRACTOR_FAILURE",
+  "confidence": "MEDIUM",
+  "basis": [
+    "Mission 053 and Mission 056 raw responses both declare status error and a terminal error message without preview_result, candidate ID, or awaiting_approval state.",
+    "Both failures began planner and control_preview_runner and entered the provider refactor pipeline; Mission 056 reached code_fixer and Mission 053 continued through code_fixer, step_preview_runner, request_fulfillment_validator, and css_selector_extractor before error.",
+    "The user-provided email says the provider was unable to generate working code for requested changes. It supports a refactor-failure interpretation but cannot be uniquely linked to a provider operation because it lacks an operation ID, timestamp, HTTP status, and code."
+  ],
+  "comparison": {
+    "mission_053_vs_056_same_exact_provider_substage": "UNKNOWN — preserved lifecycle telemetry differs in depth and does not expose the provider's exact internal failing substage.",
+    "mission_053_vs_056_common_provider_macro_stage": "YES — both are terminal errors after initial planning/control-preview activity and before candidate materialization, within the self-healing/refactor pipeline.",
+    "mission_033_contrast": "Mission 033 reached awaiting_approval with a complete preview_result and candidate ID, demonstrating that candidate generation is an observable later boundary that neither Mission 053 nor Mission 056 reached."
+  },
+  "target_dependence": {
+    "original_target_failure": "Mission 053 failed against the historical Mission 033 controlled target.",
+    "static_controlled_target_failure": "Mission 056 failed against a different standalone static controlled target whose direct baseline and drift health checks passed before the heal.",
+    "target_independent_failure": "LIKELY",
+    "reason": "The same generic terminal provider error occurred across two distinct AEGIS-controlled targets after their target-health/preexisting evidence checks. This is evidence against a target-specific extraction condition, but cannot exclude all target-, prompt-, template-, or account-conditioned behavior."
+  },
+  "candidate_generation": {
+    "mission_053": "NOT_REACHED",
+    "mission_056": "NOT_REACHED",
+    "mission_056_confirmation": "Raw response contains status error and completed_steps but no candidate ID, candidate object, preview_result, or awaiting_approval state; candidate_preview.json is absent by design.",
+    "boundary": "FAILURE OCCURS BEFORE CANDIDATE GENERATION/MATERIALIZATION."
+  },
+  "responsibility_assessment": {
+    "provider_side": "YES — the preserved provider payloads report terminal self-healing errors after provider lifecycle steps; Mission 056 raw bytes were retained before AEGIS parsing.",
+    "aegis_side": "NO_FOR_OBSERVED_TERMINAL_FAILURE — no candidate or provider structured output existed for AEGIS normalization, verification, or risk to transform. This does not prove that all possible upstream trigger conditions are independent of AEGIS inputs.",
+    "authentication": "NOT_SUPPORTED — no authentication-denial status, code, or message appears in Missions 053 or 056.",
+    "account_scope": "NOT_SUPPORTED — no account/scope denial appears in Missions 053 or 056.",
+    "rate_limit": "NOT_SUPPORTED — no rate-limit code, HTTP status, or Retry-After value appears in Missions 053 or 056.",
+    "quota": "NOT_SUPPORTED — no quota signal appears in Missions 053 or 056.",
+    "transport": "NOT_SUPPORTED — the provider accepted and progressed both self-healing workflows; the local process did not time out and preserved a provider terminal payload."
+  },
+  "unavailable_facts": ["HTTP status for Mission 053/056", "provider error code for Mission 053/056", "provider-generated job ID for Mission 053/056", "unique email-to-operation linkage", "provider refactor trace", "template/revision binding"],
+  "next_action": "STOP. Preserve the evidence and request a new, separately authorized read-only provider diagnostic only if official documentation exposes a job/error-detail interface keyed by an observed provider identifier. Do not retry or change targets based on the generic error alone.",
+  "mutations_this_mission": 0,
+  "provider_operations_this_mission": 0,
+  "retries_this_mission": 0
+}

@@ -1,0 +1,19 @@
+{
+  "schema_version": "mission-057-source-integrity-manifest-v1",
+  "algorithm": "sha256",
+  "sources": {
+    "experiments/mission_030/live_heal_result.json": "b97d0fada4f6c272def4d16d2072c7d407804cd2ad18329b2c156e69307dffc9",
+    "experiments/mission_033_live_bright_data_success/candidate_preview.json": "a19480c4e0edf8693ac91a056df2605b4f7d6f0d6f9874362cece390f036a723",
+    "experiments/mission_033_live_bright_data_success/provider_operations/operation_001_heal.json": "c6d6433db5aa44abff439a5fb9f968316e5c090beb89433a8252bb063b2af034",
+    "experiments/mission_053_candidate_only/heal_result.json": "6a2ee97dee2f0a3ac60bfe8cb77e018c73511e11603363c6b0174487100f8ecd",
+    "experiments/mission_053_candidate_only/raw_provider_response.bin": "dcfa386469ec7a78fb42e5f91779e501edb2b9863a1277212cb585b13d249178",
+    "experiments/mission_056_full_scale_recovery/heal_metadata.json": "665f79c52756ccc11b9ec216fd56ff51516cd4699ad8c737e3fc5cb32f92c070",
+    "experiments/mission_056_full_scale_recovery/heal_raw.bin": "a0bba0d6b4d1c5dcd7271519a6ade77f3135385afe2cf8d211c75f3c0ec9e9b7",
+    "experiments/mission_056_full_scale_recovery/correlation_records/m056-heal-20260821T153830Z.json": "9d910f4d016498543d0b78c3a559221f071b9e66782d82d48e4a07b2530e9ac1"
+  },
+  "historical_evidence": "UNCHANGED",
+  "provider_operations_this_mission": 0,
+  "provider_mutations_this_mission": 0,
+  "retries_this_mission": 0,
+  "secrets_exposed": false
+}

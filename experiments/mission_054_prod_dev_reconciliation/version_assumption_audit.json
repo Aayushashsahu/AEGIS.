@@ -1,0 +1,29 @@
+{
+  "schema_version": "mission-054-version-assumption-audit-v1",
+  "mission_041b": {
+    "evidence": "experiments/mission_041_post_heal_rerun/post_heal_output.json and scripts/mission041b_rerun.py",
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "transport": "POST /dca/crawl synchronous request",
+    "explicit_version_selector": "ABSENT",
+    "request_body": "url only",
+    "observed_rows": [{"input": {"url": "canonical Mission 033 target"}}],
+    "required_field_state": {"title": "MISSING", "price": "MISSING", "availability": "MISSING"},
+    "executed_version": "UNKNOWN_FROM_MISSION_041B_REQUEST_ALONE"
+  },
+  "mission_046_dashboard": {
+    "evidence": "experiments/mission_046_dashboard_forensics/dashboard_snapshot.json",
+    "recent_run_template_label": "v1 (prod)",
+    "mission_041b_run_binding": "UNKNOWN",
+    "historical_visible_editor": "Version 1, production_version=true, currently_editing=true",
+    "historical_editor_parser": "title, price, availability selectors and output schema observed",
+    "identity_binding_to_mission_041b": "NOT_PROVEN"
+  },
+  "aegis_adapter": {
+    "evidence": "src/aegis/adapter.py BrightDataCliAdapter.run_collector and src/aegis/one_shot_rerun.py rerun_collector_once",
+    "cli_run_version_selector": "ABSENT",
+    "synchronous_http_version_selector": "ABSENT",
+    "implicit_selection_behavior": "DELEGATED_TO_PROVIDER_DEFAULT",
+    "conclusion": "AEGIS did not explicitly select dev, prod, or v1 for Mission 041B."
+  },
+  "evidence_boundary": "Neither the retained synchronous response nor current Mission 054 dashboard access proves which exact parser/template revision produced the Mission 041B output."
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "mission-054-minimum-future-action-v1",
+  "status": "PREPARED_NOT_EXECUTED",
+  "precondition": "Only after a separate read-only inspection proves that the reviewed development parser is desired and production differs, and only with separate owner authorization for a production mutation.",
+  "dashboard_action": {
+    "exact_documented_action": "Open the scraper Code view and select Save to production.",
+    "effect": "Publishes the existing production scraper's current development draft.",
+    "source": "https://docs.brightdata.com/datasets/scraper-studio/initiate-collection-and-delivery-options",
+    "execution": "NOT_AUTHORIZED_NOT_EXECUTED"
+  },
+  "pending_heal_cli_action": {
+    "only_if": "A separate provider response proves a heal is awaiting approval; this is not an editor-draft publication substitute.",
+    "documented_command": "npx -y -p @brightdata/cli bdata scraper approve c_mt09pib13nxqz1coi --auto-save --url https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target --json",
+    "effect": "Approves the pending heal and asks the provider resume call to auto-save the approved template after successful completion.",
+    "execution": "NOT_AUTHORIZED_NOT_EXECUTED"
+  },
+  "version": {
+    "historically_observed_label": "v1 (prod) in Mission 046 dashboard evidence",
+    "current_version_identity": "NOT_OBSERVED_IN_MISSION_054",
+    "expected_output_after_separate_authorized_production_change_and_rerun": "A real provider result containing non-null title, price, and availability for the canonical target. This is a verification target, not a claimed result."
+  },
+  "required_before_any_future_mutation": ["Read-only parser and version comparison with captured evidence", "Explicit owner authorization naming the exact action", "Separate candidate/approval/rerun budgets", "Raw-response-first capture and deterministic verification"]
+}

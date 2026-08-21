@@ -1,0 +1,16 @@
+{
+  "schema_version": "mission-054-dashboard-readonly-attempt-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "url": "https://brightdata.com/cp/scrapers/c_mt09pib13nxqz1coi",
+  "attempted_actions": ["read-only navigation", "read-only page wait"],
+  "observed_state": "LOADING_ONLY",
+  "dashboard_bridge_result": "TIMEOUT_504",
+  "code_parser_observed": false,
+  "output_schema_observed": false,
+  "runs_version_observed": false,
+  "version_history_observed": false,
+  "save_publish_start_heal_approve_run_clicked": false,
+  "provider_operations": 0,
+  "retries": 0,
+  "conclusion": "Current dashboard version state is NOT_OBSERVED in this Mission 054 attempt. Earlier read-only Mission 046 evidence remains separate and cannot establish current state."
+}

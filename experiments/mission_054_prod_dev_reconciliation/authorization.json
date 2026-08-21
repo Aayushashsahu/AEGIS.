@@ -1,0 +1,12 @@
+{
+  "schema_version": "mission-054-authorization-v1",
+  "authorization_source": "AEGIS — CRITICAL BRIGHT DATA PRODUCTION VS DEVELOPMENT RECONCILIATION brief attached by the owner",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "allowed_activities": ["dashboard_read_only_inspection", "local_cli_help_and_version_inspection", "official_documentation_review", "repository_static_analysis", "offline_evidence_reconciliation"],
+  "provider_operation_budget": {"heal": 0, "approve": 0, "run": 0, "rerun": 0, "create": 0, "commit": 0, "rollback": 0, "retries": 0},
+  "prohibited_actions": ["Save", "Publish", "Start", "Heal", "Approve", "Run", "rerun", "collector modification", "historical evidence modification"],
+  "required_outputs": ["development parser identity", "production parser identity", "development-production match", "Mission 041B executed version", "installed CLI version and selectors", "auto-save support", "evidence-bounded root cause", "minimum future action"],
+  "fail_closed_rule": "If exact production parser source/version identity cannot be proven from read-only evidence, record PRODUCTION_PARSER_IDENTITY=UNKNOWN and do not assert equivalence.",
+  "provider_operations_executed": 0,
+  "retries_executed": 0
+}

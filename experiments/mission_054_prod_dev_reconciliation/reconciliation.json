@@ -1,0 +1,46 @@
+{
+  "schema_version": "mission-054-reconciliation-v1",
+  "answers": {
+    "DEVELOPMENT_PARSER": "UNKNOWN_CURRENT_STATE; owner-reported earlier dashboard observation described title, price, and availability parser logic together with a 'Save to development' control, but Mission 054 could not re-observe the current Code panel because the browser bridge timed out.",
+    "PRODUCTION_PARSER": "UNKNOWN; preserved Mission 046 dashboard evidence recorded Version 1 as production and a visible parser/schema with all required fields, but no exact historical or current production source snapshot is bound to Mission 041B.",
+    "PRODUCTION_PARSER_IDENTITY": "UNKNOWN",
+    "DEVELOPMENT_PRODUCTION_MATCH": "UNKNOWN",
+    "MISSION_041B_EXECUTED_VERSION": "UNKNOWN_FROM_DIRECT_REQUEST; the retained synchronous request had no version selector. Mission 046 separately observed a v1 (prod) recent run, but explicitly recorded Mission 041B run binding as UNKNOWN.",
+    "CURRENT_CLI_VERSION": "0.3.5 via npx -y -p @brightdata/cli bdata --version",
+    "RUN_VERSION_SELECTOR_SUPPORTED": "YES; scraper run --help exposes --version <version> and uses dev as its documented example.",
+    "AUTO_SAVE_SUPPORTED": "YES; scraper approve --help exposes --auto-save and states that it saves the approved template automatically once the job completes successfully by sending auto_save to the resume call.",
+    "LIKELY_ROOT_CAUSE": "UNKNOWN; DEVELOPMENT/PRODUCTION_TEMPLATE_DIVERGENCE is a plausible hypothesis but is not supported strongly enough to assert because parser identity and Mission 041B run-to-version binding are both unproven.",
+    "CONFIDENCE": "LOW",
+    "REAL_PROVIDER_CALLS": 0,
+    "MUTATIONS": 0
+  },
+  "evidence": {
+    "official_development_production_semantics": {
+      "url": "https://docs.brightdata.com/datasets/scraper-studio/initiate-collection-and-delivery-options",
+      "finding": "IDE edits auto-save as a development draft; Save to production publishes changes for an existing production scraper."
+    },
+    "official_cli_workflow": {
+      "url": "https://docs.brightdata.com/datasets/scraper-studio/build-with-the-cli",
+      "finding": "The manual lifecycle is run, inspect, heal, approve, re-run; approval commits the fix to the existing scraper."
+    },
+    "local_cli_help": {
+      "version": "0.3.5",
+      "run_flags": ["--version <version>"],
+      "approve_flags": ["--auto-save"],
+      "provider_operations": 0
+    },
+    "mission_041b": {
+      "raw_response_retained": false,
+      "rows": "input.url only",
+      "version_selector": "absent",
+      "version_identity": "unknown"
+    },
+    "mission_046": {
+      "historical_visible_version": "Version 1, production_version=true, currently_editing=true",
+      "recent_run_template": "v1 (prod)",
+      "mission_041b_run_binding": "UNKNOWN"
+    },
+    "current_dashboard_attempt": "LOADING_ONLY then browser bridge timeout; no Code, Output schema, Runs, or version/history state was observed and no control was clicked."
+  },
+  "conclusion": "The investigation establishes that production and development are distinct documented states and that AEGIS did not select either explicitly. It does not prove that their parser contents diverged for Mission 041B."
+}

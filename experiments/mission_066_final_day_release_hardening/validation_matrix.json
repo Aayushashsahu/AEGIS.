@@ -1,0 +1,38 @@
+{
+  "schema_version": "mission-066-final-validation-v1",
+  "final_main_commit": "c3aea804051b202b52b41c7778b3e7d3ff9ee10c",
+  "main_push": "SUCCESS_FAST_FORWARD_NO_FORCE",
+  "canonical_python_tests": { "command": "PYTHONPATH=.:src pytest -q", "result": "PASS", "count": 530 },
+  "canonical_web_tests": { "command": "AEGIS_ROOT=<clone-root> AEGIS_PYTHON=python3 pnpm test", "result": "PASS", "count": 13 },
+  "canonical_web_build": { "command": "AEGIS_ROOT=<clone-root> AEGIS_PYTHON=python3 pnpm build", "result": "PASS", "note": "Bundle-size advisory only; no build failure." },
+  "managed_web_tests": { "result": "PASS", "count": 26 },
+  "managed_web_build": { "result": "PASS" },
+  "managed_visual_checks": { "desktop_judge_mode": "PASS", "mobile_judge_cases_downstream": "CAPTURED_PROVIDER_FREE" },
+  "clean_checkout": {
+    "repository": "Aayushashsahu/AEGIS.",
+    "commit": "c3aea804051b202b52b41c7778b3e7d3ff9ee10c",
+    "frozen_install": "PASS",
+    "python_tests": "530_PASS",
+    "web_tests": "13_PASS",
+    "production_build": "PASS",
+    "provider_free_server": "PASS",
+    "routes": {
+      "/": 200,
+      "/cases": 200,
+      "/cases/mission_050_real_provider_causal_boundary": 200,
+      "/judge": 200,
+      "/evidence": 200,
+      "/downstream": 200
+    }
+  },
+  "security": {
+    "non_test_secret_scan": "PASS",
+    "test_fixture_pattern_paths": 5,
+    "fixture_classification": "SYNTHETIC_OR_REDACTION_TEST_CASES_ONLY",
+    "debug_asset_scan": "PASS"
+  },
+  "historical_evidence": "UNCHANGED",
+  "provider_operations": 0,
+  "provider_mutations": 0,
+  "retries": 0
+}

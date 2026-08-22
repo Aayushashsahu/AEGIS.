@@ -1,0 +1,24 @@
+{
+  "schema_version": "mission-066-provider-recovery-gate-v1",
+  "actual_support_response_available": false,
+  "concrete_documented_remedy_available": false,
+  "provider_recovery_hypothesis": "NONE_AUTHORIZED",
+  "real_heal_authorized": false,
+  "real_approval_authorized": false,
+  "real_rerun_authorized": false,
+  "provider_recovery_experiment": "NOT_STARTED",
+  "reason": "The mission permits one real recovery only if an actual Bright Data support response supplies a concrete documented evidence-backed remedy. No such response was observed in the current session.",
+  "required_future_preconditions": [
+    "actual support evidence captured without fabrication",
+    "specific documented remedy",
+    "separate exact owner authorization",
+    "one-operation budget",
+    "deterministic correlation",
+    "raw-first evidence destination",
+    "zero retry policy"
+  ],
+  "provider_operations": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "next_mode": "RELEASE_HARDENING_ONLY"
+}

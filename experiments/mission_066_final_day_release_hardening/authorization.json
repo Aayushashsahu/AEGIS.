@@ -1,0 +1,37 @@
+{
+  "mission": "MISSION_066",
+  "title": "FINAL_DAY_FULL_SCALE_RECOVERY_AND_RELEASE",
+  "date": "2026-08-22",
+  "submission_status": "ALREADY_SUBMITTED",
+  "objectives": {
+    "provider_recovery": "Only if Bright Data supplies an actual concrete documented evidence-backed remedy.",
+    "release_hardening": "Complete the strongest truthful, judge-ready, clone-ready, fail-closed AEGIS release regardless of provider outcome."
+  },
+  "provider_mutation_policy": {
+    "heal": "NOT_AUTHORIZED_UNTIL_CONCRETE_SUPPORT_REMEDY_AND_SEPARATE_BOUNDED_AUTHORIZATION",
+    "approval": "NOT_AUTHORIZED",
+    "rerun": "NOT_AUTHORIZED",
+    "collector_create": "NOT_AUTHORIZED",
+    "collector_modify": "NOT_AUTHORIZED",
+    "commit": "NOT_AUTHORIZED",
+    "rollback": "NOT_AUTHORIZED",
+    "retry": 0
+  },
+  "non_negotiable_rules": [
+    "Do not fabricate provider output, IDs, support response, or successful repair.",
+    "Do not rewrite historical evidence or relabel TEST_DOUBLE as REAL_PROVIDER.",
+    "Do not bypass verification, RiskGovernor, CommitGate, or owner authorization.",
+    "Do not expose credentials in repository, evidence, logs, or frontend.",
+    "Every future REAL_PROVIDER mutation requires explicit scope, budget, authorization, correlation, and raw-first capture."
+  ],
+  "historical_evidence_policy": "Immutable; all prior Mission 033–065 evidence remains untouched.",
+  "release_scope": [
+    "provider transport audit",
+    "output contract and provenance audit",
+    "Judge Mode truthfulness",
+    "README and current documentation consistency",
+    "canonical branch and clean-checkout reconciliation",
+    "downstream value explanation",
+    "security and validation matrix"
+  ]
+}

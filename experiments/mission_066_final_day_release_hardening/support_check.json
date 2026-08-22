@@ -1,0 +1,13 @@
+{
+  "schema_version": "mission-066-support-check-v1",
+  "check_requested": true,
+  "mailbox_access": "UNAVAILABLE_IN_CURRENT_BROWSER_SESSION",
+  "gmail_navigation": "Opened read-only; authenticated inbox was not exposed and the browser bridge timed out.",
+  "support_response_observed": false,
+  "concrete_documented_remedy_observed": false,
+  "provider_recovery_experiment_authorized": false,
+  "provider_operations": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "next_state": "PROVIDER_RECOVERY_FROZEN_RELEASE_HARDENING_CONTINUES"
+}

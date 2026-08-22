@@ -1,0 +1,27 @@
+{
+  "schema_version": "mission-066-release-lineage-v1",
+  "main_before_release": "3af9298d374193b81ff34c7a58d1337571c040be",
+  "release_branch": "mission-066-final-day-release-hardening",
+  "release_branch_base": "mission-065-direct-production-version-resolution",
+  "open_pull_request_review": {
+    "result": "ALL_OPEN_DELIVERY_BRANCHES_ARE_ANCESTORS_OF_RELEASE_CANDIDATE",
+    "reviewed_branches": [
+      "mission-032-zip-frontend-backend-integration",
+      "mission-033-live-bright-data-success",
+      "mission-034-bounded-preflight-blocked",
+      "mission-034-bounded-execution",
+      "mission-035-cli-transport-timeout",
+      "mission-056-full-scale-recovery",
+      "mission-057-self-heal-failure-forensics",
+      "mission-058-provider-refactor-job-diagnostic",
+      "mission-059-clean-correlated-heal",
+      "mission-060-support-wait-hardening"
+    ],
+    "divergent_open_branches": []
+  },
+  "merge_strategy": "FAST_FORWARD_ONLY_AFTER_RELEASE_VALIDATION",
+  "history_rewrite": false,
+  "force_push": false,
+  "provider_operations": 0,
+  "provider_mutations": 0
+}

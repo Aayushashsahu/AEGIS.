@@ -1,0 +1,31 @@
+{
+  "schema_version": "mission-065-production-version-resolution-v1",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "production_version": "UNKNOWN",
+  "version_source": "UNKNOWN",
+  "directly_retained_ui_label": "v1 (prod)",
+  "ui_label_is_exact_provider_version": "UNKNOWN",
+  "dashboard_inspection": {
+    "attempted": true,
+    "route": "https://brightdata.com/cp/data_collector/collectors/c_mt09pib13nxqz1coi/code?id=hl_5de45725",
+    "action_controls_activated": 0,
+    "result": "BROWSER_EXTENSION_TIMEOUT_WHILE_LOADING",
+    "state_interpretation": "NOT_COLLECTOR_STATE"
+  },
+  "documented_provider_mechanisms_inspected": {
+    "collector_list": "Existing documented GET /dca/collectors_list returns collector identities only in the canonical adapter and does not expose version metadata.",
+    "scraper_studio_api_quickstart": "Documents trigger and dataset retrieval for published collectors, but no read-only production-version lookup endpoint.",
+    "cli_0_3_5": "Documents scraper run --version <version>, but no documented version-list command or version metadata lookup command was verified.",
+    "ide_documentation": "Documents Save to Production and Versions menu rollback conceptually, but no documented API/CLI endpoint returning the current collector exact version value was verified."
+  },
+  "exact_provider_version_obtained": false,
+  "conditional_run_precondition": "FAILED_EXACT_PRODUCTION_VERSION_UNKNOWN",
+  "aegis_correlation_id": "NOT_CREATED_BECAUSE_RUN_NOT_AUTHORIZED",
+  "run_attempted": false,
+  "run_provider_operations": 0,
+  "provider_mutations": 0,
+  "retries": 0,
+  "stop_reason": "Mission 065 authorization requires an exact provider-recognized production version before the one allowed version-bound run. No such value was obtained without guessing or inventing a provider capability.",
+  "mission_041b_relink_attempted": false,
+  "historical_evidence": "UNCHANGED"
+}

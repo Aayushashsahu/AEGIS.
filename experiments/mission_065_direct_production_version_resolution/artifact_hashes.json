@@ -1,0 +1,13 @@
+{
+  "schema_version": "mission-065-artifact-hashes-v1",
+  "artifacts": {
+    "authorization.json": "620e98cc7acc974d46ca76b372f0eb3ca57a1c193e0b928e01d473be80d32f84",
+    "version_resolution.json": "3032f4bcd2b5cf6258ef8ba8f90f9ab91452c8d6729a2f6aa72c97f79fa5aaf4",
+    "version_resolution.md": "2b96ebaa9be70742e4350d3febd6f14565d4d66a68a70969a84020603493afe6"
+  },
+  "self_hash_excluded": true,
+  "version_bound_run_attempted": false,
+  "provider_run_operations": 0,
+  "provider_mutations": 0,
+  "retries": 0
+}

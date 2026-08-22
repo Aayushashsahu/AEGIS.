@@ -1,0 +1,54 @@
+{
+  "mission": "MISSION_065",
+  "objective": "DIRECT_PRODUCTION_VERSION_RESOLUTION_PLUS_ONE_VERSION_BOUND_PREFLIGHT",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "operator": "Aayush Sahu",
+  "authorization_time_utc": "2026-08-21T20:04:02Z",
+  "scope": {
+    "phase_1": "read-only provider/dashboard/CLI version resolution",
+    "phase_2": "create one AEGIS correlation record only if exact provider version is established",
+    "phase_3": "exactly one version-bound collector read/run only if exact provider version is established",
+    "phase_4": "raw-first capture and exact-run output inspection",
+    "phase_5": "offline comparison only; Mission 041B must not be relinked",
+    "phase_6": "read-only UI version inspection if browser access is stable"
+  },
+  "conditional_run_authorization": {
+    "condition": "PRODUCTION_VERSION must be an exact provider-recognized value obtained from documented/provider response evidence",
+    "command_shape": "bdata scraper run c_mt09pib13nxqz1coi <canonical_target_url> --version <exact_provider_version> --json",
+    "max_provider_run_operations": 1,
+    "retries": 0,
+    "stop_after_run": true
+  },
+  "prohibited_operations": [
+    "heal",
+    "approve",
+    "rerun",
+    "create_collector",
+    "modify_collector",
+    "commit",
+    "rollback",
+    "benchmark",
+    "NVIDIA",
+    "Gemini",
+    "production_save",
+    "version_modification",
+    "second_run"
+  ],
+  "target_policy": "Use only the canonical target already associated with the collector; no target change is authorized.",
+  "provider_budget": {
+    "version_resolution_requests": "documented read-only mechanisms only",
+    "run_operations": 1,
+    "mutations": 0,
+    "retries": 0
+  },
+  "fail_closed_rules": [
+    "Do not guess that v1 is the full provider version identifier.",
+    "Do not invent a revision or use an AEGIS-local fallback as provider version.",
+    "If exact production version is UNKNOWN, stop without running.",
+    "Do not retroactively relink Mission 041B.",
+    "Do not fabricate absent provider identifiers; record NOT_RETURNED_BY_PROVIDER.",
+    "Preserve raw provider response before normalization."
+  ],
+  "historical_evidence_policy": "Mission 041B and all prior evidence remain immutable and unchanged.",
+  "provider_mutations_authorized": 0
+}

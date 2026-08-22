@@ -20,8 +20,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Install test runner
-        run: python -m pip install --upgrade pip pytest
+      - name: Install test dependencies
+        run: python -m pip install --upgrade pip pytest beautifulsoup4
       - name: Run canonical AEGIS tests
         run: PYTHONPATH=src:. pytest -q tests/unit tests/integration
       - name: Verify immutable evidence fingerprints

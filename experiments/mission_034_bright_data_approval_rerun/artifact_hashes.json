@@ -1,0 +1,24 @@
+{
+  "schema_version": "mission-034-artifact-hashes-v1",
+  "scope": "blocked-preflight-only",
+  "source_brief": {
+    "path": "/home/ubuntu/upload/pasted_content_41.txt",
+    "sha256": "d89c7204b9aad4916cb34401eb4f309929edc1dcef26496fe3c6e0e8750d378d"
+  },
+  "artifacts": {
+    "README.md": "a63d0191ac448f2d81e4d2044a281acd5da337f011873b8b5e0f72917393bb6b",
+    "authorization.json": "c8c70ce781184716daf50b0e16e616c7010e80c7fab3c5fba53ac1099897c0b4",
+    "preflight.json": "f44070e92103f38ae3b033f0ffb531efa61a924e28c5d3aed50772c509241bbd",
+    "operation_ledger.json": "6e69dfe4f34cb194256e08efbe681ed6b0bb32bb84d7e3960bdf9e6e4ca5c37d",
+    "summary.json": "99ffde6a082fa5678fc06c9b93818cd4cedea30fa80218db753cc5722dd8f438"
+  },
+  "absent_by_design": [
+    "approval_request.json",
+    "approval_result.json",
+    "post_heal_run.json",
+    "verification.json",
+    "risk_decision.json",
+    "commit_decision.json",
+    "raw_provider_output.json"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "schema_version": "mission-034-preflight-v1",
+  "status": "BLOCKED_INVALID_AUTHORIZATION",
+  "evaluated_at": "2026-08-20T00:00:00Z",
+  "historical_candidate_reference": "experiments/mission_033_live_bright_data_success/candidate_preview.json",
+  "checks": [
+    {
+      "name": "candidate_id_matches_canonical_evidence",
+      "expected": "candidate_m033_a0d9aa5a0d056720",
+      "observed": "candidate_m033_a0d9aa5a0d056720",
+      "status": "PASS"
+    },
+    {
+      "name": "collector_id_matches_canonical_evidence",
+      "expected": "c_mt09pib13nxqz1coi",
+      "observed": "c_mt09pib13nxqz1co",
+      "status": "FAIL",
+      "reason": "Authorization omits the terminal 'i' from the canonical collector identifier."
+    },
+    {
+      "name": "authorization_time_is_recorded_utc",
+      "expected": "RFC3339 UTC timestamp",
+      "observed": "<INSERT CURRENT UTC TIMESTAMP>",
+      "status": "FAIL",
+      "reason": "The supplied authorization retains an unresolved placeholder."
+    },
+    {
+      "name": "operator_delegation_is_explicit",
+      "expected": "Explicit authorization for the executing agent or operator",
+      "observed": "Aayush Sahu named without explicit agent delegation",
+      "status": "BLOCKED"
+    },
+    {
+      "name": "operation_budget",
+      "observed": "approve=1; rerun=1; retries=0; heal=0; commit=0; rollback=0",
+      "status": "CONDITIONAL"
+    },
+    {
+      "name": "approval_rerun_transport",
+      "expected": "Documented authenticated mutation-capable Bright Data transport",
+      "observed": "No approval/rerun-capable transport configured in this task",
+      "status": "FAIL"
+    }
+  ],
+  "terminal_conditions": [
+    "No credential is used before all authorization checks pass.",
+    "No provider mutation is attempted after a failed preflight check.",
+    "No approval, rerun, verification, risk, commit, or output artifact is created without the corresponding actual operation."
+  ],
+  "provider_operations_executed": {
+    "bright_data_approve": 0,
+    "bright_data_collector_run": 0,
+    "bright_data_heal": 0,
+    "additional_collector_create": 0,
+    "additional_retries": 0,
+    "production_commit": 0,
+    "rollback": 0
+  }
+}

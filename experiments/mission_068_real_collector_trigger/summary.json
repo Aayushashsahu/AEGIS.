@@ -62,5 +62,11 @@
   },
   "data_shipped": "NO",
   "key_exposed": false,
-  "historical_evidence": "UNCHANGED"
+  "historical_evidence": "UNCHANGED",
+  "release_control": {
+    "manual_workflow_dispatches": 0,
+    "additional_provider_triggers_authorized": 0,
+    "scheduled_trigger_state": "NOT_INDEPENDENTLY_VERIFIABLE",
+    "scheduled_trigger_enabled_by_this_mission": false
+  }
 }

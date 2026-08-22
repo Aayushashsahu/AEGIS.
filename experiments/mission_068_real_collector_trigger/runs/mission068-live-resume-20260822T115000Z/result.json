@@ -1,0 +1,159 @@
+{
+  "audit": {
+    "detection_event_id": "audit_6655894633094dc8a95c2873ec14281e",
+    "observation_event_id": "audit_026cffe943ff46c0bd9492572b0754fc",
+    "store": "experiments/mission_068_real_collector_trigger/runs/mission068-live-resume-20260822T115000Z/audit.sqlite"
+  },
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "commit": {
+    "reason": "No repair candidate, verification result, or separate commit authorization exists.",
+    "status": "BLOCKED"
+  },
+  "correlation_id": "mission068-live-resume-20260822T115000Z",
+  "detection": {
+    "affected_fields": [
+      "availability",
+      "input",
+      "price",
+      "title"
+    ],
+    "detected": true,
+    "detector_provenance": [
+      "schema"
+    ],
+    "evaluated_at": "2026-08-22T11:49:19.739402+00:00",
+    "evidence_refs": [
+      "observation://row/0/field/availability",
+      "observation://row/0/field/input",
+      "observation://row/0/field/price",
+      "observation://row/0/field/title"
+    ],
+    "severity": "L2",
+    "signals": [
+      {
+        "affected_fields": [
+          "title"
+        ],
+        "code": "MISSING_FIELD",
+        "detector": "schema",
+        "evidence_refs": [
+          "observation://row/0/field/title"
+        ],
+        "message": "row 0 is missing required field title",
+        "severity": "L2"
+      },
+      {
+        "affected_fields": [
+          "price"
+        ],
+        "code": "MISSING_FIELD",
+        "detector": "schema",
+        "evidence_refs": [
+          "observation://row/0/field/price"
+        ],
+        "message": "row 0 is missing required field price",
+        "severity": "L2"
+      },
+      {
+        "affected_fields": [
+          "availability"
+        ],
+        "code": "MISSING_FIELD",
+        "detector": "schema",
+        "evidence_refs": [
+          "observation://row/0/field/availability"
+        ],
+        "message": "row 0 is missing required field availability",
+        "severity": "L2"
+      },
+      {
+        "affected_fields": [
+          "input"
+        ],
+        "code": "UNEXPECTED_FIELD",
+        "detector": "schema",
+        "evidence_refs": [
+          "observation://row/0/field/input"
+        ],
+        "message": "row 0 contains unexpected field input",
+        "severity": "L2"
+      }
+    ]
+  },
+  "elapsed_ms": 2796,
+  "error_class": null,
+  "error_message": null,
+  "key_exposed": false,
+  "observation": {
+    "collected_at": "2026-08-22T11:49:19.739229+00:00",
+    "collection_id": "collection_c77cbd71b30b40aa9108b8c08c7e9073",
+    "collection_mode": "BATCH",
+    "collector_id": "c_mt09pib13nxqz1coi",
+    "evidence_refs": [
+      "evidence://experiments/mission_068_real_collector_trigger/runs/mission068-live-resume-20260822T115000Z/raw/001_dataset_poll_001.bin"
+    ],
+    "input": {
+      "correlation_id": "mission068-live-resume-20260822T115000Z",
+      "target_url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+    },
+    "latency_ms": 2796,
+    "observation_id": "observation_b33c68a19d7b4ce9a0801120f75c1fd3",
+    "output": [
+      {
+        "input": {
+          "url": "https://3000-in40pq5v22nvlswgg4ddl-0b71e979.sg1.manus.computer/mission-033/target"
+        }
+      }
+    ],
+    "provider_operation_ids": {
+      "provider_collection_id": "j_mt4bb46mn59pq317w"
+    },
+    "provider_provenance": "BRIGHT_DATA",
+    "row_count": 1,
+    "schema": [
+      "input"
+    ],
+    "trust_status": "UNTRUSTED_UNTIL_VERIFIED"
+  },
+  "output_schema": [
+    "input"
+  ],
+  "poll_attempts": 1,
+  "provider_collection_id": "j_mt4bb46mn59pq317w",
+  "provider_identifier_state": "PRESENT",
+  "provider_status": "COMPLETED",
+  "raw_evidence": [
+    {
+      "bytes": 129,
+      "content_type": "application/json",
+      "http_status": 200,
+      "path": "/tmp/aegis-real-trigger/experiments/mission_068_real_collector_trigger/runs/mission068-live-resume-20260822T115000Z/raw/001_dataset_poll_001.bin",
+      "sha256": "4de55bad66eceb534b09d583e5fdc42b16070ee6988c56619dfa60f5fa0991aa",
+      "stage": "dataset_poll_001"
+    }
+  ],
+  "raw_evidence_preserved_before_normalization": true,
+  "raw_responses": [
+    {
+      "bytes": 129,
+      "content_type": "application/json",
+      "http_status": 200,
+      "sha256": "4de55bad66eceb534b09d583e5fdc42b16070ee6988c56619dfa60f5fa0991aa",
+      "stage": "dataset_poll_001"
+    }
+  ],
+  "retry_count": 0,
+  "risk": {
+    "reason": "No candidate verification exists for a direct collection result.",
+    "status": "NOT_APPLICABLE"
+  },
+  "row_count": 1,
+  "schema_version": "bright-data-batch-trigger-v1",
+  "state": "COMPLETED",
+  "target_url_sha256": "8b1a09cdd2241db74687c89d2f1b506d3467b5303ac347d6425e2dd3388a83bd",
+  "trigger_attempts": 0,
+  "verification": {
+    "reason": "A collection output is an observation, not a repaired candidate.",
+    "status": "NOT_APPLICABLE"
+  }
+}

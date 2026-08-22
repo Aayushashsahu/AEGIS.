@@ -1,0 +1,76 @@
+name: AEGIS bounded live collector trigger
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: Approved HTTP(S) target for the one collection input
+        required: true
+        type: string
+      allow_untracked_run:
+        description: First manual validation only; scheduled runs must remain false
+        required: true
+        default: false
+        type: boolean
+  schedule:
+    - cron: "17 3 * * *"
+
+concurrency:
+  group: aegis-live-collector-trigger
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  trigger:
+    # Scheduled execution is explicit opt-in. The default remains no provider call.
+    if: github.event_name == 'workflow_dispatch' || vars.AEGIS_DAILY_TRIGGER_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      BRIGHT_DATA_API_TOKEN: ${{ secrets.BRIGHT_DATA_API_TOKEN }}
+      AEGIS_TRIGGER_TARGET_URL: ${{ github.event_name == 'workflow_dispatch' && inputs.target_url || vars.AEGIS_TRIGGER_TARGET_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Prepare isolated operational state
+        run: |
+          mkdir -p "$RUNNER_TEMP/aegis-state"
+          state='${{ vars.AEGIS_LIVE_TRIGGER_STATE_JSON }}'
+          if [ -z "$state" ]; then state='{}'; fi
+          printf '%s' "$state" > "$RUNNER_TEMP/aegis-state/state.json"
+      - name: Daily preflight only
+        if: github.event_name == 'schedule'
+        run: |
+          set +e
+          PYTHONPATH=src python3 scripts/trigger_collector.py \
+            --operation-id "mission068-gh-preflight-${GITHUB_RUN_ID}" \
+            --correlation-id "mission068-gh-preflight-${GITHUB_RUN_ID}" \
+            --state-path "$RUNNER_TEMP/aegis-state/state.json"
+          code=$?
+          set -e
+          if [ "$code" -ne 0 ] && [ "$code" -ne 2 ]; then exit "$code"; fi
+      - name: Trigger one bounded manual collection
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          operation_id="mission068-gh-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          flags=()
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.allow_untracked_run }}" = "true" ]; then
+            flags+=(--allow-untracked-run)
+          fi
+          PYTHONPATH=src python3 scripts/trigger_collector.py --execute \
+            --operation-id "$operation_id" \
+            --correlation-id "$operation_id" \
+            --state-path "$RUNNER_TEMP/aegis-state/state.json" \
+            "${flags[@]}"
+      - name: Retain raw-first evidence for authorised reviewers
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aegis-live-trigger-${{ github.run_id }}
+          path: experiments/mission_068_real_collector_trigger/runs/
+          if-no-files-found: ignore
+          retention-days: 30

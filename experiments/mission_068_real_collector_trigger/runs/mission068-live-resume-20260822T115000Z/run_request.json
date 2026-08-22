@@ -1,0 +1,16 @@
+{
+  "approval": "DISABLED",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "commit": "DISABLED",
+  "correlation_id": "mission068-live-resume-20260822T115000Z",
+  "healing": "DISABLED",
+  "key_exposed": false,
+  "operation_id": "mission068-live-resume-20260822T115000Z",
+  "requested_at_utc": "2026-08-22T11:49:16.942251Z",
+  "resume_collection_id": "j_mt4bb46mn59pq317w",
+  "retry_budget": 0,
+  "rollback": "DISABLED",
+  "schema_version": "mission-068-trigger-request-v1",
+  "target_url_sha256": "8b1a09cdd2241db74687c89d2f1b506d3467b5303ac347d6425e2dd3388a83bd",
+  "trigger_budget": 0
+}

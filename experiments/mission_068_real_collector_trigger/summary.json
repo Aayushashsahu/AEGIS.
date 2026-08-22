@@ -1,0 +1,66 @@
+{
+  "schema_version": "mission-068-real-collector-trigger-summary-v1",
+  "classification": "REAL_PROVIDER_COLLECTION_COMPLETED_FAIL_CLOSED",
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "target_reference": "experiments/mission_033_live_bright_data_success/target_contract.json",
+  "target_url_sha256": "8b1a09cdd2241db74687c89d2f1b506d3467b5303ac347d6425e2dd3388a83bd",
+  "provider_collection_id": "j_mt4bb46mn59pq317w",
+  "trigger": {
+    "operation_id": "mission068-live-20260822T114500Z",
+    "correlation_id": "mission068-live-20260822T114500Z",
+    "trigger_attempts": 1,
+    "retry_count": 0,
+    "provider_response": {
+      "trigger_http_status": 200,
+      "dataset_http_status": 202,
+      "dataset_provider_status": "collecting",
+      "raw_response_hashes": [
+        "ff23fd2565f0fa8ad6d4ef6193b9c36fd0c6550bb59be4f418453f3766d1ef24",
+        "ff2f8ff073c6aaf37e2601dde6c32c5add156123847cb54ac04ad7a5791d2210"
+      ]
+    },
+    "result": "COLLECTION_CREATED_RETRIEVAL_CONTINUED",
+    "raw_evidence_directory": "runs/mission068-live-20260822T114500Z/raw"
+  },
+  "resume": {
+    "operation_id": "mission068-live-resume-20260822T115000Z",
+    "correlation_id": "mission068-live-resume-20260822T115000Z",
+    "trigger_attempts": 0,
+    "dataset_poll_attempts": 1,
+    "retry_count": 0,
+    "provider_http_status": 200,
+    "provider_status": "COMPLETED",
+    "raw_response_sha256": "4de55bad66eceb534b09d583e5fdc42b16070ee6988c56619dfa60f5fa0991aa",
+    "raw_evidence_directory": "runs/mission068-live-resume-20260822T115000Z/raw",
+    "output_schema": [
+      "input"
+    ],
+    "row_count": 1,
+    "required_fields": {
+      "title": "MISSING",
+      "price": "MISSING",
+      "availability": "MISSING"
+    },
+    "detection": {
+      "detected": true,
+      "severity": "L2",
+      "provenance": "schema"
+    },
+    "verification": "NOT_APPLICABLE_NO_REPAIR_CANDIDATE",
+    "risk": "NOT_APPLICABLE_NO_CANDIDATE_VERIFICATION",
+    "commit": "BLOCKED"
+  },
+  "prohibited_actions": {
+    "healing": 0,
+    "approval": 0,
+    "save_or_publish": 0,
+    "commit": 0,
+    "rollback": 0,
+    "benchmark": 0,
+    "nvidia": 0,
+    "gemini": 0
+  },
+  "data_shipped": "NO",
+  "key_exposed": false,
+  "historical_evidence": "UNCHANGED"
+}

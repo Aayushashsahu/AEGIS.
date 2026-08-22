@@ -20,6 +20,16 @@ describe("canonical AEGIS lifecycle adapter", () => {
     expect(result.graph.nodes.find((node: { id: string }) => node.id === "COMMIT").display_status).toBe("BLOCKED");
   });
 
+  it("projects the real-provider incomplete-output causal boundary without inventing a provider cause", () => {
+    const result = invokeAegis({ action: "mission050" });
+    expect(result.graph.mode).toBe("REAL_PROVIDER_CAUSAL_BOUNDARY");
+    expect(result.graph.provenance).toBe("REAL_PROVIDER");
+    expect(result.replay.real_provider_chain).toMatchObject({ http_status: 200, verification: "FAIL", risk: "REJECT", commit: "BLOCKED", data_shipped: "NO" });
+    expect(result.replay.real_provider_chain.required_fields).toEqual({ title: "MISSING", price: "MISSING", availability: "MISSING" });
+    expect(result.replay.cause).toBe("UNKNOWN");
+    expect(result.replay.output_eligible).toBe(false);
+  });
+
   it("projects the controlled replay with canonical verification, risk, and commit outcomes", () => {
     const result = invokeAegis({ action: "controlled" });
     expect(result.graph.mode).toBe("TEST_DOUBLE_CONTROLLED_REPLAY");

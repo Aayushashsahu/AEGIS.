@@ -4,6 +4,7 @@ import { createAegisCase, getAegisCase, listAegisCases } from "./aegisCases";
 import { enforcePublicCaseCreationRateLimit, normalizeCreateCaseInput } from "./aegisCaseBoundary";
 import { invokeAegis } from "./aegisBridge";
 import { SEEDED_CASE_METADATA } from "./aegisSeedMetadata";
+import { getAegisSupportStatus } from "./aegisSupportStatus";
 import { getSessionCookieOptions } from "./_core/cookies";
 import { systemRouter } from "./_core/systemRouter";
 import { publicProcedure, router } from "./_core/trpc";
@@ -46,6 +47,8 @@ export const appRouter = router({
     caseLifecycle: publicProcedure.input(z.object({ caseId: z.string().min(1) })).query(async ({ input }) => {
       if (input.caseId === "mission_029_real_provider") return invokeAegis({ action: "historical" });
       if (input.caseId === "mission_033_real_provider_candidate") return invokeAegis({ action: "mission033" });
+      if (input.caseId === "mission_034_transport_blocked") return invokeAegis({ action: "mission034" });
+      if (input.caseId === "mission_050_real_provider_causal_boundary") return invokeAegis({ action: "mission050" });
       if (input.caseId === "controlled_silent_corruption") return invokeAegis({ action: "controlled" });
       const configured = await getAegisCase(input.caseId);
       if (!configured) throw new Error("AEGIS case not found");
@@ -53,6 +56,7 @@ export const appRouter = router({
     }),
     benchmark: publicProcedure.query(() => invokeAegis({ action: "benchmark" })),
     downstream: publicProcedure.query(() => invokeAegis({ action: "downstream" })),
+    supportStatus: publicProcedure.query(() => getAegisSupportStatus()),
   }),
 });
 

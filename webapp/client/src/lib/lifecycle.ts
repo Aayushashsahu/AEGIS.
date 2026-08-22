@@ -7,7 +7,7 @@ import type { CaseGraph } from "./aegisApi";
 
 export type LifecycleStage = string;
 export type LifecycleStatus = "CONFIGURED" | "ACTIVE" | "PENDING" | "ANOMALY" | "VERIFIED" | "QUARANTINED" | "BLOCKED" | "UNAVAILABLE";
-export type LifecycleProvenance = "USER_CONFIGURED" | "NORMALIZED_CASE" | "REAL_PROVIDER" | "REPLAY" | "TEST_DOUBLE" | "CONTROLLED_DEMONSTRATOR";
+export type LifecycleProvenance = "USER_CONFIGURED" | "NORMALIZED_CASE" | "REAL_PROVIDER" | "REPLAY" | "TEST_DOUBLE" | "CONTROLLED_DEMONSTRATOR" | "AEGIS_DETERMINISTIC";
 export type LifecycleNode = { id: LifecycleStage; label: string; domain_status: string; display_status: LifecycleStatus; provenance: LifecycleProvenance; detail: string; evidenceRefs: string[]; timestamp?: string; provider?: string };
 export type LifecycleEdge = { id: string; source: LifecycleStage; target: LifecycleStage; domain_status: string; display_status: "PENDING" | "ACTIVE" | "BROKEN" | "VERIFIED" | "UNAVAILABLE"; provenance: LifecycleProvenance; evidenceRefs: string[] };
 export type GraphSeverity = "UNKNOWN" | "HEALTHY" | "ANOMALY" | "QUARANTINE" | "BLOCKED";

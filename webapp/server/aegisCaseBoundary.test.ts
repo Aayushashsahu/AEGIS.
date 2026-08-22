@@ -17,6 +17,6 @@ describe("public AEGIS case boundary", () => {
   it("rate-limits public demo creation while leaving the static list projection provider-free", () => {
     for (let index = 0; index < 5; index += 1) enforcePublicCaseCreationRateLimit("test-client", 1_000 + index);
     expect(() => enforcePublicCaseCreationRateLimit("test-client", 1_100)).toThrow("rate-limited");
-    expect(SEEDED_CASE_METADATA.map((item) => item.case_id)).toEqual(["mission_029_real_provider", "mission_033_real_provider_candidate", "controlled_silent_corruption"]);
+    expect(SEEDED_CASE_METADATA.map((item) => item.case_id)).toEqual(["mission_029_real_provider", "mission_033_real_provider_candidate", "mission_034_transport_blocked", "mission_050_real_provider_causal_boundary", "controlled_silent_corruption"]);
   });
 });

@@ -4,7 +4,7 @@ import { existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 
-export type AegisAction = "historical" | "mission033" | "controlled" | "configured" | "benchmark" | "downstream";
+export type AegisAction = "historical" | "mission033" | "mission034" | "mission050" | "controlled" | "configured" | "benchmark" | "downstream";
 export type AegisRequest = { action: AegisAction; case?: Record<string, unknown> };
 
 export class AegisAdapterError extends Error {

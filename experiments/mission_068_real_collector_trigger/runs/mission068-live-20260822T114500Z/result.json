@@ -1,0 +1,68 @@
+{
+  "collector_id": "c_mt09pib13nxqz1coi",
+  "commit": {
+    "reason": "collection did not produce a complete observation",
+    "status": "BLOCKED"
+  },
+  "correlation_id": "mission068-live-20260822T114500Z",
+  "detection": "NOT_CREATED",
+  "elapsed_ms": 6563,
+  "error_class": "HTTP_202",
+  "error_message": "dataset response was neither a documented pending status nor a JSON row array",
+  "key_exposed": false,
+  "observation": "NOT_CREATED",
+  "output_schema": [],
+  "poll_attempts": 1,
+  "provider_collection_id": "j_mt4bb46mn59pq317w",
+  "provider_identifier_state": "PRESENT",
+  "provider_status": "collecting",
+  "raw_evidence": [
+    {
+      "bytes": 78,
+      "content_type": "application/json",
+      "http_status": 200,
+      "path": "/tmp/aegis-real-trigger/experiments/mission_068_real_collector_trigger/runs/mission068-live-20260822T114500Z/raw/001_trigger.bin",
+      "sha256": "ff23fd2565f0fa8ad6d4ef6193b9c36fd0c6550bb59be4f418453f3766d1ef24",
+      "stage": "trigger"
+    },
+    {
+      "bytes": 55,
+      "content_type": "application/json",
+      "http_status": 202,
+      "path": "/tmp/aegis-real-trigger/experiments/mission_068_real_collector_trigger/runs/mission068-live-20260822T114500Z/raw/002_dataset_poll_001.bin",
+      "sha256": "ff2f8ff073c6aaf37e2601dde6c32c5add156123847cb54ac04ad7a5791d2210",
+      "stage": "dataset_poll_001"
+    }
+  ],
+  "raw_evidence_preserved_before_normalization": true,
+  "raw_responses": [
+    {
+      "bytes": 78,
+      "content_type": "application/json",
+      "http_status": 200,
+      "sha256": "ff23fd2565f0fa8ad6d4ef6193b9c36fd0c6550bb59be4f418453f3766d1ef24",
+      "stage": "trigger"
+    },
+    {
+      "bytes": 55,
+      "content_type": "application/json",
+      "http_status": 202,
+      "sha256": "ff2f8ff073c6aaf37e2601dde6c32c5add156123847cb54ac04ad7a5791d2210",
+      "stage": "dataset_poll_001"
+    }
+  ],
+  "retry_count": 0,
+  "risk": {
+    "reason": "collector result did not complete",
+    "status": "NOT_APPLICABLE"
+  },
+  "row_count": null,
+  "schema_version": "bright-data-batch-trigger-v1",
+  "state": "FAILED",
+  "target_url_sha256": "8b1a09cdd2241db74687c89d2f1b506d3467b5303ac347d6425e2dd3388a83bd",
+  "trigger_attempts": 1,
+  "verification": {
+    "reason": "collector result did not complete",
+    "status": "NOT_APPLICABLE"
+  }
+}
